@@ -1,0 +1,30 @@
+:root {
+    --background-color: #003049;
+    --text-color: #fdf0d5;
+}
+@font-face { 
+  font-family: "Mandator";
+  font-display: swap;
+  font-weight: 400;
+  src: url(Mandator.woff2)
+}
+
+* {
+    font-family: 'Mandator', sans-serif;
+    box-sizing: border-box;
+    user-select: none;
+    text-decoration: none;
+    color: var(--text-color);
+}
+body {
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0px;
+    overflow-x: hidden;
+}
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
