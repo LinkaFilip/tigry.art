@@ -1,7 +1,7 @@
 main {
     flex-grow: 1;
     position: relative;
-    color: white;
+    color: #fdf0d5;
     font-family: "Mandator";
     display: flex;
     justify-content: center;
