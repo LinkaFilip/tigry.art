@@ -4,27 +4,266 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TIGRY.ART – Plakáty inspirované světem</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="variables.css" />
 
 </head>
 <body>
-  <header>
-    <h1>TIGRY.ART</h1>
-  </header>
-<section class="hero">
-  <div class="hero-content">
-    <h1>TIGRY.ART</h1>
-    <p class="tagline">Objevujte kultury světa skrze architekturu</p>
-    <a href="#collection" class="cta">Prohlédněte kolekci</a>
+  <header class="header fixed top-0 left-0 w-real-screen grid-w items-start px-container py-container pointer-events-none z-header is-light" style="opacity: 1; visibility: inherit;">
+  <div class="col-span-full xl:col-span-4 flex items-start max-xl:fixed max-xl:bottom-container max-xl:left-1/2 max-xl:-translate-x-1/2 z-1">
+    <div class="header-menu relative body-14 !leading-[100%] font-medium pointer-events-auto touch-none" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+      <div class="header-menu-bg absolute top-0 left-0 w-full h-full bg-sand-600/52 rounded-[2.5rem] xl:rounded-18 backdrop-blur-[20px]" style="border-radius: 1.7rem;"></div>
+      <div class="header-menu-toggler relative flex justify-between items-center gap-x-12 px-16 py-12 xl:px-12 xl:py-10 max-xl:text-16 font-medium max-xl:!leading-[120%] text-sand-100 cursor-pointer">
+        <div class="header-swipe-bar opacity-0 xl:hidden absolute bottom-[calc(100%+0.4rem)] left-1/2 w-[6rem] h-4 bg-sand-600/52 backdrop-blur-[20px] rounded-full -translate-x-1/2" style="translate: none; rotate: none; scale: none; opacity: 0; transform: translate(-30px, 1rem);"></div>
+        <span class="header-menu-toggler-items relative inline-block overflow-hidden" style="width: 69px;">
+          <span class="toggler-item relative inline-block a">
+            <span class="opacity-52">Overview</span>
+            <span class="toggler-item-mask absolute top-0 left-0 block overflow-hidden" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+              <span class="toggler-item-inner block" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">Overview</span>
+            </span>
+          </span>
+                      <span class="toggler-item inline-block absolute top-0 left-0" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">
+              <span class="opacity-52">Jackets</span>
+              <span class="toggler-item-mask absolute top-0 left-0 block overflow-hidden" style="translate: none; rotate: none; scale: none; transform: translate(-100%, 0%);">
+                <span class="toggler-item-inner block" style="translate: none; rotate: none; scale: none; transform: translate(100%, 0%);">Jackets</span>
+              </span>
+            </span>
+                                <span class="toggler-item inline-block absolute top-0 left-0" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">
+              <span class="opacity-52">Shoes</span>
+              <span class="toggler-item-mask absolute top-0 left-0 block overflow-hidden" style="translate: none; rotate: none; scale: none; transform: translate(-100%, 0%);">
+                <span class="toggler-item-inner block" style="translate: none; rotate: none; scale: none; transform: translate(100%, 0%);">Shoes</span>
+              </span>
+            </span>
+                                <span class="toggler-item inline-block absolute top-0 left-0" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">
+              <span class="opacity-52">Backpacks</span>
+              <span class="toggler-item-mask absolute top-0 left-0 block overflow-hidden" style="translate: none; rotate: none; scale: none; transform: translate(-100%, 0%);">
+                <span class="toggler-item-inner block" style="translate: none; rotate: none; scale: none; transform: translate(100%, 0%);">Backpacks</span>
+              </span>
+            </span>
+                  </span>
+        <span class="relative w-[0.9rem] h-[0.9rem]">
+          <span class="header-circle-wrapper block w-3 h-3 absolute-center" style="translate: none; rotate: none; scale: none; transform: translate(-50%, -50%);">
+            <span class="header-circle-top-left absolute-full inline-block w-full h-full bg-sand-100 rounded-[50%]" style="translate: none; rotate: none; scale: none; transform: translate(-100%, -100%);"></span>
+            <span class="header-circle-top-right absolute-full inline-block w-full h-full bg-sand-100 rounded-[50%]" style="translate: none; rotate: none; scale: none; transform: translate(100%, -100%);"></span>
+            <span class="header-circle-bottom-left absolute-full inline-block w-full h-full bg-sand-100 rounded-[50%]" style="translate: none; rotate: none; scale: none; transform: translate(-100%, 100%);"></span>
+            <span class="header-circle-bottom-right absolute-full inline-block w-full h-full bg-sand-100 rounded-[50%]" style="translate: none; rotate: none; scale: none; transform: translate(100%, 100%);"></span>
+          </span>
+        </span>
+      </div>
+      <div class="header-menu-wrapper relative w-0 text-sand-100 overflow-hidden" style="width: 114px; height: 0px;">
+        <div class="header-menu-items flex flex-col px-4 pb-4 w-[21.5rem]">
+          <div class="menu-item relative flex gap-x-15 items-center p-4 cursor-pointer rounded-12" data-anchor="overview">
+    <div class="menu-item-image relative w-[5.7rem] h-[5.7rem] rounded-8 bg-sand-200 overflow-hidden" style="translate: none; rotate: none; scale: none; transform: rotate(10deg) scale(0, 0);">
+              <div class="absolute-full" style="translate: none; rotate: none; scale: none; transform: scale(1.2, 1.2);">
+          <div class="image  w-full h-full">
+  <figure class="w-full h-full">
+      <img class="lazy-manual opacity-0 w-full h-full object-contain object-top loaded" width="150" height="150" alt="" data-src="https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-480x480.png" data-srcset="
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-480x480.png 480w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-768x768.png 768w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-1200x1200.png 1200w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-1600x1600.png 1600w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-1920x1920.png 1920w,
+              " data-sizes="
+      (max-width: 1023px) 100vw,
+      200px" sizes="
+      (max-width: 1023px) 100vw,
+      200px" srcset="
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-480x480.png 480w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-768x768.png 768w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-1200x1200.png 1200w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-1600x1600.png 1600w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-1920x1920.png 1920w,
+              " src="https://quechua-lookbook.com/ss25/wp-content/uploads/2025/03/Panoplie-PNG-V2-1-480x480.png" data-ll-status="loaded">
+  </figure>
+</div>        </div>
+          </div>
+    <div class="flex flex-col gap-y-5">
+      <div class="overflow-hidden">
+        <span class="menu-item-title inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Overview</span>
+      </div>
+    </div>
   </div>
-</section>
-
-<section id="collection" class="grid fade-in">
-  <!-- Karty plakátů -->
-</section>
-
-  <footer>
-    <p>&copy; 2025 TIGRY.ART — <a href="mailto:info@tigry.art">info@tigry.art</a> — <a href="https://instagram.com/tigry.art" target="_blank">Instagram</a></p>
-  </footer>
+                      <div class="menu-item relative flex gap-x-15 items-center p-4 cursor-pointer rounded-12" data-anchor="jackets">
+    <div class="menu-item-image relative w-[5.7rem] h-[5.7rem] rounded-8 bg-sand-200 overflow-hidden" style="translate: none; rotate: none; scale: none; transform: rotate(10deg) scale(0, 0);">
+              <div class="absolute-full" style="translate: none; rotate: none; scale: none; transform: scale(1.2, 1.2);">
+          <div class="image  w-full h-full">
+  <figure class="w-full h-full">
+      <img class="lazy-manual opacity-0 w-full h-full object-contain object-top loaded" width="150" height="150" alt="" data-src="https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png" data-srcset="
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 480w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 768w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 1200w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 1600w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 1920w,
+              " data-sizes="
+      (max-width: 1023px) 100vw,
+      200px" sizes="
+      (max-width: 1023px) 100vw,
+      200px" srcset="
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 480w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 768w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 1200w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 1600w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png 1920w,
+              " src="https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Jacket.png" data-ll-status="loaded">
+  </figure>
+</div>        </div>
+          </div>
+    <div class="flex flex-col gap-y-5">
+      <div class="overflow-hidden">
+        <span class="menu-item-title inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Jackets</span>
+      </div>
+    </div>
+  </div>
+                                <div class="menu-item relative flex gap-x-15 items-center p-4 cursor-pointer rounded-12" data-anchor="shoes">
+    <div class="menu-item-image relative w-[5.7rem] h-[5.7rem] rounded-8 bg-sand-200 overflow-hidden" style="translate: none; rotate: none; scale: none; transform: rotate(10deg) scale(0, 0);">
+              <div class="absolute-full" style="translate: none; rotate: none; scale: none; transform: scale(1.2, 1.2);">
+          <div class="image  w-full h-full">
+  <figure class="w-full h-full">
+      <img class="lazy-manual opacity-0 w-full h-full object-contain object-top loaded" width="150" height="150" alt="" data-src="https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png" data-srcset="
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 480w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 768w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 1200w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 1600w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 1920w,
+              " data-sizes="
+      (max-width: 1023px) 100vw,
+      200px" sizes="
+      (max-width: 1023px) 100vw,
+      200px" srcset="
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 480w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 768w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 1200w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 1600w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png 1920w,
+              " src="https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/shoes-menu-3.png" data-ll-status="loaded">
+  </figure>
+</div>        </div>
+          </div>
+    <div class="flex flex-col gap-y-5">
+      <div class="overflow-hidden">
+        <span class="menu-item-title inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Shoes</span>
+      </div>
+    </div>
+  </div>
+                                <div class="menu-item relative flex gap-x-15 items-center p-4 cursor-pointer rounded-12" data-anchor="backpacks">
+    <div class="menu-item-image relative w-[5.7rem] h-[5.7rem] rounded-8 bg-sand-200 overflow-hidden" style="translate: none; rotate: none; scale: none; transform: rotate(10deg) scale(0, 0);">
+              <div class="absolute-full" style="translate: none; rotate: none; scale: none; transform: scale(1.2, 1.2);">
+          <div class="image  w-full h-full">
+  <figure class="w-full h-full">
+      <img class="lazy-manual opacity-0 w-full h-full object-contain object-top loaded" width="150" height="150" alt="" data-src="https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png" data-srcset="
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 480w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 768w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 1200w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 1600w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 1920w,
+              " data-sizes="
+      (max-width: 1023px) 100vw,
+      200px" sizes="
+      (max-width: 1023px) 100vw,
+      200px" srcset="
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 480w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 768w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 1200w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 1600w,
+                  https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png 1920w,
+              " src="https://quechua-lookbook.com/ss25/wp-content/uploads/2025/02/Menu-Backpack.png" data-ll-status="loaded">
+  </figure>
+</div>        </div>
+          </div>
+    <div class="flex flex-col gap-y-5">
+      <div class="overflow-hidden">
+        <span class="menu-item-title inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Backpacks</span>
+      </div>
+    </div>
+  </div>
+ 
+                  </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-3 md:col-span-4 xl:col-span-8 xl:py-5 flex xl:justify-center max-xl:mt-10">
+    <div class="header-logo svg-wrapper w-[13rem] md:w-[13.5rem] text-sand-600 pointer-events-auto transition-colors duration-500 ease-out" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);"><svg width="136" height="26" viewBox="0 0 136 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M43.0657 19.5002H52.1921V16.6774H46.5388V14.3095H51.5457V11.6817H46.5388V9.31381H52.1921V6.50024H43.0657V19.5002ZM63.5181 13.901C62.1964 15.9252 60.9133 16.7702 59.2636 16.7702C57.1219 16.7702 55.8774 15.3217 55.8774 12.8052C55.8774 10.4188 57.0254 9.23023 58.7909 9.23023C59.9582 9.23023 60.923 9.73166 61.222 11.4031H64.6951C64.3188 8.21809 62.2061 6.24023 58.8295 6.24023C54.9127 6.24023 52.3368 8.90523 52.3368 12.9909C52.3368 17.1045 54.9127 19.7602 59.1479 19.7602C61.9167 19.7602 63.7979 18.6459 65.0424 17.1417H69.7793V19.5002H73.233V6.50023H68.3321L63.5181 13.901ZM69.7793 14.5324H66.721L69.7793 9.75023V14.5324ZM35.6565 6.50023H30.582V19.5002H35.6565C39.6795 19.5002 42.2746 16.9467 42.2746 13.0002C42.2746 9.05381 39.6795 6.50023 35.6565 6.50023ZM35.6083 16.6774H34.0551V9.31381H35.6083C37.615 9.31381 38.7437 10.6788 38.7437 13.0002C38.7437 15.3124 37.615 16.6774 35.6083 16.6774ZM113.096 6.24024C109.015 6.24024 106.275 8.90523 106.275 13.0002C106.275 17.0952 109.015 19.7602 113.096 19.7602C117.186 19.7602 119.917 17.0952 119.917 13.0002C119.917 8.90524 117.186 6.24024 113.096 6.24024ZM113.096 16.7702C111.089 16.7702 109.825 15.4795 109.825 13.0002C109.825 10.5209 111.089 9.23023 113.096 9.23023C115.112 9.23023 116.366 10.5209 116.366 13.0002C116.366 15.4795 115.112 16.7702 113.096 16.7702ZM74.1013 9.31381H77.5068V19.5002H80.9798V9.31381H84.3853V6.50024H74.1013L74.1013 9.31381ZM128.782 6.50024V13.6595L124.306 6.50024H120.708V19.5002H124.065V12.0438L128.725 19.5002H132.14V6.50023L128.782 6.50024ZM101.355 6.50024H97.882V19.5002H106.594V16.6867H101.355V6.50024ZM93.4056 11.4588H88.7267V6.50024H85.2536V19.5002H88.7267V14.2631H93.4056V19.5002H96.8787V6.50023H93.4056V11.4588Z" fill="currentColor"></path>
+  <path d="M20.7823 3.71436C13.2406 3.71436 3.85944 11.2249 3.85944 17.4496C3.85944 20.6644 6.42497 22.2858 9.81341 22.2858C12.3015 22.2858 15.3124 21.4099 18.2167 19.7232V7.30191C17.4422 8.57852 13.8021 13.7222 10.8783 16.4618C9.38744 17.8596 8.20632 18.4653 7.1898 18.4653C6.0474 18.4653 5.50526 17.7198 5.50526 16.6109C5.50526 11.579 14.3055 5.03756 20.1336 5.03756C22.5346 5.03756 24.0836 6.06258 24.0836 8.0567C24.0836 9.88309 22.796 12.1754 20.5983 14.2907V18.1391C24.4321 15.2225 26.7265 11.5045 26.7265 8.50397C26.7265 5.34506 24.1707 3.71436 20.7823 3.71436Z" fill="currentColor"></path>
+</svg></div>
+  </div>
+  <div class="col-span-3 md:col-span-12 xl:col-span-4 flex justify-end">
+          <div class="header-langswitcher relative body-14 !leading-[100%] font-medium pointer-events-auto touch-none" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+        <div class="header-langswitcher-bg absolute top-0 left-0 w-full h-full bg-sand-600/52 rounded-[2.5rem] xl:rounded-18 backdrop-blur-[20px]"></div>
+        <div class="header-langswitcher-toggler relative flex justify-between items-center gap-x-12 px-16 xl:px-12 py-10 max-xl:text-16 font-medium max-xl:!leading-[120%] text-sand-100 cursor-pointer">
+          <div class="capitalize">
+            <span class="xl:hidden">en</span>
+            <span class="max-xl:hidden">English</span>
+          </div>
+          <div class="relative w-[0.3rem] h-[0.9rem]">
+            <div class="header-langswitcher-circle-wrapper block w-3 h-3 absolute-center">
+              <span class="header-langswitcher-circle-top inline-block absolute-full bg-sand-100 rounded-[50%]" style="translate: none; rotate: none; scale: none; transform: translate(0%, -100%);"></span>
+              <span class="header-langswitcher-circle-bottom inline-block absolute-full bg-sand-100 rounded-[50%]" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);"></span>
+            </div>
+          </div>
+        </div>
+        <div class="header-langswitcher-wrapper relative w-0 h-0 text-sand-100 overflow-hidden" style="width: 84px; height: 0px;">
+          <div class="header-langswitcher-items flex flex-col px-4 pb-4 w-[15rem]">
+                          <a href="https://quechua-lookbook.com/ss25/fr/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Français</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/es/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Español</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/de/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Deutsch</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/it/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Italiano</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/pl/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Polski</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/ja/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">日本語</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/zh/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">中文 (中国)</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/nl/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Nederlands</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/pt/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">Português</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/hi/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">हिन्दी</span>
+                </span>
+              </a>
+                          <a href="https://quechua-lookbook.com/ss25/hk/" data-taxi-ignore="" class="header-langswitcher-item  block relative !leading-[120%] px-8 py-[0.9rem] rounded-8">
+                <span class="block overflow-hidden">
+                  <span class="header-langswitcher-item-inner inline-block" style="translate: none; rotate: none; scale: none; transform: translate(0%, 100%);">English (Hong Kong)</span>
+                </span>
+              </a>
+                      </div>
+        </div>
+      </div>
+      </div>
+  <div class="header-overlay fixed top-0 left-0 w-full h-screen xl:hidden"></div>
+</header>
+<img src="/images/poster.webp" alt="background">
 </body>
 </html>
