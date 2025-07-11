@@ -27,6 +27,7 @@ body {
 .title {
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
 }
 .second-row {
     display: flex;
@@ -39,7 +40,8 @@ a {
     text-decoration: none;
     font-family: 'Mandator', sans-serif;
     font-size: 20rem;
-    line-height: 19rem;
+    font-weight: 800;
+    line-height: 24rem;
 }
 p {
     position: relative;
