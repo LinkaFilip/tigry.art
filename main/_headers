@@ -1,6 +1,0 @@
-/*
-  Cross-Origin-Opener-Policy: same-origin
-  Cross-Origin-Embedder-Policy: require-corp
-  /index.html 200
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://plausible.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://plausible.io; frame-ancestors 'none'; base-uri 'self';
-  https://www.filipl.art/*  https://filipl.art/:splat  301!
