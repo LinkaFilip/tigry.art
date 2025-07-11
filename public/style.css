@@ -27,4 +27,6 @@ body {
 a {
     color: var(--text-color);
     text-decoration: none;
+    font-family: 'Mandator', sans-serif;
+    font-size: 10rem;
 }
