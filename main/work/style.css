@@ -1,0 +1,31 @@
+#main {
+  padding-top: 50px; /* Aby nezačínalo pod navigací */
+  padding-inline: 2rem;
+}
+.grid {
+  margin: 40px auto;
+}
+
+.project {
+  width: 30%;
+  margin-bottom: 30px;
+  float: left;
+}
+@media (max-width: 1000px) {
+  .project {
+    width: 45%;
+  }
+}
+@media (max-width: 600px) {
+  .project {
+    width: 100%;
+  }
+}
+
+.project img {
+  width: 100%;
+  display: block;
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,35 @@
+#main{
+    margin-top: 50px;
+}
+
+.container{
+    display: flex;
+    margin-left: 100px;
+    width: 80%;
+    flex-direction: column;
+}
+span{
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.nav {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    background-color: rgba(150, 150, 150, .3);
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    color: white;
+    user-select: none;
+}
+@media(max-width: 800px) {
+    container{
+        margin-left: 60px;
+    }
+}

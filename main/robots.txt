@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: 
+
+User-agent: GoogleBot
+Disallow:
+
+Sitemap: https://filipl.art/sitemap.xml

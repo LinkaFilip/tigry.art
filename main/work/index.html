@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6HDQEQGMNF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-6HDQEQGMNF');
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Work - Filip Linka",
+  "url": "https://filipl.art/work/"
+}
+</script>
+  <link rel="stylesheet" href="../variables.css"> 
+  <link rel="stylesheet" href="style.css" />
+  <title>Filip Linka | Work</title>
+<link rel="shortcut icon" href="/images/logotyp.svg" type="image/x-icon">
+  <link rel="canonical" href="https://filipl.art/work" />
+<meta name="description" content="Work of Filip Linka">
+<link rel="preload" as="image" href="/images/makulaturaquality=2.webp">
+<link rel="preload" as="image" href="/images/white_puppiesquality=2.webp">
+<link rel="preload" as="image" href="/images/the_last_one_before_bedtimequality=2.webp">
+  <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+</head>
+<body>
+  <header>
+    <nav data-toggled="false" data-transitionable="false">
+		<div id="nav-logo-section" class="nav-section">
+			<a href="/">
+				Filip Linka
+			</a>
+		</div>
+		<div id="nav-mobile-section">
+			<div id="nav-link-section" class="nav-section">
+				<a href="/work/">work</a>
+				<a class="specified" href="/contact/">contact</a>
+			</div>
+		</div>
+	</nav>
+  </header>
+
+  <main id="main">
+    <div class="grid" id="project-grid"></div>
+  </main>
+
+
+  <script src="projects.js"></script>
+  <script>
+    const grid = document.getElementById("project-grid");
+
+    projects.forEach(p => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "project";
+
+      // Obrázek s odkazem, nebo bez
+      const imageHTML = p.link
+        ? `<a href="${p.link}"><img src="${p.image}" alt="${p.title}"></a>`
+        : `<img src="${p.image}" alt="${p.title}">`;
+
+      // Titulek s odkazem, nebo bez
+      const titleHTML = p.link
+        ? `<span><a href="${p.link}">${p.title}</a></span>`
+        : `<span>${p.title}</span>`;
+
+      wrapper.innerHTML = `${imageHTML}${titleHTML}`;
+      grid.appendChild(wrapper);
+    });
+
+    // Inicializace Masonry po načtení obrázků
+    imagesLoaded(grid, function () {
+      new Masonry(grid, {
+        itemSelector: '.project',
+        columnWidth: '.project',
+        gutter: 30,
+        percentPosition: true
+      });
+    });
+  </script>
+</body>
+</html>
