@@ -1,28 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
-  <link rel="stylesheet" href="/variables.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TIGRY.ART – Plakáty inspirované světem</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --bg: #111;
+      --fg: #f5f5f5;
+      --accent: #d4af37;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+    }
+
+    .hero {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .hero img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.1);
+    }
+
+    .collection {
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .poster {
+      background: #1a1a1a;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .poster:hover {
+      transform: scale(1.03);
+    }
+
+    .poster img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .poster h3 {
+      margin-top: 1rem;
+      font-weight: normal;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
+    .about {
+      padding: 3rem 2rem;
+      text-align: center;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      color: #aaa;
+    }
+
+    footer {
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <nav data-toggled="false" data-transitionable="false">
-		<div id="nav-logo-section" class="nav-section" onclick="functionToggle()">
-			<a href="/">
-				Tigry.art
-			</a>
-		</div>
-		<div id="nav-mobile-section">
-			<div id="nav-link-section" class="nav-section">
-				<a href="/work/">work</a>
-				<a class="specified" href="/contact/">contact</a>
-			</div>
-		</div>
-	</nav>
+    <h1>TIGRY.ART</h1>
   </header>
 
-  	<main id="main">
-		<img src="/images/poster.webp" alt="background image">
-	</main>
+  <section class="hero">
+    <img src="https://placehold.co/1200x600?text=Plakát+z+kolekce" alt="Ukázka plakátu">
+  </section>
+
+  <section class="collection">
+    <div class="poster">
+      <img src="https://placehold.co/400x600?text=Tokyo" alt="Plakát Tokyo">
+      <h3>Tokyo</h3>
+    </div>
+    <div class="poster">
+      <img src="https://placehold.co/400x600?text=Lisabon" alt="Plakát Lisabon">
+      <h3>Lisabon</h3>
+    </div>
+    <div class="poster">
+      <img src="https://placehold.co/400x600?text=Marrákeš" alt="Plakát Marrákeš">
+      <h3>Marrákeš</h3>
+    </div>
+  </section>
+
+  <section class="about">
+    <p>
+      Limitovaná kolekce 200 plakátů inspirovaných kulturami světa.
+      Barvy, vzory a architektura – vaše stěna, vaše cesta.
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 TIGRY.ART — <a href="mailto:info@tigry.art">info@tigry.art</a> — <a href="https://instagram.com/tigry.art" target="_blank">Instagram</a></p>
+  </footer>
 </body>
-<script src="/script.js"></script>
 </html>
