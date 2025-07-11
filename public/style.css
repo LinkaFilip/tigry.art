@@ -39,10 +39,12 @@ a {
     text-decoration: none;
     font-family: 'Mandator', sans-serif;
     font-size: 20rem;
+    line-height: 19rem;
 }
 p {
     position: relative;
     top: 6.69%;
     font-size: 2rem;
     font-weight: 800;
+    margin: 0px;
 }
