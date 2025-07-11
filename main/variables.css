@@ -47,3 +47,22 @@ img {
     border-radius: 1.7rem;
     transition: .5s;
 }
+span {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    transform: translate(-5px, 0px);
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+span.dot{
+    display: flex;
+    width: 5px;
+    height: 5px;
+    background-color: #222;
+    border-radius: 50%;
+}
