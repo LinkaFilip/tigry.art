@@ -1,5 +1,5 @@
 :root {
-    --background-color: rgb(5, 10, 24);
+    --background-color: #fdf0d5;
     --border-color: rgb(255, 255, 255, 0.1);
     --highlight-color: rgb(24, 47, 76);
 }
@@ -15,7 +15,7 @@
     box-sizing: border-box;
     user-select: none;
     text-decoration: none;
-    color: white;
+    color: #370617;
 }
 body {
     background-color: var(--background-color);
