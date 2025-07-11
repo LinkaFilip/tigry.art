@@ -1,5 +1,5 @@
 :root {
-    --background-color: #003049;
+    --background-color: #370617;
     --text-color: #fdf0d5;
 }
 @font-face { 
@@ -24,9 +24,25 @@ body {
     margin: 0px;
     overflow-x: hidden;
 }
+.title {
+    display: flex;
+    flex-direction: column;
+}
+.second-row {
+    display: flex;
+    flex-direction: row;
+    height: 352px;
+    width: 100%;
+}
 a {
     color: var(--text-color);
     text-decoration: none;
     font-family: 'Mandator', sans-serif;
-    font-size: 10rem;
+    font-size: 20rem;
+}
+p {
+    position: relative;
+    top: 6.69%;
+    font-size: 2rem;
+    font-weight: 800;
 }
