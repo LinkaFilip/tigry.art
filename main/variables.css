@@ -46,6 +46,9 @@ img {
     margin: 2rem;
     border-radius: 1.7rem;
     transition: .5s;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 span {
     position: relative;
