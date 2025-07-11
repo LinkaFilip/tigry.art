@@ -50,22 +50,44 @@ img {
     align-items: center;
     justify-content: flex-end;
 }
+.menu:hover {
+    height: 21rem;
+    width: 280px;
+    padding-top: 10px;
+    padding-right: 3px;
+}
+.menu {
+    width: 114px;
+    height: 34px;
+    background-color: #ffffff;
+    margin: 2rem;
+    border-radius: 1.7rem;
+    transition: .5s;
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: 1rem;
+    padding-top: 0.6rem;
+    padding-right: 1.2rem;
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(0px, 0px);
+    position: relative;
+    justify-content: space-between;
+}
 span {
     position: relative;
-    width: 20px;
-    height: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    transform: translate(-5px, 0px);
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
+    width: .9rem;
+    height: .9rem;
+    display: inline-block;
 }
 span.dot{
-    display: flex;
-    width: 5px;
-    height: 5px;
     background-color: #222;
     border-radius: 50%;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: inline-block;
 }
