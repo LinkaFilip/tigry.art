@@ -1,6 +1,6 @@
 :root {
-    --background-color: #370617;
-    --text-color: #fdf0d5;
+    --background-color: #fdf0d5;
+    --text-color: #370617;
 }
 @font-face { 
   font-family: "Mandator";
@@ -23,6 +23,7 @@ body {
     height: 100vh;
     margin: 0px;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 .title {
     display: flex;
