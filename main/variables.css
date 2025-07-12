@@ -94,3 +94,30 @@ span.dot{
     width: 100%;
     display: inline-block;
 }
+.menu:hover span.dot.dot1 {
+    translate: none;
+    rotate: none;
+    transform: translate(100%, -50%) rotate(90deg) !important;
+    background: red;
+}
+
+.menu:hover span.dot.dot2 {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(100%, -50%) rotate(90deg) !important;
+}
+
+.menu:hover span.dot.dot3 {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(-100%, -50%) rotate(90deg) !important;
+}
+
+.menu:hover span.dot.dot4 {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(-100%, -50%) rotate(90deg) !important;
+}
