@@ -51,8 +51,8 @@ img {
     justify-content: flex-end;
 }
 .menu:hover {
-    height: 21rem;
-    width: 280px;
+    height: 34px;
+    width: 400px;
     padding-top: 10px;
     padding-right: 3px;
     padding-right: .7rem;
@@ -123,7 +123,11 @@ span.dot{
 nav {
     display: none;
 }
-
+.menu:hover nav {
+    display: flex;
+    width: calc(100% * (1 / 2));
+    justify-content: space-around;
+}
 nav span {
     width: auto;
 }
