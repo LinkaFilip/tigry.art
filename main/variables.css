@@ -120,3 +120,10 @@ span.dot{
     scale: none;
     transform: translate(-100%, -50%) rotate(90deg) !important;
 }
+nav {
+    display: none;
+}
+
+nav span {
+    width: auto;
+}
