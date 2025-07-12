@@ -61,7 +61,7 @@ img {
 .menu {
     width: 114px;
     height: 34px;
-    background-color: #ffffff;
+    background-color: #2f497a;
     margin: 2rem;
     border-radius: 1.7rem;
     transition: .5s;
@@ -98,7 +98,6 @@ span.dot{
     translate: none;
     rotate: none;
     transform: translate(100%, -50%) rotate(90deg) !important;
-    background: red;
 }
 
 .menu:hover span.dot.dot2 {
