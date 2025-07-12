@@ -15,7 +15,7 @@
     box-sizing: border-box;
     user-select: none;
     text-decoration: none;
-    color: #370617;
+    color: black;
 }
 body {
     background-color: var(--background-color);
