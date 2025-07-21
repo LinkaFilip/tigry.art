@@ -3,3 +3,45 @@
 
 [build]
   publish = "main"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+  Content-Type = "text/plain"
+
+[[redirects]]
+  from = "http://www.tigry.art/*"
+  to = "https://tigry.art/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.tigry.art/*"
+  to = "https://tigry.art/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://tigry.art/*"
+  to = "https://tigry.art/:splat"
+  status = 301
+  force = true
+  
+# Přesměrování samotného rootu bez lomítka
+[[redirects]]
+  from = "http://www.tigry.art"
+  to = "https://tigry.art"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://tigry.art"
+  to = "https://tigry.art"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.tigry.art"
+  to = "https://tigry.art"
+  status = 301
+  force = true
