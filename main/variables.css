@@ -4,14 +4,14 @@
     --highlight-color: rgb(24, 47, 76);
 }
 @font-face { 
-  font-family: "Mandator", system-ui, sans-serif;
+  font-family: "Geist", system-ui, sans-serif;
   font-display: swap;
   font-weight: 400;
   src: url(/Geist-Regular.ttf)
 }
 
 * {
-    font-family: 'Mandator', sans-serif;
+    font-family: 'Geist', sans-serif;
     box-sizing: border-box;
     user-select: none;
     text-decoration: none;
