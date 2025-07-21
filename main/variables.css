@@ -1,0 +1,133 @@
+:root {
+    --background-color: #fdf0d5;
+    --border-color: #669bbc;
+    --highlight-color: rgb(24, 47, 76);
+}
+@font-face { 
+  font-family: "Mandator";
+  font-display: swap;
+  font-weight: 400;
+  src: url(/Mandator.woff2)
+}
+
+* {
+    font-family: 'Mandator', sans-serif;
+    box-sizing: border-box;
+    user-select: none;
+    text-decoration: none;
+    color: rgb(226, 226, 226);
+}
+body {
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0px;
+    overflow-x: hidden;
+}
+img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: grayscale(1);
+}
+.menu:hover {
+    height: 21rem;
+    width: 280px;
+}
+.menu {
+    width: 114px;
+    height: 34px;
+    background-color: #ffffff;
+    margin: 2rem;
+    border-radius: 1.7rem;
+    transition: .5s;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.menu:hover {
+    height: 34px;
+    width: 400px;
+    padding-top: 10px;
+    padding-right: 3px;
+    padding-right: .7rem;
+    border-radius: 1.2rem;
+}
+.menu {
+    width: 114px;
+    height: 34px;
+    background-color: #2f497a;
+    margin: 2rem;
+    border-radius: 1.2rem;
+    transition: .5s;
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: 1rem;
+    padding-top: 0.6rem;
+    padding-right: .7rem;
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(0px, 0px);
+    position: relative;
+    justify-content: space-between;
+}
+span {
+    position: relative;
+    width: .9rem;
+    height: .9rem;
+    display: inline-block;
+    transition: .5s;
+}
+span.dot{
+    background-color: #ffffff;
+    border-radius: 50%;
+    height: 70%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 70%;
+    display: inline-block;
+}
+.menu:hover span.dot.dot1 {
+    translate: none;
+    rotate: none;
+    transform: translate(100%, -50%) rotate(90deg) !important;
+}
+
+.menu:hover span.dot.dot2 {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(100%, -50%) rotate(90deg) !important;
+}
+
+.menu:hover span.dot.dot3 {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(-100%, -50%) rotate(90deg) !important;
+}
+
+.menu:hover span.dot.dot4 {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(-100%, -50%) rotate(90deg) !important;
+}
+.menu nav {
+    display: none;
+}
+.menu:hover nav {
+    display: flex;
+    width: calc(100% * (1 / 2));
+    justify-content: space-around;
+}
+nav span {
+    width: auto;
+}
