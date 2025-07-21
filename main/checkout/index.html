@@ -79,6 +79,8 @@ h1 {
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
   max-width: 420px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
@@ -117,21 +119,17 @@ label {
   <div class="checkout-wrapper">
     <h1>Objednávka plakátu – 10 €</h1>
 
-    <label>Číslo karty</label>
     <div id="card-number" class="stripe-input" aria-placeholder="cCrd number"></div>
 
     <div class="card-details-row">
       <div>
-        <label>MM / RR</label>
         <div id="card-expiry" class="stripe-input" aria-placeholder="MM/RR"></div>
       </div>
       <div>
-        <label>CVC</label>
         <div id="card-cvc" class="stripe-input" aria-placeholder="CVC"></div>
       </div>
     </div>
 
-    <label>PSČ</label>
     <input type="text" id="postal-code" class="stripe-text-input" placeholder="PSČ" />
 
     <button id="pay-button" disabled>Zaplatit</button>
