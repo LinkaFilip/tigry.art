@@ -1,4 +1,4 @@
-import { products } from '..posters/products.js';
+import { products } from '../posters/products.js';
 
 const selectedProduct = products.find(p => p.id === 'poster001');
 
