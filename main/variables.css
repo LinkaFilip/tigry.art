@@ -16,6 +16,7 @@
     user-select: none;
     text-decoration: none;
     color: rgb(226, 226, 226);
+    white-space: nowrap;
 }
 body {
     background-color: var(--background-color);
@@ -35,10 +36,6 @@ img {
     z-index: -1;
     filter: grayscale(1);
 }
-.menu:hover {
-    height: 21rem;
-    width: 280px;
-}
 .menu {
     width: 114px;
     height: 34px;
@@ -52,9 +49,8 @@ img {
 }
 .menu:hover {
     height: 34px;
-    width: 400px;
+    width: 270px;
     padding-top: 10px;
-    padding-right: 3px;
     padding-right: .7rem;
     border-radius: 1.2rem;
 }
