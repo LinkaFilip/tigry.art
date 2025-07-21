@@ -4,7 +4,7 @@
     --highlight-color: rgb(24, 47, 76);
 }
 @font-face { 
-  font-family: "Mandator";
+  font-family: "Mandator", system-ui, sans-serif;
   font-display: swap;
   font-weight: 400;
   src: url(/Mandator.woff2)
