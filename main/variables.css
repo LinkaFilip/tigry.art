@@ -121,8 +121,8 @@ span.dot{
 }
 .menu:hover nav {
     display: flex;
-    width: calc(100% * (1 / 2));
-    justify-content: space-around;
+    width: calc(100% * (1 / 1.85));
+    justify-content: space-between;
 }
 nav span {
     width: auto;
