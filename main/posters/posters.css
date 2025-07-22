@@ -1214,16 +1214,16 @@
     }
 }
 
-.FeaturedProductsModule_tileWrapper__GCbpK {
+.FeaturedProductsModule_tileWrapper{
     grid-column: span 2
 }
 
 @media(min-width: 1024px) {
-    .FeaturedProductsModule_tileWrapper__GCbpK {
+    .FeaturedProductsModule_tileWrapper{
         grid-column:span 1
     }
 
-    .FeaturedProductsModule_tileWrapper__GCbpK.FeaturedProductsModule_bigStyle__qSvWE {
+    .FeaturedProductsModule_tileWrapper.FeaturedProductsModule_bigStyle__qSvWE {
         grid-column: span 2
     }
 }
