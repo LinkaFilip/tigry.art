@@ -1224,10 +1224,15 @@
     }
 }
 
-.ProductTile_productTags__JQ_8b {
+.ProductTile_productTags{
     margin-top: 8px
 }
-
+.ProductTags_productTags{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: -8px
+}
 .FeaturedProductsModule_featuredProductsModule {
     display: flex;
     flex-direction: column;
