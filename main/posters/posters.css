@@ -69,6 +69,9 @@
         --layout-margin:32px
     }
 }
+html:not(.dev) {
+    scrollbar-width: none !important;
+}
 .BlurHash_canvas__Le_mo {
     position: absolute;
     top: 0;
