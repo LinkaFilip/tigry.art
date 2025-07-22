@@ -3627,3 +3627,6 @@ span>a {
     grid-template-columns: repeat(var(--layout-columns-count),minmax(0,1fr));
     grid-gap: var(--layout-columns-gap)
 }
+img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fadeIn__yUrY2.lazyautosizes.lazyloaded {
+    filter: none;
+}
