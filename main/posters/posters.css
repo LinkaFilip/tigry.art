@@ -3614,7 +3614,7 @@ svg.icon circle[stroke],svg.icon path[stroke],svg.icon rect[stroke] {
     }
 }
 span>a {
-    color: white;
+    color: var(--grey);
 }
 
 .Section_section__mRxGN.Section_gutter__BS6Ao {
