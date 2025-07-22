@@ -38,7 +38,6 @@ img {
 }
 .menu:hover {
     width: 270px;
-    border-radius: 1.2rem;
 }
 .menu {
     width: 114px;
@@ -104,9 +103,11 @@ span.dot{
     display: none;
 }
 .menu:hover nav {
-    display: flex;
+    position: relative;
+    display: inline-block;
     width: calc(100% * (1 / 1.85));
-    justify-content: space-between;
+    top: 50%;
+    transform: translateY(-50%);
 }
 nav span {
     width: auto;
