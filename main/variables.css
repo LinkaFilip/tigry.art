@@ -36,6 +36,10 @@ img {
     z-index: -1;
     filter: grayscale(1);
 }
+.menu:hover {
+    width: 270px;
+    border-radius: 1.2rem;
+}
 .menu {
     width: 114px;
     height: 34px;
