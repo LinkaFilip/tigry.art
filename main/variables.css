@@ -39,39 +39,19 @@ img {
 .menu {
     width: 114px;
     height: 34px;
-    background-color: #ffffff;
-    margin: 2rem;
-    border-radius: 1.7rem;
-    transition: .5s;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-.menu:hover {
-    height: 34px;
-    width: 270px;
-    padding-top: 10px;
-    padding-right: .7rem;
-    border-radius: 1.2rem;
-}
-.menu {
-    width: 114px;
-    height: 34px;
     background-color: #2f497a;
     margin: 2rem;
     border-radius: 1.2rem;
     transition: .5s;
     display: flex;
     align-items: flex-start;
-    padding-bottom: 1rem;
-    padding-top: 0.6rem;
-    padding-right: .7rem;
     translate: none;
     rotate: none;
     scale: none;
     transform: translate(0px, 0px);
     position: relative;
     justify-content: space-between;
+    padding-right: 7px;
 }
 span {
     position: relative;
@@ -84,9 +64,9 @@ span.dot{
     background-color: #ffffff;
     border-radius: 50%;
     height: 70%;
-    left: 0;
+    left: 25%;
     position: absolute;
-    top: 0;
+    top: 25%;
     width: 70%;
     display: inline-block;
 }
