@@ -1257,7 +1257,10 @@
         font-size:16px
     }
 }
-
+.FeaturedProductSection{
+    padding-left: 34px;
+    padding-right: 34px;
+}
 .ProductPackTile_price__Q3Wke {
     font-size: 12px;
     font-family: ABC Marfa,Helvetica,Arial,sans-serif;
