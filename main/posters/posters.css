@@ -3853,5 +3853,95 @@ svg {
     .Cart_cartContent__TEVzy {
         padding-top: 48px;
         padding-bottom: 224px;
+        display: flex;;
+        flex-direction: column-reverse;
     }
+}
+.LineItems_lineItems__9aSyR{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+.LineItem_lineItem__ZK2EH{
+    color: currentColor;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    position: relative;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+@media (min-width: 1024px) {
+    .LineItem_imageContainer__gDc0v {
+        width: calc(2 * var(--layout-column-width) + (2 - 1) * var(--layout-columns-gap));
+        margin-right: 20px;
+    }
+}
+.LineItem_imageContainer__gDc0v {
+    background-color: var(--grey);
+    width: calc(1.2 * var(--layout-column-width) + (1.2 - 1) * var(--layout-columns-gap));
+    flex-shrink: 0;
+    position: relative;
+    margin-right: 10px;
+}
+.ShopifyImage_shopifyImage__FC9OT {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+.LineItem_lineItemInfo__4tov_ {
+    height: 100%;
+    display: flex;
+    flex: 1 1;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.LineItem_bottomRow__auvwE, .LineItem_topRow__FjuFV {
+    width: 100%;
+}
+.LineItem_top__4SbKk {
+    display: flex;
+    flex-direction: column;
+}
+@media (min-width: 1024px) {
+    .LineItem_title__FgmYr {
+        font-size: calc(12px + (100vw - 1024px) * 4 / 736);
+    }
+}
+.LineItem_title__FgmYr {
+    font-size: 12px;
+    font-family: ABC Marfa, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 140%;
+    text-transform: uppercase;
+    flex: 1 1;
+    display: block;
+}
+.LineItem_totalPrice__KJ57U, .LineItem_displayPrice__knr4Q {
+    display: block;
+}
+.LineItem_variantInfo__6LGBN {
+    display: flex;
+    flex-direction: column;
+}
+.LineItem_productNotes__Jr2UI {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+}
+@media (min-width: 1024px) {
+    .LineItem_productNotes__Jr2UI p {
+        font-size: calc(12px + (100vw - 1024px) * 4 / 736);
+    }
+}
+.LineItem_productNotes__Jr2UI p {
+    font-size: 12px;
+    font-family: "Geist", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 140%;
+    text-transform: uppercase;
+    opacity: .25;
+    display: block;
 }

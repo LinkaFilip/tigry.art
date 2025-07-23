@@ -118,14 +118,31 @@ cart.forEach(item => {
   total += lineTotal;
 
   const div = document.createElement("div");
-  div.className = "Cart_item";
+  div.className = "LineItems_lineItems__9aSyR";
 
   div.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <div>
-        <strong>${item.name}</strong><br>
-        ${quantity} × ${price.toFixed(2)} € = <strong>${lineTotal.toFixed(2)} €</strong>
-      </div>
+  
+<div class="LineItem_lineItem__ZK2EH">
+    <div class="LineItem_imageContainer__gDc0v">
+        <div class="ShopifyImage_shopifyImage__FC9OT" style="padding-top: 125%;">
+            <img>
+        </div>
+    </div>
+    <div class="LineItem_lineItemInfo__4tov_">
+        <div class="LineItem_topRow__FjuFV">
+            <div class="LineItem_top__4SbKk">
+            <span class="LineItem_title__FgmYr">${item.name}</span>
+            <span class="LineItem_totalPrice__KJ57U"><span class="LineItem_displayPrice__knr4Q">A$16.00</span></span>
+        </div>
+        <div class="LineItem_variantInfo__6LGBN"></div>
+    </div>
+    <div class="LineItem_productNotes__Jr2UI"><p>Colour: White speckle</p><p>Envelope: Semi-translucent</p></div>
+    </div>
+</div>
+
+
+
+${quantity} × ${price.toFixed(2)} € = <strong>${lineTotal.toFixed(2)} €</strong>
       <span class="remove-item" data-id="${item.id}" style="cursor: pointer; color: #d00; text-decoration: underline;">Remove item</span>
     </div>
   `;
