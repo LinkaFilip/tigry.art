@@ -101,7 +101,7 @@ function renderCart() {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   if (cart.length === 0) {
-    panel.innerHTML = "<p>Košík je prázdný.</p>";
+    panel.innerHTML = "<p>The cart is empty</p>";
     return;
   }
 
