@@ -1178,7 +1178,9 @@ html:not(.dev) {
 
 .ProductTile_container__OU5uV,.ProductTile_details__hQzW4 {
     display: flex;
-    flex-direction: column
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .ProductTile_details__hQzW4 {
@@ -1205,7 +1207,17 @@ html:not(.dev) {
         font-size:16px
     }
 }
-
+button.add-to-cart {
+    display: flex
+;
+    border: 1px solid black;
+    padding: 1rem;
+    background-color: black;
+    color: white;
+    min-width: 200px;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .ProductTile_price__JoNoT {
     font-size: 12px;
     font-family: ABC Marfa,Helvetica,Arial,sans-serif;
@@ -3719,7 +3731,6 @@ svg {
 .CartIndicator_cartIndicator__VF8UZ {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
 }
 
 @media (min-width: 1024px) {
