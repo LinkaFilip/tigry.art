@@ -27,6 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Toggle cart panel
-    cartPanel.classList.toggle("Cart_open__H1xr_");
+    cartPanel.classList.toggle("Cart_open__Hlx3_");
   });
 });
