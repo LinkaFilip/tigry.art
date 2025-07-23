@@ -153,7 +153,7 @@ cart.forEach(item => {
 });
   const totalDiv = document.createElement("div");
   totalDiv.className = "Cart_total";
-  totalDiv.innerHTML = `<hr><strong>Celkem: ${total.toFixed(2)} €</strong>`;
+  totalDiv.innerHTML = `<hr><strong>Celkem: </strong>`;
   panel.appendChild(totalDiv);
 
 }
@@ -169,7 +169,7 @@ function renderFooter(){
         </div>
         <div class="Cart_detailValue__JJpkB">
         <span class="">
-            <span>$124.00</span>
+            <span>${total.toFixed(2)} €</span>
         </span>
         </div>
     </div>
@@ -180,7 +180,7 @@ function renderFooter(){
     </div>
     <button type="button" class="CheckoutButton_checkoutButton__WVgGK Button_button__OFOdO Button_styled__xGVes">
     <span>Checkout</span>
-    <span>$124.00</span>
+    <span>${total.toFixed(2)} €</span>
     </button>
     `
     const checkout = document.querySelector(".Cart_cartFooter__owP1q");
