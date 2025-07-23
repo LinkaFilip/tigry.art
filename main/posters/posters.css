@@ -3684,6 +3684,7 @@ img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fade
 }
 .CartIndicator_icon__AFivB {
     padding: 10px;
+    padding-right: 0px;
     position: relative;
 }
 @media (min-width: 1024px) {
