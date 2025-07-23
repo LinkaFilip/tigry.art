@@ -137,7 +137,7 @@ cart.forEach(item => {
         <div class="LineItem_variantInfo__6LGBN"></div>
     </div>
     <div class="LineItem_productNotes__Jr2UI"><p>Colour: White speckle</p><p>Envelope: Semi-translucent</p></div>
-    <span class="remove-item" data-id="${item.id}" style="cursor: pointer; color: #d00; text-decoration: underline;">Remove item</span>
+    <span class="remove-item" data-id="${item.id}" style="cursor: pointer; color: #d00; text-decoration: underline; text-transform: uppercase; text-decoration-thickness: 1.5px;">Remove</span>
     </div>
 </div>
   `;
