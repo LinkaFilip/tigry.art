@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function renderCart() {
   const panel = document.querySelector(".Cart_cart__yGsQk");
-  panel.innerHTML = "";
 
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
