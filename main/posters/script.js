@@ -120,7 +120,7 @@ cart.forEach(item => {
   const price = parseFloat(item.price);
   const quantity = item.quantity || 1;
 
-  if (isNaN(price)) return; // 🛡️ zabrání chybě
+  if (isNaN(price)) return;
 
   const lineTotal = price * quantity;
   total += lineTotal;
@@ -156,7 +156,7 @@ cart.forEach(item => {
 
 }
 
-function renderFooter(){
+function renderFooter(total){
     const footer = document.createElement("div");
     footer.className = "Cart_details__GrxzO";
     footer.innerHTML = `
