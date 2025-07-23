@@ -186,5 +186,6 @@ function renderFooter(total){
     </button>
     `
     const checkout = document.querySelector(".Cart_cartFooter__owP1q");
+    checkout.innerHTML = "";
     checkout.appendChild(footer);
 };
