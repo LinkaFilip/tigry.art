@@ -132,19 +132,14 @@ cart.forEach(item => {
         <div class="LineItem_topRow__FjuFV">
             <div class="LineItem_top__4SbKk">
             <span class="LineItem_title__FgmYr">${item.name}</span>
-            <span class="LineItem_totalPrice__KJ57U"><span class="LineItem_displayPrice__knr4Q">A$16.00</span></span>
+            <span class="LineItem_totalPrice__KJ57U"><span class="LineItem_displayPrice__knr4Q"><strong>${lineTotal.toFixed(2)} €</strong></span></span>
         </div>
         <div class="LineItem_variantInfo__6LGBN"></div>
     </div>
     <div class="LineItem_productNotes__Jr2UI"><p>Colour: White speckle</p><p>Envelope: Semi-translucent</p></div>
+    <span class="remove-item" data-id="${item.id}" style="cursor: pointer; color: #d00; text-decoration: underline;">Remove item</span>
     </div>
 </div>
-
-
-
-${quantity} × ${price.toFixed(2)} € = <strong>${lineTotal.toFixed(2)} €</strong>
-      <span class="remove-item" data-id="${item.id}" style="cursor: pointer; color: #d00; text-decoration: underline;">Remove item</span>
-    </div>
   `;
   panel.appendChild(div);
 });

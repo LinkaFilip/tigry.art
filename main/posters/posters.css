@@ -3827,6 +3827,10 @@ svg {
     display: flex;
     flex-direction: column;
 }
+.Section_section__mRxGN.Section_gutter__BS6Ao {
+    padding-left: var(--layout-margin);
+    padding-right: var(--layout-margin);
+}
 .Cart_cartContainer__QEmUs {
     max-height: 100%;
     display: flex;
