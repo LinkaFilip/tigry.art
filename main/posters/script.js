@@ -163,6 +163,7 @@ renderFooter(total);
 function renderFooter(total){
     const footer = document.createElement("div");
     footer.className = "Cart_details__GrxzO";
+    footer.style.display = "block";
     footer.innerHTML = `
     <div class="Cart_detail__9iko0">
         <div class="Cart_detailKey__bNTK_">
