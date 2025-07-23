@@ -52,9 +52,10 @@ img {
     rotate: none;
     scale: none;
     transform: translate(0px, 0px);
-    position: relative;
     justify-content: space-between;
     padding-right: 7px;
+    position: fixed;
+    z-index: 120000;
 }
 span.dot{
     background-color: #ffffff;

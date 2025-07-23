@@ -1254,7 +1254,7 @@ html:not(.dev) {
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: 64px;
+    margin-top: 164px;
     margin-bottom: 64px
 }
 
