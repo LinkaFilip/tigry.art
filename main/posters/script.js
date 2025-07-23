@@ -30,15 +30,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!element || !cartPanel || !panel) return;
 
-  panel.addEventListener("click", function (event) {
-    if (event.target.classList.contains("remove-item")) {
-      const idToRemove = event.target.dataset.id;
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart = cart.filter(item => item.id !== idToRemove);
-      localStorage.setItem("cart", JSON.stringify(cart));
+panel.addEventListener("click", function (event) {
+  if (event.target.classList.contains("remove-item")) {
+    const idToRemove = event.target.dataset.id;
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = cart.filter(item => item.id !== idToRemove);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // 💡 Odsuneme vykreslení na příští „tick“, tím se vyhneme dvojkliku
+    setTimeout(() => {
       renderCart();
-    }
-  });
+    }, 0);
+  }
+});
+
 
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
