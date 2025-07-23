@@ -150,7 +150,8 @@ cart.forEach(item => {
   `;
   panel.appendChild(div);
 });
-
+const checkout = document.querySelector("Cart_cartFooter__owP1q");
+checkout.appendChild(footer);
 const footer = document.createElement("div");
 footer.className = "Cart_details__GrxzO";
 footer.innerHTML = `
