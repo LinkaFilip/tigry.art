@@ -160,7 +160,7 @@ renderFooter(total);
 
 }
 
-function renderFooter(item){
+function renderFooter(total){
     const footer = document.createElement("div");
     footer.className = "Cart_details__GrxzO";
     footer.innerHTML = `
