@@ -103,7 +103,7 @@ function renderCart() {
   panel.innerHTML = "";
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const countDisplay = document.querySelector(".Cart_cartCount__dchXe");
-  const count = panel.childElementCount;
+  const count = document.querySelector(".Cart_cartContent__TEVzy").childElementCount;
 
   countDisplay.textContent = `Cart (${count})`;
 
