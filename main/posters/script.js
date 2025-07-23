@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!element || !cartPanel || !panel) return;
 
-  // 🧹 Připojíme jednorázový listener jen jednou!
   panel.addEventListener("click", function (event) {
     if (event.target.classList.contains("remove-item")) {
       const idToRemove = event.target.dataset.id;
@@ -75,13 +74,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function renderCart() {
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
-
+  panel.innerHTML = "";
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   if (cart.length === 0) {
     panel.innerHTML = "<p>Košík je prázdný.</p>";
     return;
   }
+
 
   let total = 0;
 
