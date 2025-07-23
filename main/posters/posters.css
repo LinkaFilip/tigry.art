@@ -3682,3 +3682,9 @@ img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fade
     padding-top: var(--layout-margin);
     padding-bottom: var(--layout-margin);
 }
+.CartIndicator_icon__AFivB {
+    display: block;
+    padding: 10px;
+    margin: -10px;
+    position: relative;
+}
