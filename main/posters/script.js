@@ -1,11 +1,12 @@
-var elementIsClicked = false; // declare the variable that tracks the state
 document.addEventListener("DOMContentLoaded", function () {
-  const element = document.querySelector(".CartIndicator_icon__AFivB");
-  if (element) {
-    element.addEventListener('click', clickHandler);
-  }
-});
+  const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
+  if (!element) return;
 
-function clickHandler() {
-  this.classList.toggle("CartIndicator_closeBtn___fEN6");
-}
+  element.addEventListener('click', () => {
+    if (element.classList.contains("CartIndicator_closeBtn___fEN6")) {
+      element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
+    } else {
+      element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
+    }
+  });
+});
