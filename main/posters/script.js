@@ -40,10 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
-  const countDisplay = document.querySelector(".Cart_cartCount__dchXe");
-  panel.innerHTML = "";
-  const count = panel.childElementCount;
-  countDisplay.textContent = `Cart (${count})`;
+
 
 
   cartPanel.classList.remove("Cart_open__Hlx3_");
@@ -159,12 +156,12 @@ cart.forEach(item => {
   `;
   panel.appendChild(div);
 });
-renderFooter(total);
+renderFooter(total, quantity);
 
 
 }
 
-function renderFooter(total){
+function renderFooter(total, quantity){
     const footer = document.createElement("div");
     footer.className = "Cart_details__GrxzO";
     document.querySelector(".Cart_cartFooter__owP1q").style.display = "block";
@@ -190,6 +187,10 @@ function renderFooter(total){
     <span>${total.toFixed(2)} €</span>
     </button>
     `
+    const countDisplay = document.querySelector(".Cart_cartCount__dchXe");
+    countDisplay.innerHTML = "";
+    countDisplay.textContent = `Cart (${quantity})`;
+
     const checkout = document.querySelector(".Cart_cartFooter__owP1q");
     checkout.innerHTML = "";
     checkout.appendChild(footer);
