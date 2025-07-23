@@ -5,6 +5,7 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
       name: button.dataset.name,
       price: parseFloat(button.dataset.price),
     };
+    console.log("the product has been added to the cart");
     addToCart(product);
   });
 });
