@@ -103,9 +103,10 @@ function renderCart() {
   panel.innerHTML = "";
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const countDisplay = document.querySelector(".Cart_cartCount__dchXe");
-  panel.innerHTML = "";
   const count = panel.childElementCount;
+
   countDisplay.textContent = `Cart (${count})`;
+
   if (cart.length === 0) {
     panel.innerHTML = "<p>The cart is empty</p>";
     return;
