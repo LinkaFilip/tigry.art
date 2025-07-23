@@ -3810,3 +3810,17 @@ svg {
     pointer-events: auto;
     padding-top: calc(54px);
 }
+.Cart_innerContainer__ElGMp {
+    max-height: 100%;
+    flex: 1 1;
+    display: flex;
+    flex-direction: column;
+}
+.Cart_cartContainer__QEmUs {
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+    padding: var(--layout-margin);
+    position: relative;
+}
