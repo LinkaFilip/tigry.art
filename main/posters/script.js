@@ -174,7 +174,7 @@ footer.innerHTML = `
   <span>$124.00</span>
 </button>
 `
-const checkout = document.querySelector("Cart_cartFooter__owP1q");
+const checkout = document.querySelector(".Cart_cartFooter__owP1q");
 checkout.appendChild(footer);
   const totalDiv = document.createElement("div");
   totalDiv.className = "Cart_total";
