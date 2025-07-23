@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   svg.setAttribute("viewBox", "0 0 24 24");
 
   const crossPath = `<path stroke="currentColor" stroke-width="2" d="M6 6L18 18M6 18L18 6"/>`;
-  const originalPath = `<path stroke="currentColor" stroke-width="1.5" d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z"/>`;
+  const originalPath = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18"><g clip-path="url(#a)"><path stroke="currentColor" stroke-width="1.5" d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z"></path></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h18v18H0z"></path></clipPath></defs></svg>`;
 
   svg.innerHTML = originalPath;
   element.appendChild(svg);
