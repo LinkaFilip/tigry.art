@@ -110,6 +110,7 @@ function renderCart() {
 
   if (cart.length === 0) {
     panel.innerHTML = "<p>The cart is empty</p>";
+    renderFooter(0);
     return;
   }
 
@@ -128,8 +129,7 @@ cart.forEach(item => {
   const div = document.createElement("div");
   div.className = "LineItems_lineItems__9aSyR";
 
-  div.innerHTML = `
-  
+  div.innerHTML = `  
 <div class="LineItem_lineItem__ZK2EH">
     <div class="LineItem_imageContainer__gDc0v">
         <div class="ShopifyImage_shopifyImage__FC9OT" style="padding-top: 125%;">
