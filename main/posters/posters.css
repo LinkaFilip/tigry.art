@@ -3630,3 +3630,13 @@ span>a {
 img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fadeIn__yUrY2.lazyautosizes.lazyloaded {
     filter: none;
 }
+@media (min-width: 1024px) {
+    .Header_header{
+        height: auto;
+    }
+}
+.Header_header {
+    width: 100%;
+    display: flex;
+    color: var(--black);
+}
