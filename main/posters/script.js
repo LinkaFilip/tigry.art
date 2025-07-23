@@ -1,11 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
   const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
+  const panel = document.querySelector(".Cart_cartContent__TEVzy");
+
   cartPanel.classList.remove("Cart_open__Hlx3_");
   element.classList.remove("CartIndicator_closeBtn___fEN6");
   element.classList.add("CartIndicator_icon__AFivB");
 
-  if (!element || !cartPanel) return;
+  if (!element || !cartPanel || !panel) return;
+
+  // 🧹 Připojíme jednorázový listener jen jednou!
+  panel.addEventListener("click", function (event) {
+    if (event.target.classList.contains("remove-item")) {
+      const idToRemove = event.target.dataset.id;
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart = cart.filter(item => item.id !== idToRemove);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+  });
+
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("width", "24");
@@ -72,15 +86,5 @@ function renderCart() {
   totalDiv.className = "Cart_total";
   totalDiv.innerHTML = `<hr><strong>Celkem: ${total.toFixed(2)} €</strong>`;
   panel.appendChild(totalDiv);
-
-    panel.addEventListener("click", function (event) {
-    if (event.target.classList.contains("remove-item")) {
-        const idToRemove = event.target.dataset.id;
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart = cart.filter(item => item.id !== idToRemove);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        renderCart();
-    }
-    });
 
 }
