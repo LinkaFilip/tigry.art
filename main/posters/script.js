@@ -159,7 +159,7 @@ renderFooter(total);
 function renderFooter(total){
     const footer = document.createElement("div");
     footer.className = "Cart_details__GrxzO";
-    footer.style.display = "block";
+    document.querySelector(".Cart_cartFooter__owP1q").style.display = "block";
     footer.innerHTML = `
     <div class="Cart_detail__9iko0">
         <div class="Cart_detailKey__bNTK_">
@@ -186,7 +186,3 @@ function renderFooter(total){
     checkout.innerHTML = "";
     checkout.appendChild(footer);
 };
-const footer = document.querySelector(".Cart_details__GrxzO");
-if (footer) {
-  footer.style.display = "block";
-}
