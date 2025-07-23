@@ -56,12 +56,6 @@ img {
     justify-content: space-between;
     padding-right: 7px;
 }
-span {
-    position: relative;
-    width: .9rem;
-    display: inline-block;
-    transition: .5s;
-}
 span.dot{
     background-color: #ffffff;
     border-radius: 50%;
