@@ -150,8 +150,6 @@ cart.forEach(item => {
   `;
   panel.appendChild(div);
 });
-const checkout = document.querySelector("Cart_cartFooter__owP1q");
-checkout.appendChild(footer);
 const footer = document.createElement("div");
 footer.className = "Cart_details__GrxzO";
 footer.innerHTML = `
@@ -176,6 +174,8 @@ footer.innerHTML = `
   <span>$124.00</span>
 </button>
 `
+const checkout = document.querySelector("Cart_cartFooter__owP1q");
+checkout.appendChild(footer);
   const totalDiv = document.createElement("div");
   totalDiv.className = "Cart_total";
   totalDiv.innerHTML = `<hr><strong>Celkem: ${total.toFixed(2)} €</strong>`;
