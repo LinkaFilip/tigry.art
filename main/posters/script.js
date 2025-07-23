@@ -1,6 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
+  cartPanel.classList.remove("Cart_open__Hlx3_");
+  element.classList.remove("CartIndicator_closeBtn___fEN6");
+  element.classList.add("CartIndicator_icon__AFivB");
+  svg.innerHTML = originalPath;
+
   if (!element || !cartPanel) return;
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
