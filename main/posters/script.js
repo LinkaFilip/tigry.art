@@ -39,7 +39,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
+  const countDisplay = document.querySelector(".Cart_cartCount__dchXe");
   panel.innerHTML = "";
+  const count = panel.childElementCount;
+  countDisplay.textContent = `Cart (${count})`;
 
 
   cartPanel.classList.remove("Cart_open__Hlx3_");
@@ -99,7 +102,10 @@ function renderCart() {
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
   panel.innerHTML = "";
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+  const countDisplay = document.querySelector(".Cart_cartCount__dchXe");
+  panel.innerHTML = "";
+  const count = panel.childElementCount;
+  countDisplay.textContent = `Cart (${count})`;
   if (cart.length === 0) {
     panel.innerHTML = "<p>The cart is empty</p>";
     return;

@@ -1208,9 +1208,8 @@ html:not(.dev) {
     }
 }
 button.add-to-cart {
-    display: flex
-;
-    border: 1px solid black;
+    display: flex;
+    border: 2px solid black;
     padding: 1rem;
     background-color: black;
     color: white;
