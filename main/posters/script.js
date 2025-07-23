@@ -124,18 +124,15 @@ let total = 0;
 let itemCount = 0;
 
 cart.forEach(item => {
-  const price = parseFloat(item.price);
-
-  if (isNaN(price)) return;
-
-  total += lineTotal;
-  
-
 
 const quantity = item.quantity || 1;
-const lineTotal = price * quantity;
+const price = parseFloat(item.price);
 
+if (isNaN(price)) return;
+
+const lineTotal = price * quantity; // ✅ teď lineTotal existuje
 total += lineTotal;
+
 itemCount += quantity;
 
 
