@@ -3778,7 +3778,7 @@ svg {
         width: calc(4 * var(--layout-column-width) + (4 - 1) * var(--layout-columns-gap) + 2 * var(--layout-margin));
     }
 }
-.Cart_cart__yGsQk {
+.Cart_cart__yGsQk{
     display: flex;
     flex-direction: column;
     z-index: 10000;
