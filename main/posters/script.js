@@ -153,10 +153,11 @@ cart.forEach(item => {
 });
 
   panel.appendChild(totalDiv);
+renderFooter(total);
 
 }
 
-function renderFooter(total){
+function renderFooter(){
     const footer = document.createElement("div");
     footer.className = "Cart_details__GrxzO";
     footer.innerHTML = `
