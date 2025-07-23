@@ -3833,3 +3833,7 @@ svg {
     display: flex;
     margin-bottom: 8px;
 }
+.Cart_open__Hlx3_ {
+    transform: translate(0px, 0px) !important;
+    transition: 1S;
+}
