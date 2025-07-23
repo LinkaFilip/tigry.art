@@ -3685,6 +3685,7 @@ img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fade
 .CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6 {
     padding: 10px;
     padding-right: 0px;
+    padding-top: 0px;
     position: relative;
 }
 @media (min-width: 1024px) {
@@ -3718,7 +3719,7 @@ svg {
 .CartIndicator_cartIndicator__VF8UZ {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
 }
 
 @media (min-width: 1024px) {
