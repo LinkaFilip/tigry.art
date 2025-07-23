@@ -151,8 +151,6 @@ cart.forEach(item => {
   `;
   panel.appendChild(div);
 });
-
-  panel.appendChild(totalDiv);
 renderFooter(total);
 
 }
