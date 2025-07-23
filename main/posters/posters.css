@@ -3688,3 +3688,17 @@ img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fade
     margin: -10px;
     position: relative;
 }
+@media (min-width: 1024px) {
+    .CartIndicator_label__KOYQo {
+        font-size: calc(14px + (100vw - 1024px) * 6 / 736);
+    }
+}
+.CartIndicator_label__KOYQo {
+    font-size: 14px;
+    font-family: ABC Marfa, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 110%;
+    display: block;
+    margin-right: 12px;
+}
