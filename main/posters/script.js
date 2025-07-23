@@ -33,17 +33,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Toggle cart panel
     cartPanel.classList.toggle("Cart_open__Hlx3_");
+    renderCart();
+
   });
 });
 
 function renderCart() {
   const panel = document.querySelector(".Cart_cartContainer__QEmUs");
   panel.innerHTML = "";
+
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  if (cart.length === 0) {
+    panel.innerHTML = "<p>Košík je prázdný.</p>";
+    return;
+  }
 
   cart.forEach(item => {
     const div = document.createElement("div");
-    div.innerText = `${item.name} – ${item.quantity} × ${item.price} €`;
+    div.className = "cart-item";
+    div.innerHTML = `
+      <strong>${item.name}</strong><br>
+      ${item.quantity} × ${item.price.toFixed(2)} € = ${(item.quantity * item.price).toFixed(2)} €
+    `;
     panel.appendChild(div);
   });
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalDiv = document.createElement("div");
+  totalDiv.className = "cart-total";
+  totalDiv.innerHTML = `<hr><strong>Celkem: ${total.toFixed(2)} €</strong>`;
+  panel.appendChild(totalDiv);
 }
