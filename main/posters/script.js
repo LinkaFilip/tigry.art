@@ -36,6 +36,7 @@ function addToCart(product) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  renderFooter();
   const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
@@ -157,31 +158,31 @@ cart.forEach(item => {
 
 }
 
-
-const footer = document.createElement("div");
-footer.className = "Cart_details__GrxzO";
-footer.innerHTML = `
-  <div class="Cart_detail__9iko0">
-    <div class="Cart_detailKey__bNTK_">
-      <span>Subtotal</span>
-      <span class="Cart_itemCount__FrJbS Cart_greyText__LM8q6"> (1 items)</span>
+function renderFooter(){
+    const footer = document.createElement("div");
+    footer.className = "Cart_details__GrxzO";
+    footer.innerHTML = `
+    <div class="Cart_detail__9iko0">
+        <div class="Cart_detailKey__bNTK_">
+        <span>Subtotal</span>
+        <span class="Cart_itemCount__FrJbS Cart_greyText__LM8q6"> (1 items)</span>
+        </div>
+        <div class="Cart_detailValue__JJpkB">
+        <span class="">
+            <span>$124.00</span>
+        </span>
+        </div>
     </div>
-    <div class="Cart_detailValue__JJpkB">
-      <span class="">
-        <span>$124.00</span>
-      </span>
+    <div class="Cart_detail__9iko0">
+        <div class="Cart_detailKey__bNTK_">Shipping</div>
+        <div class="Cart_detailValue__JJpkB Cart_greyText__LM8q6">Free Standard Shipping</div>
     </div>
-  </div>
-  <div class="Cart_detail__9iko0">
-    <div class="Cart_detailKey__bNTK_">Shipping</div>
-    <div class="Cart_detailValue__JJpkB Cart_greyText__LM8q6">Free Standard Shipping</div>
-  </div>
-</div>
-<button type="button" class="CheckoutButton_checkoutButton__WVgGK Button_button__OFOdO Button_styled__xGVes">
-  <span>Checkout</span>
-  <span>$124.00</span>
-</button>
-`
-const checkout = document.querySelector(".Cart_cartFooter__owP1q");
-checkout.appendChild(footer);
-
+    </div>
+    <button type="button" class="CheckoutButton_checkoutButton__WVgGK Button_button__OFOdO Button_styled__xGVes">
+    <span>Checkout</span>
+    <span>$124.00</span>
+    </button>
+    `
+    const checkout = document.querySelector(".Cart_cartFooter__owP1q");
+    checkout.appendChild(footer);
+};
