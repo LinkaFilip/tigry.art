@@ -3824,3 +3824,13 @@ svg {
     padding: var(--layout-margin);
     position: relative;
 }
+.Cart_cartHeader__JYuum {
+    font-size: 14px;
+    font-family: ABC Marfa, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 100%;
+    text-transform: uppercase;
+    display: flex;
+    margin-bottom: 8px;
+}
