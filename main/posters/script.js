@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   cartPanel.classList.remove("Cart_open__Hlx3_");
   element.classList.remove("CartIndicator_closeBtn___fEN6");
   element.classList.add("CartIndicator_icon__AFivB");
-  svg.innerHTML = originalPath;
 
   if (!element || !cartPanel) return;
 
