@@ -73,14 +73,14 @@ function renderCart() {
   totalDiv.innerHTML = `<hr><strong>Celkem: ${total.toFixed(2)} €</strong>`;
   panel.appendChild(totalDiv);
 
-  // 🧹 Odebrání položky na kliknutí
-  document.querySelectorAll(".remove-item").forEach(elem => {
-    elem.addEventListener("click", () => {
-      const idToRemove = elem.dataset.id;
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart = cart.filter(item => item.id !== idToRemove);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      renderCart();
+    panel.addEventListener("click", function (event) {
+    if (event.target.classList.contains("remove-item")) {
+        const idToRemove = event.target.dataset.id;
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart = cart.filter(item => item.id !== idToRemove);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+    }
     });
-  });
+
 }
