@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
+  panel.innerHTML = "";
+
 
   cartPanel.classList.remove("Cart_open__Hlx3_");
   element.classList.remove("CartIndicator_closeBtn___fEN6");
