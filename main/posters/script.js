@@ -30,19 +30,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!element || !cartPanel || !panel) return;
 
-panel.addEventListener("click", function (event) {
-  if (event.target.classList.contains("remove-item")) {
-    const idToRemove = event.target.dataset.id;
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart = cart.filter(item => item.id !== idToRemove);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    panel.addEventListener("click", function (event) {
+    if (event.target.classList.contains("remove-item")) {
+        event.stopPropagation(); // 🛑 Zastaví šíření kliknutí nahoru
+        event.preventDefault();  // 🛡 Pro jistotu, pokud by tam byl <a> nebo form
 
-    // 💡 Odsuneme vykreslení na příští „tick“, tím se vyhneme dvojkliku
-    setTimeout(() => {
-      renderCart();
-    }, 0);
-  }
-});
+        const idToRemove = event.target.dataset.id;
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart = cart.filter(item => item.id !== idToRemove);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+    }
+    });
+
 
 
 
