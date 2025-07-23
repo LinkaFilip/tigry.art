@@ -9,6 +9,11 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
   });
 });
 function addToCart(product) {
+  if (!product.id || !product.name || isNaN(product.price)) {
+    console.warn("Neplatný produkt:", product);
+    return; // 🛡️ Nepřidávat neplatné položky
+  }
+
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   const existing = cart.find(item => item.id === product.id);
