@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const element = document.querySelector(".Header_cartIndicator__ti8f6, .CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
+  const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
   if (!element) return;
 
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
