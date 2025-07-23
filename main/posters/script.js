@@ -110,7 +110,7 @@ function renderCart() {
 
   if (cart.length === 0) {
     panel.innerHTML = "<p>The cart is empty</p>";
-    renderFooter(0);
+    document.querySelector(".Cart_cartFooter__owP1q").style.display = "none";
     return;
   }
 
