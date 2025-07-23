@@ -1,3 +1,13 @@
+document.querySelectorAll(".add-to-cart").forEach(button => {
+  button.addEventListener("click", () => {
+    const product = {
+      id: button.dataset.id,
+      name: button.dataset.name,
+      price: parseFloat(button.dataset.price),
+    };
+    addToCart(product);
+  });
+});
 function addToCart(product) {
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -114,3 +124,4 @@ function renderCart() {
   panel.appendChild(totalDiv);
 
 }
+
