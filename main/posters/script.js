@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function renderCart() {
-  const panel = document.querySelector(".Cart_cart__yGsQk");
+  const panel = document.querySelector(".Cart_cartContent__TEVzy");
 
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
