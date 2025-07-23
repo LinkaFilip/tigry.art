@@ -190,3 +190,7 @@ function renderFooter(total){
     checkout.innerHTML = "";
     checkout.appendChild(footer);
 };
+const footer = document.querySelector(".Cart_details__GrxzO");
+if (footer) {
+  footer.style.display = "block";
+}
