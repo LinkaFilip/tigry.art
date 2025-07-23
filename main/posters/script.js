@@ -7,5 +7,5 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function clickHandler() {
-  element.classList.toggle("CartIndicator_closeBtn___fEN6");
+  this.classList.toggle("CartIndicator_closeBtn___fEN6");
 }
