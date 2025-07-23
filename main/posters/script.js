@@ -35,3 +35,15 @@ document.addEventListener("DOMContentLoaded", function () {
     cartPanel.classList.toggle("Cart_open__Hlx3_");
   });
 });
+
+function renderCart() {
+  const panel = document.querySelector(".Cart_cartContainer__QEmUs");
+  panel.innerHTML = "";
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.forEach(item => {
+    const div = document.createElement("div");
+    div.innerText = `${item.name} – ${item.quantity} × ${item.price} €`;
+    panel.appendChild(div);
+  });
+}

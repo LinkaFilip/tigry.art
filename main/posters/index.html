@@ -148,7 +148,9 @@
               </div>
               <div class="ProductTile_details__hQzW4">
                 <h3 class="ProductTile_title__ERaXV">Mexico – poster</h3>
-                <div class="ProductTile_price__JoNoT">$10.00</div>
+                <button class="add-to-cart" data-id="mexico" data-name="Mexico – poster" data-price="10.00">Add to cart
+                  <div class="ProductTile_price__JoNoT">$10.00</div>
+                </button>
               </div>
             </a>
             <div class="ProductTile_productTags ProductTags_productTags">
@@ -188,7 +190,9 @@
               </div>
               <div class="ProductTile_details__hQzW4">
                 <h3 class="ProductTile_title__ERaXV">Czechia – poster</h3>
-                <div class="ProductTile_price__JoNoT">$10.00</div>
+                <button class="add-to-cart" data-id="czechia" data-name="Czechia – poster" data-price="10.00">Add to cart
+                  <div class="ProductTile_price__JoNoT">$10.00</div>
+                </button>
               </div>
             </a>
             <div class="ProductTile_productTags ProductTags_productTags">
@@ -228,7 +232,9 @@
               </div>
               <div class="ProductTile_details__hQzW4">
                 <h3 class="ProductTile_title__ERaXV">Middle East – poster</h3>
-                <div class="ProductTile_price__JoNoT">$10.00</div>
+                <button class="add-to-cart" data-id="middle-east" data-name="Middle east – poster" data-price="10.00">Add to cart
+                  <div class="ProductTile_price__JoNoT">$10.00</div>
+                </button>
               </div>
             </a>
             <div class="ProductTile_productTags ProductTags_productTags">
@@ -268,7 +274,9 @@
               </div>
               <div class="ProductTile_details__hQzW4">
                 <h3 class="ProductTile_title__ERaXV">Uganda – poster</h3>
-                <div class="ProductTile_price__JoNoT">$10.00</div>
+                <button class="add-to-cart" data-id="uganda" data-name="Uganda – poster" data-price="10.00">Add to cart
+                  <div class="ProductTile_price__JoNoT">$10.00</div>
+                </button>
               </div>
             </a>
             <div class="ProductTile_productTags ProductTags_productTags">
@@ -307,4 +315,38 @@
       </section>
     </main>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const buttons = document.querySelectorAll(".add-to-cart");
+
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          const product = {
+            id: button.dataset.id,
+            name: button.dataset.name,
+            price: parseFloat(button.dataset.price),
+            quantity: 1
+          };
+
+          // Získáme stávající košík
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+          // Zkontrolujeme, jestli už produkt v košíku je
+          const existing = cart.find(item => item.id === product.id);
+          if (existing) {
+            existing.quantity += 1;
+          } else {
+            cart.push(product);
+          }
+
+          // Uložíme zpět do localStorage
+          localStorage.setItem("cart", JSON.stringify(cart));
+
+          // Volitelná vizuální reakce:
+          alert(`${product.name} byl přidán do košíku!`);
+        });
+      });
+    });
+
+  </script>
 </html>
