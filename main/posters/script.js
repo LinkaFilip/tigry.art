@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", () => {
 document.querySelectorAll(".add-to-cart").forEach(button => {
   button.addEventListener("click", () => {
     const product = {
@@ -8,6 +9,7 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
     console.log("the product has been added to the cart");
     addToCart(product);
   });
+});
 });
 function addToCart(product) {
   if (!product.id || !product.name || isNaN(product.price)) {
