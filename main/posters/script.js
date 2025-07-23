@@ -87,9 +87,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (element.classList.contains("CartIndicator_closeBtn___fEN6")) {
       element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
       svg.innerHTML = originalPath;
+      document.querySelector(".Overlay_overlay__hwjQ3").style.opacity = "1";
+      document.querySelector(".Overlay_overlay__hwjQ3").style.visibility = "inherit";
+      document.querySelector(".Overlay_overlay__hwjQ3").style.pointerEvents = "auto";
     } else {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       svg.innerHTML = crossPath;
+      document.querySelector(".Overlay_overlay__hwjQ3").style.opacity = "0";
+      document.querySelector(".Overlay_overlay__hwjQ3").style.visibility = "hidden";
+      document.querySelector(".Overlay_overlay__hwjQ3").style.pointerEvents = "none";
     }
 
     // Toggle cart panel
