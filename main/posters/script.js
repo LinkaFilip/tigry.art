@@ -100,28 +100,30 @@ function renderCart() {
 
   let total = 0;
 
-  cart.forEach(item => {
-    const price = parseFloat(item.price);
-    const quantity = item.quantity || 1;
+cart.forEach(item => {
+  const price = parseFloat(item.price);
+  const quantity = item.quantity || 1;
 
-    const lineTotal = price * quantity;
-    total += lineTotal;
+  if (isNaN(price)) return; // 🛡️ zabrání chybě
 
+  const lineTotal = price * quantity;
+  total += lineTotal;
 
-    const div = document.createElement("div");
-    div.className = "Cart_item";
+  const div = document.createElement("div");
+  div.className = "Cart_item";
 
-    div.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <strong>${item.name}</strong><br>
-          ${item.quantity} × ${item.price.toFixed(2)} € = <strong>${(item.price * item.quantity).toFixed(2)} €</strong>
-        </div>
-        <span class="remove-item" data-id="${item.id}" style="cursor: pointer; color: #d00; text-decoration: underline;">Remove item</span>
+  div.innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <strong>${item.name}</strong><br>
+        ${quantity} × ${price.toFixed(2)} € = <strong>${lineTotal.toFixed(2)} €</strong>
       </div>
-    `;
-    panel.appendChild(div);
-  });
+      <span class="remove-item" data-id="${item.id}" style="cursor: pointer; color: #d00; text-decoration: underline;">Remove item</span>
+    </div>
+  `;
+  panel.appendChild(div);
+});
+
 
   const totalDiv = document.createElement("div");
   totalDiv.className = "Cart_total";
