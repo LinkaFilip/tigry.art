@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   svg.setAttribute("viewBox", "0 0 24 24");
 
   // Křížek
-  const crossPath = `<path stroke="currentColor" stroke-width="2" d="M6 6L18 18M18 6L6 18" />`;
+  const crossPath = `<svg fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"></path></svg>`;
 
   // Tvoje vlastní ikona
   const originalPath = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
