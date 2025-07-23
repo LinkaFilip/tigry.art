@@ -36,7 +36,6 @@ function addToCart(product) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  renderFooter();
   const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
@@ -157,7 +156,7 @@ renderFooter(total);
 
 }
 
-function renderFooter(){
+function renderFooter(item){
     const footer = document.createElement("div");
     footer.className = "Cart_details__GrxzO";
     footer.innerHTML = `
