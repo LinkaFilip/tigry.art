@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+renderCart();
 document.querySelectorAll(".add-to-cart").forEach(button => {
   button.addEventListener("click", () => {
     const product = {
