@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function renderCart() {
-  const panel = document.querySelector(".Cart_cartContainer__QEmUs");
+  const panel = document.querySelector(".Cart_cart__yGsQk");
   panel.innerHTML = "";
 
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -49,19 +49,39 @@ function renderCart() {
     return;
   }
 
+  let total = 0;
+
   cart.forEach(item => {
+    total += item.price * item.quantity;
+
     const div = document.createElement("div");
-    div.className = "cart-item";
+    div.className = "Cart_item";
+
     div.innerHTML = `
-      <strong>${item.name}</strong><br>
-      ${item.quantity} × ${item.price.toFixed(2)} € = ${(item.quantity * item.price).toFixed(2)} €
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <strong>${item.name}</strong><br>
+          ${item.quantity} × ${item.price.toFixed(2)} € = <strong>${(item.price * item.quantity).toFixed(2)} €</strong>
+        </div>
+        <span class="remove-item" data-id="${item.id}" style="cursor: pointer; color: #d00; text-decoration: underline;">Remove item</span>
+      </div>
     `;
     panel.appendChild(div);
   });
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalDiv = document.createElement("div");
-  totalDiv.className = "cart-total";
+  totalDiv.className = "Cart_total";
   totalDiv.innerHTML = `<hr><strong>Celkem: ${total.toFixed(2)} €</strong>`;
   panel.appendChild(totalDiv);
+
+  // 🧹 Odebrání položky na kliknutí
+  document.querySelectorAll(".remove-item").forEach(elem => {
+    elem.addEventListener("click", () => {
+      const idToRemove = elem.dataset.id;
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart = cart.filter(item => item.id !== idToRemove);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    });
+  });
 }
