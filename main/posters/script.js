@@ -151,6 +151,10 @@ cart.forEach(item => {
   `;
   panel.appendChild(div);
 });
+const totalDiv = document.createElement("div");
+totalDiv.className = "Cart_total";
+totalDiv.innerHTML = `<hr><strong>Celkem: ${total.toFixed(2)} €</strong>`;
+  panel.appendChild(totalDiv);
 renderFooter(total);
 
 }
