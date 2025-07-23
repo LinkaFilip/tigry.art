@@ -3849,3 +3849,9 @@ svg {
     transform: translate(0px, 0px) !important;
     transition: 1S;
 }
+@media (min-width: 1024px) {
+    .Cart_cartContent__TEVzy {
+        padding-top: 48px;
+        padding-bottom: 224px;
+    }
+}
