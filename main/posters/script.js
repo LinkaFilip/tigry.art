@@ -101,7 +101,12 @@ function renderCart() {
   let total = 0;
 
   cart.forEach(item => {
-    total += item.price * item.quantity;
+    const price = parseFloat(item.price);
+    const quantity = item.quantity || 1;
+
+    const lineTotal = price * quantity;
+    total += lineTotal;
+
 
     const div = document.createElement("div");
     div.className = "Cart_item";
