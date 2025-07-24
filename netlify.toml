@@ -1,25 +1,20 @@
 [functions]
   node_bundler = "esbuild"
   directory = "netlify/functions"
-  
+
+  # konfigurace pro webhook funkci
   [functions."stripe-webhook"]
   external_node_modules = ["stripe"]
   included_files = ["functions/stripe-webhook.js"]
 
 [dev]
-  # To prevent Netlify dev zpracování těla
-  # Tento blok zakáže JSON parsing těla a nechá ho jako raw
-  # (Tato možnost není vždy oficiálně dokumentovaná a může se měnit)
+  # pokud funguje, tak toto zakáže JSON parsing pro stripe-webhook
   functions = { "stripe-webhook" = { "skip_payload_parsing" = true } }
 
 [build]
   command = "npm install"
   publish = "main"
   functions = "netlify/functions"
-
-[functions."stripe-webhook"]
-  external_node_modules = ["stripe"]
-  included_files = ["functions/stripe-webhook.js"]
 
 [[headers]]
   for = "/robots.txt"
@@ -43,8 +38,7 @@
   to = "https://tigry.art/:splat"
   status = 301
   force = true
-  
-# Přesměrování samotného rootu bez lomítka
+
 [[redirects]]
   from = "http://www.tigry.art"
   to = "https://tigry.art"
