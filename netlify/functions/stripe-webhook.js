@@ -3,7 +3,13 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 exports.handler = async (event, context) => {
   const sig = event.headers['stripe-signature'] || event.headers['Stripe-Signature'];
-
+  console.log('typeof event.body:', typeof event.body);
+  if (typeof event.body === 'object') {
+    // To znamená, že je již parsed JSON - potřebujeme původní raw string, 
+    // bohužel Stripe to takhle nefunguje
+    // Můžeš zkusit přepřipravit raw body jako string, ale není to spolehlivé
+    event.body = JSON.stringify(event.body);
+  }
   let eventStripe;
   try {
     eventStripe = stripe.webhooks.constructEvent(event.body, sig, endpointSecret);
