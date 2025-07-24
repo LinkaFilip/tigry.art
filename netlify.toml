@@ -1,12 +1,15 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  node_options = ["--experimental-fetch"]
+  
+  [functions.node_options]
+  external_node_modules = ["stripe"]
 
 [build]
   command = "npm install"
   publish = "main"
   functions = "netlify/functions"
+
 [functions."stripe-webhook"]
   external_node_modules = ["stripe"]
   included_files = ["functions/stripe-webhook.js"]
