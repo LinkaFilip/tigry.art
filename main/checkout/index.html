@@ -139,24 +139,29 @@ label {
 
 
 
-  <script type="module">
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+<script type="module">
+(async () => {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
   console.log(cart.length);
-    if (!cart.length) {
-      alert('Košík je prázdný!');
-    } else {
-      const product = cart[0];
-      const { id, quantity } = product;
 
-      const response = await fetch('/.netlify/functions/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: 1000 })
-      });
+  const payButton = document.getElementById('pay-button');
+  const paymentMessage = document.getElementById('payment-message');
+  const postalInput = document.getElementById('postal-code');
 
+  if (!cart.length) {
+    alert('Košík je prázdný!');
+    payButton.disabled = true;
+    return; // skončíme, protože není co platit
+  }
+
+  const response = await fetch('/.netlify/functions/create-payment-intent', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ amount: 1000 })
+  });
   const data = await response.json();
-    const stripe = Stripe('pk_live_51LpXXlEqK4P4Y8FRmvpDyFPIhKGiJCVCgYE1gMsYK6C7mjzJvFK8PAQlN9coFjtGeKuvVMAMO4iKHePrFRwNrSDM00wFzIJwxA');
 
+  const stripe = Stripe('pk_live_51LpXXlEqK4P4Y8FRmvpDyFPIhKGiJCVCgYE1gMsYK6C7mjzJvFK8PAQlN9coFjtGeKuvVMAMO4iKHePrFRwNrSDM00wFzIJwxA');
   const elements = stripe.elements();
 
   const cardNumber = elements.create('cardNumber');
@@ -168,20 +173,20 @@ label {
   const cardCvc = elements.create('cardCvc');
   cardCvc.mount('#card-cvc');
 
-  const postalInput = document.getElementById('postal-code');
-  const payButton = document.getElementById('pay-button');
-  const paymentMessage = document.getElementById('payment-message');
-
-      console.log(data);
   cardNumber.on('change', event => {
     payButton.disabled = event.empty || !!event.error;
     paymentMessage.textContent = event.error ? event.error.message : '';
   });
-};
+
+  payButton.disabled = false; // odemknout tlačítko, když je vše připraveno
 
   payButton.addEventListener('click', async () => {
     payButton.disabled = true;
     paymentMessage.textContent = 'Probíhá zpracování platby...';
+
+    // Předpokládám, že máš productId a quantity z košíku:
+    const product = cart[0];
+    const { id: productId, quantity } = product;
 
     const response = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
@@ -190,6 +195,7 @@ label {
     });
 
     const data = await response.json();
+
     if (data.error) {
       paymentMessage.textContent = 'Chyba: ' + data.error;
       payButton.disabled = false;
@@ -213,11 +219,12 @@ label {
       payButton.disabled = false;
     } else if (result.paymentIntent.status === 'succeeded') {
       paymentMessage.textContent = 'Platba úspěšná! Děkujeme za objednávku.';
-      // window.location.href = '/checkout/success.html'; // volitelné přesměrování
+      // případné přesměrování:
+      // window.location.href = '/checkout/success.html';
     }
   });
 
-    
-  </script>
+})();
+</script>
 </body>
 </html>
