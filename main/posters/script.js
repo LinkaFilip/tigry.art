@@ -69,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
       renderCart();
     }
   });
-
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("width", "24");
   svg.setAttribute("height", "24");
@@ -261,12 +260,13 @@ function renderFooter(total, itemCount){
     countDisplay.innerHTML = "";
     countDisplay.textContent = `Cart (${itemCount})`;
 
-    const buttonRef = document.querySelector(".CheckoutButton_checkoutButton__WVgGK");
 
-    buttonRef.addEventListener('click', () => {
-      window.location.href = "/checkout/";
-    });
     const checkout = document.querySelector(".Cart_cartFooter__owP1q");
     checkout.innerHTML = "";
     checkout.appendChild(footer);
 };
+const buttonRef = document.querySelector(".CheckoutButton_checkoutButton__WVgGK");
+
+buttonRef.addEventListener('click', () => {
+  window.location.href = "/checkout/";
+});
