@@ -140,6 +140,8 @@ label {
 
 
   <script type="module">
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  console.log(cart.length);
     if (!cart.length) {
       alert('Košík je prázdný!');
     } else {
