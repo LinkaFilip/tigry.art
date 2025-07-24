@@ -2,6 +2,9 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.handler = async function(event) {
+  console.log("Headers:", event.headers);
+console.log("Raw body:", event.body);
+console.log("Is base64 encoded?", event.isBase64Encoded);
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 200,
