@@ -1,60 +1,40 @@
-
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-exports.handler = async function(event) {
-  console.log("Headers:", event.headers);
-console.log("Raw body:", event.body);
-console.log("Is base64 encoded?", event.isBase64Encoded);
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 200,
-      body: "Webhook endpoint is alive",
-    };
-  }
+// Podpis Stripe webhook secret z nastavení webhooku
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-  const sig = event.headers['stripe-signature'] || event.headers['Stripe-Signature'];
+exports.handler = async (event, context) => {
+  // Netlify předává tělo jako string v event.body (nikoli JSON objekt!)
+  const sig = event.headers['stripe-signature'];
 
-  if (!sig) {
-    return {
-      statusCode: 400,
-      body: 'Missing stripe-signature header',
-    };
-  }
-
-  // event.body je string (JSON), pokud je base64 encoded, dekóduj
-  let rawBody = event.body;
-  if (event.isBase64Encoded) {
-    rawBody = Buffer.from(event.body, 'base64').toString('utf8');
-  }
+  let eventStripe;
 
   try {
-    const stripeEvent = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
-
-    switch (stripeEvent.type) {
-      case 'payment_intent.succeeded':
-        const paymentIntent = stripeEvent.data.object;
-        console.log("✅ Platba proběhla:", paymentIntent.id);
-        break;
-
-      case 'checkout.session.completed':
-        const session = stripeEvent.data.object;
-        console.log("✅ Checkout dokončen:", session.id);
-        break;
-
-      default:
-        console.log(`ℹ️ Nezpracovaný event: ${stripeEvent.type}`);
-    }
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ received: true }),
-    };
+    // IMPORTANT: Musíme použít stripe.webhooks.constructEvent, 
+    // kde předáme právě surový text těla (event.body), nikoli JSON objekt
+    eventStripe = stripe.webhooks.constructEvent(event.body, sig, endpointSecret);
   } catch (err) {
-    console.error("❌ Webhook error:", err.message);
+    console.error('Webhook signature verification failed.', err.message);
     return {
       statusCode: 400,
       body: `Webhook Error: ${err.message}`,
     };
   }
+
+  // Zpracování různých eventů
+  if (eventStripe.type === 'charge.succeeded') {
+    const charge = eventStripe.data.object;
+    console.log(`Charge succeeded for amount: ${charge.amount}`);
+    // Tady můžeš aktualizovat DB, odeslat email, atd.
+  }
+
+  if (eventStripe.type === 'payment_intent.succeeded') {
+    const paymentIntent = eventStripe.data.object;
+    console.log(`PaymentIntent succeeded: ${paymentIntent.id}`);
+  }
+
+  return {
+    statusCode: 200,
+    body: 'Webhook received successfully',
+  };
 };
