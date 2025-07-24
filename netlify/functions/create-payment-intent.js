@@ -1,5 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { products } = require('../../posters/products.js');
+const { products } = require('./data/products');
 
 exports.handler = async function(event, context) {
   try {
