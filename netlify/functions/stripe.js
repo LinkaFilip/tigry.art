@@ -20,8 +20,8 @@ exports.handler = async (event, context) => {
         },
       ],
       mode: "payment",
-      success_url: "https://localhost:8888/success",  // uprav podle potřeby
-      cancel_url: "https://localhost:8888/cancel",
+      success_url: "https://tigry.art/posters/",  // uprav podle potřeby
+      cancel_url: "https://tigry.art/",
     });
 
     console.log("Session created:", session.id);
