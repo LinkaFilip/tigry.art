@@ -164,7 +164,7 @@ function renderFooter(total, itemCount) {
       <div class="Cart_detailKey__bNTK_">Shipping</div>
       <div class="Cart_detailValue__JJpkB Cart_greyText__LM8q6">Free Standard Shipping</div>
     </div>
-    <button type="button" class="CheckoutButton_checkoutButton__WVgGK Button_button__OFOdO">
+    <button type="button" class="CheckoutButton_checkoutButton__WVgGK Button_button__OFOdO Button_styled__xGVes">
       <span>Checkout</span>
       <span>${total.toFixed(2)} €</span>
     </button>

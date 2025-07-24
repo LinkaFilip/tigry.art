@@ -180,14 +180,14 @@ html:not(.dev) {
 
 .Button_button__OFOdO.Button_styled__xGVes.Button_isActive__mpn4i {
     color: var(--black);
-    background-color: var(--yellow);
+    background-color: #146757;
     border-color: var(--black)
 }
 
 @media(min-width: 1024px) {
     .Button_button__OFOdO.Button_styled__xGVes:not(:disabled):not(.Button_disabled__P_CVQ):focus-visible,.Button_button__OFOdO.Button_styled__xGVes:not(:disabled):not(.Button_disabled__P_CVQ):hover {
         color:var(--black);
-        background-color: var(--yellow);
+        background-color: #146757;
         border-color: var(--black)
     }
 }
