@@ -1,20 +1,12 @@
-[functions]
-  node_bundler = "esbuild"
-  directory = "netlify/functions"
-
-  # konfigurace pro webhook funkci
-  [functions."stripe-webhook"]
-  external_node_modules = ["stripe"]
-  included_files = ["functions/stripe-webhook.js"]
-
-[dev]
-  # pokud funguje, tak toto zakáže JSON parsing pro stripe-webhook
-  functions = { "stripe-webhook" = { "skip_payload_parsing" = true } }
-
 [build]
-  command = "npm install"
-  publish = "main"
+  command = "# no build command"
   functions = "netlify/functions"
+  publish = "main"
+
+[[redirects]]
+  from = '/api/*'
+  to = '/.netlify/functions/:splat'
+  status = 200
 
 [[headers]]
   for = "/robots.txt"
