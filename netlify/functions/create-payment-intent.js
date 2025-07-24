@@ -1,4 +1,4 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY); // ve .env uložíš tajný klíč
+const stripe = require("stripe")(process.env.STRIPE_SECRET); // ve .env uložíš tajný klíč
 
 exports.handler = async function (event, context) {
   const { amount } = JSON.parse(event.body);
