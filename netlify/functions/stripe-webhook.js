@@ -2,13 +2,19 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 exports.handler = async (event) => {
-  console.log('typeof event.body:', typeof event.body);
-  if (!event.body || event.body.length === 0) {
-    console.error('No webhook payload was provided.');
-    return { statusCode: 400, body: 'No webhook payload was provided.' };
-  }
+  console.log('--- New webhook call ---');
+  console.log('Headers:', event.headers);
+  console.log('Raw body length:', event.body ? event.body.length : 'undefined');
+  console.log('Raw body (first 300 chars):', event.body ? event.body.substring(0, 300) : 'undefined');
 
-  const sig = event.headers['stripe-signature'];
+  if (!event.body || event.body.trim().length === 0) {
+    console.error('No webhook payload was provided.');
+    return {
+      statusCode: 400,
+      body: 'No webhook payload was provided.',
+    };
+  };
+  const sig = event.headers['stripe-signature'] || event.headers['Stripe-Signature'];
   if (!sig) {
     console.error('No stripe-signature header provided.');
     return { statusCode: 400, body: 'Missing stripe-signature header.' };
