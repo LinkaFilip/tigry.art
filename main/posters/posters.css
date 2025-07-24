@@ -3822,6 +3822,7 @@ svg {
     height: 100%;
     pointer-events: auto;
     padding-top: calc(54px);
+    z-index: 130000;
 }
 .Cart_innerContainer__ElGMp {
     max-height: 100%;
