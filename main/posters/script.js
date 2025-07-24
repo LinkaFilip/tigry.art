@@ -168,7 +168,6 @@ element.addEventListener('click', () => {
   cartPanel.classList.toggle("Cart_open__Hlx3_");
   renderCart();
 });
-});
 
 function renderCart() {
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
