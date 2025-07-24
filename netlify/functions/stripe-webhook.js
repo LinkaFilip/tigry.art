@@ -11,25 +11,34 @@ exports.handler = async function(event) {
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
   const sig = event.headers['stripe-signature'];
 
-  // Pokud tělo přijde base64 encoded, dekóduj ho
-  let rawBody = event.body;
-  if (event.isBase64Encoded) {
-    rawBody = Buffer.from(event.body, 'base64').toString('utf8');
+  if (!sig) {
+    console.error("❌ Missing stripe-signature header");
+    return {
+      statusCode: 400,
+      body: "Missing stripe-signature header",
+    };
   }
+
+  // Připrav raw body jako Buffer (z base64 nebo utf8 stringu)
+  const rawBody = event.isBase64Encoded
+    ? Buffer.from(event.body, 'base64')
+    : Buffer.from(event.body, 'utf8');
 
   try {
     const stripeEvent = stripe.webhooks.constructEvent(rawBody, sig, endpointSecret);
 
     switch (stripeEvent.type) {
-      case 'payment_intent.succeeded':
+      case 'payment_intent.succeeded': {
         const paymentIntent = stripeEvent.data.object;
         console.log("✅ Platba proběhla:", paymentIntent.id);
         break;
+      }
 
-      case 'checkout.session.completed':
+      case 'checkout.session.completed': {
         const session = stripeEvent.data.object;
         console.log("✅ Checkout dokončen:", session.id);
         break;
+      }
 
       default:
         console.log(`ℹ️ Nezpracovaný event: ${stripeEvent.type}`);
