@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="cs">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Platba na webu</title>
-    <script src="https://js.stripe.com/v3/"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Platba na webu</title>
+  <script src="https://js.stripe.com/v3/"></script>
     <style>
       form {
         max-width: 400px;
@@ -34,8 +35,8 @@
     </form>
 
     <script>
-      const stripe = Stripe("pk_test_..."); // Tvůj veřejný klíč
-      const elements = stripe.elements();
+      const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
+      const elements = stripe.elements({ clientSecret });
       const card = elements.create("card");
       card.mount("#card-element");
 
