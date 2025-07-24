@@ -187,6 +187,7 @@ function renderCart() {
 
 let total = 0;
 let itemCount = cart.length;
+//let itemCount = 0;
 
 cart.forEach(item => {
   const quantity = item.quantity || 1;
@@ -194,6 +195,7 @@ cart.forEach(item => {
   if (isNaN(price)) return;
   const lineTotal = price * quantity;
   total += lineTotal;
+  //itemCount += quantity;
 
 
   const div = document.createElement("div");

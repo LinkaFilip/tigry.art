@@ -140,8 +140,6 @@ label {
 
 
   <script>
-    
-    // veřejný klíč
     const stripe = Stripe('pk_live_51LpXXlEqK4P4Y8FRmvpDyFPIhKGiJCVCgYE1gMsYK6C7mjzJvFK8PAQlN9coFjtGeKuvVMAMO4iKHePrFRwNrSDM00wFzIJwxA');
 
   const elements = stripe.elements();
@@ -171,7 +169,7 @@ label {
     const response = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: 1000 })
+      body: JSON.stringify({ productId, quantity })
     });
 
     const data = await response.json();

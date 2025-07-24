@@ -1,18 +1,18 @@
-export const products = [
+exports.products = [
   {
     id: 'poster001',
-    name: 'Plakát tygra',
-    description: 'Stylový plakát s ilustrací tygra na kvalitním papíře.',
-    image: '/images/tiger.jpg',
-    price: 1000, // cena v centách nebo haléřích
+    name: 'Tigří plakát',
+    description: 'Stylový plakát s tygrem',
+    price: 1000, // 10.00 €
     currency: 'eur',
+    image: 'https://tigry.art/img/poster001.jpg'
   },
   {
     id: 'poster002',
-    name: 'Plakát pantera',
-    description: 'Elegantní černobílý plakát pantera, vhodný do moderního interiéru.',
-    image: '/images/panther.jpg',
-    price: 1200,
+    name: 'Levhartí plakát',
+    description: 'Plakát s levhartem',
+    price: 1500, // 15.00 €
     currency: 'eur',
+    image: 'https://tigry.art/img/poster002.jpg'
   }
 ];
