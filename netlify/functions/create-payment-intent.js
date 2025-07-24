@@ -10,11 +10,13 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+        headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
     };
   } catch (error) {
     return {
       statusCode: 400,
+        headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ error: error.message }),
     };
   }
