@@ -3832,6 +3832,7 @@ svg {
 .Section_section__mRxGN.Section_gutter__BS6Ao {
     padding-left: var(--layout-margin);
     padding-right: var(--layout-margin);
+    z-index: 150000;
 }
 .Cart_cartContainer__QEmUs {
     max-height: 100%;
