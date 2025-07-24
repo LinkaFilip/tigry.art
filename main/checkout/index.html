@@ -118,7 +118,7 @@ label {
 }
   </style>
   <div class="checkout-wrapper">
-    <h1>Objednávka plakátu – 10 €</h1>
+    <h1 class="itemPrice_itemPrice__QA3O9"></h1>
 
     <div id="card-number" class="stripe-input" aria-placeholder="cCrd number"></div>
 
@@ -184,7 +184,6 @@ label {
     payButton.disabled = true;
     paymentMessage.textContent = 'Probíhá zpracování platby...';
 
-    // Předpokládám, že máš productId a quantity z košíku:
     const product = cart[0];
     const { id: productId, quantity } = product;
 

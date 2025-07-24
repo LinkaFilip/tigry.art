@@ -68,6 +68,19 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("cart", JSON.stringify(cart));
       renderCart();
     }
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", "24");
+  svg.setAttribute("height", "24");
+  svg.setAttribute("viewBox", "0 0 24 24");
+  svg.setAttribute("fill", "none");
+
+  const crossPath = `<path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"></path>`;
+  const originalPath = `<path stroke="currentColor" stroke-width="1.5" d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z"></path>`;
+
+  svg.innerHTML = originalPath;
+  element.appendChild(svg);
+
+  let showingCross = false;
   });
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("width", "24");
@@ -116,19 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("width", "24");
-  svg.setAttribute("height", "24");
-  svg.setAttribute("viewBox", "0 0 24 24");
-  svg.setAttribute("fill", "none");
 
-  const crossPath = `<path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"></path>`;
-  const originalPath = `<path stroke="currentColor" stroke-width="1.5" d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z"></path>`;
-
-  svg.innerHTML = originalPath;
-  element.appendChild(svg);
-
-  let showingCross = false;
 
 element.addEventListener('click', () => {
   const isMobile = window.matchMedia("(max-width: 1024px)").matches;
