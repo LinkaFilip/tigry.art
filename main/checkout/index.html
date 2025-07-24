@@ -2,44 +2,74 @@
 <html lang="cs">
   <head>
     <meta charset="UTF-8" />
-    <title>Serverless payments</title>
+    <title>Platba na webu</title>
     <script src="https://js.stripe.com/v3/"></script>
+    <style>
+      form {
+        max-width: 400px;
+        margin: 2rem auto;
+      }
+      #card-element {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+      #error-message {
+        color: red;
+        margin-top: 1rem;
+      }
+    </style>
   </head>
-  <body style="height: 100vh; margin: 0">
-    <div
-      style="
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      "
-    >
-      <h1 style="text-align: center">💸 Serverless Payment example 💸</h1>
-      <button id="checkout-button">Trigger payment</button>
+  <body>
+    <h2 style="text-align: center">💳 Zaplatit</h2>
+    <form id="payment-form">
+      <div id="card-element"></div>
+      <button type="submit">Zaplatit</button>
+      <div id="error-message"></div>
+    </form>
 
-      <script>
-        const stripe = Stripe(
-          "pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb"
-        );
+    <script>
+      const stripe = Stripe("pk_test_..."); // Tvůj veřejný klíč
+      const elements = stripe.elements();
+      const card = elements.create("card");
+      card.mount("#card-element");
 
-        document
-          .getElementById("checkout-button")
-          .addEventListener("click", () => {
-            fetch("/.netlify/functions/stripe", {
-              method: "POST",
-            })
-              .then((res) => res.json())
-              .then((session) => {
-                console.log("📦 Received session:", session);
-                if (!session.id) throw new Error("Missing session ID");
-                return stripe.redirectToCheckout({ sessionId: session.id });
-              })
-              .catch((err) => {
-                console.error("❌ Error:", err);
-              });
-          });
-      </script>
-    </div>
+      const form = document.getElementById("payment-form");
+      const errorMsg = document.getElementById("error-message");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const res = await fetch("/netlify/functions/create-payment-intent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: 1999 }), // cena v centech = 19.99 Kč
+        });
+
+        const data = await res.json();
+        const clientSecret = data.clientSecret;
+
+        const result = await stripe.confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: card,
+          },
+        });
+
+        if (result.error) {
+          errorMsg.textContent = result.error.message;
+        } else {
+          if (result.paymentIntent.status === "succeeded") {
+            alert("✅ Platba úspěšná!");
+            form.reset();
+            card.clear();
+          }
+        }
+      });
+    </script>
   </body>
 </html>
