@@ -140,6 +140,20 @@ label {
 
 
   <script>
+    if (!cart.length) {
+      alert('Košík je prázdný!');
+    } else {
+      const product = cart[0]; // Pokud máš jen 1 produkt, nebo uprav na smyčku
+      const { id, quantity } = product;
+
+      // Volání Netlify serverless funkce
+      const response = await fetch('/.netlify/functions/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: id, quantity })
+      });
+
+  const data = await response.json();
     const stripe = Stripe('pk_live_51LpXXlEqK4P4Y8FRmvpDyFPIhKGiJCVCgYE1gMsYK6C7mjzJvFK8PAQlN9coFjtGeKuvVMAMO4iKHePrFRwNrSDM00wFzIJwxA');
 
   const elements = stripe.elements();
@@ -161,6 +175,7 @@ label {
     payButton.disabled = event.empty || !!event.error;
     paymentMessage.textContent = event.error ? event.error.message : '';
   });
+};
 
   payButton.addEventListener('click', async () => {
     payButton.disabled = true;
