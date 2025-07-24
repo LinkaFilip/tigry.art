@@ -1,15 +1,19 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-exports.handler = async (event, context) => {
-  const sig = event.headers['stripe-signature'] || event.headers['Stripe-Signature'];
+exports.handler = async (event) => {
   console.log('typeof event.body:', typeof event.body);
-  if (typeof event.body === 'object') {
-    // To znamená, že je již parsed JSON - potřebujeme původní raw string, 
-    // bohužel Stripe to takhle nefunguje
-    // Můžeš zkusit přepřipravit raw body jako string, ale není to spolehlivé
-    event.body = JSON.stringify(event.body);
+  if (!event.body || event.body.length === 0) {
+    console.error('No webhook payload was provided.');
+    return { statusCode: 400, body: 'No webhook payload was provided.' };
   }
+
+  const sig = event.headers['stripe-signature'];
+  if (!sig) {
+    console.error('No stripe-signature header provided.');
+    return { statusCode: 400, body: 'Missing stripe-signature header.' };
+  }
+
   let eventStripe;
   try {
     eventStripe = stripe.webhooks.constructEvent(event.body, sig, endpointSecret);
@@ -20,20 +24,16 @@ exports.handler = async (event, context) => {
 
   console.log('Webhook received:', eventStripe.type);
 
+  // zpracování eventů
   switch (eventStripe.type) {
-    case 'charge.succeeded':
-      const charge = eventStripe.data.object;
-      console.log(`Charge succeeded for amount: ${charge.amount}`);
-      break;
-
     case 'payment_intent.succeeded':
-      const paymentIntent = eventStripe.data.object;
-      console.log(`PaymentIntent succeeded: ${paymentIntent.id}`);
+      console.log('PaymentIntent succeeded:', eventStripe.data.object.id);
       break;
-
-    // Přidej další eventy, které chceš zpracovat
+    case 'charge.succeeded':
+      console.log('Charge succeeded for amount:', eventStripe.data.object.amount);
+      break;
     default:
-      console.log(`Unhandled event type: ${eventStripe.type}`);
+      console.log('Unhandled event type:', eventStripe.type);
   }
 
   return { statusCode: 200, body: 'Webhook received successfully' };
