@@ -41,18 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
 
-  function myFunction(x) {
-    if (x.matches) {
-      cartPanel.style.backgroundColor = "yellow";
-    } else {
-    cartPanel.style.backgroundColor = "pink";
-    }
-  }
-  var x = window.matchMedia("(max-width: 700px)");
-  myFunction(x);
-  x.addEventListener("change", function() {
-    myFunction(x);
-  });
+
 
   cartPanel.classList.remove("Cart_open__Hlx3_");
   element.classList.remove("CartIndicator_closeBtn___fEN6");
@@ -90,26 +79,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let showingCross = false;
 
-  element.addEventListener('click', () => {
-    if (element.classList.contains("CartIndicator_closeBtn___fEN6")) {
-      element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
-      svg.innerHTML = originalPath;
-      document.querySelector(".Overlay_overlay__hwjQ3").style.opacity = "0";
-      document.querySelector(".Overlay_overlay__hwjQ3").style.visibility = "hidden";
-      document.querySelector(".Overlay_overlay__hwjQ3").style.pointerEvents = "none";
-      document.querySelector(".Overlay_overlay__hwjQ3").style.transition = "1s";
-    } else {
-      element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
-      svg.innerHTML = crossPath;
-      document.querySelector(".Overlay_overlay__hwjQ3").style.opacity = "1";
-      document.querySelector(".Overlay_overlay__hwjQ3").style.visibility = "inherit";
-      document.querySelector(".Overlay_overlay__hwjQ3").style.pointerEvents = "auto";
-      document.querySelector(".Overlay_overlay__hwjQ3").style.transition = "1s";
-    }
-    cartPanel.classList.toggle("Cart_open__Hlx3_");
-    renderCart();
+element.addEventListener('click', () => {
+  const isMobile = window.matchMedia("(max-width: 1024px)").matches;
 
-  });
+  if (element.classList.contains("CartIndicator_closeBtn___fEN6")) {
+    // ZAVŘÍT KOŠÍK
+    element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
+    svg.innerHTML = originalPath;
+    document.querySelector(".Overlay_overlay__hwjQ3").style.opacity = "0";
+    document.querySelector(".Overlay_overlay__hwjQ3").style.visibility = "hidden";
+    document.querySelector(".Overlay_overlay__hwjQ3").style.pointerEvents = "none";
+    document.querySelector(".Overlay_overlay__hwjQ3").style.transition = "1s";
+
+    // Zavření animace podle typu zařízení
+    if (isMobile) {
+      cartPanel.style.transform = "translate(0, -100%)";
+    } else {
+      cartPanel.style.transform = "translate(100%, 0)";
+    }
+
+  } else {
+    // OTEVŘÍT KOŠÍK
+    element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
+    svg.innerHTML = crossPath;
+    document.querySelector(".Overlay_overlay__hwjQ3").style.opacity = "1";
+    document.querySelector(".Overlay_overlay__hwjQ3").style.visibility = "inherit";
+    document.querySelector(".Overlay_overlay__hwjQ3").style.pointerEvents = "auto";
+    document.querySelector(".Overlay_overlay__hwjQ3").style.transition = "1s";
+    
+    if (isMobile) {
+      cartPanel.style.transform = "translate(0, 0%)";
+    } else {
+      cartPanel.style.transform = "translate(0, 0)";
+    }
+  }
+  cartPanel.classList.toggle("Cart_open__Hlx3_");
+  renderCart();
+});
 });
 
 function renderCart() {
