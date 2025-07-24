@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Platba</title>
-  <script src="https://js.stripe.com/v3/"></script>
+ <script src="https://js.stripe.com/v3/"></script>
+<script src="/js/checkout.js"></script>
   <link rel="stylesheet" href="../variables.css">
 
   <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
@@ -138,91 +139,24 @@ label {
   </div>
 
 
-
-<script type="module">
-(async () => {
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  console.log(cart.length);
-
-  const payButton = document.getElementById('pay-button');
-  const paymentMessage = document.getElementById('payment-message');
-  const postalInput = document.getElementById('postal-code');
-
-  if (!cart.length) {
-    alert('Košík je prázdný!');
-    payButton.disabled = true;
-    return;
-  }
-
-  const response = await fetch('/.netlify/functions/create-payment-intent', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ amount: 1000 })
-  });
-  const data = await response.json();
-
-  const stripe = Stripe('pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb');
-  const elements = stripe.elements();
-
-  const cardNumber = elements.create('cardNumber');
-  cardNumber.mount('#card-number');
-
-  const cardExpiry = elements.create('cardExpiry');
-  cardExpiry.mount('#card-expiry');
-
-  const cardCvc = elements.create('cardCvc');
-  cardCvc.mount('#card-cvc');
-
-  cardNumber.on('change', event => {
-    payButton.disabled = event.empty || !!event.error;
-    paymentMessage.textContent = event.error ? event.error.message : '';
-  });
-
-  payButton.disabled = false;
-
-  payButton.addEventListener('click', async () => {
-    payButton.disabled = true;
-    paymentMessage.textContent = 'Probíhá zpracování platby...';
-
-    const product = cart[0];
-    const { id: productId, quantity } = product;
-
-    const response = await fetch('/.netlify/functions/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId, quantity })
-    });
-
-    const data = await response.json();
-
-    if (data.error) {
-      paymentMessage.textContent = 'Chyba: ' + data.error;
-      payButton.disabled = false;
-      return;
+<script>
+  // inicializace Stripe, získání cardElement apod.
+  
+  stripe.confirmCardPayment(clientSecret, {
+    payment_method: {
+      card: cardElement,
     }
-
-    const result = await stripe.confirmCardPayment(data.clientSecret, {
-      payment_method: {
-        card: cardNumber,
-        billing_details: {
-          name: 'Zákazník',
-          address: {
-            postal_code: postalInput.value
-          }
-        }
-      }
-    });
-
+  }).then(function(result) {
     if (result.error) {
-      paymentMessage.textContent = 'Platba selhala: ' + result.error.message;
-      payButton.disabled = false;
-    } else if (result.paymentIntent.status === 'succeeded') {
-      paymentMessage.textContent = 'Platba úspěšná! Děkujeme za objednávku.';
-      window.location.href = '/checkout/success.html';
+      console.error(result.error.message);
+      // zobraz chybu uživateli
+    } else {
+      if (result.paymentIntent.status === 'succeeded') {
+        console.log("Platba proběhla");
+        // můžeš přesměrovat uživatele nebo ukázat potvrzení
+      }
     }
   });
-
-})();
 </script>
 </body>
 </html>
