@@ -261,6 +261,11 @@ function renderFooter(total, itemCount){
     countDisplay.innerHTML = "";
     countDisplay.textContent = `Cart (${itemCount})`;
 
+    const buttonRef = document.querySelector(".CheckoutButton_checkoutButton__WVgGK");
+
+    buttonRef.addEventListener('click', () => {
+      window.location.href = "/checkout/";
+    });
     const checkout = document.querySelector(".Cart_cartFooter__owP1q");
     checkout.innerHTML = "";
     checkout.appendChild(footer);

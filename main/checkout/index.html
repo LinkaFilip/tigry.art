@@ -151,7 +151,7 @@ label {
   if (!cart.length) {
     alert('Košík je prázdný!');
     payButton.disabled = true;
-    return; // skončíme, protože není co platit
+    return;
   }
 
   const response = await fetch('/.netlify/functions/create-payment-intent', {
@@ -178,7 +178,7 @@ label {
     paymentMessage.textContent = event.error ? event.error.message : '';
   });
 
-  payButton.disabled = false; // odemknout tlačítko, když je vše připraveno
+  payButton.disabled = false;
 
   payButton.addEventListener('click', async () => {
     payButton.disabled = true;
@@ -219,8 +219,7 @@ label {
       payButton.disabled = false;
     } else if (result.paymentIntent.status === 'succeeded') {
       paymentMessage.textContent = 'Platba úspěšná! Děkujeme za objednávku.';
-      // případné přesměrování:
-      // window.location.href = '/checkout/success.html';
+      window.location.href = '/checkout/success.html';
     }
   });
 
