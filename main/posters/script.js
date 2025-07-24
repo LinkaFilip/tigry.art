@@ -15,7 +15,7 @@ document.querySelectorAll(".add-to-cart").forEach(button => {
 function addToCart(product) {
   if (!product.id || !product.name || isNaN(product.price)) {
     console.warn("Neplatný produkt:", product);
-    return; // 🛡️ Nepřidávat neplatné položky
+    return;
   }
 
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -41,7 +41,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
 
-
+  function myFunction(x) {
+    if (x.matches) {
+      cartPanel.style.backgroundColor = "yellow";
+    } else {
+    cartPanel.style.backgroundColor = "pink";
+    }
+  }
+  var x = window.matchMedia("(max-width: 700px)");
+  myFunction(x);
+  x.addEventListener("change", function() {
+    myFunction(x);
+  });
 
   cartPanel.classList.remove("Cart_open__Hlx3_");
   element.classList.remove("CartIndicator_closeBtn___fEN6");
@@ -51,8 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     panel.addEventListener("click", function (event) {
     if (event.target.classList.contains("remove-item")) {
-        event.stopPropagation(); // 🛑 Zastaví šíření kliknutí nahoru
-        event.preventDefault();  // 🛡 Pro jistotu, pokud by tam byl <a> nebo form
+        event.stopPropagation();
+        event.preventDefault();
 
         const idToRemove = event.target.dataset.id;
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -80,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let showingCross = false;
 
   element.addEventListener('click', () => {
-    // Toggle icon class
     if (element.classList.contains("CartIndicator_closeBtn___fEN6")) {
       element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
       svg.innerHTML = originalPath;
@@ -96,8 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
       document.querySelector(".Overlay_overlay__hwjQ3").style.pointerEvents = "auto";
       document.querySelector(".Overlay_overlay__hwjQ3").style.transition = "1s";
     }
-
-    // Toggle cart panel
     cartPanel.classList.toggle("Cart_open__Hlx3_");
     renderCart();
 
@@ -130,7 +138,7 @@ const price = parseFloat(item.price);
 
 if (isNaN(price)) return;
 
-const lineTotal = price * quantity; // ✅ teď lineTotal existuje
+const lineTotal = price * quantity;
 total += lineTotal;
 
 itemCount += quantity;
