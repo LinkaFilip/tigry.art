@@ -4902,7 +4902,8 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
     width: 100vw;
     height: 100%;
     pointer-events: auto;
-    padding-top: calc(54px)
+    padding-top: calc(54px);
+    z-index: 130000;
 }
 
 @media(min-width: 1024px) {
