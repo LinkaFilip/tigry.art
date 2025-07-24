@@ -36,50 +36,54 @@
 
   <script>
     const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
+  let elements;
+  let card;
+  let clientSecret; // ← zde uložíme clientSecret
 
-    let elements;
-    let card;
-
-    async function initializeStripe() {
-      const res = await fetch("/.netlify/functions/create-payment-intent", {
-        method: "POST",
-      });
-
-      const data = await res.json();
-      const clientSecret = data.clientSecret;
-
-      elements = stripe.elements({ clientSecret });
-      card = elements.create("card");
-      card.mount("#card-element");
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      initializeStripe();
-
-      const form = document.getElementById("payment-form");
-      const errorMsg = document.getElementById("error-message");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const { error, paymentIntent } = await stripe.confirmCardPayment(
-          elements._clientSecret,
-          {
-            payment_method: {
-              card: card,
-            },
-          }
-        );
-
-        if (error) {
-          errorMsg.textContent = error.message;
-        } else if (paymentIntent.status === "succeeded") {
-          alert("✅ Platba úspěšná!");
-          form.reset();
-          card.clear();
-        }
-      });
+  async function initializeStripe() {
+    const res = await fetch("/.netlify/functions/create-payment-intent", {
+      method: "POST",
     });
-  </script>
+    const data = await res.json();
+    clientSecret = data.clientSecret; // ← uložíme správně
+
+    elements = stripe.elements({ clientSecret });
+    card = elements.create("card");
+    card.mount("#card-element");
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeStripe();
+
+    const form = document.getElementById("payment-form");
+    const errorMsg = document.getElementById("error-message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!clientSecret) {
+        errorMsg.textContent = "Chyba: chybí clientSecret.";
+        return;
+      }
+
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: card,
+          },
+        }
+      );
+
+      if (error) {
+        errorMsg.textContent = error.message;
+      } else if (paymentIntent.status === "succeeded") {
+        alert("✅ Platba úspěšná!");
+        form.reset();
+        card.clear();
+      }
+    });
+  });
+</script>
 </body>
 </html>
