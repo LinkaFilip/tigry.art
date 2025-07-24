@@ -1,22 +1,26 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 exports.handler = async (event) => {
   try {
-    // Tady můžeš zpracovat vstupní data event.body, pokud je potřeba
+    // Můžeš odkomentovat a zalogovat tělo požadavku pokud posíláš data
+    // const data = JSON.parse(event.body);
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1000,        // částka v nejmenší měně, např. 1000 = 10.00 CZK
+      amount: 1000, // částka v haléřích: 1000 = 10.00 CZK
       currency: 'czk',
     });
 
     return {
       statusCode: 200,
-        headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
     };
   } catch (error) {
+    console.error('Stripe PaymentIntent Error:', error.message);
+
     return {
       statusCode: 400,
-        headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: error.message }),
     };
   }
