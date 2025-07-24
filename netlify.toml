@@ -4,7 +4,9 @@
   publish = "main"
 
 [functions]
-directory = "netlify/functions"
+  directory = "netlify/functions"
+  node_bundler = "esbuild"  
+  [functions.stripe-webhook]
 
 [[redirects]]
   from = '/api/*'
