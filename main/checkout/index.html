@@ -157,6 +157,23 @@ label {
       }
     }
   });
+  const paymentMessage = document.getElementById('payment-message');
+
+stripe.confirmCardPayment(clientSecret, {
+  payment_method: {
+    card: cardElement,
+  }
+}).then(function(result) {
+  if (result.error) {
+    paymentMessage.textContent = `Platba selhala: ${result.error.message}`;
+    paymentMessage.style.color = 'red';
+  } else {
+    if (result.paymentIntent.status === 'succeeded') {
+      paymentMessage.textContent = 'Platba úspěšná! Děkujeme za objednávku.';
+      paymentMessage.style.color = 'green';
+    }
+  }
+});
 </script>
 </body>
 </html>
