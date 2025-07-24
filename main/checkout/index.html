@@ -30,6 +30,10 @@
           fetch("/api/stripe", {
             method: "POST",
           })
+            .then((session) => {
+              console.log("Received session:", session);  // <-- Pomůže zjistit, co vrací server
+              return stripe.redirectToCheckout({ sessionId: session.id });
+            })
             .then(function (response) {
               return response.json();
             })
