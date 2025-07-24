@@ -1,9 +1,16 @@
 [functions]
-  directory = "netlify/functions"
   node_bundler = "esbuild"
+  directory = "netlify/functions"
   
-  [functions.node_options]
+  [functions."stripe-webhook"]
   external_node_modules = ["stripe"]
+  included_files = ["functions/stripe-webhook.js"]
+
+[dev]
+  # To prevent Netlify dev zpracování těla
+  # Tento blok zakáže JSON parsing těla a nechá ho jako raw
+  # (Tato možnost není vždy oficiálně dokumentovaná a může se měnit)
+  functions = { "stripe-webhook" = { "skip_payload_parsing" = true } }
 
 [build]
   command = "npm install"
