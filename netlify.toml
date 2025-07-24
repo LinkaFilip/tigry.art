@@ -2,7 +2,9 @@
   directory = "netlify/functions"
 
 [build]
+  command = "npm install"
   publish = "main"
+  functions = "netlify/functions"
 
 [[headers]]
   for = "/robots.txt"
