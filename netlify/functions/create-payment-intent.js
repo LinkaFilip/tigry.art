@@ -1,22 +1,15 @@
-const stripe = require("stripe")(process.env.STRIPE_SECRET); // ve .env uložíš tajný klíč
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-exports.handler = async function (event, context) {
-  const { amount } = JSON.parse(event.body);
+exports.handler = async (event) => {
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: 1000,
+    currency: "czk",
+  });
 
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency: "czk",
-    });
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
-    };
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
-    };
-  }
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      clientSecret: paymentIntent.client_secret,
+    }),
+  };
 };

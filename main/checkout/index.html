@@ -31,6 +31,7 @@
     <form id="payment-form">
       <div id="card-element"></div>
       <button type="submit">Zaplatit</button>
+      <div id="payment-element"></div>
       <div id="error-message"></div>
     </form>
 
@@ -46,11 +47,14 @@
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const res = await fetch("/netlify/functions/create-payment-intent", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: 1999 }), // cena v centech = 19.99 Kč
-        });
+      fetch("/netlify/functions/create-payment-intent", { method: "POST" })
+        .then((res) => res.json())
+        .then(({ clientSecret }) => {
+          const elements = stripe.elements({ clientSecret });
+
+          const paymentElement = elements.create("payment");
+          paymentElement.mount("#payment-element");
+              });
 
         const data = await res.json();
         const clientSecret = data.clientSecret;
