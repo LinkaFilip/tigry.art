@@ -6,7 +6,10 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"  
-  [functions.stripe-webhook]
+  [functions."stripe-webhook"]
+    include_files = []
+    node_bundler = "esbuild"
+    external_node_modules = ["stripe"]
 
 [[redirects]]
   from = '/api/*'
