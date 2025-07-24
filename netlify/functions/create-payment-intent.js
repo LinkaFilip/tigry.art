@@ -7,7 +7,7 @@ exports.handler = async (event) => {
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 1000, // částka v haléřích: 1000 = 10.00 CZK
-      currency: 'czk',
+      currency: 'eur',
     });
 
     return {
