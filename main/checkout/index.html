@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<meta charset="UTF-8" />
-<html>
+<html lang="cs">
   <head>
+    <meta charset="UTF-8" />
     <title>Serverless payments</title>
     <script src="https://js.stripe.com/v3/"></script>
   </head>
-  <body style="height: 100vh">
+  <body style="height: 100vh; margin: 0">
     <div
       style="
         height: 100%;
@@ -15,33 +15,30 @@
         align-items: center;
       "
     >
-      <h1 style="text-align: center">💸💸 Serverless Payment example 💸💸</h1>
+      <h1 style="text-align: center">💸 Serverless Payment example 💸</h1>
       <button id="checkout-button">Trigger payment</button>
-      <script type="text/javascript">
-        // Create an instance of the Stripe object with your publishable API key
-        var stripe = Stripe(
-          "pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNbpk_test_51IMfMQDCdPpxKeemxC3ObfzgTtts1mw0qf2FXUqDrIjkzdlLZRGAY2oZX4kgmDO5w1n1l5glu1TfmsNfyivrajnU00BeaDUr9u"
-        );
-        var checkoutButton = document.getElementById("checkout-button");
 
-        checkoutButton.addEventListener("click", function () {
-          fetch("/api/stripe", {
-            method: "POST",
-          })
-            .then(function (response) {
-              return response.json();
+      <script>
+        const stripe = Stripe(
+          "pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb"
+        );
+
+        document
+          .getElementById("checkout-button")
+          .addEventListener("click", () => {
+            fetch("/.netlify/functions/stripe", {
+              method: "POST",
             })
-            .then(function (session) {
-              console.log("Received session:", session);
-              if (!session.id) {
-                throw new Error("No session ID received from backend");
-              }
-              return stripe.redirectToCheckout({ sessionId: session.id });
-            })
-            .catch(function (error) {
-              console.error("Error:", error);
-            });
-        });
+              .then((res) => res.json())
+              .then((session) => {
+                console.log("📦 Received session:", session);
+                if (!session.id) throw new Error("Missing session ID");
+                return stripe.redirectToCheckout({ sessionId: session.id });
+              })
+              .catch((err) => {
+                console.error("❌ Error:", err);
+              });
+          });
       </script>
     </div>
   </body>
