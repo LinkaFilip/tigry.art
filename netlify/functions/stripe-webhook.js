@@ -6,6 +6,11 @@ exports.handler = async (event) => {
   console.log('Headers:', event.headers);
   console.log('Raw body length:', event.body ? event.body.length : 'undefined');
   console.log('Raw body (first 300 chars):', event.body ? event.body.substring(0, 300) : 'undefined');
+  console.log('Method:', req.method);
+  console.log('Headers:', req.headers);
+  console.log('Content-Length:', req.headers['content-length']);
+  console.log('Content-Type:', req.headers['content-type']);
+
 
   if (!event.body || event.body.trim().length === 0) {
     console.error('No webhook payload was provided.');
