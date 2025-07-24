@@ -25,28 +25,18 @@
         var checkoutButton = document.getElementById("checkout-button");
 
         checkoutButton.addEventListener("click", function () {
-          // Create a new Checkout Session using the server-side endpoint you
-          // created in step 3.
           fetch("/api/stripe", {
             method: "POST",
           })
-            .then((session) => {
-              console.log("Received session:", session);  // <-- Pomůže zjistit, co vrací server
-              return stripe.redirectToCheckout({ sessionId: session.id });
-            })
             .then(function (response) {
               return response.json();
             })
             .then(function (session) {
-              return stripe.redirectToCheckout({ sessionId: session.id });
-            })
-            .then(function (result) {
-              // If `redirectToCheckout` fails due to a browser or network
-              // error, you should display the localized error message to your
-              // customer using `error.message`.
-              if (result.error) {
-                alert(result.error.message);
+              console.log("Received session:", session);
+              if (!session.id) {
+                throw new Error("No session ID received from backend");
               }
+              return stripe.redirectToCheckout({ sessionId: session.id });
             })
             .catch(function (error) {
               console.error("Error:", error);

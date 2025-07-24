@@ -1,31 +1,41 @@
-// Manage your variables with style: https://www.netlify.com/blog/2021/07/12/managing-environment-variables-from-your-terminal-with-netlify-cli/
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-console.log("Creating session...");
-console.log(session.id);
-exports.handler = async (event, context) => {
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card"],
-    line_items: [
-      {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Posters",
-          },
-          unit_amount: 2000,
-        },
-        quantity: 1,
-      },
-    ],
-    mode: "payment",
-    success_url: "https://tigry.art/success",
-    cancel_url: "https://tigry.art/cancel",
-  });
+// netlify/functions/stripe.js
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      id: session.id,
-    }),
-  };
+exports.handler = async (event, context) => {
+  try {
+    console.log("Starting session creation...");
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "T-shirt",
+            },
+            unit_amount: 2000,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: "https://localhost:8888/success",  // uprav podle potřeby
+      cancel_url: "https://localhost:8888/cancel",
+    });
+
+    console.log("Session created:", session.id);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ id: session.id }),
+    };
+  } catch (error) {
+    console.error("Stripe error:", error.message);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
+    };
+  }
 };
