@@ -12206,7 +12206,8 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
 }
 
 .IWR5K {
-    border-color: var(--x-default-color-border)
+    border-color: var(--x-default-color-border);
+    padding-left: var(--padding-inline);
 }
 
 .IWR5K.tu1VS:focus {
@@ -27359,7 +27360,8 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
 }
 
 .IWR5K {
-    border-color: var(--x-default-color-border)
+    border-color: var(--x-default-color-border);
+    padding-left: var(--padding-inline);
 }
 
 .IWR5K.tu1VS:focus {
