@@ -360,6 +360,8 @@
       async function initializeStripe() {
         const res = await fetch("/.netlify/functions/create-payment-intent", {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ productId: "POSTER_A" }),
         });
 
         const data = await res.json();

@@ -1,10 +1,26 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
+const productPrices = {
+  POSTER_A: parseInt(process.env.PRODUCT_POSTER_A),
+  POSTER_B: parseInt(process.env.PRODUCT_POSTER_B),
+  POSTER_C: parseInt(process.env.PRODUCT_POSTER_C),
+};
+
 exports.handler = async (event) => {
-  try {
+    try {
+    const data = JSON.parse(event.body);
+    const productId = data.productId;
+
+    const amount = productPrices[productId];
+    if (!amount) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Neplatný produkt." }),
+      };
+    }
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1000,
+      amount,
       currency: 'eur',
       automatic_payment_methods: { enabled: true,},
     });
