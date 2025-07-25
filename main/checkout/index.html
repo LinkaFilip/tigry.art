@@ -14,7 +14,7 @@
         border-radius: 6px;
         background: #f9f9f9;
       }
-      #card-element {
+      #card-element, #payment-request-button {
         padding: 12px;
         border: 1px solid #ccc;
         border-radius: 6px;
@@ -38,23 +38,24 @@
   <body>
     <h2 style="text-align: center">💳 Zaplatit 10 EUR</h2>
 
-  <form id="payment-form">
-    <input type="text" id="name" placeholder="Jméno a příjmení" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="tel" id="phone" placeholder="Telefon" />
+    <form id="payment-form">
+      <input type="text" id="name" placeholder="Jméno a příjmení" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="tel" id="phone" placeholder="Telefon" />
+      <input type="text" id="line1" placeholder="Adresa" required />
+      <input type="text" id="city" placeholder="Město" required />
+      <input type="text" id="postal_code" placeholder="PSČ" required />
+      <input type="text" id="country" placeholder="Země (např. CZ)" required />
 
-    <input type="text" id="line1" placeholder="Adresa" required />
-    <input type="text" id="city" placeholder="Město" required />
-    <input type="text" id="postal_code" placeholder="PSČ" required />
-    <input type="text" id="country" placeholder="Země (např. CZ)" required />
+      <div id="payment-request-button"></div>
 
-    <div id="card-element"></div>
-    <button type="submit">Zaplatit</button>
-    <div id="error-message"></div>
-  </form>
+      <div id="card-element"></div>
+      <button type="submit">Zaplatit</button>
+      <div id="error-message"></div>
+    </form>
 
     <script>
-      const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb"); // nahraď svým veřejným klíčem
+      const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
 
       let elements, card;
 
@@ -66,10 +67,53 @@
         const data = await res.json();
         const clientSecret = data.clientSecret;
 
+        // Set up Stripe Elements
         elements = stripe.elements({ clientSecret });
         card = elements.create("card");
         card.mount("#card-element");
 
+        // Payment Request API (Apple Pay / Google Pay)
+        const paymentRequest = stripe.paymentRequest({
+          country: "CZ",
+          currency: "eur",
+          total: {
+            label: "Platba",
+            amount: 1000,
+          },
+          requestPayerName: true,
+          requestPayerEmail: true,
+        });
+
+        const prButton = elements.create("paymentRequestButton", {
+          paymentRequest: paymentRequest,
+        });
+
+        const canMakePayment = await paymentRequest.canMakePayment();
+        if (canMakePayment) {
+          prButton.mount("#payment-request-button");
+        } else {
+          document.getElementById("payment-request-button").style.display = "none";
+        }
+
+        paymentRequest.on("paymentmethod", async (ev) => {
+          const { error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+              payment_method: ev.paymentMethod.id,
+            },
+            { handleActions: false }
+          );
+
+          if (confirmError) {
+            ev.complete("fail");
+            alert(confirmError.message);
+          } else {
+            ev.complete("success");
+            alert("✅ Platba úspěšná přes Apple/Google Pay!");
+          }
+        });
+
+        // Form submit for card
         const form = document.getElementById("payment-form");
         const errorMsg = document.getElementById("error-message");
 
@@ -84,7 +128,7 @@
               line1: document.getElementById("line1").value,
               city: document.getElementById("city").value,
               postal_code: document.getElementById("postal_code").value,
-              country: document.getElementById("country").value,
+              country: document.getElementById("country").value.toUpperCase(),
             },
           };
 
