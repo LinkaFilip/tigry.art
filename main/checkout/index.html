@@ -364,6 +364,7 @@
       .split("; ")
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
+    const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
     console.log(cart);
     console.log("Cookies:", document.cookie);
     console.log("cartCookie raw:", cartCookie);
@@ -372,12 +373,7 @@
       alert("Váš košík je prázdný. Přidejte prosím položky před platbou.");
       return;
     }
-    const items = cart.map(product => ({
-      id: product.id,
-      quantity: product.quantity,
-      price: product.price
-    }));
-
+    const items = cart.map(({ id, quantity }) => ({ id, quantity }));
 console.log('Posílám položky:', items);
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
@@ -481,6 +477,7 @@ console.log('Posílám položky:', items);
       .split("; ")
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
+    const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
 
     const total = cart.reduce((sum, product) => {
       return sum + product.price * product.quantity;
