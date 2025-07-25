@@ -311,7 +311,7 @@
 
 
 
-            <input type="text" id="name" placeholder="Jméno a příjmení" required />
+            <input type="text" id="firstName" placeholder="Jméno a příjmení" required />
             <input type="tel" id="phone" placeholder="Telefon" />
             <input type="text" id="line1" placeholder="Adresa" required />
             <input type="text" id="city" placeholder="Město" required />
@@ -400,14 +400,16 @@
           e.preventDefault();
 
           const billingDetails = {
-            name: document.getElementById("name").value,
+            firstName: document.getElementById("TextField0").value,
+            lastName: document.getElementById("TextField1").value,
             email: document.getElementById("email").value,
-            phone: document.getElementById("phone").value,
+            phone: document.getElementById("TextField6").value,
             address: {
-              line1: document.getElementById("line1").value,
-              city: document.getElementById("city").value,
-              postal_code: document.getElementById("postal_code").value,
-              country: document.getElementById("country").value.toUpperCase(),
+              line1: document.getElementById("TextField2").value,
+              line2: document.getElementById("TextField3").value,
+              city: document.getElementById("TextField5").value,
+              postal_code: document.getElementById("TextField4").value,
+              country: document.getElementById("Select0").value.toUpperCase(),
             },
           };
 
