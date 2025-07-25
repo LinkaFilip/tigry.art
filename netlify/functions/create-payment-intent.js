@@ -7,22 +7,31 @@ const productPrices = {
 };
 
 exports.handler = async (event) => {
-    try {
-    const data = JSON.parse(event.body);
-    const productId = data.productId;
-
-    const amount = productPrices[productId];
-    if (!amount) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: "Neplatný produkt." }),
-      };
+  try {
+    if (!event.body) {
+      throw new Error("Missing request body");
     }
 
+    const data = JSON.parse(event.body);
+
+    // Příklad: načti produkt z dat
+    const productId = data.productId;
+    if (!productId) throw new Error("Missing productId");
+
+    // třeba map produktů, ceny v centech
+    const products = {
+      POSTER_A: 1000,
+      POSTER_B: 1500,
+      POSTER_C: 2500,
+    };
+
+    const amount = products[productId];
+    if (!amount) throw new Error("Invalid productId");
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency: 'eur',
-      automatic_payment_methods: { enabled: true,},
+      amount: amount,
+      currency: "eur",
+      automatic_payment_methods: { enabled: true },
     });
 
     return {
