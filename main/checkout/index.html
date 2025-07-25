@@ -366,20 +366,28 @@
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
 
+  const res = await fetch('/.netlify/functions/create-payment-intent', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items })
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    alert("Chyba při vytvoření platby: " + errorData.error);
+    return;
+  }
+
+  const data = await res.json();
+  const clientSecret = data.clientSecret;
+  
     // Připravíme data pro backend
     const items = cart.map(product => ({
       id: product.id,
       quantity: product.quantity
     }));
 
-fetch('/.netlify/functions/create-payment-intent', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ items: [{id: "poster002", name: "Mexico – poster", price: 10, quantity: 1}] })
-});
 
-    const data = await res.json();
-    const clientSecret = data.clientSecret;
 
     elements = stripe.elements({
       clientSecret,

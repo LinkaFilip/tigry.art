@@ -1,11 +1,11 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 const PRODUCTS = {
-  'poster001': { name: 'Japan – poster', price: 1000 },
-  'poster002': { name: 'Mexico – poster', price: 1000 },
-  'poster003': { name: 'Czechia – poster', price: 1000 },
-  'poster004': { name: 'Middle East – poster', price: 1000 },
-  'poster005': { name: 'Uganda – poster', price: 1000 }
+  'poster001': { name: 'Japan – poster', price: 10 },
+  'poster002': { name: 'Mexico – poster', price: 10 },
+  'poster003': { name: 'Czechia – poster', price: 10 },
+  'poster004': { name: 'Middle East – poster', price: 10 },
+  'poster005': { name: 'Uganda – poster', price: 10 }
 };
 
 exports.handler = async (event) => {
