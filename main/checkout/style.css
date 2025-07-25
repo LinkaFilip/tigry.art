@@ -26204,7 +26204,8 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
     opacity: var(--_10vrn9p5, 0);
     top: var(--label-inset-block-start);
     transform: var(--_10vrn9p6, translateY(.21428571428571427em));
-    max-width: calc(100% - 1.8571428571428572em)
+    max-width: calc(100% - 1.8571428571428572em);
+    padding: 0px var(--padding-block);
 }
 
 .cektnc4 {
@@ -30301,4 +30302,15 @@ html:not(:active-view-transition-type(payment-icons)) ._6f3AR {
 .pJt3c {
     color: var(--header-shop-name-color, inherit);
     pointer-events: none
+}
+.o1z23 {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    align-items: flex-end;
+}
+
+.kTI19 {
+    padding-top: 1.7rem;
 }

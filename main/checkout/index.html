@@ -51,6 +51,29 @@
                     <div class="km09ry1 _1fragemms">
                       <div>
                         <section aria-label="Contact" class="_17kya4ui _17kya4ug _1fragemoh _17kya4up _17kya4uk _1fragemod _1fragemue _1fragem32 _1fragemg4 _1fragemh4 _1fragemi7 _1fragemix _1fragemeb _1fragemfb _1fragemk0 _1fragemkq _1fragemms">
+                          <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s">
+                            <div>
+                              <div>
+                                <section aria-label="Express checkout" class="_1fragem32 _1fragemms">
+                                  <div data-count="3" class="_1fragem32 _1fragemms OTERX">
+                                    <div class="o1z23">
+                                      <h3 class="_4aXW0" style="margin-bottom: calc(-1 * var(--x-spacing-small-500));font-size: var(--x-typography-size-default);font-weight: var(--x-typography-primary-weight-base);color: var(--x-default-color-text-subdued);">Express checkout</h3>
+                                      </div>
+                                      <div class="kTI19">
+                                        <div class="DUnBb" style="padding-bottom: 16px;">
+                                          <div id="express-checkout-wallets-wrapper" class="iRnuh pUo2R XHLFs Pnahu">
+                                            <div id="payment-request-button" class="StripeElement">
+                                              <div class="__PrivateStripeElement" style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;">
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </div>
                         <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s">
                           <div>
                             <div>
@@ -372,7 +395,7 @@
             document.getElementById('payment-request-button').style.display = 'none';
           }
         });
-        
+
         const canMakePayment = await paymentRequest.canMakePayment();
         if (canMakePayment) {
           prButton.mount("#payment-request-button");
