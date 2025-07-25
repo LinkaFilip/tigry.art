@@ -397,19 +397,18 @@
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
 
-          const billingDetails = {
-            firstName: document.getElementById("TextField0").value,
-            lastName: document.getElementById("TextField1").value,
-            email: document.getElementById("email").value,
-            phone: document.getElementById("TextField6").value,
-            address: {
-              line1: document.getElementById("TextField2").value,
-              line2: document.getElementById("TextField3").value,
-              city: document.getElementById("TextField5").value,
-              postal_code: document.getElementById("TextField4").value,
-              country: document.getElementById("Select0").value.toUpperCase(),
-            },
-          };
+        const billingDetails = {
+          name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`, // spojení jména a příjmení
+          email: document.getElementById("email").value,
+          phone: document.getElementById("TextField6").value,
+          address: {
+            line1: document.getElementById("TextField2").value,
+            line2: document.getElementById("TextField3").value,
+            city: document.getElementById("TextField5").value,
+            postal_code: document.getElementById("TextField4").value,
+            country: document.getElementById("Select0").value.toUpperCase(), // např. 'CZ'
+          },
+        };
 
           const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
