@@ -1,36 +1,33 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
-const productPrices = {
-  POSTER_A: parseInt(process.env.PRODUCT_POSTER_A),
-  POSTER_B: parseInt(process.env.PRODUCT_POSTER_B),
-  POSTER_C: parseInt(process.env.PRODUCT_POSTER_C),
+const PRODUCTS = {
+  'poster001': { name: 'Japan – poster', price: 10 },
+  'poster002': { name: 'Mexico – poster', price: 10 },
+  // ...
 };
 
 exports.handler = async (event) => {
   try {
-    if (!event.body) {
-      throw new Error("Missing request body");
+    const { items } = JSON.parse(event.body);
+
+    // Spočítáme celkovou částku
+    let total = 0;
+    for (const { id, quantity } of items) {
+      const product = PRODUCTS[id];
+      if (!product) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: `Unknown product: ${id}` })
+        };
+      }
+      total += product.price * quantity;
     }
 
-    const data = JSON.parse(event.body);
-
-    // Příklad: načti produkt z dat
-    const productId = data.productId;
-    if (!productId) throw new Error("Missing productId");
-
-    // třeba map produktů, ceny v centech
-    const products = {
-      POSTER_A: 1000,
-      POSTER_B: 1500,
-      POSTER_C: 2500,
-    };
-
-    const amount = products[productId];
-    if (!amount) throw new Error("Invalid productId");
+    const amountInCents = total * 100;
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount,
-      currency: "eur",
+      amount: amountInCents,
+      currency: 'eur',
       automatic_payment_methods: { enabled: true },
     });
 
@@ -39,12 +36,11 @@ exports.handler = async (event) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
     };
-  } catch (error) {
-    console.error('Stripe PaymentIntent Error:', error.message);
 
+  } catch (error) {
+    console.error("Payment Intent Error:", error);
     return {
       statusCode: 400,
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: error.message }),
     };
   }

@@ -343,7 +343,9 @@
               </main>
             </div>
           </div>
-          <div class="i4DWM _1fragemoh _1fragemoe _1fragemue"></div>
+          <div class="i4DWM _1fragemoh _1fragemoe _1fragemue">
+            <p id="total-price"></p>
+          </div>
         </div>
       </div>
     </div>
@@ -352,105 +354,132 @@
 
 
 
-    <script>
-      const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
+<script>
+  const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
 
-      let elements, card;
+  let elements, card;
 
-      async function initializeStripe() {
-        const res = await fetch("/.netlify/functions/create-payment-intent", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ productId: "POSTER_A" }),
-        });
+  async function initializeStripe() {
+    // Získání produktů z cookies (cookie jménem "cart")
+    const cartCookie = document.cookie
+      .split("; ")
+      .find(row => row.startsWith("cart="));
+    const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
 
-        const data = await res.json();
-        const clientSecret = data.clientSecret;
-        elements = stripe.elements({clientSecret, appearance: { theme: 'flat' }, paymentMethodCreation: 'manual',});
-        card = elements.create("card");
-        card.mount("#card-element");
-        const paymentRequest = stripe.paymentRequest({
-          country: "CZ",
-          currency: "eur",
-          total: {
-            label: "Platba",
-            amount: 1000,
-          },
-          requestPayerName: true,
-          requestPayerEmail: true,
-        });
+    // Připravíme data pro backend
+    const items = cart.map(product => ({
+      id: product.id,
+      quantity: product.quantity
+    }));
 
-        const prButton = elements.create("paymentRequestButton", {
-          paymentRequest: paymentRequest,
-        });
+    const res = await fetch("/.netlify/functions/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items }),
+    });
 
-        paymentRequest.canMakePayment().then(function(result) {
-          if (result) {
-            prButton.mount('#payment-request-button');
-          } else {
-            document.getElementById('payment-request-button').style.display = 'none';
-          }
-        });
+    const data = await res.json();
+    const clientSecret = data.clientSecret;
 
-        const canMakePayment = await paymentRequest.canMakePayment();
-        if (canMakePayment) {
-          prButton.mount("#payment-request-button");
-        } else {
-          document.getElementById("payment-request-button").style.display = "none";
-        }
+    elements = stripe.elements({
+      clientSecret,
+      appearance: { theme: 'flat' },
+      paymentMethodCreation: 'manual',
+    });
 
-        paymentRequest.on("paymentmethod", async (ev) => {
-          const { error: confirmError } = await stripe.confirmCardPayment(
-            clientSecret,
-            {
-              payment_method: ev.paymentMethod.id,
-            },
-            { handleActions: false }
-          );
+    card = elements.create("card");
+    card.mount("#card-element");
 
-          if (confirmError) {
-            ev.complete("fail");
-            alert(confirmError.message);
-          } else {
-            ev.complete("success");
-          }
-        });
-        const form = document.getElementById("payment-form");
-        const errorMsg = document.getElementById("error-message");
+    const paymentRequest = stripe.paymentRequest({
+      country: "CZ",
+      currency: "eur",
+      total: {
+        label: "Platba",
+        amount: data.amount || 1000, // Pokud backend vrátí částku, použij ji
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
 
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
+    const prButton = elements.create("paymentRequestButton", {
+      paymentRequest: paymentRequest,
+    });
 
-        const billingDetails = {
-          name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`,
-          email: document.getElementById("email").value,
-          phone: document.getElementById("TextField6").value,
-          address: {
-            line1: document.getElementById("TextField2").value,
-            line2: document.getElementById("TextField3").value,
-            city: document.getElementById("TextField5").value,
-            postal_code: document.getElementById("TextField4").value,
-            country: document.getElementById("Select0").value.toUpperCase(),
-          },
-        };
+    const result = await paymentRequest.canMakePayment();
+    if (result) {
+      prButton.mount('#payment-request-button');
+    } else {
+      document.getElementById('payment-request-button').style.display = 'none';
+    }
 
-          const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-              card: card,
-              billing_details: billingDetails,
-            },
-          });
+    paymentRequest.on("paymentmethod", async (ev) => {
+      const { error: confirmError } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: ev.paymentMethod.id,
+        },
+        { handleActions: false }
+      );
 
-          if (error) {
-            errorMsg.textContent = error.message;
-          } else if (paymentIntent.status === "succeeded") {
-            form.reset();
-            card.clear();
-          }
-        });
+      if (confirmError) {
+        ev.complete("fail");
+        alert(confirmError.message);
+      } else {
+        ev.complete("success");
       }
+    });
 
-      initializeStripe();
-    </script>
+    const form = document.getElementById("payment-form");
+    const errorMsg = document.getElementById("error-message");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const billingDetails = {
+        name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("TextField6").value,
+        address: {
+          line1: document.getElementById("TextField2").value,
+          line2: document.getElementById("TextField3").value,
+          city: document.getElementById("TextField5").value,
+          postal_code: document.getElementById("TextField4").value,
+          country: document.getElementById("Select0").value.toUpperCase(),
+        },
+      };
+
+      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: billingDetails,
+        },
+      });
+
+      if (error) {
+        errorMsg.textContent = error.message;
+      } else if (paymentIntent.status === "succeeded") {
+        form.reset();
+        card.clear();
+      }
+    });
+  }
+  function displayTotalPrice() {
+    const cartCookie = document.cookie
+      .split("; ")
+      .find(row => row.startsWith("cart="));
+    const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
+
+    const total = cart.reduce((sum, product) => {
+      return sum + product.price * product.quantity;
+    }, 0);
+
+    const priceElement = document.getElementById("total-price");
+    priceElement.textContent = `Celková cena: €${total.toFixed(2)}`;
+  }
+
+  displayTotalPrice();
+  initializeStripe();
+</script>
+
   </body>
 </html>
