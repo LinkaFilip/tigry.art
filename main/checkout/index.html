@@ -38,11 +38,20 @@
   <body>
     <h2 style="text-align: center">💳 Zaplatit 10 EUR</h2>
 
-    <form id="payment-form">
-      <div id="card-element"></div>
-      <button type="submit">Zaplatit</button>
-      <div id="error-message"></div>
-    </form>
+  <form id="payment-form">
+    <input type="text" id="name" placeholder="Jméno a příjmení" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="tel" id="phone" placeholder="Telefon" />
+
+    <input type="text" id="line1" placeholder="Adresa" required />
+    <input type="text" id="city" placeholder="Město" required />
+    <input type="text" id="postal_code" placeholder="PSČ" required />
+    <input type="text" id="country" placeholder="Země (např. CZ)" required />
+
+    <div id="card-element"></div>
+    <button type="submit">Zaplatit</button>
+    <div id="error-message"></div>
+  </form>
 
     <script>
       const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb"); // nahraď svým veřejným klíčem
@@ -66,9 +75,23 @@
 
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
+
+          const billingDetails = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            address: {
+              line1: document.getElementById("line1").value,
+              city: document.getElementById("city").value,
+              postal_code: document.getElementById("postal_code").value,
+              country: document.getElementById("country").value,
+            },
+          };
+
           const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
               card: card,
+              billing_details: billingDetails,
             },
           });
 
