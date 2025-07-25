@@ -9,9 +9,16 @@ const PRODUCTS = {
 };
 
 exports.handler = async (event) => {
-  console.log("event.body:", event.body);
   try {
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Request body is empty" }),
+      };
+    }
+
     const { items } = JSON.parse(event.body);
+    console.log("event.body:", event.body);
 
     let total = 0;
     for (const { id, quantity } of items) {

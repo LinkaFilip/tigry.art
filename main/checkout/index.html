@@ -372,11 +372,11 @@
       quantity: product.quantity
     }));
 
-    const res = await fetch("/.netlify/functions/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({"items":[{"id":"poster001","quantity":1}]}),
-    });
+fetch('/.netlify/functions/create-payment-intent', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ items: [{id: "poster002", name: "Mexico – poster", price: 10, quantity: 1}] })
+});
 
     const data = await res.json();
     const clientSecret = data.clientSecret;
