@@ -2,11 +2,9 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 exports.handler = async (event) => {
   try {
-    // Můžeš odkomentovat a zalogovat tělo požadavku pokud posíláš data
-    // const data = JSON.parse(event.body);
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 1000, // částka v haléřích: 1000 = 10.00 CZK
+      amount: 1000,
       currency: 'eur',
       automatic_payment_methods: { enabled: true,},
     });

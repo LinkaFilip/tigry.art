@@ -1,4 +1,3 @@
-// netlify/functions/stripe.js
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.handler = async (event, context) => {
@@ -20,7 +19,7 @@ exports.handler = async (event, context) => {
         },
       ],
       mode: "payment",
-      success_url: "https://tigry.art/posters/",  // uprav podle potřeby
+      success_url: "https://tigry.art/posters/",
       cancel_url: "https://tigry.art/",
     });
 

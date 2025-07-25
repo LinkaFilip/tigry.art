@@ -164,13 +164,13 @@
                                                           <option value="GB">United Kingdom</option>
                                                           <option value="US">United States</option>
                                                         </select>
-                                                        <div class="VXrUd">
+                                                        <!-- <div class="VXrUd">
                                                           <span class="a8x1wu2 a8x1wu1 _1fragempm _1fragem2x _1fragemlo _1fragemle a8x1wu9 a8x1wui a8x1wum a8x1wuk _1fragem32 a8x1wup a8x1wuo a8x1wuw">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" focusable="false" aria-hidden="true" class="a8x1wuy a8x1wux _1fragem32 _1fragempm _1fragemlo _1fragemle _1fragemot">
                                                               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.75 7.354 9.396a.5.5 0 0 1-.708 0L2 4.75"></path>
                                                             </svg>
                                                           </span>
-                                                        </div>
+                                                        </div>-->
                                                       </div>
                                                     </div>
                                                   </div>
@@ -364,13 +364,9 @@
 
         const data = await res.json();
         const clientSecret = data.clientSecret;
-
-        // Set up Stripe Elements
         elements = stripe.elements({clientSecret, appearance: { theme: 'flat' }, paymentMethodCreation: 'manual',});
         card = elements.create("card");
         card.mount("#card-element");
-
-        // Payment Request API (Apple Pay / Google Pay)
         const paymentRequest = stripe.paymentRequest({
           country: "CZ",
           currency: "eur",
@@ -415,11 +411,8 @@
             alert(confirmError.message);
           } else {
             ev.complete("success");
-            alert("✅ Platba úspěšná přes Apple/Google Pay!");
           }
         });
-
-        // Form submit for card
         const form = document.getElementById("payment-form");
         const errorMsg = document.getElementById("error-message");
 
@@ -427,7 +420,7 @@
           e.preventDefault();
 
         const billingDetails = {
-          name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`, // spojení jména a příjmení
+          name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`,
           email: document.getElementById("email").value,
           phone: document.getElementById("TextField6").value,
           address: {
@@ -435,7 +428,7 @@
             line2: document.getElementById("TextField3").value,
             city: document.getElementById("TextField5").value,
             postal_code: document.getElementById("TextField4").value,
-            country: document.getElementById("Select0").value.toUpperCase(), // např. 'CZ'
+            country: document.getElementById("Select0").value.toUpperCase(),
           },
         };
 
@@ -449,7 +442,6 @@
           if (error) {
             errorMsg.textContent = error.message;
           } else if (paymentIntent.status === "succeeded") {
-            alert("✅ Platba úspěšná!");
             form.reset();
             card.clear();
           }

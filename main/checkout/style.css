@@ -27251,7 +27251,8 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
 }
 
 .A9HkF {
-    top: var(--label-inset-block-start)
+    top: var(--label-inset-block-start);
+    padding-left: var(--padding-inline);
 }
 
 :is(.D67WW,.A9HkF) .XDBWz {
