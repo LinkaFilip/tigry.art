@@ -68,7 +68,7 @@
         const clientSecret = data.clientSecret;
 
         // Set up Stripe Elements
-        elements = stripe.elements({ clientSecret });
+        elements = stripe.elements({clientSecret, appearance: { theme: 'flat' }, paymentMethodCreation: 'manual',});
         card = elements.create("card");
         card.mount("#card-element");
 
