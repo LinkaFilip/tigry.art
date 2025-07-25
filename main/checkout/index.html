@@ -365,6 +365,9 @@
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
 console.log(cart);
+console.log("Cookies:", document.cookie);
+console.log("cartCookie raw:", cartCookie);
+console.log("Parsed cart:", cart);
     if (cart.length === 0) {
       alert("Váš košík je prázdný. Přidejte prosím položky před platbou.");
       return;
