@@ -131,27 +131,50 @@ function renderCart() {
     const div = document.createElement("div");
     div.className = "LineItems_lineItems__9aSyR";
     div.innerHTML = `
-      <div class="LineItem_lineItem__ZK2EH">
-        <div class="LineItem_imageContainer__gDc0v">
-          <div class="ShopifyImage_shopifyImage__FC9OT" style="padding-top: 125%;">
-            <img>
-          </div>
-        </div>
-        <div class="LineItem_lineItemInfo__4tov_">
-          <div class="LineItem_topRow__FjuFV">
-            <div class="LineItem_top__4SbKk">
-              <span class="LineItem_title__FgmYr">${item.name}</span>
-              <span class="LineItem_totalPrice__KJ57U"><strong>${lineTotal.toFixed(2)} €</strong></span>
-            </div>
-          </div>
-          <div class="LineItem_productNotes__Jr2UI"><p>Colour: White speckle</p><p>Envelope: Semi-translucent</p></div>
-          <span class="remove-item" data-id="${item.id}" style="cursor:pointer; color:#d00; text-decoration:underline;">Remove</span>
+  <div class="LineItem_lineItem__ZK2EH">
+    <div class="LineItem_imageContainer__gDc0v">
+      <div class="ShopifyImage_shopifyImage__FC9OT" style="padding-top: 125%;">
+        <img>
+      </div>
+    </div>
+    <div class="LineItem_lineItemInfo__4tov_">
+      <div class="LineItem_topRow__FjuFV">
+        <div class="LineItem_top__4SbKk">
+          <span class="LineItem_title__FgmYr">${item.name}</span>
+          <span class="LineItem_totalPrice__KJ57U"><strong>${lineTotal.toFixed(2)} €</strong></span>
         </div>
       </div>
+      <div class="LineItem_quantityControls" style="margin: 8px 0; display: flex; gap: 8px; align-items: center;">
+        <button class="qty-btn decrease" data-id="${item.id}">-</button>
+        <span>${quantity}</span>
+        <button class="qty-btn increase" data-id="${item.id}">+</button>
+      </div>
+      <span class="remove-item" data-id="${item.id}" style="cursor:pointer; color:#d00; text-decoration:underline;">Remove</span>
+    </div>
+  </div>
     `;
     panel.appendChild(div);
   });
+panel.querySelectorAll(".qty-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const id = button.dataset.id;
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const item = cart.find(p => p.id === id);
+    if (!item) return;
 
+    if (button.classList.contains("increase")) {
+      item.quantity += 1;
+    } else if (button.classList.contains("decrease")) {
+      if (item.quantity > 1) {
+        item.quantity -= 1;
+      }
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    document.cookie = "cart=" + encodeURIComponent(JSON.stringify(cart)) + "; path=/";
+    renderCart();
+  });
+});
   renderFooter(total, itemCount);
 }
 
