@@ -1,12 +1,19 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 const PRODUCTS = {
-  'poster001': { name: 'Japan – poster', price: 10 },
-  'poster002': { name: 'Mexico – poster', price: 10 },
+  'poster001': { name: 'Japan – poster', price: 1000 },
+  'poster002': { name: 'Mexico – poster', price: 1000 },
   // ...
 };
 
+console.log("Final amount:", amount);
 exports.handler = async (event) => {
+  if (amount < 50) {
+  return {
+    statusCode: 400,
+    body: JSON.stringify({ error: "Amount must be at least 50 cents." })
+  };
+}
   try {
     const { items } = JSON.parse(event.body);
 
