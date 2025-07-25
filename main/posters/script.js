@@ -147,7 +147,7 @@ function renderCart() {
 <div class="LineItem_bottomRow__auvwE" style="">
   <div class="LineItem_quantitySelector__nUMsi QuantitySelector_quantitySelector__aZh48">
     <div class="QuantitySelector_quantity__4sUhH"><span class="QuantitySelector_qtyLabel___kOy2">Qty</span>
-    <span>3</span>
+    <span>${quantity}</span>
     </div>
     <button class="qty-btn decrease QuantitySelector_adjustButton__B31Mr" data-id="poster005">-</button>
 
