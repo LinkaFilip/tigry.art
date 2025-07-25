@@ -365,6 +365,14 @@
           paymentRequest: paymentRequest,
         });
 
+        paymentRequest.canMakePayment().then(function(result) {
+          if (result) {
+            prButton.mount('#payment-request-button');
+          } else {
+            document.getElementById('payment-request-button').style.display = 'none';
+          }
+        });
+        
         const canMakePayment = await paymentRequest.canMakePayment();
         if (canMakePayment) {
           prButton.mount("#payment-request-button");
