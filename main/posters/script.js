@@ -144,12 +144,18 @@ function renderCart() {
           <span class="LineItem_totalPrice__KJ57U"><strong>${lineTotal.toFixed(2)} €</strong></span>
         </div>
       </div>
-      <div class="LineItem_quantityControls" style="margin: 8px 0; display: flex; gap: 8px; align-items: center;">
-        <button class="qty-btn decrease" data-id="${item.id}">-</button>
-        <span>${quantity}</span>
-        <button class="qty-btn increase" data-id="${item.id}">+</button>
-      </div>
+<div class="LineItem_bottomRow__auvwE" style="">
+  <div class="LineItem_quantitySelector__nUMsi QuantitySelector_quantitySelector__aZh48">
+    <div class="QuantitySelector_quantity__4sUhH"><span class="QuantitySelector_qtyLabel___kOy2">Qty</span>
+    <span>3</span>
+    </div>
+    <button class="qty-btn decrease QuantitySelector_adjustButton__B31Mr" data-id="poster005">-</button>
+
+        <button class="qty-btn increase QuantitySelector_adjustButton__B31Mr" data-id="poster005">+</button>
+</div>
       <span class="remove-item" data-id="${item.id}" style="cursor:pointer; color:#d00; text-decoration:underline;">Remove</span>
+
+</div>
     </div>
   </div>
     `;
