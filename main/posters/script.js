@@ -24,15 +24,31 @@ document.addEventListener("DOMContentLoaded", () => {
   cartPanel.style.transition = "transform 0.5s ease";
 
   // SVG ikona
-  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("width", "24");
-  svg.setAttribute("height", "24");
-  svg.setAttribute("viewBox", "0 0 24 24");
-  svg.setAttribute("fill", "none");
-  const crossPath = `<path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"></path>`;
-  const originalPath = `<path stroke="currentColor" stroke-width="1.5" d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z"></path>`;
-  svg.innerHTML = originalPath;
-  element.appendChild(svg);
+const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+svg.setAttribute("width", "24");
+svg.setAttribute("height", "24");
+svg.setAttribute("fill", "none");
+
+function setToOriginal() {
+  svg.setAttribute("viewBox", "0 0 18 18");
+  svg.innerHTML = `<path stroke="currentColor" stroke-width="1.5" d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z" />`;
+}
+
+function setToCross() {
+  svg.setAttribute("viewBox", "0 0 14 14");
+  svg.innerHTML = `<path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12" />`;
+}
+
+// Inicializace
+setToOriginal(); // nebo setToCross()
+element.appendChild(svg);
+
+// Příklad přepínání (např. kliknutí na tlačítko)
+let showingOriginal = true;
+svg.addEventListener("click", () => {
+  showingOriginal ? setToCross() : setToOriginal();
+  showingOriginal = !showingOriginal;
+});
 
   // Přepínání košíku
   element.addEventListener("click", () => {
