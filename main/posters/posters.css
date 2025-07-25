@@ -3845,7 +3845,7 @@ svg {
 }
 .Cart_cartHeader__JYuum {
     font-size: 14px;
-    font-family: ABC Marfa, Helvetica, Arial, sans-serif;
+    font-family: "Geist", system-ui, sans-serif;
     font-weight: 400;
     letter-spacing: 0;
     line-height: 100%;
@@ -3918,7 +3918,7 @@ svg {
 }
 .LineItem_title__FgmYr {
     font-size: 12px;
-    font-family: ABC Marfa, Helvetica, Arial, sans-serif;
+    font-family: "Geist", system-ui, sans-serif;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 140%;
@@ -3977,7 +3977,7 @@ button.add-to-cart:hover {
 
 button.CheckoutButton_checkoutButton__WVgGK.Button_button__OFOdO.Button_styled__xGVes {
     font-size: 14px;
-    font-family: ABC Marfa, Helvetica, Arial, sans-serif;
+    font-family: "Geist", system-ui, sans-serif;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 140%;
@@ -4003,7 +4003,7 @@ button.CheckoutButton_checkoutButton__WVgGK.Button_button__OFOdO.Button_styled__
     display: flex;
     flex-direction: row;
     font-size: 9px;
-    font-family: ABC Marfa, Helvetica, Arial, sans-serif;
+    font-family: "Geist", system-ui, sans-serif;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 140%;
@@ -4013,7 +4013,7 @@ button.CheckoutButton_checkoutButton__WVgGK.Button_button__OFOdO.Button_styled__
 
 .Cart_detailValue__JJpkB {
     font-size: 9px;
-    font-family: ABC Marfa, Helvetica, Arial, sans-serif;
+    font-family: "Geist", system-ui, sans-serif;
     font-weight: 500;
     letter-spacing: 0;
     line-height: 140%;
