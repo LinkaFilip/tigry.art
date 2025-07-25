@@ -88,6 +88,7 @@ function addToCart(product) {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
+  document.cookie = "cart=" + encodeURIComponent(JSON.stringify(cart)) + "; path=/";
   renderCart();
 }
 
