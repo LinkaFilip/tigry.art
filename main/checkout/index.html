@@ -366,6 +366,14 @@
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
 
+
+
+    // Připravíme data pro backend
+    const items = cart.map(product => ({
+      id: product.id,
+      quantity: product.quantity
+    }));
+
   const res = await fetch('/.netlify/functions/create-payment-intent', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -380,14 +388,6 @@
 
   const data = await res.json();
   const clientSecret = data.clientSecret;
-  
-    // Připravíme data pro backend
-    const items = cart.map(product => ({
-      id: product.id,
-      quantity: product.quantity
-    }));
-
-
 
     elements = stripe.elements({
       clientSecret,
