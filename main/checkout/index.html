@@ -364,12 +364,17 @@
       .split("; ")
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-
+console.log(cart);
+    if (cart.length === 0) {
+      alert("Váš košík je prázdný. Přidejte prosím položky před platbou.");
+      return;
+    }
     const items = cart.map(product => ({
       id: product.id,
       quantity: product.quantity
     }));
 
+console.log(items);
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
