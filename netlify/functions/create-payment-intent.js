@@ -18,6 +18,7 @@ exports.handler = async (event) => {
     }
 
     const { items } = JSON.parse(event.body);
+    console.log('Přijaté položky:', items);
     console.log("event.body:", event.body);
 
     let total = 0;
