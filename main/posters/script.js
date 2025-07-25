@@ -23,48 +23,36 @@ document.addEventListener("DOMContentLoaded", () => {
   cartPanel.style.transform = isMobile ? "translate(0, -100%)" : "translate(100%, 0)";
   cartPanel.style.transition = "transform 0.5s ease";
 
-  // SVG ikona
 
 
-const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svg.setAttribute("width", "24");
-svg.setAttribute("height", "24");
-svg.setAttribute("fill", "none");
 
-// Cesty
-const originalPath = `
+
+
+const iconElement = document.querySelector('.CartIndicator_icon__AFivB');
+
+const bagSVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 18 18">
   <path stroke="currentColor" stroke-width="1.5"
     d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z"/>
-`;
+</svg>`;
 
-const crossPath = `
+const crossSVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 14 14">
   <path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"/>
-`;
+</svg>`;
 
-function setToOriginal() {
-  svg.setAttribute("viewBox", "0 0 18 18");
-  svg.innerHTML = originalPath;
-}
+let showingBag = true;
+iconElement.innerHTML = bagSVG;
 
-function setToCross() {
-  svg.setAttribute("viewBox", "0 0 14 14");
-  svg.innerHTML = crossPath;
-}
-
-// Inicializace
-let showingOriginal = true;
-setToOriginal();
-
-document.body.appendChild(svg); // nebo kamkoliv potřebuješ
-
-// Přepínání klikem
-svg.style.cursor = "pointer";
-svg.addEventListener("click", () => {
-  showingOriginal ? setToCross() : setToOriginal();
-  showingOriginal = !showingOriginal;
+iconElement.addEventListener('click', () => {
+  iconElement.innerHTML = showingBag ? crossSVG : bagSVG;
+  showingBag = !showingBag;
 });
 
-  // Přepínání košíku
+
+const originalPath = `<path stroke="currentColor" stroke-width="1.5"d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z"/>`;
+const crossPath = `<path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"/>`;
+
   element.addEventListener("click", () => {
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
