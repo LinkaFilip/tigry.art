@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       cart = cart.filter(item => item.id !== idToRemove);
       localStorage.setItem("cart", JSON.stringify(cart));
+      document.cookie = "cart=" + encodeURIComponent(JSON.stringify(cart)) + "; path=/";
       renderCart();
     }
   });
