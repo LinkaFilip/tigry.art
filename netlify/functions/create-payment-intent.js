@@ -52,7 +52,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
+      body: JSON.stringify({ clientSecret: paymentIntent.client_secret, amount: amountInCents }),
     };
 
   } catch (error) {

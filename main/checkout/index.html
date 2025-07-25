@@ -360,34 +360,30 @@
   let elements, card;
 
   async function initializeStripe() {
-    // Získání produktů z cookies (cookie jménem "cart")
     const cartCookie = document.cookie
       .split("; ")
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
 
-
-
-    // Připravíme data pro backend
     const items = cart.map(product => ({
       id: product.id,
       quantity: product.quantity
     }));
 
-  const res = await fetch('/.netlify/functions/create-payment-intent', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items })
-  });
+    const res = await fetch('/.netlify/functions/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items })
+    });
 
-  if (!res.ok) {
-    const errorData = await res.json();
-    alert("Chyba při vytvoření platby: " + errorData.error);
-    return;
-  }
+    if (!res.ok) {
+      const errorData = await res.json();
+      alert("Chyba při vytvoření platby: " + errorData.error);
+      return;
+    }
 
-  const data = await res.json();
-  const clientSecret = data.clientSecret;
+    const data = await res.json();
+    const clientSecret = data.clientSecret;
 
     elements = stripe.elements({
       clientSecret,
@@ -403,7 +399,7 @@
       currency: "eur",
       total: {
         label: "Platba",
-        amount: data.amount || 1000, // Pokud backend vrátí částku, použij ji
+        amount: data.amount,
       },
       requestPayerName: true,
       requestPayerEmail: true,
