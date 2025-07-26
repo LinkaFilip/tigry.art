@@ -33,7 +33,7 @@ exports.handler = async (event) => {
       total += product.price * quantity;
     }
 
-    const amountInCents = total * 100 + 2;
+    const amountInCents = total * 100 + 200;
 
     if (amountInCents < 50) {
       return {
@@ -48,6 +48,12 @@ exports.handler = async (event) => {
       amount: amountInCents,
       currency: 'eur',
       automatic_payment_methods: { enabled: true },
+        metadata: {
+          order: items.map(({ id, quantity }) => {
+            const product = PRODUCTS[id];
+            return `${product.name} x${quantity}`;
+          }).join(', ')
+        }
     });
 
     return {
