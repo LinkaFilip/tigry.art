@@ -666,62 +666,69 @@ function renderShopifyStyleCart() {
     ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
     : [];
 
-  console.log("🛒 Cart:", cart);
-
   const parent = document.querySelector('section._1fragem32._1fragemms');
-  if (!parent) {
-    console.error("❌ Parent container nebyl nalezen");
-    return;
-  }
-
-  const rowGroups = [...parent.querySelectorAll('[role="rowgroup"]')];
-  console.log("📦 Nalezeno rowgroup:", rowGroups.length);
+  const rowGroups = parent.querySelectorAll('[role="rowgroup"]');
+  console.log("🧱 rowGroups found:", rowGroups.length);
 
   if (rowGroups.length < 2) {
     console.error("❌ Šablona (second rowgroup) nebyla nalezena. Musíš mít v HTML aspoň jeden <div role='rowgroup'> jako šablonu produktu.");
     return;
   }
 
-  const template = rowGroups[1]; // první = hlavička, druhý = šablona
+  const firstRowGroup = rowGroups[1]; // druhý (první produkt)
+  // Odstraň všechny předešlé klony (ponecháme šablonu)
+  rowGroups.forEach((rg, index) => {
+    if (index > 1) rg.remove();
+  });
 
-  // Odstranit všechny předchozí produkty (všechny od indexu 2 dál)
-  rowGroups.slice(2).forEach(rg => rg.remove());
+  cart.forEach((product) => {
+    const clone = firstRowGroup.cloneNode(true);
 
-  cart.forEach((product, i) => {
-    const clone = template.cloneNode(true);
-    console.log(`🔁 Vkládám produkt ${i + 1}:`, product);
-
-    // IMG
-    const img = clone.querySelector("img");
+    // Najdi a nastav IMG
+    const img = clone.querySelector('img');
     if (img) {
-      img.src = product.image || "";
-      img.alt = product.name || "";
+      img.src = product.image || '';
+      img.alt = product.name;
     }
 
     // Název produktu
-    const name = clone.querySelector("p");
+    const name = clone.querySelector('p');
     if (name) name.textContent = product.name;
 
-    // Quantity – hledej všechny <span> a nahraď číselné
-    const spans = clone.querySelectorAll("span");
-    spans.forEach(span => {
+    // Množství
+    const quantitySpans = clone.querySelectorAll('span');
+    quantitySpans.forEach(span => {
       if (span.textContent.trim() === "Quantity") return;
-      if (!isNaN(span.textContent.trim())) {
-        span.textContent = product.quantity;
-      }
+      if (!isNaN(span.textContent)) span.textContent = product.quantity;
     });
 
     // Cena
-    const priceContainer = [...clone.querySelectorAll('div[role="cell"] span')]
-      .find(span => span.textContent.includes("Kč"));
-    if (priceContainer) {
-      const totalPrice = (product.price * product.quantity).toFixed(2);
-      priceContainer.textContent = `Kč ${totalPrice}`;
-    }
+    const price = clone.querySelector('div[role="cell"] span:not(:has(span))');
+    if (price) price.textContent = `Kč ${ (product.price * product.quantity).toFixed(2) }`;
 
     parent.appendChild(clone);
   });
 }
+
+// Počkej, až bude DOM připraven a šablona dostupná
+function waitForTemplateAndRender(retries = 20) {
+  const parent = document.querySelector('section._1fragem32._1fragemms');
+  const rowGroups = parent ? parent.querySelectorAll('[role="rowgroup"]') : [];
+
+  if (rowGroups.length >= 2) {
+    console.log("✅ Šablona nalezena, vykresluji košík.");
+    renderShopifyStyleCart();
+  } else if (retries > 0) {
+    console.log("⏳ Čekám na šablonu produktu...");
+    setTimeout(() => waitForTemplateAndRender(retries - 1), 300);
+  } else {
+    console.error("❌ Šablona se nikdy nenačetla.");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  waitForTemplateAndRender();
+});
 
 function updateDisplayedQuantity() {
   const cartCookie = document.cookie
@@ -759,7 +766,6 @@ function updateCartItemCount() {
   }
 }
 document.addEventListener("DOMContentLoaded", () => {
-  renderShopifyStyleCart();
   updateDisplayedQuantity();      // Tohle je to hlavní, co chceš
   updateCartItemCount();
 });
