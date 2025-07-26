@@ -33,7 +33,7 @@ exports.handler = async (event) => {
       total += product.price * quantity;
     }
 
-    const amountInCents = total * 100;
+    const amountInCents = total * 100 + 2;
 
     if (amountInCents < 50) {
       return {
