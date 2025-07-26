@@ -680,7 +680,7 @@ function renderShopifyStyleCart() {
 
   const firstRowGroup = rowGroups[1];
 
-  // Odstraň všechny existující duplikáty
+  // Odstraň staré klony (ponecháme jen první dvě rowgroups – header + šablonu)
   rowGroups.forEach((rg, index) => {
     if (index > 1) rg.remove();
   });
@@ -708,6 +708,10 @@ function renderShopifyStyleCart() {
 
     parent.appendChild(clone);
   });
+
+  // ✅ Zavoláme až po vykreslení produktů
+  updateDisplayedQuantity();
+  updateCartItemCount();
 }
 
 // 👉 Čekej pomocí MutationObserver na DOM, až Shopify vloží šablonu
