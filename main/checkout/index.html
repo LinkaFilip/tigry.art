@@ -373,8 +373,7 @@
                                         <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
                                           <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
                                             <picture>
-                                              <source media="(min-width: 0px)" srcset="https://cdn.shopify.com/s/files/1/0851/0095/3919/files/Short-Talk-Hungry-Workshop-The-Place-3_64x64.png?v=1748781351 1x, https://cdn.shopify.com/s/files/1/0851/0095/3919/files/Short-Talk-Hungry-Workshop-The-Place-3_128x128.png?v=1748781351 2x, https://cdn.shopify.com/s/files/1/0851/0095/3919/files/Short-Talk-Hungry-Workshop-The-Place-3_256x256.png?v=1748781351 4x">
-                                              <img src="https://cdn.shopify.com/s/files/1/0851/0095/3919/files/Short-Talk-Hungry-Workshop-The-Place-3_64x64.png?v=1748781351" loading="eager" alt="This must be the place" class="_1h3po425 _1h3po424 _1fragem32 _1fragemlo _1fragemle _1h3po426 _1fragemq0 _1fragempy _1fragemq2 _1fragempw _1fragemr1 _1fragemqx _1fragemr5 _1fragemqt _1fragemci _1fragemby _1fragemd2 _1fragembe _1fragemm3 _1m6j2n3c _1fragempm _1fragem2x _1m6j2n35">
+                                              <img src="">
                                             </picture>
                                             <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
                                               <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
@@ -389,7 +388,7 @@
                                   </div>
                                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
                                     <div class="_1fragem32 _1fragemms dDm6x">
-                                      <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">This must be the place</p>
+                                      <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f"></p>
                                       <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s"></div>
                                     </div>
                                   </div>
@@ -486,7 +485,7 @@
                               <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8w">
                                 <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemnh _1fragem4l _1fragem6e _1fragem8w">
                                   <abbr class="_1qifbzv1 _1qifbzv0 _1fragemtl">
-                                    <span translate="no" class="_19gi7yt0 _19gi7yte _19gi7ytd _1fragemp2 _19gi7yt12 _19gi7yt1b _19gi7yt1g notranslate">CZK</span>
+                                    <span translate="no" class="_19gi7yt0 _19gi7yte _19gi7ytd _1fragemp2 _19gi7yt12 _19gi7yt1b _19gi7yt1g notranslate">EUR</span>
                                   </abbr>
                                   <strong translate="no" class="_19gi7yt0 _19gi7ytk _19gi7ytj _1fragemp5 _19gi7yt12 _19gi7yt1a _19gi7yt1l notranslate">
                                     <p id="total-price"></p>
@@ -650,10 +649,72 @@ function displayTotalPrice() {
   document.getElementById("subtotal-price").textContent = `€ ${subtotal.toFixed(2)}`;
   shippingEl.textContent                                = `€ ${SHIPPING_COST.toFixed(2)}`;
   document.getElementById("total-price").textContent    = `€ ${total.toFixed(2)}`;
+
 }
 
   displayTotalPrice();
   initializeStripe();
+
+
+function renderShopifyStyleCart() {
+  const cartCookie = document.cookie
+    .split("; ")
+    .find(row => row.startsWith("cart="));
+  const cart = cartCookie
+    ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
+    : [];
+
+  const cartSection = document.querySelector("section._1fragem32._1fragemms");
+  if (!cartSection || cart.length === 0) return;
+
+  // Najdeme místo, kam nové řádky (produkty) vložit:
+  const targetRowGroup = cartSection.querySelectorAll('[role="rowgroup"]')[1]; // druhý rowgroup – ten pro položky
+
+  // Vymažeme předchozí obsah
+  targetRowGroup.innerHTML = '';
+
+  cart.forEach(product => {
+    const row = document.createElement("div");
+    row.setAttribute("role", "row");
+    row.className = "_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k";
+
+    row.innerHTML = `
+      <!-- Obrázek -->
+      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
+        <div class="_1fragem32 _1fragemms _16s97g74b">
+          <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
+            <img src="${product.image}" alt="${product.name}" style="width:64px; height:auto; border-radius:0.4rem;">
+          </div>
+        </div>
+      </div>
+
+      <!-- Název -->
+      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou">
+        <div class="_1fragem32 _1fragemms dDm6x">
+          <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b">${product.name}</p>
+        </div>
+      </div>
+
+      <!-- Množství -->
+      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou">
+        <div class="_6zbcq522 _1fragemth">
+          <span>${product.quantity}</span>
+        </div>
+      </div>
+
+      <!-- Cena -->
+      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou">
+        <div class="_197l2oft _1fragemou _1fragemnk">
+          <span translate="no">Kč&nbsp;${(product.price * product.quantity).toFixed(2)}</span>
+        </div>
+      </div>
+    `;
+
+    targetRowGroup.appendChild(row);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", renderShopifyStyleCart);
 </script>
 
   </body>
