@@ -664,71 +664,53 @@ function renderShopifyStyleCart() {
     ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
     : [];
 
-  const cartSection = document.querySelector("section._1fragem32._1fragemms");
-  if (!cartSection || cart.length === 0) return;
+  const parent = document.querySelector('section._1fragem32._1fragemms');
+  if (!parent || !cart.length) return;
 
-  // Najdeme místo, kam nové řádky (produkty) vložit:
-const rowGroups = cartSection.querySelectorAll('[role="rowgroup"]');
-const targetRowGroup = rowGroups[1];
+  // Najdi první existující rowgroup s produktem jako šablonu
+  const rowGroups = [...parent.querySelectorAll('[role="rowgroup"]')];
+  const firstRowGroup = rowGroups[1]; // první [0] je hlavička
 
-if (!targetRowGroup) {
-  console.warn("Nepodařilo se najít druhý [role='rowgroup']");
-  return;
+  if (!firstRowGroup) return;
+
+  // Odstraň staré produkty (klony) kromě šablony
+  rowGroups.slice(2).forEach(rg => rg.remove());
+
+  // Pro každý produkt v košíku vytvoř klon a uprav data
+  cart.forEach((product, index) => {
+    const clone = firstRowGroup.cloneNode(true);
+
+    // Nastav obrázek
+    const img = clone.querySelector('img');
+    if (img) {
+      img.src = product.image || '';
+      img.alt = product.name || '';
+    }
+
+    // Nastav název produktu
+    const name = clone.querySelector('p');
+    if (name) name.textContent = product.name || '';
+
+    // Nastav množství – pouze pro span, který obsahuje číslo
+    const quantitySpans = clone.querySelectorAll('span');
+    quantitySpans.forEach(span => {
+      if (span.textContent.trim() === "Quantity") return;
+      if (!isNaN(span.textContent.trim())) span.textContent = product.quantity;
+    });
+
+    // Nastav cenu
+    const priceCell = clone.querySelectorAll('div[role="cell"] span');
+    priceCell.forEach(span => {
+      const priceNumber = parseFloat(span.textContent.replace(/[^\d.]/g, ''));
+      if (!isNaN(priceNumber)) {
+        span.textContent = `Kč ${ (product.price * product.quantity).toFixed(2) }`;
+      }
+    });
+
+    parent.appendChild(clone);
+  });
 }
 
-
-
-cart.forEach(product => {
-  const parentSection = document.querySelector('section._1fragem32._1fragemms');
-  parentSection.innerHTML = '';
-
-  parentSection.innerHTML = cart.map(product => `
-  <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou">
-    <div role="row" class="_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k">
-      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
-        <div class="_1fragem32 _1fragemms _16s97g74b" style="--_16s97g746: 6.4rem;">
-          <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
-            <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
-              <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
-                <picture>
-                  <img src="${product.image || ''}" alt="${product.name}">
-                </picture>
-                <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
-                  <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
-                    <span class="_99ss3sw _1fragemth">Quantity</span>
-                    <span>${product.quantity}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
-        <div class="_1fragem32 _1fragemms dDm6x">
-          <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${product.name}</p>
-          <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s"></div>
-        </div>
-      </div>
-      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51o _6zbcq51y">
-        <div class="_6zbcq522 _1fragemth">
-          <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g">${product.quantity}</span>
-        </div>
-      </div>
-      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno">
-        <div class="_197l2oft _1fragemou _1fragemnk _1fragem3c _1fragemms Byb5s">
-          <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">Kč&nbsp;${(product.price * product.quantity).toFixed(2)}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-`).join('');
-
-
-  parentSection.appendChild(productDiv);
-});
-
-}
 function updateDisplayedQuantity() {
   const cartCookie = document.cookie
     .split("; ")
