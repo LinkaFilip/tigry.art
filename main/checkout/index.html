@@ -460,7 +460,8 @@
                               <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g">Subtotal</span>
                             </div>
                             <div role="cell" class="_1qy6ue6c">
-                              <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">Kč&nbsp;372.00</span>
+                              <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">
+                                <p id="subtotal-price"></p></span>
                             </div>
                           </div>
                           <div role="row" class="_1qy6ue60 _1qy6ue6a _1qy6ue61 _1qy6ue67 _1qy6ue65 _1fragem4l _1fragem6e _1fragem41">
@@ -473,7 +474,8 @@
                             </div>
                             <div role="cell" class="_1qy6ue6c">
                               <span translate="no" class="_19gi7yt0 _19gi7yt7 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">
-            <p id="total-price"></p></span>
+                                <p id="shipping-price"></p>
+                              </span>
                             </div>
                           </div>
                           <div role="row" class="_1x41w3p1 _1x41w3p0 _1fragem41 _1fragemni _1x41w3p2">
@@ -486,7 +488,9 @@
                                   <abbr class="_1qifbzv1 _1qifbzv0 _1fragemtl">
                                     <span translate="no" class="_19gi7yt0 _19gi7yte _19gi7ytd _1fragemp2 _19gi7yt12 _19gi7yt1b _19gi7yt1g notranslate">CZK</span>
                                   </abbr>
-                                  <strong translate="no" class="_19gi7yt0 _19gi7ytk _19gi7ytj _1fragemp5 _19gi7yt12 _19gi7yt1a _19gi7yt1l notranslate">Kč&nbsp;723.00</strong>
+                                  <strong translate="no" class="_19gi7yt0 _19gi7ytk _19gi7ytj _1fragemp5 _19gi7yt12 _19gi7yt1a _19gi7yt1l notranslate">
+                                    <p id="total-price"></p>
+                                  </strong>
                                 </div>
                               </div>
                             </div>
@@ -528,7 +532,7 @@
       return;
     }
     const items = cart.map(({ id, quantity }) => ({ id, quantity }));
-console.log('Posílám položky:', items);
+    console.log('Posílám položky:', items);
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -626,20 +630,27 @@ console.log('Posílám položky:', items);
       }
     });
   }
-  function displayTotalPrice() {
-    const cartCookie = document.cookie
-      .split("; ")
-      .find(row => row.startsWith("cart="));
-    const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-    const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
+function displayTotalPrice() {
+  const cartCookie = document.cookie
+    .split("; ")
+    .find(row => row.startsWith("cart="));
+  const cart = cartCookie
+    ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
+    : [];
 
-    const total = cart.reduce((sum, product) => {
-      return sum + product.price * product.quantity;
-    }, 0);
+  const subtotal = cart.reduce(
+    (sum, product) => sum + product.price * product.quantity,
+    0
+  );
 
-    const priceElement = document.getElementById("total-price");
-    priceElement.textContent = `Celková cena: €${total.toFixed(2)}`;
-  }
+  const SHIPPING_COST = 2;        // číslo
+  const shippingEl   = document.getElementById("shipping-price");
+  const total = subtotal + SHIPPING_COST;
+
+  document.getElementById("subtotal-price").textContent = `€ ${subtotal.toFixed(2)}`;
+  shippingEl.textContent                                = `€ ${SHIPPING_COST.toFixed(2)}`;
+  document.getElementById("total-price").textContent    = `€ ${total.toFixed(2)}`;
+}
 
   displayTotalPrice();
   initializeStripe();
