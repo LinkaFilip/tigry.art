@@ -395,11 +395,11 @@
                                     </div>
                                   </div>
                                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51o _6zbcq51y"><div class="_6zbcq522 _1fragemth">
-                                    <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g">3</span>
+                                    <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g"></span>
                                   </div>
                                 </div>
                                 <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno"><div class="_197l2oft _1fragemou _1fragemnk _1fragem3c _1fragemms Byb5s">
-                                  <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">Kč&nbsp;372.00</span>
+                                  <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate"></span>
                                 </div>
                               </div>
                             </div>
@@ -760,6 +760,7 @@ function updateDisplayedQuantity() {
     : [];
   const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
   const container = document.querySelector('._1m6j2n3m ._99ss3s1');
+  const firstPrice = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1g.notranslate");
   if (container) {
     const spans = container.querySelectorAll('span');
     if (spans.length >= 2) {
@@ -776,8 +777,7 @@ function updateCartItemCount() {
     : [];
 
   const itemCount = cart.length;
-
-  // Najdi správné místo v HTML, kam počet vložit:
+  
   const container = document.querySelector('._1m6j2n3m ._99ss3s1'); // Přizpůsob, pokud máš jiné místo
   if (container) {
     const spans = container.querySelectorAll('span');
@@ -787,7 +787,7 @@ function updateCartItemCount() {
   }
 }
 document.addEventListener("DOMContentLoaded", () => {
-  updateDisplayedQuantity();      // Tohle je to hlavní, co chceš
+  updateDisplayedQuantity();
   updateCartItemCount();
 });
 </script>
