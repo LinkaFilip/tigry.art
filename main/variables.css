@@ -93,9 +93,14 @@ span.dot{
     transform: translate(-100%, -50%) rotate(90deg) !important;
 }
 .menu nav {
-    display: none;
+    display: flex;
+    visibility: hidden;
+    width: 0;
+    pointer-events: none;
 }
 .menu:hover nav {
+    pointer-events: auto;
+    visibility: visible;
     position: relative;
     display: flex;
     width: calc(100% * (1 / 1.85));
@@ -106,4 +111,21 @@ span.dot{
 }
 nav span {
     width: auto;
+}
+.menu nav .first_a {
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.3s ease 0.3s;
+}
+
+.menu:hover nav a {
+    opacity: 1;
+    transition: opacity 0.6s ease 0.6s;
+    transform: translateY(0);
+}
+
+.menu span .second_a {
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.6s ease 0.6s;
 }
