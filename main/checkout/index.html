@@ -348,11 +348,12 @@
               <aside>
                 <div>
                   <section class="_1fragem32 _1fragemms">
-                    <div role="rowgroup" class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5a _1fragem73">
+                    <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5a _1fragem73">
 
                       <h2 class="n8k95wh _1fragemth">Order summary</h2>
                       <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5a _1fragem73">
-                        <section class="_1fragem32 _1fragemms"><div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
+                        <section class="_1fragem32 _1fragemms">
+                          <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
                           <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh;">
                             <div class="_6zbcq522 _1fragemth">
                               <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">Shopping cart</h3>
@@ -658,7 +659,7 @@ function displayTotalPrice() {
   initializeStripe();
 
 
-function renderShopifyStyleCart() {
+function renderShopifyStyleCartFromRow() {
   const cartCookie = document.cookie
     .split("; ")
     .find(row => row.startsWith("cart="));
@@ -666,50 +667,60 @@ function renderShopifyStyleCart() {
     ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
     : [];
 
-  const parent = document.querySelector('section._1fragem32._1fragemms');
-  if (!parent) {
-    console.error("❌ Nelze najít hlavní parent element.");
+  // Najdi rowgroup s produkty
+  const parentGroup = document.querySelector('div[role="rowgroup"]');
+  if (!parentGroup) {
+    console.error("❌ Nenalezen rowgroup.");
     return;
   }
 
-  const rowGroups = parent.querySelectorAll('[role="rowgroup"]');
-  if (rowGroups.length < 2) {
-    console.error("❌ Šablona (second rowgroup) nebyla nalezena.");
+  // Najdi první row = šablonu
+  const templateRow = parentGroup.querySelector('div[role="row"]');
+  if (!templateRow) {
+    console.error("❌ Nenalezen row jako šablona.");
     return;
   }
 
-  const firstRowGroup = rowGroups[1];
-
-  // Odstraň staré klony (ponecháme jen první dvě rowgroups – header + šablonu)
-  rowGroups.forEach((rg, index) => {
-    if (index > 1) rg.remove();
+  // Smaž staré řádky (všechny kromě šablony)
+  parentGroup.querySelectorAll('div[role="row"]').forEach((row, i) => {
+    if (i > 0) row.remove();
   });
 
-  cart.forEach((product) => {
-    const clone = firstRowGroup.cloneNode(true);
+  // Pro každou položku vytvoř nový řádek
+  cart.forEach(product => {
+    const clone = templateRow.cloneNode(true);
 
+    // Obrázek
     const img = clone.querySelector('img');
     if (img) {
-      img.src = product.image || '';
-      img.alt = product.name;
+      img.src = product.image || "";
+      img.alt = product.name || "";
     }
 
+    // Název (první <p>)
     const name = clone.querySelector('p');
-    if (name) name.textContent = product.name;
+    if (name) {
+      name.textContent = product.name || "Produkt";
+    }
 
-    const quantitySpans = clone.querySelectorAll('span');
-    quantitySpans.forEach(span => {
-      if (span.textContent.trim() === "Quantity") return;
-      if (!isNaN(span.textContent)) span.textContent = product.quantity;
+    // Množství (hledáme span, který není Quantity)
+    const spans = clone.querySelectorAll('span');
+    spans.forEach(span => {
+      if (span.textContent.trim() !== "Quantity" && !isNaN(span.textContent)) {
+        span.textContent = product.quantity;
+      }
     });
 
-    const price = clone.querySelector('div[role="cell"] span:not(:has(span))');
-    if (price) price.textContent = `Kč ${ (product.price * product.quantity).toFixed(2) }`;
+    // Cena (např. poslední role=cell → span)
+    const priceSpan = clone.querySelector('div[role="cell"] span:not(:has(span))');
+    if (priceSpan) {
+      priceSpan.textContent = `Kč ${ (product.price * product.quantity).toFixed(2) }`;
+    }
 
-    parent.appendChild(clone);
+    parentGroup.appendChild(clone);
   });
 
-  // ✅ Zavoláme až po vykreslení produktů
+  // Aktualizuj počty
   updateDisplayedQuantity();
   updateCartItemCount();
 }
