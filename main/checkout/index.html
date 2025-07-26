@@ -659,67 +659,65 @@ function displayTotalPrice() {
 
 
 function renderShopifyStyleCart() {
-  console.log("Funkce spuštěna");
   const cartCookie = document.cookie
     .split("; ")
     .find(row => row.startsWith("cart="));
   const cart = cartCookie
     ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
     : [];
-  console.log("Košík:", cart);
-  if (cart.length === 0) {
-    console.warn("Košík je prázdný nebo neexistuje cookie");
-  }
+
+  console.log("🛒 Cart:", cart);
+
   const parent = document.querySelector('section._1fragem32._1fragemms');
   if (!parent) {
-    console.error("Parent section nebyl nalezen");
+    console.error("❌ Parent container nebyl nalezen");
     return;
   }
 
-  // Najdi první existující rowgroup s produktem jako šablonu
   const rowGroups = [...parent.querySelectorAll('[role="rowgroup"]')];
+  console.log("📦 Nalezeno rowgroup:", rowGroups.length);
 
-  const firstRowGroup = rowGroups[1]; // první [0] je hlavička
-  if (!firstRowGroup) {
-    console.error("Šablona (second rowgroup) nebyla nalezena");
+  if (rowGroups.length < 2) {
+    console.error("❌ Šablona (second rowgroup) nebyla nalezena. Musíš mít v HTML aspoň jeden <div role='rowgroup'> jako šablonu produktu.");
     return;
   }
 
+  const template = rowGroups[1]; // první = hlavička, druhý = šablona
 
-
-  if (!firstRowGroup) return;
-
-  // Odstraň staré produkty (klony) kromě šablony
+  // Odstranit všechny předchozí produkty (všechny od indexu 2 dál)
   rowGroups.slice(2).forEach(rg => rg.remove());
 
-  // Pro každý produkt v košíku vytvoř klon a uprav data
-  cart.forEach((product, index) => {
-    const clone = firstRowGroup.cloneNode(true);
+  cart.forEach((product, i) => {
+    const clone = template.cloneNode(true);
+    console.log(`🔁 Vkládám produkt ${i + 1}:`, product);
 
-    // Nastav obrázek
-    const img = clone.querySelector('img');
+    // IMG
+    const img = clone.querySelector("img");
     if (img) {
-      img.src = product.image || '';
-      img.alt = product.name || '';
+      img.src = product.image || "";
+      img.alt = product.name || "";
     }
 
-    // Nastav název produktu
-    const name = clone.querySelector('p');
-    if (name) name.textContent = product.name || '';
+    // Název produktu
+    const name = clone.querySelector("p");
+    if (name) name.textContent = product.name;
 
-    // Nastav množství – pouze pro span, který obsahuje číslo
-    const quantitySpans = clone.querySelectorAll('span');
-    quantitySpans.forEach(span => {
+    // Quantity – hledej všechny <span> a nahraď číselné
+    const spans = clone.querySelectorAll("span");
+    spans.forEach(span => {
       if (span.textContent.trim() === "Quantity") return;
-      if (!isNaN(span.textContent.trim())) span.textContent = product.quantity;
-    });
-    const priceCell = clone.querySelectorAll('div[role="cell"] span');
-    priceCell.forEach(span => {
-      const priceNumber = parseFloat(span.textContent.replace(/[^\d.]/g, ''));
-      if (!isNaN(priceNumber)) {
-        span.textContent = `Kč ${ (product.price * product.quantity).toFixed(2) }`;
+      if (!isNaN(span.textContent.trim())) {
+        span.textContent = product.quantity;
       }
     });
+
+    // Cena
+    const priceContainer = [...clone.querySelectorAll('div[role="cell"] span')]
+      .find(span => span.textContent.includes("Kč"));
+    if (priceContainer) {
+      const totalPrice = (product.price * product.quantity).toFixed(2);
+      priceContainer.textContent = `Kč ${totalPrice}`;
+    }
 
     parent.appendChild(clone);
   });
