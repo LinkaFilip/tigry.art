@@ -149,9 +149,9 @@ function renderCart() {
     <div class="QuantitySelector_quantity__4sUhH"><span class="QuantitySelector_qtyLabel___kOy2">Qty</span>
     <span>${quantity}</span>
     </div>
-    <button class="qty-btn decrease QuantitySelector_adjustButton__B31Mr" data-id="poster005">-</button>
+    <button class="qty-btn decrease QuantitySelector_adjustButton__B31Mr" data-id="${item.id}">-</button>
 
-        <button class="qty-btn increase QuantitySelector_adjustButton__B31Mr" data-id="poster005">+</button>
+        <button class="qty-btn increase QuantitySelector_adjustButton__B31Mr" data-id="${item.id}">+</button>
 </div>
       <span class="remove-item" data-id="${item.id}" style="cursor:pointer; color:#d00; text-decoration:underline;">Remove</span>
 
