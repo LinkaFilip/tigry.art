@@ -10,6 +10,29 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       console.log("Produkt přidán do košíku:", product);
       addToCart(product);
+      
+      const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
+      const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
+      const cartPanel = document.querySelector(".Cart_cart__yGsQk");
+
+      if (element && overlay && cartPanel) {
+        const isMobile = window.matchMedia("(max-width: 1024px)").matches;
+
+        element.classList.remove("CartIndicator_icon__AFivB");
+        element.classList.add("CartIndicator_closeBtn___fEN6");
+        element.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"/>
+          </svg>`;
+
+        overlay.style.opacity = "1";
+        overlay.style.visibility = "inherit";
+        overlay.style.pointerEvents = "auto";
+        cartPanel.style.transform = "translate(0, 0)";
+        cartPanel.classList.add("Cart_open__Hlx3_");
+
+        renderCart(); // obnov zobrazení
+      }
     });
   });
 
@@ -70,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderCart();
   });
 
-  // Odstranění položky z košíku
   panel.addEventListener("click", function (event) {
     if (event.target.classList.contains("remove-item")) {
       event.preventDefault();
@@ -213,8 +235,6 @@ function renderFooter(total, itemCount) {
   `;
 
   footerWrapper.appendChild(footer);
-
-  // 🛒 Ošetři funkčnost tlačítka po renderu
   const checkoutButton = footer.querySelector(".CheckoutButton_checkoutButton__WVgGK");
   if (checkoutButton) {
     checkoutButton.addEventListener("click", () => {
