@@ -668,53 +668,124 @@ function renderShopifyStyleCart() {
   if (!cartSection || cart.length === 0) return;
 
   // Najdeme místo, kam nové řádky (produkty) vložit:
-  const targetRowGroup = cartSection.querySelectorAll('[role="rowgroup"]')[1]; // druhý rowgroup – ten pro položky
+const rowGroups = cartSection.querySelectorAll('[role="rowgroup"]');
+const targetRowGroup = rowGroups[1];
 
-  // Vymažeme předchozí obsah
-  targetRowGroup.innerHTML = '';
+if (!targetRowGroup) {
+  console.warn("Nepodařilo se najít druhý [role='rowgroup']");
+  return;
+}
 
-  cart.forEach(product => {
-    const row = document.createElement("div");
-    row.setAttribute("role", "row");
-    row.className = "_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k";
+const parentSection = document.querySelector('section._1fragem32._1fragemms');
+parentSection.innerHTML = ''; // vyčistit parent
 
-    row.innerHTML = `
-      <!-- Obrázek -->
-      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
-        <div class="_1fragem32 _1fragemms _16s97g74b">
-          <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
-            <img src="${product.image}" alt="${product.name}" style="width:64px; height:auto; border-radius:0.4rem;">
+cart.forEach(product => {
+  const productDiv = document.createElement('div');
+  productDiv.className = '_1mjy8kn6 _1fragemms _16s97g73k';
+  productDiv.style.setProperty('--_16s97g73f', '40vh');
+
+  productDiv.innerHTML = `
+    <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh;">
+      <div class="_6zbcq522 _1fragemth">
+        <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">${product.name}</h3>
+      </div>
+      <div role="table" aria-labelledby="ResourceList0" class="_6zbcq56 _6zbcq55 _1fragem3c _1fragemou _6zbcq5o _6zbcq5c _1fragem50 _6zbcq516">
+        <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou _6zbcq51d _6zbcq51c _1fragemth">
+          <div role="row" class="_6zbcq51f _6zbcq51e _1fragem3c _1fragemni _1fragempm _1fragem6t">
+            <div role="columnheader" class="_6zbcq522 _1fragemth">Product image</div>
+            <div role="columnheader" class="_6zbcq522 _1fragemth">Description</div>
+            <div role="columnheader" class="_6zbcq522 _1fragemth">Quantity</div>
+            <div role="columnheader" class="_6zbcq522 _1fragemth">Price</div>
+          </div>
+        </div>
+        <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou">
+          <div role="row" class="_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k">
+            <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
+              <div class="_1fragem32 _1fragemms _16s97g74b" style="--_16s97g746: 6.4rem;">
+                <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
+                  <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
+                    <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
+                      <picture>
+                        <img src="${product.image || ''}" alt="${product.name}">
+                      </picture>
+                      <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
+                        <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
+                          <span class="_99ss3sw _1fragemth">Quantity</span>
+                          <span>${product.quantity}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
+              <div class="_1fragem32 _1fragemms dDm6x">
+                <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${product.name}</p>
+                <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s"></div>
+              </div>
+            </div>
+            <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51o _6zbcq51y">
+              <div class="_6zbcq522 _1fragemth">
+                <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g">${product.quantity}</span>
+              </div>
+            </div>
+            <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno">
+              <div class="_197l2oft _1fragemou _1fragemnk _1fragem3c _1fragemms Byb5s">
+                <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">Kč&nbsp;${(product.price * product.quantity).toFixed(2)}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  `;
 
-      <!-- Název -->
-      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou">
-        <div class="_1fragem32 _1fragemms dDm6x">
-          <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b">${product.name}</p>
-        </div>
-      </div>
 
-      <!-- Množství -->
-      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou">
-        <div class="_6zbcq522 _1fragemth">
-          <span>${product.quantity}</span>
-        </div>
-      </div>
+  parentSection.appendChild(productDiv);
+});
 
-      <!-- Cena -->
-      <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou">
-        <div class="_197l2oft _1fragemou _1fragemnk">
-          <span translate="no">Kč&nbsp;${(product.price * product.quantity).toFixed(2)}</span>
-        </div>
-      </div>
-    `;
-
-    targetRowGroup.appendChild(row);
-  });
 }
+function updateDisplayedQuantity() {
+  const cartCookie = document.cookie
+    .split("; ")
+    .find(row => row.startsWith("cart="));
+  const cart = cartCookie
+    ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
+    : [];
+  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const container = document.querySelector('._1m6j2n3m ._99ss3s1');
+  if (container) {
+    const spans = container.querySelectorAll('span');
+    if (spans.length >= 2) {
+      spans[1].textContent = totalQuantity;
+    }
+  }
+}
+function updateCartItemCount() {
+  const cartCookie = document.cookie
+    .split("; ")
+    .find(row => row.startsWith("cart="));
+  const cart = cartCookie
+    ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
+    : [];
 
-document.addEventListener("DOMContentLoaded", renderShopifyStyleCart);
+  const itemCount = cart.length;
+
+  // Najdi správné místo v HTML, kam počet vložit:
+  const container = document.querySelector('._1m6j2n3m ._99ss3s1'); // Přizpůsob, pokud máš jiné místo
+  if (container) {
+    const spans = container.querySelectorAll('span');
+    if (spans.length >= 2) {
+      spans[1].textContent = itemCount;
+    }
+  }
+}
+document.addEventListener("DOMContentLoaded", () => {
+  renderShopifyStyleCart();
+  updateDisplayedQuantity();      // Tohle je to hlavní, co chceš
+  updateCartItemCount();
+});
 </script>
 
   </body>
