@@ -657,19 +657,33 @@ function displayTotalPrice() {
 
 
 function renderShopifyStyleCart() {
+  console.log("Funkce spuštěna");
   const cartCookie = document.cookie
     .split("; ")
     .find(row => row.startsWith("cart="));
   const cart = cartCookie
     ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
     : [];
-
+  console.log("Košík:", cart);
+  if (cart.length === 0) {
+    console.warn("Košík je prázdný nebo neexistuje cookie");
+  }
   const parent = document.querySelector('section._1fragem32._1fragemms');
-  if (!parent || !cart.length) return;
+  if (!parent) {
+    console.error("Parent section nebyl nalezen");
+    return;
+  }
 
   // Najdi první existující rowgroup s produktem jako šablonu
   const rowGroups = [...parent.querySelectorAll('[role="rowgroup"]')];
+
   const firstRowGroup = rowGroups[1]; // první [0] je hlavička
+  if (!firstRowGroup) {
+    console.error("Šablona (second rowgroup) nebyla nalezena");
+    return;
+  }
+
+
 
   if (!firstRowGroup) return;
 
@@ -697,8 +711,6 @@ function renderShopifyStyleCart() {
       if (span.textContent.trim() === "Quantity") return;
       if (!isNaN(span.textContent.trim())) span.textContent = product.quantity;
     });
-
-    // Nastav cenu
     const priceCell = clone.querySelectorAll('div[role="cell"] span');
     priceCell.forEach(span => {
       const priceNumber = parseFloat(span.textContent.replace(/[^\d.]/g, ''));
