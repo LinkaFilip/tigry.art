@@ -201,7 +201,7 @@ function renderCart() {
 
         <button class="qty-btn increase QuantitySelector_adjustButton__B31Mr" data-id="${item.id}">+</button>
 </div>
-      <span class="remove-item" data-id="${item.id}" style="cursor:pointer; color:#d00; text-decoration:underline;">Remove</span>
+      <span class="remove-item" data-id="${item.id}" style="cursor:pointer; color:#000000; text-transform: uppercase; text-decoration:underline;">Remove</span>
 
 </div>
     </div>
