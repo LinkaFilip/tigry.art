@@ -3659,6 +3659,7 @@ img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fade
     align-items: flex-start;
     padding-top: var(--layout-margin);
     padding-bottom: var(--layout-margin);
+    position: fixed;
 }
 @media (min-width: 1024px) {
     .Header_fixed__PFqXi {
@@ -3669,14 +3670,6 @@ img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fade
         justify-content: flex-end;
         z-index: 11000;
     }
-}
-.Header_fixed__PFqXi {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-top: var(--layout-margin);
-    padding-bottom: var(--layout-margin);
 }
 .CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6 {
     padding: 10px;
@@ -3776,38 +3769,6 @@ svg {
         padding-top: 0;
         width: calc(4 * var(--layout-column-width) + (4 - 1) * var(--layout-columns-gap) + 2 * var(--layout-margin));
     }
-}
-.Cart_cart__yGsQk{
-    display: flex;
-    flex-direction: column;
-    z-index: 130000;
-    background-color: var(--white);
-    position: fixed;
-    right: 0;
-    top: 0;
-    width: 100vw;
-    height: 100%;
-    pointer-events: auto;
-    padding-top: calc(54px);
-}
-@media (min-width: 1024px) {
-    .Cart_cart__yGsQk {
-        padding-top: 0;
-        width: calc(4 * var(--layout-column-width) + (4 - 1) * var(--layout-columns-gap) + 2 * var(--layout-margin));
-    }
-}
-.Cart_cart__yGsQk {
-    display: flex;
-    flex-direction: column;
-    z-index: 10000;
-    background-color: var(--white);
-    position: fixed;
-    right: 0;
-    top: 0;
-    height: 100%;
-    pointer-events: auto;
-    padding-top: calc(54px);
-    z-index: 130000;
 }
 .Cart_innerContainer__ElGMp {
     max-height: 100%;
@@ -4875,9 +4836,9 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 }
 
 .Cart_cart__yGsQk {
-    display: flex;
+    display: flex
+;
     flex-direction: column;
-    z-index: 10000;
     background-color: var(--white);
     position: fixed;
     right: 0;
@@ -4885,8 +4846,8 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
     width: 100vw;
     height: 100%;
     pointer-events: auto;
-    padding-top: calc(54px);
     z-index: 130000;
+    padding-top: 0px;
 }
 
 @media(min-width: 1024px) {
