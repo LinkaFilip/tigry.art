@@ -5,7 +5,7 @@ async function registerDomains() {
     const domains = ['tigry.art', 'www.tigry.art'];
 
     for (const domain of domains) {
-      const result = await stripe.paymentMethodDomains.create({
+      await stripe.paymentMethodDomains.create({
         domain_name: domain,
       });
     }
