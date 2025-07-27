@@ -3819,7 +3819,6 @@ svg {
     padding-left: var(--layout-margin);
     padding-right: var(--layout-margin);
     z-index: 150000;
-    position: fixed;
 }
 .Cart_cartContainer__QEmUs {
     max-height: 100%;
