@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
+const stripe = require('stripe')("sk_test_51LpXXlEqK4P4Y8FRHxxQSGUDafn8XjwWaKHcXI7NAHRrY2MVdEOk3DH97ZjaiqcMlAqSEF9SxldmO9xPHtyRlEYT00OONh3M9p");
 
 async function registerDomain() {
   try {
