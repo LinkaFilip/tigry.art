@@ -1184,7 +1184,8 @@ html:not(.dev) {
 }
 
 .ProductTile_details__hQzW4 {
-    margin-top: 16px
+    margin-top: 16px;
+    column-gap: 10px;
 }
 
 .ProductTile_title__ERaXV {
@@ -1210,10 +1211,10 @@ html:not(.dev) {
 button.add-to-cart {
     display: flex;
     border: 2px solid black;
-    padding: 1rem;
+    width: 100%;
+    padding: 10px;
     background-color: black;
     color: white;
-    min-width: 200px;
     flex-direction: row;
     justify-content: space-between;
 }
