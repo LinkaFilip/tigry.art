@@ -4,6 +4,7 @@ async function registerDomain() {
   try {
     const paymentMethodDomain = await stripe.paymentMethodDomains.create({
       domain_name: 'tigry.art',
+      domain_name: 'www.tigry.art'
     });
 
     console.log('Registered domain:', paymentMethodDomain);
