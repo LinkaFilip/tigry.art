@@ -106,6 +106,8 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
       } else if (paymentIntent.status === "succeeded") {
         form.reset();
         card.clear();
+        localStorage.removeItem('cart');
+        window.location.href = '/posters/?success=true';
       }
     });
   }
