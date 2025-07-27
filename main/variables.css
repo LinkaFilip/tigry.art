@@ -41,7 +41,7 @@ img {
 .menu {
     width: 114px;
     height: 34px;
-    background-color: #2f497a;
+    background-color: transparent;
     border-radius: 1.2rem;
     transition: .5s;
     display: flex;
@@ -54,9 +54,10 @@ img {
     padding-right: 7px;
     position: fixed;
     z-index: 120000;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 span.dot{
-    background-color: #ffffff;
+    background-color: #000000;
     border-radius: 50%;
     height: 70%;
     left: 25%;
@@ -127,4 +128,7 @@ nav span {
     opacity: 0;
     transform: translateY(5px);
     transition: opacity 0.6s ease 0.6s;
+}
+.a_clr_blc__a_clrBlc_Fe3a9{
+    color: #000000;
 }

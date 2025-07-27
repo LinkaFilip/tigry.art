@@ -4054,6 +4054,8 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 .CartIndicator_icon__AFivB svg {
     display: block;
     fill: transparent;
+    width: 14px;
+    height: 14px;
     transition: fill .2s ease-in-out
 }
 
