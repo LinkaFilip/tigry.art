@@ -102,6 +102,34 @@ document.addEventListener("DOMContentLoaded", () => {
       renderCart();
     }
   });
+  const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
+  overlay.addEventListener("click", () => {
+    const element = document.querySelector(".CartIndicator_closeBtn___fEN6");
+    const cartPanel = document.querySelector(".Cart_cart__yGsQk");
+
+    if (element && cartPanel) {
+      element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
+      element.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+          <g clip-path="url(#a)">
+            <path stroke="currentColor" stroke-width="1.5"
+              d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z" />
+          </g>
+          <defs>
+            <clipPath id="a">
+              <path fill="#fff" d="M0 0h18v18H0z"></path>
+            </clipPath>
+          </defs>
+        </svg>`;
+
+      overlay.style.opacity = "0";
+      overlay.style.visibility = "hidden";
+      overlay.style.pointerEvents = "none";
+      const isMobile = window.matchMedia("(max-width: 1024px)").matches;
+      cartPanel.style.transform = isMobile ? "translate(0, -100%)" : "translate(100%, 0)";
+      cartPanel.classList.remove("Cart_open__Hlx3_");
+    }
+  });
 });
 
 function addToCart(product) {
