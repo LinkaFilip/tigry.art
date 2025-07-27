@@ -8,9 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
         name: button.dataset.name,
         price: parseFloat(button.dataset.price),
       };
-      console.log("Produkt přidán do košíku:", product);
       addToCart(product);
-      
+
       const element = document.querySelector(".CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6");
       const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
       const cartPanel = document.querySelector(".Cart_cart__yGsQk");
@@ -31,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cartPanel.style.transform = "translate(0, 0)";
         cartPanel.classList.add("Cart_open__Hlx3_");
 
-        renderCart(); // obnov zobrazení
+        renderCart();
       }
     });
   });
@@ -64,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
   <path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"/>
 </svg>`;
 
-  // Inicializuj SVG
   element.innerHTML = bagSVG;
 
   element.addEventListener("click", () => {

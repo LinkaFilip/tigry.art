@@ -8,16 +8,10 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
     const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
-    console.log(cart);
-    console.log("Cookies:", document.cookie);
-    console.log("cartCookie raw:", cartCookie);
-    console.log("Parsed cart:", cart);
     if (cart.length === 0) {
-      alert("Váš košík je prázdný. Přidejte prosím položky před platbou.");
       return;
     }
     const items = cart.map(({ id, quantity }) => ({ id, quantity }));
-    console.log('Posílám položky:', items);
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -128,7 +122,7 @@ function displayTotalPrice() {
     0
   );
 
-  const SHIPPING_COST = 2;        // číslo
+  const SHIPPING_COST = 2;
   const shippingEl   = document.getElementById("shipping-price");
   const total = subtotal + SHIPPING_COST;
 
@@ -150,43 +144,36 @@ function renderShopifyStyleCartFromRow() {
     ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
     : [];
 
-  // Najdi rowgroup s produkty
   const parentGroup = document.querySelector('div[role="rowgroup"]');
   if (!parentGroup) {
-    console.error("❌ Nenalezen rowgroup.");
     return;
   }
 
-  // Najdi první row = šablonu
+
   const templateRow = parentGroup.querySelector('div[role="row"]');
   if (!templateRow) {
-    console.error("❌ Nenalezen row jako šablona.");
     return;
   }
 
-  // Smaž staré řádky (všechny kromě šablony)
+ 
   parentGroup.querySelectorAll('div[role="row"]').forEach((row, i) => {
     if (i > 0) row.remove();
   });
 
-  // Pro každou položku vytvoř nový řádek
   cart.forEach(product => {
     const clone = templateRow.cloneNode(true);
 
-    // Obrázek
     const img = clone.querySelector('img');
     if (img) {
       img.src = product.image || "";
       img.alt = product.name || "";
     }
 
-    // Název (první <p>)
     const name = clone.querySelector('p');
     if (name) {
       name.textContent = product.name || "Produkt";
     }
 
-    // Množství (hledáme span, který není Quantity)
     const spans = clone.querySelectorAll('span');
     spans.forEach(span => {
       if (span.textContent.trim() !== "Quantity" && !isNaN(span.textContent)) {
@@ -194,7 +181,6 @@ function renderShopifyStyleCartFromRow() {
       }
     });
 
-    // Cena (např. poslední role=cell → span)
     const priceSpan = clone.querySelector('div[role="cell"] span:not(:has(span))');
     if (priceSpan) {
       priceSpan.textContent = `Kč ${ (product.price * product.quantity).toFixed(2) }`;
@@ -203,30 +189,25 @@ function renderShopifyStyleCartFromRow() {
     parentGroup.appendChild(clone);
   });
 
-  // Aktualizuj počty
   updateDisplayedQuantity();
   updateCartItemCount();
 }
 
-// 👉 Čekej pomocí MutationObserver na DOM, až Shopify vloží šablonu
 function waitForShopifyTemplate() {
   const parent = document.querySelector('section._1fragem32._1fragemms');
   if (!parent) {
-    console.error("❌ Parent sekce nebyla nalezena.");
     return;
   }
 
   const observer = new MutationObserver(() => {
     const rowGroups = parent.querySelectorAll('[role="rowgroup"]');
     if (rowGroups.length >= 2) {
-      console.log("✅ Šablona byla detekována, spouštím render...");
-      observer.disconnect(); // přestaň sledovat
+      observer.disconnect();
       renderShopifyStyleCart();
     }
   });
 
   observer.observe(parent, { childList: true, subtree: true });
-  console.log("👀 Sleduji DOM pomocí MutationObserver pro načtení šablony...");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -261,7 +242,7 @@ function updateCartItemCount() {
 
   const itemCount = cart.length;
   
-  const container = document.querySelector('._1m6j2n3m ._99ss3s1'); // Přizpůsob, pokud máš jiné místo
+  const container = document.querySelector('._1m6j2n3m ._99ss3s1');
   if (container) {
     const spans = container.querySelectorAll('span');
     if (spans.length >= 2) {
