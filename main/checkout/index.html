@@ -575,10 +575,10 @@
     });
 
     const result = await paymentRequest.canMakePayment();
-    if (result) {
-      prButton.mount('#payment-request-button');
+    if (result && (result.googlePay || result.applePay)) {
+      prButton.mount("#payment-request-button");
     } else {
-      document.getElementById('payment-request-button').style.display = 'none';
+      document.getElementById("payment-request-button").style.display = "none";
     }
 
     paymentRequest.on("paymentmethod", async (ev) => {
