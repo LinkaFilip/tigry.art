@@ -127,3 +127,19 @@ nav span {
 .a_clr_blc__a_clrBlc_Fe3a9{
     color: #000000;
 }
+.Section_section__mRxGN.Section_gutter__BS6Ao {
+    z-index: 150000;
+}
+@media (min-width: 1024px) {
+    .Header_header{
+        height: auto;
+    }
+}
+.Header_header {
+    width: 100vw;
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    z-index: 150000;
+    margin-top: 15px;
+}
