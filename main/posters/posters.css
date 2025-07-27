@@ -1212,7 +1212,7 @@ button.add-to-cart {
     display: flex;
     border: 2px solid black;
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     background-color: black;
     color: white;
     flex-direction: row;
