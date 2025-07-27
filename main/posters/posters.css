@@ -3646,16 +3646,6 @@ img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fade
     justify-content: space-between;
     align-items: flex-start;
 }
-@media (min-width: 1024px) {
-    .Header_fixed__PFqXi {
-        width: auto;
-        position: fixed;
-        right: 0;
-        top: 0;
-        justify-content: flex-end;
-        z-index: 11000;
-    }
-}
 .CartIndicator_icon__AFivB, .CartIndicator_closeBtn___fEN6 {
     padding: 10px;
     margin: -10px;
@@ -5062,7 +5052,6 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 @media(min-width: 1024px) {
     .Header_fixed__PFqXi {
         width:auto;
-        position: fixed;
         right: 0;
         top: 0;
         justify-content: flex-end;
