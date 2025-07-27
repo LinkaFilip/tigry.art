@@ -116,19 +116,18 @@ nav span {
 .menu nav .first_a {
     opacity: 0;
     transform: translateY(5px);
-    transition: opacity 0.3s ease 0.3s;
+    transition: opacity 0.3s ease-in-out 0.3s;
 }
 
 .menu:hover nav a {
     opacity: 1;
-    transition: opacity 0.6s ease 0.6s;
     transform: translateY(0);
 }
 
 .menu span .second_a {
     opacity: 0;
     transform: translateY(5px);
-    transition: opacity 0.6s ease 0.6s;
+    transition: opacity 0.6s ease-in-out 0.6s;
 }
 .a_clr_blc__a_clrBlc_Fe3a9{
     color: #000000;
