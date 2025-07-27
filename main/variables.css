@@ -135,6 +135,10 @@ nav span {
         height: auto;
     }
 }
+.Header_fixed__PFqXi .Header_left__LL1Ja {
+    display: flex;
+    align-items: center;
+}
 .Header_header {
     width: 100vw;
     display: flex;

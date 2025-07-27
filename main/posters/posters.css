@@ -3637,10 +3637,7 @@ img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fade
     filter: none;
 }
 
-.Header_fixed__PFqXi .Header_left__LL1Ja {
-    display: flex;
-    align-items: center;
-}
+
 
 
 
@@ -5780,14 +5777,6 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
     .Page_mainContent__4KIV9.Page_hasAnnouncementBar__KVrzt {
         padding-bottom:40px
     }
-}
-
-.MenuFolder_menuFolder__4Re21 {
-    width: auto;
-    z-index: 130000;
-    padding-left: var(--layout-margin);
-    padding-right: var(--layout-margin);
-    padding-top: var(--layout-margin);
 }
 .MenuCover_menuCover__2c3ab {
     padding-left: 16px;
