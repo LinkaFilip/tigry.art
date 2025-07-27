@@ -53,7 +53,10 @@ exports.handler = async (event) => {
             const product = PRODUCTS[id];
             return `${product.name} x${quantity}`;
           }).join(', ')
-        }
+        },
+      mode: "payment",
+      success_url: "https://tigry.art/posters/",
+      cancel_url: "https://tigry.art/",
     });
 
     return {

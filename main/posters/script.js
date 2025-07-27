@@ -1,3 +1,4 @@
+localStorage.removeItem('cart');
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 
