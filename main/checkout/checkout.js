@@ -12,10 +12,18 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
       return;
     }
     const items = cart.map(({ id, quantity }) => ({ id, quantity }));
+    const SHIPPING_COST = {
+      AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8,
+      HK: 15, IE: 10, IL: 13, IT: 9, JP: 15, MY: 15, NL: 9, NZ: 14, NO: 12,
+      PL: 8, PT: 9, SG: 15, KR: 15, ES: 9, SE: 10, CH: 10, AE: 15, GB: 10, US: 12,
+    };
+
+    const selectedCountry = document.getElementById("Select0").value;
+    const shippingFee = SHIPPING_COST[selectedCountry] || 0;
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items })
+      body: JSON.stringify({ items: simplifiedItems, shippingFee })
     });
 
     if (!res.ok) {
