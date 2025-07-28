@@ -136,7 +136,7 @@ function updatePrices() {
     totalPriceEl.textContent = `€ ${totalWithShipping.toFixed(2)}`;
   }
 
-  return shippingFeeCents; // return cents for Stripe
+  return shippingFeeCents;
 }
 
 async function initializeStripe(shippingFeeCents) {
@@ -192,9 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
   updateDisplayedQuantity();
   updateCartItemCount();
 
-  const selectElement = document.getElementById("select-country");
+  const selectElement = document.getElementById("Select0");
   if (selectElement) {
-    // On change, update prices and Stripe
     selectElement.addEventListener("change", async () => {
       const shippingFeeCents = updatePrices();
       await initializeStripe(shippingFeeCents);
