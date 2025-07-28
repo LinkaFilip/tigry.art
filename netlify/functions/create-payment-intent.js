@@ -41,7 +41,7 @@ for (const { id, quantity } of items) {
 }
 
 const shippingFeeInCents = parseInt(shippingFee) || 0;
-const amountInCents = totalInCents + shippingFeeInCents;
+const amountInCents = totalInCents * 100 + shippingFeeInCents;
 
     if (amountInCents < 50) {
       return {
