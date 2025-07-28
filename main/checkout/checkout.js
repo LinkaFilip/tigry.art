@@ -2,6 +2,7 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
 
 let elements;
 let card;
+let clientSecret = null;
 const SHIPPING_COST = {
   AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8,
   HK: 15, IE: 10, IL: 13, IT: 9, JP: 15, MY: 15, NL: 9, NZ: 14, NO: 12,
@@ -30,7 +31,7 @@ function getCartFromCookie() {
 function renderProductFromCart() {
   const cart = getCartFromCookie();
   const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
-  container.innerHTML = ""; // Clear previous
+  container.innerHTML = "";
 
   cart.forEach(item => {
     const itemDiv = document.createElement('section');
@@ -161,10 +162,12 @@ function updatePrices() {
 
   return shippingPrice * 100;
 }
+document.getElementById("Select0").addEventListener("change", () => {
+  updatePrices(); // jen UI
+});
 
 async function initializeStripe(shippingFeeCents) {
   const cart = getCartFromCookie();
-
   const items = cart.map(item => ({
     id: item.id,
     quantity: item.quantity,
@@ -182,32 +185,41 @@ async function initializeStripe(shippingFeeCents) {
       throw new Error('No client secret returned');
     }
 
-    if (card) {
-      card.unmount();
-    }
+    clientSecret = data.clientSecret; // <== Uložit pro pozdější potvrzení
+
+    if (card) card.unmount?.(); // unmount if exists (safe check)
 
     elements = stripe.elements();
     card = elements.create("card");
     card.mount("#card-element");
 
-    stripe.confirmCardPayment(data.clientSecret, {
-      payment_method: {
-        card: card,
-      },
-    }).then((result) => {
-      if (result.error) {
-        console.error("Payment failed", result.error.message);
-      } else {
-        if (result.paymentIntent.status === 'succeeded') {
-          console.log("Payment succeeded!");
-        }
-      }
-    });
-
   } catch (err) {
     console.error('Error initializing Stripe:', err);
   }
 }
+document.getElementById("pay-button").addEventListener("click", async () => {
+  if (!clientSecret) {
+    alert("Payment not initialized");
+    return;
+  }
+
+  const result = await stripe.confirmCardPayment(clientSecret, {
+    payment_method: {
+      card: card,
+    },
+  });
+
+  if (result.error) {
+    console.error("Payment failed", result.error.message);
+    alert("Payment failed: " + result.error.message);
+  } else {
+    if (result.paymentIntent.status === 'succeeded') {
+      alert("Payment succeeded!");
+      // Zde můžeš přesměrovat nebo vymazat košík atd.
+    }
+  }
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
   renderProductFromCart();
@@ -219,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
     selectElement.addEventListener("change", async () => {
       console.log("Changed country to:", selectElement.value);
       const shippingFeeCents = updatePrices();
+
       await initializeStripe(shippingFeeCents);
     });
   }
