@@ -123,9 +123,20 @@ function displayTotalPrice() {
     (sum, product) => sum + product.price * product.quantity,
     0
   );
+const SHIPPING_COST = {AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8, HK: 15, IE: 10, IL: 13, IT: 9, JP: 15, MY: 15, NL: 9, NZ: 14, NO: 12, PL: 8, PT: 9, SG: 15, KR: 15, ES: 9, SE: 10, CH: 10, AE: 15, GB: 10, US: 12,};
+const selectElement = document.getElementById("Select0");
+const shippingDisplay = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem4q._1fragem6j._1fragempp");
+selectElement.addEventListener("change", function () {
+  const selectedCountry = this.value;
+  const shippingPrice = shippingRates[selectedCountry];
 
-  const SHIPPING_COST = 2;
-  const shippingEl   = document.getElementById("shipping-price");
+  if (shippingPrice !== undefined) {
+    shippingDisplay.textContent = `Shipping: €${shippingPrice.toFixed(2)}`;
+  } else {
+    shippingDisplay.textContent = "Shipping not available";
+  }
+});
+  const shippingEl   = document.querySelector("shipping-price");
   const total = subtotal + SHIPPING_COST;
 
   document.getElementById("subtotal-price").textContent = `€ ${subtotal.toFixed(2)}`;
