@@ -1,4 +1,7 @@
-localStorage.removeItem('cart');
+if (new URL(window.location.href).pathname === "/posters/" && new URL(window.location.href).searchParams.get("success") === "true") {
+  localStorage.clear();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 
