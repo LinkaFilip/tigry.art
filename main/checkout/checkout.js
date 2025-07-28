@@ -18,9 +18,13 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
     };
 
     const selectedCountry = document.getElementById("Select0").value;
-    const shippingFee = SHIPPING_COST[selectedCountry.toUpperCase()] || 0;
+ 
+  const shippingFee = currentShippingFee || 0;
+
+
     console.log("Selected country:", selectedCountry);
     console.log("Shipping fee:", SHIPPING_COST[selectedCountry]);
+    
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -149,25 +153,31 @@ function displayTotalPrice() {
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.querySelector("._1tx8jg70._1fragemms._1tx8jg715._1tx8jg71e._1tx8jg71f");
 
-  function updatePrices() {
-    const selectedCountry = selectElement.value;
-    const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
-    const total = subtotal + shippingPrice;
+let currentShippingFee = 0;
 
-    const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
-    const countryLabel = selectElement.options[selectElement.selectedIndex].text;
+function updatePrices() {
+  const selectedCountry = selectElement.value.toUpperCase();
+  const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
+  currentShippingFee = shippingPrice;
 
-    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${shippingPrice.toFixed(2)}`;
-    totalDisplay.textContent = `€ ${total.toFixed(2)}`;
+  const total = subtotal + shippingPrice;
 
-    shippingSummary.textContent =
-      `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
-  }
+  const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
+  const countryLabel = selectElement.options[selectElement.selectedIndex].text;
 
-  updatePrices();
-  selectElement.addEventListener("change", updatePrices);
+  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${shippingPrice.toFixed(2)}`;
+  totalDisplay.textContent = `€ ${total.toFixed(2)}`;
+
+  shippingSummary.textContent =
+    `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
 }
+
+}
+
+selectElement.addEventListener("change", () => {
+  updatePrices();  
+});
 
   displayTotalPrice();
   initializeStripe();
