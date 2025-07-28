@@ -140,99 +140,98 @@ function calculateSubtotal() {
 
   return subtotal;
 }
+const selectElement = document.getElementById("Select0");
+const subtotalDisplay = document.getElementById("subtotal");
+const shippingDisplay = document.getElementById("shipping");
+const totalDisplay = document.getElementById("total");
+const shippingSummary = document.getElementById("shipping-summary");
+
+// --- Spočítej a aktualizuj cenu ---
 function updatePrices() {
-  const subtotal = calculateSubtotal();
-  const selectedCountry = document.getElementById("Select0").value; // get it fresh
+  const selectedCountry = selectElement.value;
   const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
-  const total = subtotal + shippingPrice;
-  const subtotalDisplay = document.getElementById("subtotal-price");
-  const shippingDisplay = document.getElementById("shipping-price");
-  const totalDisplay = document.getElementById("total-price");
-  const shippingSummary = document.querySelector("._1tx8jg70._1fragemms._1tx8jg715._1tx8jg71e._1tx8jg71f");
-
   const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
-  const countryLabel = document.getElementById("Select0").selectedOptions[0].text;
+  const countryLabel = selectElement.options[selectElement.selectedIndex].text;
 
-  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${shippingPrice.toFixed(2)}`;
-  totalDisplay.textContent = `€ ${total.toFixed(2)}`;
+  const cart = JSON.parse(decodeURIComponent(document.cookie.split("; ").find(r => r.startsWith("cart="))?.split("=")[1] || "[]"));
+  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  shippingSummary.textContent =
-    `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
+  subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${(shippingPrice / 100).toFixed(2)}`;
+  totalDisplay.textContent = `€ ${((subtotal + shippingPrice) / 100).toFixed(2)}`;
+  shippingSummary.textContent = `${delivery.type} (${countryLabel}): €${(shippingPrice / 100).toFixed(2)} – delivery in ${delivery.eta}`;
 
-  return shippingPrice * 100;
+  return shippingPrice;
 }
-  const selectElement = document.getElementById("Select0");
-  if (selectElement) {
-    selectElement.addEventListener("change", () => {
-      updatePrices();
-    });
-  }
 
-async function initializeStripe(shippingFeeCents) {
-  const cartCookie = document.cookie
-    .split("; ")
-    .find(row => row.startsWith("cart="));
+async function initializeStripe(shippingFee) {
+  const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
   const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
   const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
-  const selectedCountry = document.getElementById("Select0").value;
+  const selectedCountry = selectElement.value;
 
   const res = await fetch('/.netlify/functions/create-payment-intent', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items: simplifiedItems, shippingFee: shippingFeeCents })
+    body: JSON.stringify({ items: simplifiedItems, shippingFee })
   });
 
   const data = await res.json();
   clientSecret = data.clientSecret;
 
-const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
+  stripe = Stripe("TVŮJ_PUBLIC_KEY"); // nahraď vlastním
   elements = stripe.elements({ clientSecret });
-
   card = elements.create("card");
   card.mount("#card-element");
+}
 
-  const form = document.getElementById("payment-form");
-  const errorMsg = document.getElementById("error-message");
+// --- Odeslání platby po submitu ---
+const form = document.getElementById("payment-form");
+const errorMsg = document.getElementById("error-message");
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const billingDetails = {
-      name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("TextField6").value,
-      address: {
-        line1: document.getElementById("TextField2").value,
-        line2: document.getElementById("TextField3").value,
-        city: document.getElementById("TextField5").value,
-        postal_code: document.getElementById("TextField4").value,
-        country: selectedCountry
-      }
-    };
+  if (!clientSecret) {
+    alert("Platba nebyla inicializována.");
+    return;
+  }
 
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: card,
-        billing_details: billingDetails,
-      }
-    });
+  const billingDetails = {
+    name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("TextField6").value,
+    address: {
+      line1: document.getElementById("TextField2").value,
+      line2: document.getElementById("TextField3").value,
+      city: document.getElementById("TextField5").value,
+      postal_code: document.getElementById("TextField4").value,
+      country: selectElement.value
+    }
+  };
 
-    if (error) {
-      errorMsg.textContent = error.message;
-    } else if (paymentIntent.status === "succeeded") {
-      localStorage.removeItem("cart");
-      form.reset();
-      card.clear();
-      window.location.href = "/posters/?success=true";
+  const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+    payment_method: {
+      card: card,
+      billing_details: billingDetails,
     }
   });
-}
+
+  if (error) {
+    errorMsg.textContent = error.message;
+  } else if (paymentIntent.status === "succeeded") {
+    localStorage.removeItem("cart");
+    alert("Payment succeeded!");
+    window.location.href = "/posters/?success=true";
+  }
+});
+
+// --- Inicalizační tlačítko ---
 const payButton = document.getElementById("pay-button");
 if (payButton) {
   payButton.addEventListener("click", async () => {
-    const shippingFeeCents = updatePrices(); // zaktualizuje UI a vrátí poštovné
-    await initializeStripe(shippingFeeCents); // připraví Stripe, neplatí ještě!
+    const fee = updatePrices();
+    await initializeStripe(fee);
   });
 }
 
