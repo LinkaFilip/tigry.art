@@ -195,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectElement = document.getElementById("Select0");
   if (selectElement) {
     selectElement.addEventListener("change", async () => {
+      console.log("Changed country to:", selectElement.value);
       const shippingFeeCents = updatePrices();
       await initializeStripe(shippingFeeCents);
     });
