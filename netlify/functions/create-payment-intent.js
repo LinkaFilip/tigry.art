@@ -37,7 +37,7 @@ exports.handler = async (event) => {
         body: JSON.stringify({ error: `Unknown product ${id}` }),
       };
     }
-    totalInCents += product.price * 100 * quantity;  // převod EUR na centy
+    totalInCents += product.price * 100 * quantity * 100;  // převod EUR na centy
   }
 
   const shippingFeeInCents = parseInt(shippingFee) || 0;
