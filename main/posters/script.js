@@ -1,5 +1,6 @@
 if (new URL(window.location.href).pathname === "/posters/" && new URL(window.location.href).searchParams.get("success") === "true") {
   localStorage.clear();
+  window.history.replaceState({}, document.title, "/posters/");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
