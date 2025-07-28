@@ -135,9 +135,9 @@ const calculateSubtotal = () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: cartItems,
+          items: items,
           shippingFee: selectedShippingFee,
-          country: selectedCountryCode // např. "CZ", "DE", "US" ...
+          country: country // např. "CZ", "DE", "US" ...
         })
     });
 
