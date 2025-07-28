@@ -126,7 +126,7 @@ const getSelectedShipping = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         items: items,
-        shippingFee: Math.round(shippingFee * 100), // převedeno na centy
+        shippingFee: shippingFeeInCents, // v centech
         country: country
       })
     });
