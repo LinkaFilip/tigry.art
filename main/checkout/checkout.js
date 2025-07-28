@@ -145,9 +145,9 @@ const initializeStripe = async () => {
     stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
   }
 
-  elements = stripe.elements({ clientSecret, appearance: { theme: "flat" } });
   if (card) card.unmount();
   card = elements.create("card");
+  console.log("Mounting Stripe card element");
   card.mount("#card-element");
 };
 
