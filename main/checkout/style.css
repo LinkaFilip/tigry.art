@@ -79,7 +79,19 @@
     --swn0j1r: hsl(0, 0%, 40%);
     --swn0j1s: hsl(0, 0%, 80%)
 }
+@media(min-width: 1024px) {
+    :root {
+        --layout-columns-count:12;
+        --layout-columns-gap: 24px;
+        --layout-margin: 24px
+    }
+}
 
+@media(min-width: 1440px) {
+    :root {
+        --layout-margin:32px
+    }
+}
 :root {
     --x-primary-button-block-padding: var(--x-spacing-base);
     --x-primary-button-inline-padding: var(--x-spacing-base);
@@ -483,9 +495,6 @@ ul,ol {
     row-gap: var(--x-spacing-large-100)
 }
 
-._1fragem5a {
-    row-gap: var(--x-spacing-large-200)
-}
 
 ._1fragem5f {
     row-gap: var(--x-spacing-large-300)
@@ -15636,9 +15645,6 @@ ul,ol {
     row-gap: var(--x-spacing-large-100)
 }
 
-._1fragem5a {
-    row-gap: var(--x-spacing-large-200)
-}
 
 ._1fragem5f {
     row-gap: var(--x-spacing-large-300)
@@ -30321,4 +30327,10 @@ html:not(:active-view-transition-type(payment-icons)) ._6f3AR {
 .g9gqqf1.g9gqqf0._1fragemp3.g9gqqfc.g9gqqfa._1fragemue.g9gqqf6.g9gqqf2._1fragemod._1fragemoh{
     padding: 2.1rem;
 }
+}
+p._1tx8jg70._1fragemms._1tx8jg7c._1tx8jg7b._1fragemp3._1tx8jg715._1tx8jg71d._1tx8jg71f {
+    padding-left: var(--layout-margin);
+}
+section._1fragem32._1fragemms {
+    padding-top: var(--layout-margin);
 }
