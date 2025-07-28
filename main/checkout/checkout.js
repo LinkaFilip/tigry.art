@@ -184,7 +184,6 @@ payButton.addEventListener("click", async () => {
       payButton.textContent = "Zaplatit";
     } else {
       if (result.paymentIntent.status === "succeeded") {
-        alert("Platba proběhla úspěšně!");
         document.cookie = "cart=; Max-Age=0; path=/";
         location.href = "/posters/?success=true";
       }
