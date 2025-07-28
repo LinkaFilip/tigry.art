@@ -123,9 +123,13 @@ function updatePrices() {
   }
   const totalWithShipping = totalPrice + shippingFeeEuros;
 
-  const shippingFeeEl = document.getElementById("shipping-fee");
+  const shippingFeeEl = document.getElementById("shipping-price");
   if (shippingFeeEl) {
     shippingFeeEl.textContent = `€ ${shippingFeeEuros.toFixed(2)}`;
+  }
+  const subtotalPriceEl = document.getElementById("subtotal-price");
+  if (subtotalPriceEl) {
+    subtotalPriceEl.textContent = `€ ${totalPrice.toFixed(2)}`;
   }
   const totalPriceEl = document.getElementById("total-price");
   if (totalPriceEl) {
