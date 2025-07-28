@@ -33,22 +33,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 const getSelectedShipping = () => {
   const country = getSelectedCountry();
-  return SHIPPING_COST[country] || 0; // toto je EUR (např. 5)
+  return SHIPPING_COST[country] || 0;  // vrací v centech
 };
 
-  const updatePrices = () => {
-    const subtotal = calculateSubtotal(); // EUR, třeba 20
-    const shippingFee = getSelectedShipping(); // musí být EUR, např. 12
-    console.log("Shipping fee for display:", shippingFee);
-    const total = subtotal + shippingFee;
+const updatePrices = () => {
+  const subtotalEUR = calculateSubtotal(); // v EUR
+  const shippingFeeCents = getSelectedShipping(); // v centech, např. 1200
+  const shippingFeeEUR = shippingFeeCents / 100;
+  const totalEUR = subtotalEUR + shippingFeeEUR;
 
-    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${shippingFee.toFixed(2)}`; // musí být EUR
-    totalDisplay.textContent = `€ ${total.toFixed(2)}`;
-    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${shippingFee.toFixed(2)}`;
+  subtotalDisplay.textContent = `€ ${subtotalEUR.toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${shippingFeeEUR.toFixed(2)}`;
+  totalDisplay.textContent = `€ ${totalEUR.toFixed(2)}`;
+  shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${shippingFeeEUR.toFixed(2)}`;
 
-    return shippingFee; // v EUR
-  };
+  return shippingFeeCents; // vrací v centech
+};
+
 
   const renderProductFromCart = () => {
     const cart = getCartFromCookie();
@@ -115,40 +116,42 @@ const getSelectedShipping = () => {
     });
   };
 
-  const initializeStripe = async () => {
-    const cart = getCartFromCookie();
-    const items = cart.map(({ id, quantity }) => ({ id, quantity }));
-    const shippingFee = getSelectedShipping();
-    const country = getSelectedCountry();
+const initializeStripe = async () => {
+  const cart = getCartFromCookie();
+  const items = cart.map(({ id, quantity }) => ({ id, quantity }));
+  const shippingFeeInCents = getSelectedShipping(); // už je v centech
+  const country = getSelectedCountry();
 
-    const response = await fetch("/.netlify/functions/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items: items,
-        shippingFee: shippingFeeInCents, // v centech
-        country: country
-      })
-    });
+  const response = await fetch("/.netlify/functions/create-payment-intent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      items: items,
+      shippingFee: shippingFeeInCents, // správně v centech
+      country: country
+    })
+  });
 
-    if (!response.ok) {
-      const error = await response.json();
-      alert("Chyba při vytváření platby: " + error.error);
-      return;
-    }
+  if (!response.ok) {
+    const error = await response.json();
+    alert("Chyba při vytváření platby: " + error.error);
+    return;
+  }
 
-    const data = await response.json();
-    clientSecret = data.clientSecret;
+  const data = await response.json();
+  clientSecret = data.clientSecret;
 
-    if (!stripe) {
-      stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
-    }
+  if (!stripe) {
+    stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
+  }
 
-    elements = stripe.elements({ clientSecret, appearance: { theme: "flat" } });
-    if (card) card.unmount();
-    card = elements.create("card");
-    card.mount("#card-element");
-  };
+  elements = stripe.elements({ clientSecret, appearance: { theme: "flat" } });
+  if (card) card.unmount();
+  card = elements.create("card");
+  card.mount("#card-element");
+};
+
+
 
   payButton.addEventListener("click", async () => {
     updatePrices();
