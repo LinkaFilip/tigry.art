@@ -42,7 +42,7 @@ for (const { id, quantity } of items) {
 
 const shippingFeeInCents = parseInt(shippingFee) || 0;
 
-const amount = totalInCents + shippingFeeInCents;
+const amount = totalInCents * 100 + shippingFeeInCents;
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
