@@ -36,15 +36,18 @@ const getSelectedShipping = () => {
   return SHIPPING_COST[country] || 0; // toto je EUR (např. 5)
 };
 
-const updatePrices = () => {
-  const subtotal = calculateSubtotal(); // EUR
-  const shippingFee = getSelectedShipping(); // EUR
-  const total = subtotal + shippingFee;
+  const updatePrices = () => {
+    const subtotal = calculateSubtotal(); // EUR, třeba 20
+    const shippingFee = getSelectedShipping(); // musí být EUR, např. 12
+    console.log("Shipping fee for display:", shippingFee);
+    const total = subtotal + shippingFee;
 
-  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${shippingFee.toFixed(2)}`;    // tu už NEmáš dělit 100!
-  totalDisplay.textContent = `€ ${total.toFixed(2)}`;
-  shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${shippingFee.toFixed(2)}`;
+    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${shippingFee.toFixed(2)}`; // musí být EUR
+    totalDisplay.textContent = `€ ${total.toFixed(2)}`;
+    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${shippingFee.toFixed(2)}`;
+
+    return shippingFee; // v EUR
   };
 
   const renderProductFromCart = () => {
