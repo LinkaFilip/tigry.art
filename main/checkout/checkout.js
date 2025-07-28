@@ -143,6 +143,7 @@ function updatePrices() {
   const selectedCountry = document.getElementById("Select0").value; // get it fresh
   const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
   const total = subtotal + shippingPrice;
+  const subtotalDisplay = document.getElementById("subtotal-price");
 
   const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
   const countryLabel = document.getElementById("Select0").selectedOptions[0].text;
