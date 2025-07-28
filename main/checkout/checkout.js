@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
     shippingDisplay.textContent = `€ ${(shippingFee / 100).toFixed(2)}`;
-    totalDisplay.textContent = `€ ${(total / 100).toFixed(2)}`;
+    totalDisplay.textContent = `€ ${(total).toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee).toFixed(2)}`;
   };
 
