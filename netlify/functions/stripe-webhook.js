@@ -2,47 +2,40 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 exports.handler = async (event) => {
-  console.log('--- New webhook call ---');
-  console.log('Headers:', event.headers);
-  console.log('Raw body length:', event.body ? event.body.length : 'undefined');
-  console.log('Content-Length:', event.headers['content-length']);
-  console.log('Content-Type:', event.headers['content-type']);
-
-  if (!event.body || event.body.trim().length === 0) {
-    console.error('No webhook payload was provided.');
-    return {
-      statusCode: 400,
-      body: 'No webhook payload was provided.',
-    };
+  // event.body je string, pokud je base64 encoded, musíš dekódovat
+  let payload = event.body;
+  if (event.isBase64Encoded) {
+    payload = Buffer.from(event.body, 'base64').toString('utf8');
   }
 
   const sig = event.headers['stripe-signature'] || event.headers['Stripe-Signature'];
-  if (!sig) {
-    console.error('No stripe-signature header provided.');
-    return { statusCode: 400, body: 'Missing stripe-signature header.' };
-  }
 
-  let eventStripe;
+  let stripeEvent;
   try {
-    eventStripe = stripe.webhooks.constructEvent(event.body, sig, endpointSecret);
+    stripeEvent = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
   } catch (err) {
     console.error('Webhook signature verification failed:', err.message);
-    return { statusCode: 400, body: `Webhook Error: ${err.message}` };
+    return {
+      statusCode: 400,
+      body: `Webhook Error: ${err.message}`
+    };
   }
 
-  console.log('Webhook received:', eventStripe.type);
+  console.log('Webhook received:', stripeEvent.type);
 
-  switch (eventStripe.type) {
+  switch (stripeEvent.type) {
     case 'payment_intent.succeeded':
-      console.log('PaymentIntent succeeded:', eventStripe.data.object.id);
+      console.log('PaymentIntent succeeded:', stripeEvent.data.object.id);
       break;
     case 'charge.succeeded':
-      console.log('Charge succeeded for amount:', eventStripe.data.object.amount);
+      console.log('Charge succeeded for amount:', stripeEvent.data.object.amount);
       break;
     default:
-      console.log('Unhandled event type:', eventStripe.type);
+      console.log('Unhandled event type:', stripeEvent.type);
   }
 
-  return { statusCode: 200, body: 'Webhook received successfully' };
+  return {
+    statusCode: 200,
+    body: 'Webhook received successfully',
+  };
 };
-
