@@ -22,7 +22,7 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items, shippingFee }) // přidáno shippingFee
+      body: JSON.stringify({ items, shippingFee })
     });
     if (!res.ok) {
       const errorData = await res.json();

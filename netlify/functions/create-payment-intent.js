@@ -38,7 +38,6 @@ const shippingFeeNum = parseFloat(shippingFee) || 0;
 
 const amountInCents = total * 100 + shippingFeeNum;
 
-// kontrola min. částky (např. 0.50 EUR)
 if (amountInCents < 50) {
   return {
     statusCode: 400,
