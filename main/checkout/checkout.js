@@ -172,12 +172,12 @@ function updatePrices() {
   shippingSummary.textContent =
     `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
 }
-
-}
-
 selectElement.addEventListener("change", () => {
   updatePrices();  
 });
+}
+
+
 
   displayTotalPrice();
   initializeStripe();
