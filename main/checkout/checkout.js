@@ -184,7 +184,7 @@ const calculateSubtotal = () => {
   });
 
   // Start: vykresli košík, přepočítej ceny, inicializuj Stripe
-  renderCart();
+  renderProductFromCart();
   updatePrices();
   await initializeStripe();
 });
