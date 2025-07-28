@@ -146,6 +146,7 @@ function updatePrices() {
   const subtotalDisplay = document.getElementById("subtotal-price");
   const shippingDisplay = document.getElementById("shipping-price");
   const totalDisplay = document.getElementById("total-price");
+  const shippingSummary = document.querySelector("._1tx8jg70._1fragemms._1tx8jg715._1tx8jg71e._1tx8jg71f")
 
   const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
   const countryLabel = document.getElementById("Select0").selectedOptions[0].text;
