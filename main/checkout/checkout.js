@@ -144,6 +144,7 @@ function updatePrices() {
   const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
   const total = subtotal + shippingPrice;
   const subtotalDisplay = document.getElementById("subtotal-price");
+  const shippingDisplay = document.getElementById("shipping-price");
 
   const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
   const countryLabel = document.getElementById("Select0").selectedOptions[0].text;
@@ -155,7 +156,7 @@ function updatePrices() {
   shippingSummary.textContent =
     `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
 
-  return shippingPrice * 100; // return cents
+  return shippingPrice; // return cents
 }
 
 async function initializeStripe(shippingFeeCents) {
