@@ -141,9 +141,9 @@ function calculateSubtotal() {
   return subtotal;
 }
 const selectElement = document.getElementById("Select0");
-const subtotalDisplay = document.getElementById("subtotal");
-const shippingDisplay = document.getElementById("shipping");
-const totalDisplay = document.getElementById("total");
+const subtotalDisplay = document.getElementById("subtotal-price");
+const shippingDisplay = document.getElementById("shipping-price");
+const totalDisplay = document.getElementById("total-price");
 const shippingSummary = document.getElementById("shipping-summary");
 
 // --- Spočítej a aktualizuj cenu ---
