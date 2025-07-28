@@ -21,10 +21,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const cartItemsContainer = document.getElementById("cart-items");
 
   // Načti košík z cookie
-  const getCart = () => {
+  const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
     return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
   };
+  
 function renderProductFromCart() {
   const cart = getCartFromCookie();
   const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
@@ -93,7 +94,7 @@ function renderProductFromCart() {
   });
 }
 const calculateSubtotal = () => {
-    const cart = getCart();
+    const cart = getCartFromCookie();
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
 
@@ -122,7 +123,7 @@ const calculateSubtotal = () => {
 
   // Inicializace Stripe + vytvoření Payment Intent
   const initializeStripe = async () => {
-    const cart = getCart();
+    const cart = getCartFromCookie();
     const items = cart.map(({ id, quantity }) => ({ id, quantity }));
     const shippingFee = getSelectedShipping();
     const country = getSelectedCountry();
