@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     CH: 1000, AE: 1500, GB: 1000, US: 1200,
   };
 
-  let stripe;
-  let elements;
-  let card;
-  let clientSecret;
+  let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxK...");
+  let elements = stripe.elements();
+  let card = elements.create("card");
+  card.mount("#card-element");
 
   const selectElement = document.getElementById("Select0");
   const payButton = document.getElementById("pay-button");
@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const shippingDisplay = document.getElementById("shipping-price");
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.getElementById("shipping-summary");
+
+  let clientSecret = null;
 
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
@@ -31,149 +33,158 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const getSelectedCountry = () => selectElement.value;
 
-const getSelectedShipping = () => {
-  const country = getSelectedCountry();
-  return SHIPPING_COST[country] || 0;  // vrací v centech
-};
+  const getSelectedShipping = () => {
+    const country = getSelectedCountry();
+    return SHIPPING_COST[country] || 0;  // v centech
+  };
 
-const updatePrices = () => {
-  const subtotalEUR = calculateSubtotal(); // v EUR
-  const shippingFeeCents = getSelectedShipping(); // v centech, např. 1200
-  const shippingFeeEUR = shippingFeeCents / 100;
-  const totalEUR = subtotalEUR + shippingFeeEUR;
+  const updatePrices = () => {
+    const subtotalEUR = calculateSubtotal(); // v EUR
+    const shippingFeeCents = getSelectedShipping(); // v centech
+    const shippingFeeEUR = shippingFeeCents / 100;
+    const totalEUR = subtotalEUR + shippingFeeEUR;
 
-  subtotalDisplay.textContent = `€ ${subtotalEUR.toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${shippingFeeEUR.toFixed(2)}`;
-  totalDisplay.textContent = `€ ${totalEUR.toFixed(2)}`;
-  shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${shippingFeeEUR.toFixed(2)}`;
+    subtotalDisplay.textContent = `€ ${subtotalEUR.toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${shippingFeeEUR.toFixed(2)}`;
+    totalDisplay.textContent = `€ ${totalEUR.toFixed(2)}`;
+    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${shippingFeeEUR.toFixed(2)}`;
 
-  return shippingFeeCents; // vrací v centech
-};
-
+    return shippingFeeCents;
+  };
 
   const renderProductFromCart = () => {
     const cart = getCartFromCookie();
     const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
     container.innerHTML = "";
+
     cart.forEach(item => {
       const itemDiv = document.createElement('section');
       itemDiv.className = '_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8';
-      itemDiv.innerHTML = `<div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
-        <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh; overflow: hidden;">
-          <div class="_6zbcq522 _1fragemth">
-            <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">Shopping cart</h3>
-          </div>
-          <div role="table" aria-labelledby="ResourceList0" class="_6zbcq56 _6zbcq55 _1fragem3c _1fragemou _6zbcq5o _6zbcq5c _1fragem50 _6zbcq516">
-            <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou _6zbcq51d _6zbcq51c _1fragemth">
-              <div role="row" class="_6zbcq51f _6zbcq51e _1fragem3c _1fragemni _1fragempm _1fragem6t">
-                <div role="columnheader" class="_6zbcq522 _1fragemth">Product image</div>
-                <div role="columnheader" class="_6zbcq522 _1fragemth">Description</div>
-                <div role="columnheader" class="_6zbcq522 _1fragemth">Quantity</div>
-                <div role="columnheader" class="_6zbcq522 _1fragemth">Price</div>
-              </div>
+      itemDiv.innerHTML = `
+        <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
+          <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh; overflow: hidden;">
+            <div class="_6zbcq522 _1fragemth">
+              <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">${item.name}</h3>
             </div>
-            <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou">
-              <div role="row" class="_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k">
-                <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
-                  <div class="_1fragem32 _1fragemms _16s97g74b" style="--_16s97g746: 6.4rem;">
-                    <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
-                      <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
-                        <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
-                          <picture>
-                            <img src="${item.image}" style="width: 100%; height: 100%; object-fit: contain;" alt="${item.name}">
-                          </picture>
-                          <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
-                            <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
-                              <span class="_99ss3sw _1fragemth">Quantity</span>
-                              <span>${item.quantity}</span>
+            <div role="table" aria-labelledby="ResourceList0" class="_6zbcq56 _6zbcq55 _1fragem3c _1fragemou _6zbcq5o _6zbcq5c _1fragem50 _6zbcq516">
+              <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou _6zbcq51d _6zbcq51c _1fragemth">
+                <div role="row" class="_6zbcq51f _6zbcq51e _1fragem3c _1fragemni _1fragempm _1fragem6t">
+                  <div role="columnheader" class="_6zbcq522 _1fragemth">Product image</div>
+                  <div role="columnheader" class="_6zbcq522 _1fragemth">Description</div>
+                  <div role="columnheader" class="_6zbcq522 _1fragemth">Quantity</div>
+                  <div role="columnheader" class="_6zbcq522 _1fragemth">Price</div>
+                </div>
+              </div>
+              <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou">
+                <div role="row" class="_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k">
+                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
+                    <div class="_1fragem32 _1fragemms _16s97g74b" style="--_16s97g746: 6.4rem;">
+                      <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
+                        <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
+                          <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
+                            <picture>
+                              <img src="${item.image}" style="width: 100%; height: 100%; object-fit: contain;" alt="${item.name}">
+                            </picture>
+                            <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
+                              <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
+                                <span class="_99ss3sw _1fragemth">Quantity</span>
+                                <span>${item.quantity}</span>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
-                  <div class="_1fragem32 _1fragemms dDm6x">
-                    <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${item.name}</p>
-                    <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s"></div>
+                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
+                    <div class="_1fragem32 _1fragemms dDm6x">
+                      <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${item.name}</p>
+                      <p class="_1fragem12">${item.description || ''}</p>
+                    </div>
+                  </div>
+                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51v _6zbcq51s _1fragemno _6zbcq51y _6zbcq51z _1fragemox _1fragemq8" style="--_16s97g73w: 6.4rem;">
+                    <span>${item.quantity}</span>
+                  </div>
+                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox" style="--_16s97g73w: 6.4rem;">
+                    <span>€ ${(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 </div>
-                <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51o _6zbcq51y"><div class="_6zbcq522 _1fragemth">
-                  <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g"></span>
-                </div>
-              </div>
-              <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno"><div class="_197l2oft _1fragemou _1fragemnk _1fragem3c _1fragemms Byb5s">
-                <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">€ ${(item.price * item.quantity).toFixed(2)}</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    `; 
-      itemDiv.querySelector('._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1g').textContent = item.quantity;
+      `;
       container.appendChild(itemDiv);
     });
   };
 
-const initializeStripe = async () => {
-  const cart = getCartFromCookie();
-  const items = cart.map(({ id, quantity }) => ({ id, quantity }));
-  const shippingFeeInCents = getSelectedShipping(); // už je v centech
-  const country = getSelectedCountry();
-
-  const response = await fetch("/.netlify/functions/create-payment-intent", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      items: items,
-      shippingFee: shippingFeeInCents, // správně v centech
-      country: country
-    })
-  });
-
-  if (!response.ok) {
-    const error = await response.json();
-    alert("Chyba při vytváření platby: " + error.error);
-    return;
-  }
-
-  const data = await response.json();
-  clientSecret = data.clientSecret;
-
-  if (!stripe) {
-    stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
-  }
-
-  if (card) card.unmount();
-  card = elements.create("card");
-  console.log("Mounting Stripe card element");
-  card.mount("#card-element");
-};
-
-
-
-  payButton.addEventListener("click", async () => {
-    updatePrices();
-    await initializeStripe();
-
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: { card },
-    });
-
-    if (result.error) {
-      alert("Platba selhala: " + result.error.message);
-    } else if (result.paymentIntent.status === "succeeded") {
-      localStorage.removeItem("cart");
-      document.cookie = "cart=; max-age=0; path=/";
-      window.location.href = "/posters/?success=true";
-    }
-  });
-
+  // Update UI prices on country change
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
 
+  // Initial render
   renderProductFromCart();
   updatePrices();
+
+  // Handle payment submission
+  payButton.addEventListener("click", async () => {
+    payButton.disabled = true;
+    payButton.textContent = "Processing...";
+
+    const cart = getCartFromCookie();
+    if (cart.length === 0) {
+      alert("Cart is empty");
+      payButton.disabled = false;
+      payButton.textContent = "Zaplatit";
+      return;
+    }
+
+    const shippingFeeCents = getSelectedShipping();
+
+    // Vytvoření PaymentIntent na backendu
+    try {
+      const response = await fetch("/.netlify/functions/create-payment-intent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: cart,
+          shipping: shippingFeeCents,
+          country: getSelectedCountry(),
+        }),
+      });
+
+      const data = await response.json();
+      clientSecret = data.clientSecret;
+
+      if (!clientSecret) {
+        throw new Error("Failed to get client secret");
+      }
+
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+        },
+      });
+
+      if (result.error) {
+        alert(result.error.message);
+        payButton.disabled = false;
+        payButton.textContent = "Zaplatit";
+      } else {
+        if (result.paymentIntent.status === "succeeded") {
+          alert("Platba proběhla úspěšně!");
+          // Tady můžeš přesměrovat nebo vyčistit košík
+          document.cookie = "cart=; Max-Age=0; path=/";
+          location.href = "/thank-you"; // nebo kamkoliv chceš
+        }
+      }
+    } catch (err) {
+      alert("Chyba při zpracování platby: " + err.message);
+      payButton.disabled = false;
+      payButton.textContent = "Zaplatit";
+    }
+  });
 });
