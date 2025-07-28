@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     CH: 1000, AE: 1500, GB: 1000, US: 1200,
   };
 
-  let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxK...");
+  let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
   let elements = stripe.elements();
   let card = elements.create("card");
   card.mount("#card-element");
