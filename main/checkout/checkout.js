@@ -41,10 +41,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const shippingFee = getSelectedShipping();
     const total = subtotal + shippingFee;
 
-    subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
+    subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
     shippingDisplay.textContent = `€ ${(shippingFee / 100).toFixed(2)}`;
     totalDisplay.textContent = `€ ${(total / 100).toFixed(2)}`;
-    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee / 100).toFixed(2)}`;
+    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee).toFixed(2)}`;
   };
 
   const renderProductFromCart = () => {
