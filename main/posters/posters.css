@@ -4808,8 +4808,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 }
 
 .Cart_cart__yGsQk {
-    display: flex
-;
+    display: flex;
     flex-direction: column;
     background-color: var(--white);
     position: fixed;
@@ -4819,7 +4818,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
     height: 100%;
     pointer-events: auto;
     z-index: 130000;
-    padding-top: 0px;
+    padding-top: 60px;
 }
 
 @media(min-width: 1024px) {
