@@ -110,33 +110,21 @@ function updateCartItemCount() {
 }
 
 function updatePrices() {
-  const cart = getCartFromCookie();
-  const selectElement = document.getElementById("select-country");
-  const selectedCountry = selectElement ? selectElement.value.toUpperCase() : "US";
+  const selectedCountry = document.getElementById("select-country").value; // get it fresh
+  const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
+  const total = subtotal + shippingPrice;
 
-  const shippingFeeCents = SHIPPING_COST[selectedCountry] || 0;
-  const shippingFeeEuros = shippingFeeCents / 100;
+  const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
+  const countryLabel = document.getElementById("select-country").selectedOptions[0].text;
 
-  let totalPrice = 0;
-  for (const item of cart) {
-    totalPrice += item.price * item.quantity;
-  }
-  const totalWithShipping = totalPrice + shippingFeeEuros;
+  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${shippingPrice.toFixed(2)}`;
+  totalDisplay.textContent = `€ ${total.toFixed(2)}`;
 
-  const shippingFeeEl = document.getElementById("shipping-price");
-  if (shippingFeeEl) {
-    shippingFeeEl.textContent = `€ ${shippingFeeEuros.toFixed(2)}`;
-  }
-  const subtotalPriceEl = document.getElementById("subtotal-price");
-  if (subtotalPriceEl) {
-    subtotalPriceEl.textContent = `€ ${totalPrice.toFixed(2)}`;
-  }
-  const totalPriceEl = document.getElementById("total-price");
-  if (totalPriceEl) {
-    totalPriceEl.textContent = `€ ${totalWithShipping.toFixed(2)}`;
-  }
+  shippingSummary.textContent =
+    `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
 
-  return shippingFeeCents;
+  return shippingPrice * 100; // return cents
 }
 
 async function initializeStripe(shippingFeeCents) {
