@@ -21,40 +21,44 @@ exports.handler = async (event) => {
     console.log('Přijaté položky:', items);
     console.log("event.body:", event.body);
 
-    let total = 0;
-    for (const { id, quantity } of items) {
+let total = 0;
+for (const { id, quantity } of items) {
+  const product = PRODUCTS[id];
+  if (!product) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: `Unknown product: ${id}` }),
+    };
+  }
+  total += product.price * quantity;
+}
+
+const { shippingFee } = JSON.parse(event.body);
+const shippingFeeNum = parseFloat(shippingFee) || 0;
+
+const amountInCents = Math.round((total + shippingFeeNum) * 100);
+
+// kontrola min. částky (např. 0.50 EUR)
+if (amountInCents < 50) {
+  return {
+    statusCode: 400,
+    body: JSON.stringify({ error: "Amount must be at least 50 cents." }),
+  };
+}
+
+console.log("Final amount:", amountInCents);
+
+const paymentIntent = await stripe.paymentIntents.create({
+  amount: amountInCents,
+  currency: 'eur',
+  automatic_payment_methods: { enabled: true },
+  metadata: {
+    order: items.map(({ id, quantity }) => {
       const product = PRODUCTS[id];
-      if (!product) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ error: `Unknown product: ${id}` }),
-        };
-      }
-      total += product.price * quantity;
-    }
-
-    const amountInCents = total * 100 + 200;
-
-    if (amountInCents < 50) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: "Amount must be at least 50 cents." }),
-      };
-    }
-
-    console.log("Final amount:", amountInCents);
-
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amountInCents,
-      currency: 'eur',
-      automatic_payment_methods: { enabled: true },
-        metadata: {
-          order: items.map(({ id, quantity }) => {
-            const product = PRODUCTS[id];
-            return `${product.name} x${quantity}`;
-          }).join(', ')
-        }
-    });
+      return `${product.name} x${quantity}`;
+    }).join(', ')
+  }
+});
 
     return {
       statusCode: 200,
