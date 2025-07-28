@@ -7,23 +7,22 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
       .split("; ")
       .find(row => row.startsWith("cart="));
     const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-    const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
     if (cart.length === 0) {
       return;
     };
     const items = cart.map(({ id, quantity }) => ({ id, quantity }));
     const SHIPPING_COST = {
-      AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8,
-      HK: 15, IE: 10, IL: 13, IT: 9, JP: 15, MY: 15, NL: 9, NZ: 14, NO: 12,
-      PL: 8, PT: 9, SG: 15, KR: 15, ES: 9, SE: 10, CH: 10, AE: 15, GB: 10, US: 12,
+      AU: 1200, AT: 900, BE: 900, CA: 1400, CZ: 500, DK: 1000, FI: 1000, FR: 900, DE: 800,
+      HK: 1500, IE: 1000, IL: 1300, IT: 900, JP: 1500, MY: 1500, NL: 900, NZ: 1400, NO: 1200,
+      PL: 800, PT: 900, SG: 1500, KR: 1500, ES: 900, SE: 1000, CH: 1000, AE: 1500, GB: 1000, US: 1200,
     };
 
     const selectedCountry = document.getElementById("Select0").value;
-    const shippingFee = SHIPPING_COST[selectedCountry] || 0;
+    const shippingFee = SHIPPING_COST[selectedCountry.toUpperCase()] || 0;
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: simplifiedItems, shippingFee }) // přidáno shippingFee
+      body: JSON.stringify({ items, shippingFee }) // přidáno shippingFee
     });
     if (!res.ok) {
       const errorData = await res.json();
