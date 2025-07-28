@@ -49,9 +49,9 @@ const amount = totalInCents + shippingFeeInCents;
     currency: 'eur',
     automatic_payment_methods: { enabled: true },
     metadata: {
-      items: items.map(item => item.id).join(','),
+        items: items.map(item => `${item.id}:${item.quantity}`).join(','),
       country,
-      shippingFee: shippingFee.toString()
+      shippingFee: shippingFee.toString() / 100
     }
   });
 
