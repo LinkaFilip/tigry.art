@@ -128,10 +128,17 @@ const calculateSubtotal = () => {
     const shippingFee = getSelectedShipping();
     const country = getSelectedCountry();
 
+    
+  console.log("Initializing Stripe with shippingFee:", shippingFee);
+
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items, shippingFee, country }),
+        body: JSON.stringify({
+          items: cartItems,
+          shippingFee: selectedShippingFee,
+          country: selectedCountryCode // např. "CZ", "DE", "US" ...
+        })
     });
 
     if (!response.ok) {
@@ -181,6 +188,7 @@ const calculateSubtotal = () => {
   // Po změně země přepočítej ceny a znovu inicializuj Stripe
   selectElement.addEventListener("change", async () => {
     updatePrices();
+    console.log("Sending shippingFee:", getSelectedShipping());
     await initializeStripe();
   });
 

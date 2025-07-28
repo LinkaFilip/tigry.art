@@ -8,6 +8,13 @@ const PRODUCTS = {
   'poster005': { name: 'Uganda – poster', price: 10 }
 };
 
+const SHIPPING_FEES = {
+  'CZ': 150,
+  'DE': 250,
+  'US': 1000,
+  'default': 500
+};
+
 exports.handler = async (event) => {
   try {
     if (!event.body) {
@@ -17,47 +24,47 @@ exports.handler = async (event) => {
       };
     }
 
-const { items, shippingFee = 0} = JSON.parse(event.body);
+    const { items, country } = JSON.parse(event.body);
     console.log('Přijaté položky:', items);
-    console.log("event.body:", event.body);
+    console.log('Země:', country);
 
-let total = 0;
-for (const { id, quantity } of items) {
-  const product = PRODUCTS[id];
-  if (!product) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: `Unknown product: ${id}` }),
-    };
-  }
-  total += product.price * quantity;
-}
-
-
-const shippingFeeNum = parseFloat(shippingFee) || 0;
-
-const amountInCents = total * 100 + shippingFeeNum;
-
-if (amountInCents < 50) {
-  return {
-    statusCode: 400,
-    body: JSON.stringify({ error: "Amount must be at least 50 cents." }),
-  };
-}
-
-console.log("Final amount:", amountInCents);
-
-const paymentIntent = await stripe.paymentIntents.create({
-  amount: amountInCents,
-  currency: 'eur',
-  automatic_payment_methods: { enabled: true },
-  metadata: {
-    order: items.map(({ id, quantity }) => {
+    let total = 0;
+    for (const { id, quantity } of items) {
       const product = PRODUCTS[id];
-      return `${product.name} x${quantity}`;
-    }).join(', ')
-  }
-});
+      if (!product) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: `Unknown product: ${id}` }),
+        };
+      }
+      total += product.price * quantity;
+    }
+
+    const shippingFeeNum = SHIPPING_FEES[country] ?? SHIPPING_FEES['default'];
+    console.log('Shipping fee in cents:', shippingFeeNum);
+
+    const amountInCents = total * 100 + shippingFeeNum;
+
+    if (amountInCents < 50) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: "Amount must be at least 50 cents." }),
+      };
+    }
+
+    console.log("Final amount:", amountInCents);
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amountInCents,
+      currency: 'eur',
+      automatic_payment_methods: { enabled: true },
+      metadata: {
+        order: items.map(({ id, quantity }) => {
+          const product = PRODUCTS[id];
+          return `${product.name} x${quantity}`;
+        }).join(', ')
+      }
+    });
 
     return {
       statusCode: 200,
