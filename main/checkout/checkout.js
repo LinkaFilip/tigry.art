@@ -136,7 +136,7 @@ const calculateSubtotal = () => {
       headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items: items,
-          shippingFee: selectedShippingFee,
+          shippingFee: shippingFee,
           country: country // např. "CZ", "DE", "US" ...
         })
     });
