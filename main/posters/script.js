@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         id: button.dataset.id,
         name: button.dataset.name,
         price: parseFloat(button.dataset.price),
-        image: button.datase.image,
+        image: button.datase.img,
       };
       addToCart(product);
 
