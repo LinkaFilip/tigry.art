@@ -170,7 +170,7 @@ cart.forEach(item => {
                       <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
                         <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
                           <picture>
-                            <img src="${item.image}" alt="${item.image}">
+                            <img src="${item.image}" style="width: 100%; height: 100%; object-fit: contain;" alt="${item.image}">
                           </picture>
                           <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
                             <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
