@@ -1,11 +1,10 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 const PRODUCTS = {
-  'poster001': { name: 'Japan – poster', price: 10 },
-  'poster002': { name: 'Mexico – poster', price: 10 },
-  'poster003': { name: 'Czechia – poster', price: 10 },
-  'poster004': { name: 'Middle East – poster', price: 10 },
-  'poster005': { name: 'Uganda – poster', price: 10 }
+  'poster001': { name: 'Japan – poster', price: Number(process.env.PRODUCT_POSTER_A) }, // v centech
+  'poster002': { name: 'Mexico – poster', price: Number(process.env.PRODUCT_POSTER_B) },
+  'poster003': { name: 'Czechia – poster', price: Number(process.env.PRODUCT_POSTER_C) },
+  // ostatní produkty tady pokud chceš
 };
 
 const SHIPPING_FEES = {
@@ -53,7 +52,7 @@ const amount = totalInCents * 100 + shippingFeeInCents;
   return {
     statusCode: 200,
     body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
-  };join(', ')} 
+  };} 
   catch (error) {
     console.error("Payment Intent Error:", error);
     return {
