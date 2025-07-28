@@ -7,6 +7,20 @@ const SHIPPING_COST = {
   PL: 800, PT: 900, SG: 1500, KR: 1500, ES: 900, SE: 1000, CH: 1000, AE: 1500, GB: 1000, US: 1200,
 };
 
+const DELIVERY_INFO = {
+  CZ: { type: "Domestic shipping", eta: "2–4 days" },
+  SK: { type: "Borderline shipping", eta: "5–10 days" },
+  default: { type: "International shipping", eta: "6–26 days" },
+};
+
+const PRODUCTS = {
+  'poster001': { name: 'Japan – poster', price: 1000 },
+  'poster002': { name: 'Mexico – poster', price: 1000 },
+  'poster003': { name: 'Czechia – poster', price: 1000 },
+  'poster004': { name: 'Middle East – poster', price: 1000 },
+  'poster005': { name: 'Uganda – poster', price: 1000 },
+};
+
 function getCartFromCookie() {
   const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
   return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
@@ -108,8 +122,24 @@ function updateCartItemCount() {
     }
   }
 }
+function calculateSubtotal() {
+  const cartCookie = document.cookie
+    .split("; ")
+    .find(row => row.startsWith("cart="));
+  const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
 
+  let subtotal = 0;
+  for (const { id, quantity } of cart) {
+    const product = PRODUCTS[id];
+    if (product) {
+      subtotal += product.price * quantity;
+    }
+  }
+
+  return subtotal;
+}
 function updatePrices() {
+  const subtotal = calculateSubtotal();
   const selectedCountry = document.getElementById("Select0").value; // get it fresh
   const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
   const total = subtotal + shippingPrice;
