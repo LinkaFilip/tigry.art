@@ -28,22 +28,20 @@ exports.handler = async (event) => {
     console.log('Přijaté položky:', items);
     console.log('Země:', country);
 
-    let total = 0;
-    for (const { id, quantity } of items) {
-      const product = PRODUCTS[id];
-      if (!product) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ error: `Unknown product: ${id}` }),
-        };
-      }
-      total += product.price * quantity;
-    }
+let totalInCents = 0;
+for (const { id, quantity } of items) {
+  const product = PRODUCTS[id];
+  if (!product) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: `Unknown product: ${id}` }),
+    };
+  }
+  totalInCents += product.price * 100 * quantity; // přepočítáno na centy
+}
 
-    const shippingFeeNum = SHIPPING_FEES[country] ?? SHIPPING_FEES['default'];
-    console.log('Shipping fee in cents:', shippingFeeNum);
-
-    const amountInCents = total * 100 + shippingFeeNum;
+const shippingFeeInCents = parseInt(shippingFee) || 0;
+const amountInCents = totalInCents + shippingFeeInCents;
 
     if (amountInCents < 50) {
       return {
