@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const SHIPPING_COST = {
-    AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8,
-    HK: 15, IE: 10, IL: 13, IT: 9, JP: 15, MY: 15, NL: 9, NZ: 14, NO: 12,
-    PL: 8, PT: 9, SG: 15, KR: 15, ES: 9, SE: 10, CH: 10, AE: 15, GB: 10, US: 12,
+    AU: 1200, AT: 900, BE: 900, CA: 1400, CZ: 500, DK: 1000, FI: 1000, FR: 900,
+    DE: 800, HK: 1500, IE: 1000, IL: 1300, IT: 900, JP: 1500, MY: 1500, NL: 900,
+    NZ: 1400, NO: 1200, PL: 800, PT: 900, SG: 1500, KR: 1500, ES: 900, SE: 1000,
+    CH: 1000, AE: 1500, GB: 1000, US: 1200,
   };
 
   let stripe;
@@ -18,24 +19,42 @@ document.addEventListener("DOMContentLoaded", async () => {
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.getElementById("shipping-summary");
 
-  const cartItemsContainer = document.getElementById("cart-items");
-
-  // Načti košík z cookie
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
     return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
   };
-  
-function renderProductFromCart() {
-  const cart = getCartFromCookie();
-  const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
-  container.innerHTML = "";
 
-  cart.forEach(item => {
-    const itemDiv = document.createElement('section');
-    itemDiv.className = '_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8';
-    itemDiv.innerHTML = `
-      <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
+  const calculateSubtotal = () => {
+    const cart = getCartFromCookie();
+    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  };
+
+  const getSelectedCountry = () => selectElement.value;
+
+  const getSelectedShipping = () => {
+    const country = getSelectedCountry();
+    return SHIPPING_COST[country] || 0;
+  };
+
+  const updatePrices = () => {
+    const subtotal = calculateSubtotal();
+    const shippingFee = getSelectedShipping();
+    const total = subtotal + shippingFee;
+
+    subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${(shippingFee / 100).toFixed(2)}`;
+    totalDisplay.textContent = `€ ${(total / 100).toFixed(2)}`;
+    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee / 100).toFixed(2)}`;
+  };
+
+  const renderProductFromCart = () => {
+    const cart = getCartFromCookie();
+    const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
+    container.innerHTML = "";
+    cart.forEach(item => {
+      const itemDiv = document.createElement('section');
+      itemDiv.className = '_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8';
+      itemDiv.innerHTML = `<div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
         <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh; overflow: hidden;">
           <div class="_6zbcq522 _1fragemth">
             <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">Shopping cart</h3>
@@ -87,58 +106,22 @@ function renderProductFromCart() {
           </div>
         </div>
       </div>
-    `;
-    // Insert quantity inside the empty quantity span
-    itemDiv.querySelector('._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1g').textContent = item.quantity;
-    container.appendChild(itemDiv);
-  });
-}
-const calculateSubtotal = () => {
-    const cart = getCartFromCookie();
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    `; 
+      itemDiv.querySelector('._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1g').textContent = item.quantity;
+      container.appendChild(itemDiv);
+    });
   };
 
-  // Vrátí vybranou zemi
-  const getSelectedCountry = () => selectElement.value;
-
-  // Spočítá shipping fee podle země
-  const getSelectedShipping = () => {
-    const country = getSelectedCountry();
-    return SHIPPING_COST[country] || 0;
-  };
-
-  // Aktualizace zobrazených cen
-  const updatePrices = () => {
-    const subtotal = calculateSubtotal();
-    const shippingFee = getSelectedShipping();
-    const total = subtotal + shippingFee;
-
-    subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${(shippingFee).toFixed(2)}`;
-    totalDisplay.textContent = `€ ${(total).toFixed(2)}`;
-    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee / 100).toFixed(2)}`;
-
-    return shippingFee;
-  };
-
-  // Inicializace Stripe + vytvoření Payment Intent
   const initializeStripe = async () => {
     const cart = getCartFromCookie();
     const items = cart.map(({ id, quantity }) => ({ id, quantity }));
     const shippingFee = getSelectedShipping();
     const country = getSelectedCountry();
 
-    
-  console.log("Initializing Stripe with shippingFee:", shippingFee);
-
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items: items,
-          shippingFee: shippingFee,
-          country: country
-        })
+      body: JSON.stringify({ items, shippingFee, country }),
     });
 
     if (!response.ok) {
@@ -154,22 +137,15 @@ const calculateSubtotal = () => {
       stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
     }
 
-    if (elements) {
-      elements = null;
-    }
     elements = stripe.elements({ clientSecret, appearance: { theme: "flat" } });
-
     if (card) card.unmount();
     card = elements.create("card");
     card.mount("#card-element");
   };
 
-  // Platba
   payButton.addEventListener("click", async () => {
-    if (!clientSecret) {
-      alert("Platba nebyla inicializována.");
-      return;
-    }
+    updatePrices();
+    await initializeStripe();
 
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: { card },
@@ -179,22 +155,15 @@ const calculateSubtotal = () => {
       alert("Platba selhala: " + result.error.message);
     } else if (result.paymentIntent.status === "succeeded") {
       localStorage.removeItem("cart");
-      // Můžeš vymazat i cookie cart, pokud chceš
       document.cookie = "cart=; max-age=0; path=/";
       window.location.href = "/posters/?success=true";
     }
   });
 
-  // Po změně země přepočítej ceny a znovu inicializuj Stripe
-  selectElement.addEventListener("change", async () => {
+  selectElement.addEventListener("change", () => {
     updatePrices();
-    console.log("Sending shippingFee:", getSelectedShipping());
-    await initializeStripe();
   });
 
-  // Start: vykresli košík, přepočítej ceny, inicializuj Stripe
   renderProductFromCart();
   updatePrices();
-  await initializeStripe();
 });
-
