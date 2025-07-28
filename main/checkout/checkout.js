@@ -114,7 +114,7 @@ const calculateSubtotal = () => {
     const total = subtotal + shippingFee;
 
     subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${(shippingFee).toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${(shippingFee).toFixed(2) / 100}`;
     totalDisplay.textContent = `€ ${(total).toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee / 100).toFixed(2)}`;
 
