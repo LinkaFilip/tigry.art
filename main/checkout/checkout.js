@@ -186,7 +186,7 @@ payButton.addEventListener("click", async () => {
       if (result.paymentIntent.status === "succeeded") {
         alert("Platba proběhla úspěšně!");
         document.cookie = "cart=; Max-Age=0; path=/";
-        location.href = "/poster/?=sucess";
+        location.href = "/posters/?success=true";
       }
     }
   } catch (err) {
