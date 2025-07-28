@@ -31,20 +31,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const getSelectedCountry = () => selectElement.value;
 
-  const getSelectedShipping = () => {
-    const country = getSelectedCountry();
-    return SHIPPING_COST[country] || 0;
-  };
+const getSelectedShipping = () => {
+  const country = getSelectedCountry();
+  return SHIPPING_COST[country] || 0; // toto je EUR (např. 5)
+};
 
-  const updatePrices = () => {
-    const subtotal = calculateSubtotal();
-    const shippingFee = getSelectedShipping();
-    const total = subtotal + shippingFee;
+const updatePrices = () => {
+  const subtotal = calculateSubtotal(); // EUR
+  const shippingFee = getSelectedShipping(); // EUR
+  const total = subtotal + shippingFee;
 
-    subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${(shippingFee / 100).toFixed(2)}`;
-    totalDisplay.textContent = `€ ${(total).toFixed(2)}`;
-    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee).toFixed(2)}`;
+  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${shippingFee.toFixed(2)}`;    // tu už NEmáš dělit 100!
+  totalDisplay.textContent = `€ ${total.toFixed(2)}`;
+  shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${shippingFee.toFixed(2)}`;
   };
 
   const renderProductFromCart = () => {
@@ -121,7 +121,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items, shippingFee, country }),
+      body: JSON.stringify({
+        items: items,
+        shippingFee: Math.round(shippingFee * 100), // převedeno na centy
+        country: country
+      })
     });
 
     if (!response.ok) {
