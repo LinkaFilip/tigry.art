@@ -156,10 +156,10 @@ function updatePrices() {
   const cart = JSON.parse(decodeURIComponent(document.cookie.split("; ").find(r => r.startsWith("cart="))?.split("=")[1] || "[]"));
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-  subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${(shippingPrice / 100).toFixed(2)}`;
-  totalDisplay.textContent = `€ ${((subtotal + shippingPrice) / 100).toFixed(2)}`;
-  shippingSummary.textContent = `${delivery.type} (${countryLabel}): €${(shippingPrice / 100).toFixed(2)} – delivery in ${delivery.eta}`;
+  subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${(shippingPrice).toFixed(2)}`;
+  totalDisplay.textContent = `€ ${((subtotal + shippingPrice)).toFixed(2)}`;
+  shippingSummary.textContent = `${delivery.type} (${countryLabel}): €${(shippingPrice).toFixed(2)} – delivery in ${delivery.eta}`;
 
   return shippingPrice;
 }
