@@ -26453,7 +26453,8 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
 ._99ss3sh {
     --x-default-color-icon: var(--x-default-color-text-contrast);
     background-color: hsl(0deg 0% 40% / 53%);
-    color: var(--x-default-color-text-contrast)
+    color: var(--x-default-color-text-contrast);
+    border-radius: 50%;
 }
 
 ._99ss3sj {
@@ -27058,7 +27059,7 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
 }
 
 [dir=ltr] ._1m6j2n3m {
-    right: calc(var(--x-product-thumbnail-badge-offset) * -1)
+    right: calc(var(--x-product-thumbnail-badge-offset) * -1);
 }
 
 [dir=rtl] ._1m6j2n3m {
@@ -27066,7 +27067,8 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
 }
 
 ._1m6j2n3m {
-    top: calc(var(--x-product-thumbnail-badge-offset) * -1)
+    top: calc(var(--x-product-thumbnail-badge-offset) * -1);
+    right: calc(var(--x-product-thumbnail-badge-offset) * -1);
 }
 
 @keyframes xvcb00 {
