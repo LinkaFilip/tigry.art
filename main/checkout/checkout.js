@@ -10,7 +10,7 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
     const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
     if (cart.length === 0) {
       return;
-    }
+    };
     const items = cart.map(({ id, quantity }) => ({ id, quantity }));
     const SHIPPING_COST = {
       AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8,
@@ -23,9 +23,8 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: simplifiedItems, shippingFee })
+      body: JSON.stringify({ items: simplifiedItems, shippingFee }) // přidáno shippingFee
     });
-
     if (!res.ok) {
       const errorData = await res.json();
       alert("Chyba při vytvoření platby: " + errorData.error);

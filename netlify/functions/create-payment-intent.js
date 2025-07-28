@@ -17,7 +17,7 @@ exports.handler = async (event) => {
       };
     }
 
-    const { items } = JSON.parse(event.body);
+const { items, shippingFee = 0 } = JSON.parse(event.body);
     console.log('Přijaté položky:', items);
     console.log("event.body:", event.body);
 
@@ -33,10 +33,10 @@ for (const { id, quantity } of items) {
   total += product.price * quantity;
 }
 
-const { shippingFee } = JSON.parse(event.body);
+
 const shippingFeeNum = parseFloat(shippingFee) || 0;
 
-const amountInCents = Math.round((total + shippingFeeNum) * 100);
+const amountInCents = total * 100 + shippingFeeNum;
 
 // kontrola min. částky (např. 0.50 EUR)
 if (amountInCents < 50) {
