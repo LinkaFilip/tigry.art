@@ -158,7 +158,7 @@ function updatePrices() {
   shippingSummary.textContent =
     `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
 
-  return shippingPrice;
+  return shippingPrice * 100;
 }
 
 async function initializeStripe(shippingFeeCents) {
