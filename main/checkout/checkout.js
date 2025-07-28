@@ -1,256 +1,108 @@
-
-
-let elements;
-let card;
-let clientSecret = null;
-const SHIPPING_COST = {
-  AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8,
-  HK: 15, IE: 10, IL: 13, IT: 9, JP: 15, MY: 15, NL: 9, NZ: 14, NO: 12,
-  PL: 8, PT: 9, SG: 15, KR: 15, ES: 9, SE: 10, CH: 10, AE: 15, GB: 10, US: 12,
-};
-
-const DELIVERY_INFO = {
-  CZ: { type: "Domestic shipping", eta: "2–4 days" },
-  SK: { type: "Borderline shipping", eta: "5–10 days" },
-  default: { type: "International shipping", eta: "6–26 days" },
-};
-
-const PRODUCTS = {
-  'poster001': { name: 'Japan – poster', price: 10 },
-  'poster002': { name: 'Mexico – poster', price: 10 },
-  'poster003': { name: 'Czechia – poster', price: 10 },
-  'poster004': { name: 'Middle East – poster', price: 10 },
-  'poster005': { name: 'Uganda – poster', price: 10 },
-};
-
-function getCartFromCookie() {
-  const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
-  return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-}
-
-function renderProductFromCart() {
-  const cart = getCartFromCookie();
-  const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
-  container.innerHTML = "";
-
-  cart.forEach(item => {
-    const itemDiv = document.createElement('section');
-    itemDiv.className = '_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8';
-    itemDiv.innerHTML = `
-      <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
-        <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh; overflow: hidden;">
-          <div class="_6zbcq522 _1fragemth">
-            <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">Shopping cart</h3>
-          </div>
-          <div role="table" aria-labelledby="ResourceList0" class="_6zbcq56 _6zbcq55 _1fragem3c _1fragemou _6zbcq5o _6zbcq5c _1fragem50 _6zbcq516">
-            <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou _6zbcq51d _6zbcq51c _1fragemth">
-              <div role="row" class="_6zbcq51f _6zbcq51e _1fragem3c _1fragemni _1fragempm _1fragem6t">
-                <div role="columnheader" class="_6zbcq522 _1fragemth">Product image</div>
-                <div role="columnheader" class="_6zbcq522 _1fragemth">Description</div>
-                <div role="columnheader" class="_6zbcq522 _1fragemth">Quantity</div>
-                <div role="columnheader" class="_6zbcq522 _1fragemth">Price</div>
-              </div>
-            </div>
-            <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou">
-              <div role="row" class="_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k">
-                <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
-                  <div class="_1fragem32 _1fragemms _16s97g74b" style="--_16s97g746: 6.4rem;">
-                    <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
-                      <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
-                        <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
-                          <picture>
-                            <img src="${item.image}" style="width: 100%; height: 100%; object-fit: contain;" alt="${item.name}">
-                          </picture>
-                          <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
-                            <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
-                              <span class="_99ss3sw _1fragemth">Quantity</span>
-                              <span>${item.quantity}</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
-                  <div class="_1fragem32 _1fragemms dDm6x">
-                    <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${item.name}</p>
-                    <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s"></div>
-                  </div>
-                </div>
-                <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51o _6zbcq51y"><div class="_6zbcq522 _1fragemth">
-                  <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g"></span>
-                </div>
-              </div>
-              <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno"><div class="_197l2oft _1fragemou _1fragemnk _1fragem3c _1fragemms Byb5s">
-                <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">€ ${(item.price * item.quantity).toFixed(2)}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    // Insert quantity inside the empty quantity span
-    itemDiv.querySelector('._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1g').textContent = item.quantity;
-    container.appendChild(itemDiv);
-  });
-}
-
-function updateDisplayedQuantity() {
-  const cart = getCartFromCookie();
-  let totalQuantity = 0;
-  for (const item of cart) {
-    totalQuantity += item.quantity;
-  }
-
-  const container = document.querySelector('._1m6j2n3m ._99ss3s1');
-  if (container) {
-    const spans = container.querySelectorAll('span');
-    if (spans.length >= 2) {
-      spans[1].textContent = totalQuantity;
-    }
-  }
-}
-
-function updateCartItemCount() {
-  const cart = getCartFromCookie();
-  const itemCount = cart.length;
-
-  const container = document.querySelector('._1m6j2n3m ._99ss3s1');
-  if (container) {
-    const spans = container.querySelectorAll('span');
-    if (spans.length >= 1) {
-      spans[0].textContent = itemCount;
-    }
-  }
-}
-function calculateSubtotal() {
-  const cartCookie = document.cookie
-    .split("; ")
-    .find(row => row.startsWith("cart="));
-  const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-
-  let subtotal = 0;
-  for (const { id, quantity } of cart) {
-    const product = PRODUCTS[id];
-    if (product) {
-      subtotal += product.price * quantity;
-    }
-  }
-
-  return subtotal;
-}
-const selectElement = document.getElementById("Select0");
-const subtotalDisplay = document.getElementById("subtotal-price");
-const shippingDisplay = document.getElementById("shipping-price");
-const totalDisplay = document.getElementById("total-price");
-const shippingSummary = document.getElementById("shipping-summary");
-
-// --- Spočítej a aktualizuj cenu ---
-function updatePrices() {
-  const selectedCountry = selectElement.value;
-  const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
-  const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
-  const countryLabel = selectElement.options[selectElement.selectedIndex].text;
-
-  const cart = JSON.parse(decodeURIComponent(document.cookie.split("; ").find(r => r.startsWith("cart="))?.split("=")[1] || "[]"));
-  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
-  subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${(shippingPrice).toFixed(2)}`;
-  totalDisplay.textContent = `€ ${((subtotal + shippingPrice)).toFixed(2)}`;
-  shippingSummary.textContent = `${delivery.type} (${countryLabel}): €${(shippingPrice).toFixed(2)} – delivery in ${delivery.eta}`;
-
-  return shippingPrice;
-}
-
-async function initializeStripe(shippingFee) {
-  const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
-  const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-  const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
-  const selectedCountry = selectElement.value;
-
-  const res = await fetch('/.netlify/functions/create-payment-intent', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items: simplifiedItems, shippingFee })
-  });
-
-  const data = await res.json();
-  clientSecret = data.clientSecret;
-
-  stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb"); // nahraď vlastním
-  elements = stripe.elements({ clientSecret });
-  card = elements.create("card");
-  card.mount("#card-element");
-}
-
-// --- Odeslání platby po submitu ---
-const form = document.getElementById("payment-form");
-const errorMsg = document.getElementById("error-message");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  if (!clientSecret) {
-    alert("Platba nebyla inicializována.");
-    return;
-  }
-
-  const billingDetails = {
-    name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`,
-    email: document.getElementById("email").value,
-    phone: document.getElementById("TextField6").value,
-    address: {
-      line1: document.getElementById("TextField2").value,
-      line2: document.getElementById("TextField3").value,
-      city: document.getElementById("TextField5").value,
-      postal_code: document.getElementById("TextField4").value,
-      country: selectElement.value
-    }
+document.addEventListener("DOMContentLoaded", async () => {
+  const SHIPPING_COST = {
+    AU: 1200, AT: 900, BE: 900, CA: 1400, CZ: 500, DK: 1000, FI: 1000, FR: 900, DE: 800,
+    HK: 1500, IE: 1000, IL: 1300, IT: 900, JP: 1500, MY: 1500, NL: 900, NZ: 1400, NO: 1200,
+    PL: 800, PT: 900, SG: 1500, KR: 1500, ES: 900, SE: 1000, CH: 1000, AE: 1500, GB: 1000, US: 1200,
   };
 
-  const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-    payment_method: {
-      card: card,
-      billing_details: billingDetails,
+  let stripe;
+  let elements;
+  let card;
+  let clientSecret;
+
+  const selectElement = document.getElementById("Select0");
+  const payButton = document.getElementById("pay-button");
+
+  const subtotalDisplay = document.getElementById("subtotal-price");
+  const shippingDisplay = document.getElementById("shipping-price");
+  const totalDisplay = document.getElementById("total-price");
+  const shippingSummary = document.getElementById("shipping-summary");
+
+  const getCart = () => {
+    const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
+    return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
+  };
+
+  const getSelectedShipping = () => {
+    const selected = selectElement.value;
+    return SHIPPING_COST[selected] || 0;
+  };
+
+  const calculateSubtotal = () => {
+    const cart = getCart();
+    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  };
+
+  const updatePrices = () => {
+    const subtotal = calculateSubtotal();
+    const shippingFee = getSelectedShipping();
+    const total = subtotal + shippingFee;
+
+    subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${(shippingFee / 100).toFixed(2)}`;
+    totalDisplay.textContent = `€ ${(total / 100).toFixed(2)}`;
+    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee / 100).toFixed(2)}`;
+
+    return shippingFee;
+  };
+
+  const initializeStripe = async () => {
+    const cart = getCart();
+    const items = cart.map(({ id, quantity }) => ({ id, quantity }));
+    const shippingFee = getSelectedShipping();
+
+    const response = await fetch("/.netlify/functions/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items, shippingFee }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      alert("Chyba při vytváření platby: " + error.error);
+      return;
+    }
+
+    const data = await response.json();
+    clientSecret = data.clientSecret;
+
+    stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb"); // nahraď vlastním
+    elements = stripe.elements({ clientSecret, appearance: { theme: "flat" } });
+
+    if (card) card.unmount(); // aby se nemountoval znovu
+    card = elements.create("card");
+    card.mount("#card-element");
+  };
+
+  payButton.addEventListener("click", async () => {
+    if (!clientSecret) {
+      alert("Platba nebyla inicializována.");
+      return;
+    }
+
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: card,
+      },
+    });
+
+    if (result.error) {
+      alert("Platba selhala: " + result.error.message);
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        localStorage.removeItem("cart");
+        window.location.href = "/posters/?success=true";
+      }
     }
   });
 
-  if (error) {
-    errorMsg.textContent = error.message;
-  } else if (paymentIntent.status === "succeeded") {
-    localStorage.removeItem("cart");
-    alert("Payment succeeded!");
-    window.location.href = "/posters/?success=true";
-  }
-});
-
-// --- Inicalizační tlačítko ---
-const payButton = document.getElementById("pay-button");
-if (payButton) {
-  payButton.addEventListener("click", async () => {
-    const fee = updatePrices();
-    await initializeStripe(fee);
+  // Reaguje na změnu země
+  selectElement.addEventListener("change", async () => {
+    updatePrices();
+    await initializeStripe();
   });
-}
 
-
-document.addEventListener("DOMContentLoaded", () => {
-  renderProductFromCart();
-  updateDisplayedQuantity();
-  updateCartItemCount();
-
-  const selectElement = document.getElementById("Select0");
-  if (selectElement) {
-    selectElement.addEventListener("change", async () => {
-      console.log("Changed country to:", selectElement.value);
-      const shippingFeeCents = updatePrices();
-
-    });
-  }
-
-  // Initial load
-  const initialShippingFeeCents = updatePrices();
-  initializeStripe(initialShippingFeeCents);
+  // Init po načtení stránky
+  updatePrices();
+  await initializeStripe();
 });
