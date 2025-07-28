@@ -114,7 +114,7 @@ const calculateSubtotal = () => {
     const total = subtotal + shippingFee;
 
     subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${(shippingFee).toFixed(2) / 100}`;
+    shippingDisplay.textContent = `€ ${(shippingFee).toFixed(2)}`;
     totalDisplay.textContent = `€ ${(total).toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shippingFee / 100).toFixed(2)}`;
 
@@ -137,7 +137,7 @@ const calculateSubtotal = () => {
         body: JSON.stringify({
           items: items,
           shippingFee: shippingFee,
-          country: country // např. "CZ", "DE", "US" ...
+          country: country
         })
     });
 
