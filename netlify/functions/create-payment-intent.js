@@ -37,7 +37,7 @@ for (const { id, quantity } of items) {
       body: JSON.stringify({ error: `Unknown product: ${id}` }),
     };
   }
-  totalInCents += product.price * 100 * quantity; // přepočítáno na centy
+  totalInCents += product.price * 100 * quantity; // přepočet do centů
 }
 
 const shippingFeeInCents = parseInt(shippingFee) || 0;
@@ -52,17 +52,17 @@ const amountInCents = totalInCents + shippingFeeInCents;
 
     console.log("Final amount:", amountInCents);
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amountInCents,
-      currency: 'eur',
-      automatic_payment_methods: { enabled: true },
-      metadata: {
-        order: items.map(({ id, quantity }) => {
-          const product = PRODUCTS[id];
-          return `${product.name} x${quantity}`;
-        }).join(', ')
-      }
-    });
+const paymentIntent = await stripe.paymentIntents.create({
+  amount: amountInCents,
+  currency: 'eur',
+  automatic_payment_methods: { enabled: true },
+  metadata: {
+    order: items.map(({ id, quantity }) => {
+      const product = PRODUCTS[id];
+      return `${product.name} x${quantity}`;
+    }).join(', ')
+  }
+});
 
     return {
       statusCode: 200,
