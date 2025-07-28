@@ -28,21 +28,21 @@ exports.handler = async (event) => {
     console.log('Přijaté položky:', items);
     console.log('Země:', country);
 
-  let totalInCents = 0;
-  for (const { id, quantity } of items) {
-    const product = PRODUCTS[id];
-    if (!product) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: `Unknown product ${id}` }),
-      };
-    }
-    totalInCents += product.price * quantity * 100;
+let totalInCents = 0;
+for (const { id, quantity } of items) {
+  const product = PRODUCTS[id];
+  if (!product) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ error: `Unknown product ${id}` }),
+    };
   }
+  totalInCents += product.price * quantity * 100;  // Převod EUR na centy
+}
 
-  const shippingFeeInCents = parseInt(shippingFee) || 0;
+const shippingFeeInCents = parseInt(shippingFee) || 0;
 
-  const amount = totalInCents + shippingFeeInCents;
+const amount = totalInCents + shippingFeeInCents;
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
