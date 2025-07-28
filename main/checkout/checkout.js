@@ -1,202 +1,27 @@
 const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
 
-  let elements, card;
+let elements, card;
+const SHIPPING_COST = {
+  AU: 1200, AT: 900, BE: 900, CA: 1400, CZ: 500, DK: 1000, FI: 1000, FR: 900, DE: 800,
+  HK: 1500, IE: 1000, IL: 1300, IT: 900, JP: 1500, MY: 1500, NL: 900, NZ: 1400, NO: 1200,
+  PL: 800, PT: 900, SG: 1500, KR: 1500, ES: 900, SE: 1000, CH: 1000, AE: 1500, GB: 1000, US: 1200,
+};
 
-  async function initializeStripe(shippingFee = 0) {
-    const cartCookie = document.cookie
-      .split("; ")
-      .find(row => row.startsWith("cart="));
-    const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-    if (cart.length === 0) {
-      return;
-    };
-    const items = cart.map(({ id, quantity }) => ({ id, quantity }));
-    const SHIPPING_COST = {
-      AU: 1200, AT: 900, BE: 900, CA: 1400, CZ: 500, DK: 1000, FI: 1000, FR: 900, DE: 800,
-      HK: 1500, IE: 1000, IL: 1300, IT: 900, JP: 1500, MY: 1500, NL: 900, NZ: 1400, NO: 1200,
-      PL: 800, PT: 900, SG: 1500, KR: 1500, ES: 900, SE: 1000, CH: 1000, AE: 1500, GB: 1000, US: 1200,
-    };
-
-    const selectedCountry = document.getElementById("Select0").value;
-
-
-    console.log("Selected country:", selectedCountry);
-    console.log("Shipping fee:", SHIPPING_COST[selectedCountry]);
-    
-    const res = await fetch('/.netlify/functions/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items, shippingFee })
-    });
-    if (!res.ok) {
-      const errorData = await res.json();
-      alert("Chyba při vytvoření platby: " + errorData.error);
-      return;
-    }
-selectElement.addEventListener("change", () => {
-  updatePrices();
-  displayTotalPrice();
-  
-  const selectedCountry = selectElement.value.toUpperCase();
-  const shippingFee = SHIPPING_COST[selectedCountry] || 0;
-
-  initializeStripe(shippingFee);
-});
-    const data = await res.json();
-    const clientSecret = data.clientSecret;
-
-    elements = stripe.elements({
-      clientSecret,
-      appearance: { theme: 'flat' },
-      paymentMethodCreation: 'manual',
-    });
-
-    card = elements.create("card");
-    card.mount("#card-element");
-
-    const paymentRequest = stripe.paymentRequest({
-      country: "CZ",
-      currency: "eur",
-      total: {
-        label: "Platba",
-        amount: data.amount,
-      },
-      requestPayerName: true,
-      requestPayerEmail: true,
-    });
-
-    const prButton = elements.create("paymentRequestButton", {
-      paymentRequest: paymentRequest,
-    });
-
-    const result = await paymentRequest.canMakePayment();
-    if (result && (result.googlePay || result.applePay)) {
-      prButton.mount("#payment-request-button");
-    } else {
-      document.getElementById("payment-request-button").style.display = "none";
-    }
-
-    paymentRequest.on("paymentmethod", async (ev) => {
-      const { error: confirmError } = await stripe.confirmCardPayment(
-        clientSecret,
-        {
-          payment_method: ev.paymentMethod.id,
-        },
-        { handleActions: false }
-      );
-
-      if (confirmError) {
-        ev.complete("fail");
-        alert(confirmError.message);
-      } else {
-        ev.complete("success");
-      }
-    });
-
-    const form = document.getElementById("payment-form");
-    const errorMsg = document.getElementById("error-message");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const billingDetails = {
-        name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`,
-        email: document.getElementById("email").value,
-        phone: document.getElementById("TextField6").value,
-        address: {
-          line1: document.getElementById("TextField2").value,
-          line2: document.getElementById("TextField3").value,
-          city: document.getElementById("TextField5").value,
-          postal_code: document.getElementById("TextField4").value,
-          country: document.getElementById("Select0").value.toUpperCase(),
-        },
-      };
-
-      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: card,
-          billing_details: billingDetails,
-        },
-      });
-
-      if (error) {
-        errorMsg.textContent = error.message;
-      } else if (paymentIntent.status === "succeeded") {
-        form.reset();
-        card.clear();
-        localStorage.removeItem('cart');
-        window.location.href = '/posters/?success=true';
-      }
-    });
-  }
-function displayTotalPrice() {
-  const cartCookie = document.cookie
-    .split("; ")
-    .find(row => row.startsWith("cart="));
-  const cart = cartCookie
-    ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
-    : [];
-
-  const subtotal = cart.reduce(
-    (sum, product) => sum + product.price * product.quantity,
-    0
-  );
-
-  const SHIPPING_COST = {
-    AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8,
-    HK: 15, IE: 10, IL: 13, IT: 9, JP: 15, MY: 15, NL: 9, NZ: 14, NO: 12,
-    PL: 8, PT: 9, SG: 15, KR: 15, ES: 9, SE: 10, CH: 10, AE: 15, GB: 10, US: 12,
-  };
-
-  const DELIVERY_INFO = {
-    CZ: { type: "Domestic shipping", eta: "2–4 days" },
-    default: { type: "International shipping", eta: "5–10 days" }
-  };
-
-  const selectElement = document.getElementById("Select0");
-  const shippingDisplay = document.getElementById("shipping-price");
-  const subtotalDisplay = document.getElementById("subtotal-price");
-  const totalDisplay = document.getElementById("total-price");
-  const shippingSummary = document.querySelector("._1tx8jg70._1fragemms._1tx8jg715._1tx8jg71e._1tx8jg71f");
-
-
-
-function updatePrices() {
-  const selectedCountry = selectElement.value.toUpperCase();
-  const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
-  currentShippingFee = shippingPrice;
-
-  const total = subtotal + shippingPrice;
-
-  const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
-  const countryLabel = selectElement.options[selectElement.selectedIndex].text;
-
-  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${shippingPrice.toFixed(2)}`;
-  totalDisplay.textContent = `€ ${total.toFixed(2)}`;
-
-  shippingSummary.textContent =
-    `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
+function getCartFromCookie() {
+  const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
+  return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
 }
-
-}
-
-
-
-
-
 
 function renderProductFromCart() {
-const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cart = getCartFromCookie();
+  const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
+  container.innerHTML = ""; // Clear previous
 
-const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
-
-cart.forEach(item => {
+  cart.forEach(item => {
     const itemDiv = document.createElement('section');
     itemDiv.className = '_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8';
-
     itemDiv.innerHTML = `
-        <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
+      <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
         <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh; overflow: hidden;">
           <div class="_6zbcq522 _1fragemth">
             <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">Shopping cart</h3>
@@ -218,7 +43,7 @@ cart.forEach(item => {
                       <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
                         <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
                           <picture>
-                            <img src="${item.image}" style="width: 100%; height: 100%; object-fit: contain;" alt="${item.image}">
+                            <img src="${item.image}" style="width: 100%; height: 100%; object-fit: contain;" alt="${item.name}">
                           </picture>
                           <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
                             <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
@@ -242,38 +67,27 @@ cart.forEach(item => {
                 </div>
               </div>
               <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno"><div class="_197l2oft _1fragemou _1fragemnk _1fragem3c _1fragemms Byb5s">
-                <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">€ ${item.price * item.quantity}</span>
+                <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">€ ${(item.price * item.quantity).toFixed(2)}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div aria-hidden="true" class="_1r4exbt7 _1r4exbt6 _1fragemfu _1frageme1 _1fragemjq _1fragemhx _1fragemmi _1fragem3c _1fragemni _1fragemri _1fragemtg _1r4exbta _1r4exbt8 _1fragemsi _1r4exbt5">Scroll for more items
-      <span class="a8x1wu2 a8x1wu1 _1fragempm _1fragem2x _1fragemlo _1fragemle a8x1wu9 a8x1wui a8x1wum a8x1wuk _1fragem32 a8x1wuq a8x1wuo a8x1wuw">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" focusable="false" aria-hidden="true" class="a8x1wuy a8x1wux _1fragem32 _1fragempm _1fragemlo _1fragemle _1fragemot">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M7 1.5v11m0 0 4.75-3.826M7 12.5 2.25 8.674"></path>
-        </svg>
-      </span>
-    </div>
-  </div>
     `;
-
+    // Insert quantity inside the empty quantity span
+    itemDiv.querySelector('._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1g').textContent = item.quantity;
     container.appendChild(itemDiv);
-    });
+  });
 }
-window.addEventListener("DOMContentLoaded", renderProductFromCart);
 
 function updateDisplayedQuantity() {
-  const cartCookie = document.cookie
-    .split("; ")
-    .find(row => row.startsWith("cart="));
-  const cart = cartCookie
-    ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
-    : [];
-  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cart = getCartFromCookie();
+  let totalQuantity = 0;
+  for (const item of cart) {
+    totalQuantity += item.quantity;
+  }
+
   const container = document.querySelector('._1m6j2n3m ._99ss3s1');
-  const firstPrice = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1g.notranslate");
   if (container) {
     const spans = container.querySelectorAll('span');
     if (spans.length >= 2) {
@@ -281,25 +95,109 @@ function updateDisplayedQuantity() {
     }
   }
 }
-function updateCartItemCount() {
-  const cartCookie = document.cookie
-    .split("; ")
-    .find(row => row.startsWith("cart="));
-  const cart = cartCookie
-    ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
-    : [];
 
+function updateCartItemCount() {
+  const cart = getCartFromCookie();
   const itemCount = cart.length;
-  
+
   const container = document.querySelector('._1m6j2n3m ._99ss3s1');
   if (container) {
     const spans = container.querySelectorAll('span');
-    if (spans.length >= 2) {
-      spans[1].textContent = itemCount;
+    if (spans.length >= 1) {
+      spans[0].textContent = itemCount;
     }
   }
 }
+
+function updatePrices() {
+  const cart = getCartFromCookie();
+  const selectElement = document.getElementById("select-country");
+  const selectedCountry = selectElement ? selectElement.value.toUpperCase() : "US";
+
+  const shippingFeeCents = SHIPPING_COST[selectedCountry] || 0;
+  const shippingFeeEuros = shippingFeeCents / 100;
+
+  let totalPrice = 0;
+  for (const item of cart) {
+    totalPrice += item.price * item.quantity;
+  }
+  const totalWithShipping = totalPrice + shippingFeeEuros;
+
+  const shippingFeeEl = document.getElementById("shipping-fee");
+  if (shippingFeeEl) {
+    shippingFeeEl.textContent = `€ ${shippingFeeEuros.toFixed(2)}`;
+  }
+  const totalPriceEl = document.getElementById("total-price");
+  if (totalPriceEl) {
+    totalPriceEl.textContent = `€ ${totalWithShipping.toFixed(2)}`;
+  }
+
+  return shippingFeeCents; // return cents for Stripe
+}
+
+async function initializeStripe(shippingFeeCents) {
+  const cart = getCartFromCookie();
+
+  const items = cart.map(item => ({
+    id: item.id,
+    quantity: item.quantity,
+  }));
+
+  try {
+    const res = await fetch('/.netlify/functions/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items, shippingFee: shippingFeeCents }),
+    });
+    const data = await res.json();
+
+    if (!data.clientSecret) {
+      throw new Error('No client secret returned');
+    }
+
+    if (elements) {
+      elements.unmount();
+      elements = null;
+    }
+
+    elements = stripe.elements();
+    card = elements.create("card");
+    card.mount("#card-element");
+
+    stripe.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: card,
+      },
+    }).then((result) => {
+      if (result.error) {
+        console.error("Payment failed", result.error.message);
+      } else {
+        if (result.paymentIntent.status === 'succeeded') {
+          console.log("Payment succeeded!");
+        }
+      }
+    });
+
+  } catch (err) {
+    console.error('Error initializing Stripe:', err);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  renderProductFromCart();
   updateDisplayedQuantity();
   updateCartItemCount();
+
+  const selectElement = document.getElementById("select-country");
+  if (selectElement) {
+    // On change, update prices and Stripe
+    selectElement.addEventListener("change", async () => {
+      const shippingFeeCents = updatePrices();
+      await initializeStripe(shippingFeeCents);
+    });
+  }
+
+  // Initial load
+  const initialShippingFeeCents = updatePrices();
+  initializeStripe(initialShippingFeeCents);
 });
