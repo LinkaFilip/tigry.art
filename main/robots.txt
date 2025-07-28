@@ -4,3 +4,8 @@ User-agent: *
 Allow: /*
 Disallow: /api/*
 Disallow: /checkout
+Disallow: /*?add-to-cart=
+Disallow: /cart/*
+Disallow: /hello-world/
+Disallow: /product-category/*
+Disallow: /product/*
