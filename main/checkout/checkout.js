@@ -162,9 +162,12 @@ function updatePrices() {
 
   return shippingPrice * 100;
 }
-document.getElementById("Select0").addEventListener("change", () => {
-  updatePrices(); // jen UI
-});
+  const selectElement = document.getElementById("Select0");
+  if (selectElement) {
+    selectElement.addEventListener("change", () => {
+      updatePrices();
+    });
+  }
 
 async function initializeStripe(shippingFeeCents) {
   const cart = getCartFromCookie();
@@ -196,29 +199,14 @@ async function initializeStripe(shippingFeeCents) {
   } catch (err) {
     console.error('Error initializing Stripe:', err);
   }
-}
-document.getElementById("pay-button").addEventListener("click", async () => {
-  if (!clientSecret) {
-    alert("Payment not initialized");
-    return;
-  }
-
-  const result = await stripe.confirmCardPayment(clientSecret, {
-    payment_method: {
-      card: card,
-    },
+}  
+const payButton = document.getElementById("pay-button");
+if (payButton) {
+  payButton.addEventListener("click", async () => {
+    const shippingFeeCents = updatePrices(); // zaktualizuje UI a vrátí poštovné
+    await initializeStripe(shippingFeeCents); // připraví Stripe, neplatí ještě!
   });
-
-  if (result.error) {
-    console.error("Payment failed", result.error.message);
-    alert("Payment failed: " + result.error.message);
-  } else {
-    if (result.paymentIntent.status === 'succeeded') {
-      alert("Payment succeeded!");
-      // Zde můžeš přesměrovat nebo vymazat košík atd.
-    }
-  }
-});
+}
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -232,7 +220,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Changed country to:", selectElement.value);
       const shippingFeeCents = updatePrices();
 
-      await initializeStripe(shippingFeeCents);
     });
   }
 
