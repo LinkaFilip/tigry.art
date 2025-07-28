@@ -41,6 +41,10 @@ exports.handler = async (event) => {
       break;
     default:
       console.log('Unhandled event type:', eventStripe.type);
+    case 'charge.updated':
+      const charge = event.data.object;
+      console.log('Charge updated:', charge.id);
+      break;
   }
 
   return { statusCode: 200, body: 'Webhook received successfully' };
