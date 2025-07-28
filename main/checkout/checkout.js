@@ -128,72 +128,72 @@ document.addEventListener("DOMContentLoaded", async () => {
   updatePrices();
 
   // Handle payment submission
-  payButton.addEventListener("click", async () => {
-    payButton.disabled = true;
-    payButton.textContent = "Processing...";
+payButton.addEventListener("click", async () => {
+  payButton.disabled = true;
+  payButton.textContent = "Processing...";
 
-    const cart = getCartFromCookie();
-    if (cart.length === 0) {
-      alert("Cart is empty");
+  const cart = getCartFromCookie();
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    payButton.disabled = false;
+    payButton.textContent = "Zaplatit";
+    return;
+  }
+
+  const shippingFeeCents = getSelectedShipping();
+  const country = getSelectedCountry();
+
+  try {
+    const response = await fetch("/.netlify/functions/create-payment-intent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        items: cart,
+        shippingFee: shippingFeeCents,
+        country: country,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      alert("Chyba při vytváření platby: " + (errorData.error || 'Neznámá chyba'));
       payButton.disabled = false;
       payButton.textContent = "Zaplatit";
       return;
     }
 
-    const shippingFeeCents = getSelectedShipping();
+    const data = await response.json();
+    clientSecret = data.clientSecret;
 
-    // Vytvoření PaymentIntent na backendu
-    try {
-      const response = await fetch("/.netlify/functions/create-payment-intent", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          items,
-          shippingFee: shippingFeeInCents,
-          country,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        alert("Chyba při vytváření platby: " + errorData.error);
-        return;
-      }
-
-      const data = await response.json();
-      clientSecret = data.clientSecret;
-      if (!clientSecret) {
-        alert("Failed to get client secret");
-        return;
-}
-      clientSecret = data.clientSecret;
-
-      if (!clientSecret) {
-        throw new Error("Failed to get client secret");
-      }
-
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: card,
-        },
-      });
-
-      if (result.error) {
-        alert(result.error.message);
-        payButton.disabled = false;
-        payButton.textContent = "Zaplatit";
-      } else {
-        if (result.paymentIntent.status === "succeeded") {
-          alert("Platba proběhla úspěšně!");
-          // Tady můžeš přesměrovat nebo vyčistit košík
-          document.cookie = "cart=; Max-Age=0; path=/";
-          location.href = "/thank-you"; // nebo kamkoliv chceš
-        }
-      }
-    } catch (err) {
-      alert("Chyba při zpracování platby: " + err.message);
+    if (!clientSecret) {
+      alert("Failed to get client secret");
       payButton.disabled = false;
       payButton.textContent = "Zaplatit";
+      return;
     }
-  });
+
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: card,
+      },
+    });
+
+    if (result.error) {
+      alert(result.error.message);
+      payButton.disabled = false;
+      payButton.textContent = "Zaplatit";
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        alert("Platba proběhla úspěšně!");
+        document.cookie = "cart=; Max-Age=0; path=/";
+        location.href = "/poster/?=sucess";
+      }
+    }
+  } catch (err) {
+    alert("Chyba při zpracování platby: " + err.message);
+    payButton.disabled = false;
+    payButton.textContent = "Zaplatit";
+  }
+});
+
 });
