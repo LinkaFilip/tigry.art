@@ -1,37 +1,8 @@
 const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
 
   let elements, card;
-  const selectElement = document.getElementById("Select0");
-  const shippingDisplay = document.getElementById("shipping-price");
-  const subtotalDisplay = document.getElementById("subtotal-price");
-  const totalDisplay = document.getElementById("total-price");
-  const shippingSummary = document.querySelector("._1tx8jg70._1fragemms._1tx8jg715._1tx8jg71e._1tx8jg71f");
 
-let currentShippingFee = 0;
-
-function updatePrices() {
-  const selectedCountry = selectElement.value.toUpperCase();
-  const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
-  currentShippingFee = shippingPrice;
-
-  const total = subtotal + shippingPrice;
-
-  const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
-  const countryLabel = selectElement.options[selectElement.selectedIndex].text;
-
-  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${shippingPrice.toFixed(2)}`;
-  totalDisplay.textContent = `€ ${total.toFixed(2)}`;
-
-  shippingSummary.textContent =
-    `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
-}
-selectElement.addEventListener("change", () => {
-  updatePrices();  
-  displayTotalPrice();
-  initializeStripe();
-});
-  async function initializeStripe() {
+  async function initializeStripe(shippingFee = 0) {
     const cartCookie = document.cookie
       .split("; ")
       .find(row => row.startsWith("cart="));
@@ -47,8 +18,6 @@ selectElement.addEventListener("change", () => {
     };
 
     const selectedCountry = document.getElementById("Select0").value;
- 
-  const shippingFee = currentShippingFee || 0;
 
 
     console.log("Selected country:", selectedCountry);
@@ -182,7 +151,7 @@ function displayTotalPrice() {
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.querySelector("._1tx8jg70._1fragemms._1tx8jg715._1tx8jg71e._1tx8jg71f");
 
-let currentShippingFee = 0;
+
 
 function updatePrices() {
   const selectedCountry = selectElement.value.toUpperCase();
@@ -202,9 +171,13 @@ function updatePrices() {
     `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
 }
 selectElement.addEventListener("change", () => {
-  updatePrices();  
+  updatePrices();
   displayTotalPrice();
-  initializeStripe();
+  
+  const selectedCountry = selectElement.value.toUpperCase();
+  const shippingFee = SHIPPING_COST[selectedCountry] || 0;
+
+  initializeStripe(shippingFee);
 });
 }
 
