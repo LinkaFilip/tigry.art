@@ -19,6 +19,8 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
 
     const selectedCountry = document.getElementById("Select0").value;
     const shippingFee = SHIPPING_COST[selectedCountry.toUpperCase()] || 0;
+    console.log("Selected country:", selectedCountry);
+    console.log("Shipping fee:", SHIPPING_COST[selectedCountry]);
     const res = await fetch('/.netlify/functions/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

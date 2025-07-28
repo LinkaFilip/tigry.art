@@ -17,7 +17,7 @@ exports.handler = async (event) => {
       };
     }
 
-const { items, shippingFee} = JSON.parse(event.body);
+const { items, shippingFee = 0} = JSON.parse(event.body);
     console.log('Přijaté položky:', items);
     console.log("event.body:", event.body);
 
