@@ -1,6 +1,7 @@
 const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
 
-let elements, card;
+let elements;
+let card;
 const SHIPPING_COST = {
   AU: 12, AT: 9, BE: 9, CA: 14, CZ: 5, DK: 10, FI: 10, FR: 9, DE: 8,
   HK: 15, IE: 10, IL: 13, IT: 9, JP: 15, MY: 15, NL: 9, NZ: 14, NO: 12,
@@ -181,9 +182,8 @@ async function initializeStripe(shippingFeeCents) {
       throw new Error('No client secret returned');
     }
 
-    if (elements) {
-      elements.unmount();
-      elements = null;
+    if (card) {
+      card.unmount();
     }
 
     elements = stripe.elements();
