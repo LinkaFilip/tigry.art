@@ -110,12 +110,12 @@ function updateCartItemCount() {
 }
 
 function updatePrices() {
-  const selectedCountry = document.getElementById("select-country").value; // get it fresh
+  const selectedCountry = document.getElementById("Select0").value; // get it fresh
   const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
   const total = subtotal + shippingPrice;
 
   const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
-  const countryLabel = document.getElementById("select-country").selectedOptions[0].text;
+  const countryLabel = document.getElementById("Select0").selectedOptions[0].text;
 
   subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
   shippingDisplay.textContent = `€ ${shippingPrice.toFixed(2)}`;
