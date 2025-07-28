@@ -146,17 +146,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       const response = await fetch("/.netlify/functions/create-payment-intent", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: cart,
-          shipping: shippingFeeCents,
-          country: getSelectedCountry(),
+          items,
+          shippingFee: shippingFeeInCents,
+          country,
         }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert("Chyba při vytváření platby: " + errorData.error);
+        return;
+      }
+
       const data = await response.json();
+      clientSecret = data.clientSecret;
+      if (!clientSecret) {
+        alert("Failed to get client secret");
+        return;
+}
       clientSecret = data.clientSecret;
 
       if (!clientSecret) {
