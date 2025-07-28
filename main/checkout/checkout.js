@@ -170,36 +170,64 @@ function updatePrices() {
   }
 
 async function initializeStripe(shippingFeeCents) {
-  const cart = getCartFromCookie();
-  const items = cart.map(item => ({
-    id: item.id,
-    quantity: item.quantity,
-  }));
+  const cartCookie = document.cookie
+    .split("; ")
+    .find(row => row.startsWith("cart="));
+  const cart = cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
+  const simplifiedItems = cart.map(({ id, quantity }) => ({ id, quantity }));
+  const selectedCountry = document.getElementById("Select0").value;
 
-  try {
-    const res = await fetch('/.netlify/functions/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items, shippingFee: shippingFeeCents }),
+  const res = await fetch('/.netlify/functions/create-payment-intent', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items: simplifiedItems, shippingFee: shippingFeeCents })
+  });
+
+  const data = await res.json();
+  clientSecret = data.clientSecret;
+
+  stripe = Stripe("tvůj_public_key"); // Nahraď svým Stripe public key
+  elements = stripe.elements({ clientSecret });
+
+  card = elements.create("card");
+  card.mount("#card-element");
+
+  const form = document.getElementById("payment-form");
+  const errorMsg = document.getElementById("error-message");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const billingDetails = {
+      name: `${document.getElementById("TextField0").value} ${document.getElementById("TextField1").value}`,
+      email: document.getElementById("email").value,
+      phone: document.getElementById("TextField6").value,
+      address: {
+        line1: document.getElementById("TextField2").value,
+        line2: document.getElementById("TextField3").value,
+        city: document.getElementById("TextField5").value,
+        postal_code: document.getElementById("TextField4").value,
+        country: selectedCountry
+      }
+    };
+
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: card,
+        billing_details: billingDetails,
+      }
     });
-    const data = await res.json();
 
-    if (!data.clientSecret) {
-      throw new Error('No client secret returned');
+    if (error) {
+      errorMsg.textContent = error.message;
+    } else if (paymentIntent.status === "succeeded") {
+      localStorage.removeItem("cart");
+      form.reset();
+      card.clear();
+      window.location.href = "/posters/?success=true";
     }
-
-    clientSecret = data.clientSecret; // <== Uložit pro pozdější potvrzení
-
-    if (card) card.unmount?.(); // unmount if exists (safe check)
-
-    elements = stripe.elements();
-    card = elements.create("card");
-    card.mount("#card-element");
-
-  } catch (err) {
-    console.error('Error initializing Stripe:', err);
-  }
-}  
+  });
+}
 const payButton = document.getElementById("pay-button");
 if (payButton) {
   payButton.addEventListener("click", async () => {
