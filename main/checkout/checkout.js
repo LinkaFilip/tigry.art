@@ -130,25 +130,34 @@ function displayTotalPrice() {
     PL: 8, PT: 9, SG: 15, KR: 15, ES: 9, SE: 10, CH: 10, AE: 15, GB: 10, US: 12,
   };
 
+  const DELIVERY_INFO = {
+    CZ: { type: "Domestic shipping", eta: "2–4 days" },
+    default: { type: "International shipping", eta: "5–10 days" }
+  };
+
   const selectElement = document.getElementById("Select0");
   const shippingDisplay = document.getElementById("shipping-price");
   const subtotalDisplay = document.getElementById("subtotal-price");
-  const totalDisplay    = document.getElementById("total-price");
+  const totalDisplay = document.getElementById("total-price");
+  const shippingSummary = document.querySelector("._1tx8jg70._1fragemms._1tx8jg715._1tx8jg71e._1tx8jg71f");
 
   function updatePrices() {
     const selectedCountry = selectElement.value;
     const shippingPrice = SHIPPING_COST[selectedCountry] ?? 0;
     const total = subtotal + shippingPrice;
 
+    const delivery = DELIVERY_INFO[selectedCountry] ?? DELIVERY_INFO.default;
+    const countryLabel = selectElement.options[selectElement.selectedIndex].text;
+
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     shippingDisplay.textContent = `€ ${shippingPrice.toFixed(2)}`;
     totalDisplay.textContent = `€ ${total.toFixed(2)}`;
+
+    shippingSummary.textContent =
+      `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
   }
 
-  // inicializace
   updatePrices();
-
-  // přepočet při změně státu
   selectElement.addEventListener("change", updatePrices);
 }
 
