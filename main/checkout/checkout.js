@@ -170,12 +170,12 @@ cart.forEach(item => {
                       <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
                         <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
                           <picture>
-                            <img src="">
+                            <img src="${item.image}" alt="${item.image}">
                           </picture>
                           <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
                             <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
                               <span class="_99ss3sw _1fragemth">Quantity</span>
-                              <span>3</span>
+                              <span>${item.quantity}</span>
                             </div>
                           </div>
                         </div>
@@ -185,7 +185,7 @@ cart.forEach(item => {
                 </div>
                 <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
                   <div class="_1fragem32 _1fragemms dDm6x">
-                    <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f"></p>
+                    <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${item.name}</p>
                     <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s"></div>
                   </div>
                 </div>
@@ -194,7 +194,7 @@ cart.forEach(item => {
                 </div>
               </div>
               <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno"><div class="_197l2oft _1fragemou _1fragemnk _1fragem3c _1fragemms Byb5s">
-                <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate"></span>
+                <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">${item.price}</span>
               </div>
             </div>
           </div>
@@ -215,15 +215,6 @@ cart.forEach(item => {
     });
 }
 window.addEventListener("DOMContentLoaded", renderProductFromCart);
-  
-
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-details">
-                <h3>${item.name}</h3>
-                <p>Cena: ${item.price} Kč</p>
-                <p>Množství: ${item.quantity}</p>
-                <p>Celkem: ${item.price * item.quantity} Kč</p>
-                </div>
 
 function updateDisplayedQuantity() {
   const cartCookie = document.cookie
