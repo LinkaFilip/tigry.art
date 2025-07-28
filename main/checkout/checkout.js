@@ -33,7 +33,15 @@ const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhb
       alert("Chyba při vytvoření platby: " + errorData.error);
       return;
     }
+selectElement.addEventListener("change", () => {
+  updatePrices();
+  displayTotalPrice();
+  
+  const selectedCountry = selectElement.value.toUpperCase();
+  const shippingFee = SHIPPING_COST[selectedCountry] || 0;
 
+  initializeStripe(shippingFee);
+});
     const data = await res.json();
     const clientSecret = data.clientSecret;
 
@@ -170,15 +178,7 @@ function updatePrices() {
   shippingSummary.textContent =
     `${delivery.type} (${countryLabel}): €${shippingPrice.toFixed(2)} – delivery in ${delivery.eta}`;
 }
-selectElement.addEventListener("change", () => {
-  updatePrices();
-  displayTotalPrice();
-  
-  const selectedCountry = selectElement.value.toUpperCase();
-  const shippingFee = SHIPPING_COST[selectedCountry] || 0;
 
-  initializeStripe(shippingFee);
-});
 }
 
 
