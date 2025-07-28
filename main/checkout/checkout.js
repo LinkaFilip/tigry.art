@@ -174,13 +174,14 @@ function updatePrices() {
 }
 selectElement.addEventListener("change", () => {
   updatePrices();  
+  displayTotalPrice();
+  initializeStripe();
 });
 }
 
 
 
-  displayTotalPrice();
-  initializeStripe();
+
 
 
 function renderProductFromCart() {
