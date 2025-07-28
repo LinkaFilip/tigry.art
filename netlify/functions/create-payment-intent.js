@@ -1,10 +1,11 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 const PRODUCTS = {
-  'poster001': { name: 'Japan – poster', price: Number(process.env.PRODUCT_POSTER_A) }, // v centech
-  'poster002': { name: 'Mexico – poster', price: Number(process.env.PRODUCT_POSTER_B) },
-  'poster003': { name: 'Czechia – poster', price: Number(process.env.PRODUCT_POSTER_C) },
-  // ostatní produkty tady pokud chceš
+  'poster001': { name: 'Japan – poster', price: Number(process.env.PRODUCT_POSTER_A) || 1000 },
+  'poster002': { name: 'Mexico – poster', price: Number(process.env.PRODUCT_POSTER_B) || 1000 },
+  'poster003': { name: 'Czechia – poster', price: Number(process.env.PRODUCT_POSTER_C) || 1000 },
+  'poster004': { name: 'Middle East – poster', price: Number(process.env.PRODUCT_POSTER_D) || 1000 },
+  'poster005': { name: 'Uganda – poster', price: Number(process.env.PRODUCT_POSTER_E) || 1000 },
 };
 
 const SHIPPING_FEES = {
@@ -36,12 +37,12 @@ for (const { id, quantity } of items) {
       body: JSON.stringify({ error: `Unknown product ${id}` }),
     };
   }
-  totalInCents += product.price * quantity * 100;  // Převod EUR na centy
+  totalInCents += product.price * quantity;  // už v centech, ne *100
 }
 
 const shippingFeeInCents = parseInt(shippingFee) || 0;
 
-const amount = totalInCents * 100 + shippingFeeInCents;
+const amount = totalInCents + shippingFeeInCents; 
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,

@@ -194,6 +194,8 @@ payButton.addEventListener("click", async () => {
     payButton.disabled = false;
     payButton.textContent = "Zaplatit";
   }
+  console.log("Cart:", cart);
+console.log("Shipping Fee (cents):", shippingFeeCents);
 });
 
 });
