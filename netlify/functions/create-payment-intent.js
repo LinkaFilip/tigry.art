@@ -24,56 +24,37 @@ exports.handler = async (event) => {
       };
     }
 
-    const { items, country } = JSON.parse(event.body);
+    const { items, shippingFee, country } = JSON.parse(event.body);
     console.log('Přijaté položky:', items);
     console.log('Země:', country);
 
-let totalInCents = 0;
-for (const { id, quantity } of items) {
-  const product = PRODUCTS[id];
-  if (!product) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: `Unknown product: ${id}` }),
-    };
-  }
-  totalInCents += product.price * 100 * quantity; // přepočet do centů
-}
-
-const shippingFeeInCents = parseInt(shippingFee) || 0;
-const amountInCents = totalInCents * 100 + shippingFeeInCents;
-
-    if (amountInCents < 50) {
+  let totalInCents = 0;
+  for (const { id, quantity } of items) {
+    const product = PRODUCTS[id];
+    if (!product) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: "Amount must be at least 50 cents." }),
+        body: JSON.stringify({ error: `Unknown product ${id}` }),
       };
     }
-
-    console.log("Final amount:", amountInCents);
-
-const paymentIntent = await stripe.paymentIntents.create({
-  amount: amountInCents,
-  currency: 'eur',
-  automatic_payment_methods: { enabled: true },
-  metadata: {
-    order: items.map(({ id, quantity }) => {
-      const product = PRODUCTS[id];
-      return `${product.name} x${quantity}`;
-    }).join(', ')
+    totalInCents += product.price * 100 * quantity;  // převod EUR na centy
   }
-});
 
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        clientSecret: paymentIntent.client_secret,
-        amount: amountInCents
-      }),
-    };
+  const shippingFeeInCents = parseInt(shippingFee) || 0;
 
-  } catch (error) {
+  const amount = totalInCents + shippingFeeInCents;
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount,
+    currency: 'eur',
+    automatic_payment_methods: { enabled: true },
+  });
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
+  };join(', ')} 
+  catch (error) {
     console.error("Payment Intent Error:", error);
     return {
       statusCode: 400,
