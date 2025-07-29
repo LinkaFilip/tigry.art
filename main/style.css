@@ -1,16 +1,17 @@
 
 @keyframes skewAnimation {
-    0% { transform: rotate(43deg) skew(10deg, 10deg);}
-    25% { transform: rotate(43deg) skew(8deg, 12deg);}
-    50% { transform: rotate(43deg) skew(9deg, 11deg);}
-    70% { transform: rotate(43deg) skew(7deg, 13deg);}
-    100% { transform: rotate(43deg) skew(10deg, 10deg);}
+    0% { transform: rotate(43deg) skew(10deg, 10deg) translate(0px, -16px);}
+    25% { transform: rotate(43deg) skew(8deg, 12deg) translate(0px, -16px);}
+    50% { transform: rotate(43deg) skew(9deg, 11deg) translate(0px, -16px);}
+    70% { transform: rotate(43deg) skew(7deg, 13deg) translate(0px, -16px);}
+    100% { transform: rotate(43deg) skew(10deg, 10deg) translate(0px, -16px);}
 }
 path {
     transform: rotate(43deg) translate(0px, -16px);
     color: white;
     position: relative;
     animation-name: skewAnimation;
+    animation-iteration-count: infinite;
     animation-duration: 5s;
 }
 svg {
