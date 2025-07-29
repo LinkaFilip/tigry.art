@@ -112,7 +112,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
       container.appendChild(itemDiv);
     });
-  }; const createPaymentRequest = () => {
+  }; 
+  
+  const createPaymentRequest = () => {
     const paymentRequest = stripe.paymentRequest({
       country: getSelectedCountry(),
       currency: "eur",
@@ -120,7 +122,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         label: "Celková cena",
         amount: Math.round((calculateSubtotal() + getSelectedShipping() / 100) * 100),
       },
-      promoCode: "TEST10",
+      promoCode: promoInput.value.trim() ,
       requestPayerName: true,
       requestPayerEmail: true,
     });
@@ -190,7 +192,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cart, shippingFee, country }),
+      body: JSON.stringify({ items: cart, shippingFee, country, promoCode: promoCode }),
     });
 
     const data = await response.json();
