@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         label: "Celková cena",
         amount: Math.round((calculateSubtotal() + getSelectedShipping() / 100) * 100),
       },
-      promoCode: test10,
+      promoCode: "test10",
       requestPayerName: true,
       requestPayerEmail: true,
     });
