@@ -7,10 +7,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
+  
+const style = {
+  base: {
+    fontSize: '16px',
+    color: '#333',
+    '::placeholder': { color: '#aaa' }
+  },
+  invalid: {
+    color: '#e5424d'
+  }
+};
+
+
   let elements = stripe.elements();
-  let cardNumber = elements.create('cardNumber');
-  let cardExpiry = elements.create('cardExpiry');
-  let cardCvc = elements.create('cardCvc');
+  let cardNumber = elements.create('cardNumber', {style});
+  let cardExpiry = elements.create('cardExpiry', {style});
+  let cardCvc = elements.create('cardCvc', {style});
 
   cardNumber.mount('#card-number-element');
   cardExpiry.mount('#card-expiry-element');
