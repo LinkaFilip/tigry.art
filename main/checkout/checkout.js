@@ -57,7 +57,20 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
 
-
+  const style = {
+    base: {
+      fontSize: "16px",
+      color: "#000000",
+      "::placeholder": { color: "#aaa" },
+    },
+    invalid: { color: "#e5424d" },
+  };
+  const cardNumber = elements.create("cardNumber", { style });
+  const cardExpiry = elements.create("cardExpiry", { style });
+  const cardCvc = elements.create("cardCvc", { style });
+  cardNumber.mount("#card-number-element");
+  cardExpiry.mount("#card-expiry-element");
+  cardCvc.mount("#card-cvc-element");
 
 
 
@@ -143,14 +156,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
-  // Update UI prices on country change
+  renderProductFromCart();
+  updatePrices();
+  createPaymentRequest();
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
 
   // Initial render
-  renderProductFromCart();
-  updatePrices();
+
 
   // Handle payment submission
   payButton.addEventListener("click", async () => {
