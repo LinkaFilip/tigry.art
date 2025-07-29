@@ -30336,9 +30336,9 @@ p._1tx8jg70._1fragemms._1tx8jg7c._1tx8jg7b._1fragemp3._1tx8jg715._1tx8jg71d._1tx
 section._1fragem32._1fragemms {
     padding-top: var(--layout-margin);
 }
-#card-number,
-#card-expiry,
-#card-cvc {
+#card-number-element,
+#card-expiry-element,
+#card-cvc-element {
   width: 100%;        
   height: 50px; 
   padding: 12px;      
