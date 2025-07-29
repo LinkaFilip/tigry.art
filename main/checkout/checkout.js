@@ -34,6 +34,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   requestPayerName: true,
   requestPayerEmail: true,
 });
+const style = {
+  base: {
+    fontSize: '16px',
+    color: '#000000',
+    '::placeholder': { color: '#aaa' },
+    backgroundColor: "white",
+  },
+  invalid: {
+    color: '#e5424d'
+  }
+};
   let elements = stripe.elements();
   let cardNumber = elements.create('cardNumber', {style});
   let cardExpiry = elements.create('cardExpiry', {style});
@@ -60,17 +71,7 @@ paymentRequest.canMakePayment().then(function(result) {
     document.getElementById('payment-request_button').style.display = 'none';
   }
 });
-const style = {
-  base: {
-    fontSize: '16px',
-    color: '#000000',
-    '::placeholder': { color: '#aaa' },
-    backgroundColor: "white",
-  },
-  invalid: {
-    color: '#e5424d'
-  }
-};
+
 
 
 
