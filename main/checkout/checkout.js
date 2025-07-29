@@ -6,91 +6,38 @@ document.addEventListener("DOMContentLoaded", async () => {
     CH: 300, AE: 300, GB: 300, US: 300,
   };
 
-  let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
-    const getCartFromCookie = () => {
-    const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
-    return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-  };  
-  const calculateSubtotal = () => {
-    const cart = getCartFromCookie();
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  };
+  const stripe = Stripe("pk_test_...");
+  const elements = stripe.elements();
+
   const selectElement = document.getElementById("Select0");
   const payButton = document.getElementById("pay-button");
-
-  const getSelectedCountry = () => selectElement.value;
-
-  const getSelectedShipping = () => {
-    const country = getSelectedCountry();
-    return SHIPPING_COST[country] || 0;  // v centech
-  };
-  const createPaymentRequest = () => {
-    const paymentRequest = stripe.paymentRequest({
-      country: getSelectedCountry(),
-      currency: "eur",
-      total: {
-        label: "Celková cena",
-        amount: Math.round((calculateSubtotal() + getSelectedShipping() / 100) * 100),
-      },
-      requestPayerName: true,
-      requestPayerEmail: true,
-    });
-
-    const prButton = elements.create("paymentRequestButton", {
-      paymentRequest,
-      style: {
-        paymentRequestButton: {
-          type: "default",
-          theme: "dark",
-          height: "44px",
-        },
-      },
-    });
-
-    paymentRequest.canMakePayment().then(result => {
-      if (result) {
-        prButton.mount("#payment_request_button");
-      } else {
-        document.getElementById("payment_request_button").style.display = "none";
-      }
-    });
-  };
-
-
-  const style = {
-    base: {
-      fontSize: "16px",
-      color: "#000000",
-      "::placeholder": { color: "#aaa" },
-    },
-    invalid: { color: "#e5424d" },
-  };
-  const cardNumber = elements.create("cardNumber", { style });
-  const cardExpiry = elements.create("cardExpiry", { style });
-  const cardCvc = elements.create("cardCvc", { style });
-  cardNumber.mount("#card-number-element");
-  cardExpiry.mount("#card-expiry-element");
-  cardCvc.mount("#card-cvc-element");
-
-
-
   const subtotalDisplay = document.getElementById("subtotal-price");
   const shippingDisplay = document.getElementById("shipping-price");
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.getElementById("shipping-summary");
 
+  const getCartFromCookie = () => {
+    const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
+    return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
+  };
+
+  const calculateSubtotal = () => {
+    const cart = getCartFromCookie();
+    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  };
+
+  const getSelectedCountry = () => selectElement.value;
+  const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
+
   const updatePrices = () => {
-    const subtotalEUR = calculateSubtotal(); // v EUR
-    const shippingFeeCents = getSelectedShipping(); // v centech
-    const shippingFeeEUR = shippingFeeCents / 100;
-    const totalEUR = subtotalEUR + shippingFeeEUR;
+    const subtotal = calculateSubtotal();
+    const shipping = getSelectedShipping();
+    const total = subtotal + shipping / 100;
 
-    subtotalDisplay.textContent = `€ ${subtotalEUR.toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${shippingFeeEUR.toFixed(2)}`;
-    totalDisplay.textContent = `€ ${totalEUR.toFixed(2)}`;
-    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${shippingFeeEUR.toFixed(2)}`;
-
-    return shippingFeeCents;
+    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+    totalDisplay.textContent = `€ ${total.toFixed(2)}`;
+    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
   };
 
   const renderProductFromCart = () => {
@@ -154,19 +101,65 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
       container.appendChild(itemDiv);
     });
+  }; const createPaymentRequest = () => {
+    const paymentRequest = stripe.paymentRequest({
+      country: getSelectedCountry(),
+      currency: "eur",
+      total: {
+        label: "Celková cena",
+        amount: Math.round((calculateSubtotal() + getSelectedShipping() / 100) * 100),
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
+
+    const prButton = elements.create("paymentRequestButton", {
+      paymentRequest,
+      style: {
+        paymentRequestButton: {
+          type: "default",
+          theme: "dark",
+          height: "44px",
+        },
+      },
+    });
+
+    paymentRequest.canMakePayment().then(result => {
+      if (result) {
+        prButton.mount("#payment_request_button");
+      } else {
+        document.getElementById("payment_request_button").style.display = "none";
+      }
+    });
   };
 
-  renderProductFromCart();
+  // Mount Stripe Elements
+  const style = {
+    base: {
+      fontSize: "16px",
+      color: "#000000",
+      "::placeholder": { color: "#aaa" },
+    },
+    invalid: { color: "#e5424d" },
+  };
+  const cardNumber = elements.create("cardNumber", { style });
+  const cardExpiry = elements.create("cardExpiry", { style });
+  const cardCvc = elements.create("cardCvc", { style });
+  cardNumber.mount("#card-number-element");
+  cardExpiry.mount("#card-expiry-element");
+  cardCvc.mount("#card-cvc-element");
+
+  // Init render
+  renderCartProducts();
   updatePrices();
   createPaymentRequest();
+
+  // Update prices when country changes
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
 
-  // Initial render
-
-
-  // Handle payment submission
+  // Handle card payment
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
     payButton.textContent = "Processing...";
