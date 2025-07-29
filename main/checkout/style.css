@@ -30341,7 +30341,8 @@ section._1fragem32._1fragemms {
 #card-cvc-element {
   width: 100%;        
   height: 50px; 
-  padding: 12px;      
-  border: 1px solid #ccc;
+  padding: 13.5px;      
+  border-color: var(--x-default-color-border);
+  border: 1px transparent solid;
   border-radius: 8px;
 }
