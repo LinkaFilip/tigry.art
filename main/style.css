@@ -1,12 +1,12 @@
 
 path {
-    transform: rotate(43deg) translate(0px, -16px);
+    transform: rotate(43deg) translate(14px, -29px);
     color: white;
     position: relative;
 }
 svg {
     transform: matrix(27.876766e-17,-1,-1,33.123234e-17,-123,0);
-    width: 50% !important;
+    width: 51% !important;
     height: 50% !important;
-    position: fixed;
+    padding: 7rem;
 }
