@@ -12,7 +12,8 @@ const style = {
   base: {
     fontSize: '16px',
     color: '#000000',
-    '::placeholder': { color: '#aaa' }
+    '::placeholder': { color: '#aaa' },
+    backgroundColor: "white",
   },
   invalid: {
     color: '#e5424d'
