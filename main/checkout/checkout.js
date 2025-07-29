@@ -34,7 +34,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   requestPayerName: true,
   requestPayerEmail: true,
 });
+  let elements = stripe.elements();
+  let cardNumber = elements.create('cardNumber', {style});
+  let cardExpiry = elements.create('cardExpiry', {style});
+  let cardCvc = elements.create('cardCvc', {style});
 
+  cardNumber.mount('#card-number-element');
+  cardExpiry.mount('#card-expiry-element');
+  cardCvc.mount('#card-cvc-element');
 const prButton = elements.create('paymentRequestButton', {
   paymentRequest: paymentRequest,
   style: {
@@ -66,14 +73,7 @@ const style = {
 };
 
 
-  let elements = stripe.elements();
-  let cardNumber = elements.create('cardNumber', {style});
-  let cardExpiry = elements.create('cardExpiry', {style});
-  let cardCvc = elements.create('cardCvc', {style});
 
-  cardNumber.mount('#card-number-element');
-  cardExpiry.mount('#card-expiry-element');
-  cardCvc.mount('#card-cvc-element');
 
 
   const subtotalDisplay = document.getElementById("subtotal-price");
