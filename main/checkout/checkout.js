@@ -122,7 +122,7 @@ const style = {
                     </div>
                   </div>
                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox" style="--_16s97g73w: 6.4rem;">
-                    <span style="display: flex; justify-context: flex-end;">€ ${(item.price * item.quantity).toFixed(2)}</span>
+                    <span style="display: flex; justify-content: flex-end;">€ ${(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
