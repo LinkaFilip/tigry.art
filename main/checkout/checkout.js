@@ -171,10 +171,37 @@ payButton.addEventListener("click", async () => {
       payButton.textContent = "Zaplatit";
       return;
     }
-
-    const result = await stripe.confirmCardPayment(clientSecret, {
+    const email = document.getElementById('email').value;
+    const firstName = document.getElementById('TextField0').value;
+    const lastName = document.getElementById('TextField1').value;
+    const address1 = document.getElementById('TextField2').value;
+    const postalCode = document.getElementById('TextField4').value;
+    const city = document.getElementById('TextField5').value;
+    const country = document.getElementById('Select0').value;
+    const phone = document.getElementById('TextField6').value;
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: card,
+        billing_details: {
+          name: `${firstName} ${lastName}`,
+          email: email,
+          phone: phone,
+          address: {
+            line1: address1,
+            postal_code: postalCode,
+            city: city,
+            country: country
+          }
+        }
+      },
+      shipping: {
+        name: `${firstName} ${lastName}`,
+        address: {
+          line1: address1,
+          postal_code: postalCode,
+          city: city,
+          country: country
+        }
       },
     });
 
