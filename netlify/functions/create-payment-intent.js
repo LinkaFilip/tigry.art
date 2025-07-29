@@ -42,7 +42,7 @@ const code = promoCode?.toUpperCase();
 const promo = PROMO_CODES[code];
 
 if (promo?.percent_off) {
-  discount = Math.round((totalInCents * promo.percent_off) / 100);
+  discount = (totalInCents * promo.percent_off) / 100;
 }
 
 const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
