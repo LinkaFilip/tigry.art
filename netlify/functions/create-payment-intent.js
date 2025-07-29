@@ -1,7 +1,7 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 const PROMO_CODES = {
-  'test10': { percent_off: 10 },
+  'TEST10': { percent_off: 10 },
 };
 
 const PRODUCTS = {
@@ -34,7 +34,7 @@ for (const { id, quantity } of items) {
       body: JSON.stringify({ error: `Unknown product ${id}` }),
     };
   }
-  totalInCents += product.price * quantity;  // už v centech, ne *100
+  totalInCents += product.price * quantity;
 }
 
 let discount = 0;
