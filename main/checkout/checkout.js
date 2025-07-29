@@ -83,12 +83,6 @@ paymentRequest.canMakePayment().then(function(result) {
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.getElementById("shipping-summary");
 
-  let clientSecret = null;
-
-
-
-
-
   const updatePrices = () => {
     const subtotalEUR = calculateSubtotal(); // v EUR
     const shippingFeeCents = getSelectedShipping(); // v centech
@@ -176,107 +170,76 @@ paymentRequest.canMakePayment().then(function(result) {
   updatePrices();
 
   // Handle payment submission
-payButton.addEventListener("click", async () => {
-  payButton.disabled = true;
-  payButton.textContent = "Processing...";
+  payButton.addEventListener("click", async () => {
+    payButton.disabled = true;
+    payButton.textContent = "Processing...";
 
-  const cart = getCartFromCookie();
-  if (cart.length === 0) {
-    alert("Cart is empty");
-    payButton.disabled = false;
-    payButton.textContent = "Zaplatit";
-    return;
-  }
+    const cart = getCartFromCookie();
+    if (!cart.length) {
+      alert("Cart is empty.");
+      payButton.disabled = false;
+      payButton.textContent = "Zaplatit";
+      return;
+    }
 
-  const shippingFeeCents = getSelectedShipping();
-  const country = getSelectedCountry();
+    const shippingFee = getSelectedShipping();
+    const country = getSelectedCountry();
 
-  try {
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        items: cart,
-        shippingFee: shippingFeeCents,
-        country: country,
-      }),
+      body: JSON.stringify({ items: cart, shippingFee, country }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      alert("Chyba při vytváření platby: " + (errorData.error || 'Neznámá chyba'));
-      payButton.disabled = false;
-      payButton.textContent = "Zaplatit";
-      return;
-    }
-
     const data = await response.json();
-    clientSecret = data.clientSecret;
-
-    if (!clientSecret) {
-      alert("Failed to get client secret");
+    if (!data.clientSecret) {
+      alert("Chyba při vytváření platby.");
       payButton.disabled = false;
       payButton.textContent = "Zaplatit";
       return;
     }
 
-    const email = document.getElementById('email').value;
-    const firstName = document.getElementById('TextField0').value;
-    const lastName = document.getElementById('TextField1').value;
-    const address1 = document.getElementById('TextField2').value;
-    const postalCode = document.getElementById('TextField4').value;
-    const city = document.getElementById('TextField5').value;
-    const formCountry = document.getElementById('Select0').value;
-    const phone = document.getElementById('TextField6').value;
+    const email = document.getElementById("email").value;
+    const firstName = document.getElementById("TextField0").value;
+    const lastName = document.getElementById("TextField1").value;
+    const address1 = document.getElementById("TextField2").value;
+    const postalCode = document.getElementById("TextField4").value;
+    const city = document.getElementById("TextField5").value;
+    const phone = document.getElementById("TextField6").value;
 
-    try {
-      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardNumber,
-          billing_details: {
-            name: `${firstName} ${lastName}`,
-            email: email,
-            phone: phone,
-            address: {
-              line1: address1,
-              postal_code: postalCode,
-              city: city,
-              country: formCountry
-            }
-          }
-        },
-        shipping: {
+    const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: cardNumber,
+        billing_details: {
           name: `${firstName} ${lastName}`,
+          email,
+          phone,
           address: {
             line1: address1,
             postal_code: postalCode,
-            city: city,
-            country: country
-          }
+            city,
+            country,
+          },
         },
-      });
+      },
+      shipping: {
+        name: `${firstName} ${lastName}`,
+        address: {
+          line1: address1,
+          postal_code: postalCode,
+          city,
+          country,
+        },
+      },
+    });
 
-      if (error) {
-        alert(error.message);
-        payButton.disabled = false;
-        payButton.textContent = "Zaplatit";
-      } else if (paymentIntent && paymentIntent.status === "succeeded") {
-        document.cookie = "cart=; Max-Age=0; path=/";
-        location.href = "/posters/?success=true";
-      }
-
-    } catch (err) {
-      alert("Chyba při zpracování platby: " + err.message);
+    if (error) {
+      alert(error.message);
       payButton.disabled = false;
       payButton.textContent = "Zaplatit";
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      document.cookie = "cart=; Max-Age=0; path=/";
+      location.href = "/posters/?success=true";
     }
-
-  } catch (err) {
-    alert("Chyba při komunikaci se serverem: " + err.message);
-    payButton.disabled = false;
-    payButton.textContent = "Zaplatit";
-  }
-
-  console.log("Cart:", cart);
-  console.log("Shipping Fee (cents):", shippingFeeCents);
-})});
+  });
+});
