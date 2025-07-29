@@ -1,18 +1,8 @@
 
-@keyframes skewAnimation {
-    0% { transform: rotate(43deg) skew(10px, 10px) translate(0px, -16px);}
-    25% { transform: rotate(43deg) skew(3px, 19px) translate(0px, -16px);}
-    50% { transform: rotate(43deg) skew(7px, 34px) translate(0px, -16px);}
-    70% { transform: rotate(43deg) skew(7px, 13px) translate(0px, -16px);}
-    100% { transform: rotate(43deg) skew(10px, 10px) translate(0px, -16px);}
-}
 path {
     transform: rotate(43deg) translate(0px, -16px);
     color: white;
     position: relative;
-    animation-name: skewAnimation;
-    animation-iteration-count: infinite;
-    animation-duration: 5s;
 }
 svg {
     transform: matrix(27.876766e-17,-1,-1,33.123234e-17,-123,0);
