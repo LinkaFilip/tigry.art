@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   cardCvc.mount("#card-cvc-element");
 
   // Init render
-  renderCartProducts();
+  renderProductFromCart();
   updatePrices();
   createPaymentRequest();
 
