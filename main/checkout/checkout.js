@@ -8,6 +8,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
   
+  const paymentRequest = stripe.paymentRequest({
+  country: 'DE', // Nebo CZ, pokud chceš testovat z ČR
+  currency: 'eur',
+  total: {
+    label: 'Celková cena',
+    amount: Math.round((calculateSubtotal() + getSelectedShipping()) * 100), // v centech
+  },
+  requestPayerName: true,
+  requestPayerEmail: true,
+});
+
+const prButton = elements.create('paymentRequestButton', {
+  paymentRequest: paymentRequest,
+  style: {
+    paymentRequestButton: {
+      type: 'default',
+      theme: 'dark',
+      height: '44px',
+    },
+  },
+});
+
+// Zkontroluj, jestli je podporováno (např. Google Pay/Apple Pay):
+paymentRequest.canMakePayment().then(function(result) {
+  if (result) {
+    prButton.mount('#payment-request_button');
+  } else {
+    document.getElementById('payment-request_button').style.display = 'none';
+  }
+});
 const style = {
   base: {
     fontSize: '16px',
