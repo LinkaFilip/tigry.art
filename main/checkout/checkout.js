@@ -7,7 +7,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
-    const calculateSubtotal = () => {
+    const getCartFromCookie = () => {
+    const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
+    return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
+  };  
+  const calculateSubtotal = () => {
     const cart = getCartFromCookie();
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
@@ -79,10 +83,7 @@ const style = {
 
   let clientSecret = null;
 
-  const getCartFromCookie = () => {
-    const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
-    return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
-  };
+
 
 
 
