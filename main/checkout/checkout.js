@@ -7,7 +7,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
-  
+    const calculateSubtotal = () => {
+    const cart = getCartFromCookie();
+    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  };
+
+  const getSelectedCountry = () => selectElement.value;
+
+  const getSelectedShipping = () => {
+    const country = getSelectedCountry();
+    return SHIPPING_COST[country] || 0;  // v centech
+  };
   const paymentRequest = stripe.paymentRequest({
   country: 'DE', // Nebo CZ, pokud chceš testovat z ČR
   currency: 'eur',
@@ -30,7 +40,6 @@ const prButton = elements.create('paymentRequestButton', {
   },
 });
 
-// Zkontroluj, jestli je podporováno (např. Google Pay/Apple Pay):
 paymentRequest.canMakePayment().then(function(result) {
   if (result) {
     prButton.mount('#payment-request_button');
@@ -75,17 +84,7 @@ const style = {
     return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
   };
 
-  const calculateSubtotal = () => {
-    const cart = getCartFromCookie();
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  };
 
-  const getSelectedCountry = () => selectElement.value;
-
-  const getSelectedShipping = () => {
-    const country = getSelectedCountry();
-    return SHIPPING_COST[country] || 0;  // v centech
-  };
 
   const updatePrices = () => {
     const subtotalEUR = calculateSubtotal(); // v EUR
