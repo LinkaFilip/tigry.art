@@ -1,10 +1,10 @@
 
 @keyframes skewAnimation {
-    0% { transform: rotate(43deg) skew(10deg, 10deg) translate(0px, -16px);}
-    25% { transform: rotate(43deg) skew(8deg, 12deg) translate(0px, -16px);}
-    50% { transform: rotate(43deg) skew(9deg, 11deg) translate(0px, -16px);}
-    70% { transform: rotate(43deg) skew(7deg, 13deg) translate(0px, -16px);}
-    100% { transform: rotate(43deg) skew(10deg, 10deg) translate(0px, -16px);}
+    0% { transform: rotate(43deg) skew(10px, 10px) translate(0px, -16px);}
+    25% { transform: rotate(43deg) skew(3px, 19px) translate(0px, -16px);}
+    50% { transform: rotate(43deg) skew(7px, 34px) translate(0px, -16px);}
+    70% { transform: rotate(43deg) skew(7px, 13px) translate(0px, -16px);}
+    100% { transform: rotate(43deg) skew(10px, 10px) translate(0px, -16px);}
 }
 path {
     transform: rotate(43deg) translate(0px, -16px);
