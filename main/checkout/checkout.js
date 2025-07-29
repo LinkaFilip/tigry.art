@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 const style = {
   base: {
     fontSize: '16px',
-    color: '#333',
+    color: '#000000',
     '::placeholder': { color: '#aaa' }
   },
   invalid: {
