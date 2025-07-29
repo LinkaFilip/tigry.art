@@ -178,7 +178,7 @@ payButton.addEventListener("click", async () => {
     const address1 = document.getElementById('TextField2').value;
     const postalCode = document.getElementById('TextField4').value;
     const city = document.getElementById('TextField5').value;
-    const country = document.getElementById('Select0').value;
+    const formCountry = document.getElementById('Select0').value;
     const phone = document.getElementById('TextField6').value;
 
     try {
@@ -193,7 +193,7 @@ payButton.addEventListener("click", async () => {
               line1: address1,
               postal_code: postalCode,
               city: city,
-              country: country
+              country: formCountry
             }
           }
         },
