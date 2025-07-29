@@ -188,6 +188,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const shippingFee = getSelectedShipping();
     const country = getSelectedCountry();
+    const promoCode = document.getElementById('ReductionsInput0').value.trim().toUpperCase();
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
