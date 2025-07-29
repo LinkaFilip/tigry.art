@@ -47,7 +47,7 @@ if (promo?.percent_off) {
 
 const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
 const amount = totalInCents + shippingFeeInCents - discount;
-
+console.log({ totalInCents, discount, shippingFeeInCents, amount });
   const paymentIntent = await stripe.paymentIntents.create({
     amount,
     currency: 'eur',
