@@ -30343,6 +30343,6 @@ section._1fragem32._1fragemms {
   height: 50px; 
   padding: 13.5px;      
   border-color: var(--x-default-color-border);
-  border: 1px transparent solid;
+  border: 1px solid;
   border-radius: 8px;
 }
