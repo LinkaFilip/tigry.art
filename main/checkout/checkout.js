@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const cart = getCartFromCookie();
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
+  const selectElement = document.getElementById("Select0");
+  const payButton = document.getElementById("pay-button");
 
   const getSelectedCountry = () => selectElement.value;
 
@@ -73,8 +75,6 @@ const style = {
   cardExpiry.mount('#card-expiry-element');
   cardCvc.mount('#card-cvc-element');
 
-  const selectElement = document.getElementById("Select0");
-  const payButton = document.getElementById("pay-button");
 
   const subtotalDisplay = document.getElementById("subtotal-price");
   const shippingDisplay = document.getElementById("shipping-price");
