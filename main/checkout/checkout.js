@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     CH: 300, AE: 300, GB: 300, US: 300,
   };
 
-  const stripe = Stripe("pk_test_...");
+  const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
   const elements = stripe.elements();
 
   const selectElement = document.getElementById("Select0");
