@@ -121,11 +121,8 @@ const style = {
                       <p class="_1fragem12">${item.description || ''}</p>
                     </div>
                   </div>
-                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51v _6zbcq51s _1fragemno _6zbcq51y _6zbcq51z _1fragemox _1fragemq8" style="--_16s97g73w: 6.4rem;">
-                    <span>${item.quantity}</span>
-                  </div>
                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox" style="--_16s97g73w: 6.4rem;">
-                    <span>€ ${(item.price * item.quantity).toFixed(2)}</span>
+                    <span style="display: flex; justify-context: flex-end;">€ ${(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
