@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return SHIPPING_COST[country] || 0;  // v centech
   };
   const paymentRequest = stripe.paymentRequest({
-  country: getSelectedCountry, // Nebo CZ, pokud chceš testovat z ČR
+  country: getSelectedCountry(), // Nebo CZ, pokud chceš testovat z ČR
   currency: 'eur',
   total: {
     label: 'Celková cena',
