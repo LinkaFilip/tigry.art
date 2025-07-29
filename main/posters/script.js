@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   cartPanel.style.transition = "transform 0.5s ease";
 
   const bagSVG = `
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 19">
   <g clip-path="url(#a)">
     <path stroke="currentColor" stroke-width="1.5"
       d="M5.5 6.25v-2a3.5 3.5 0 1 1 7 0v2m-11.75.5h16.5v10.5H.75V6.75Z" />

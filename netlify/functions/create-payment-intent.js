@@ -1,5 +1,9 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
+const PROMO_CODES = {
+  'test10': { percent_off: 10 },
+};
+
 const PRODUCTS = {
   'poster001': { name: 'Japan – poster', price: Number(process.env.PRODUCT_POSTER_A) || 1000 },
   'poster002': { name: 'Mexico – poster', price: Number(process.env.PRODUCT_POSTER_B) || 1000 },
@@ -8,12 +12,6 @@ const PRODUCTS = {
   'poster005': { name: 'Uganda – poster', price: Number(process.env.PRODUCT_POSTER_E) || 1000 },
 };
 
-const SHIPPING_FEES = {
-  'CZ': 150,
-  'DE': 250,
-  'US': 1000,
-  'default': 500
-};
 
 exports.handler = async (event) => {
   try {
@@ -24,10 +22,9 @@ exports.handler = async (event) => {
       };
     }
 
-    const { items, shippingFee, country } = JSON.parse(event.body);
+    const { items, shippingFee, country, promoCode } = JSON.parse(event.body);
     console.log('Přijaté položky:', items);
     console.log('Země:', country);
-
 let totalInCents = 0;
 for (const { id, quantity } of items) {
   const product = PRODUCTS[id];
@@ -40,9 +37,16 @@ for (const { id, quantity } of items) {
   totalInCents += product.price * quantity;  // už v centech, ne *100
 }
 
-const shippingFeeInCents = parseInt(shippingFee) || 0;
+let discount = 0;
+const code = promoCode?.toUpperCase();
+const promo = PROMO_CODES[code];
 
-const amount = totalInCents + shippingFeeInCents; 
+if (promo?.percent_off) {
+  discount = Math.round((totalInCents * promo.percent_off) / 100);
+}
+
+const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
+const amount = totalInCents + shippingFeeInCents - discount;
 
   const paymentIntent = await stripe.paymentIntents.create({
     amount,

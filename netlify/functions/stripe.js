@@ -4,6 +4,15 @@ exports.handler = async (event, context) => {
   try {
     console.log("Starting session creation...");
 
+    const coupon = await stripe.coupons.create({
+      percent_off: 20,
+      duration: 'forever', // nebo 'repeating', 'forever'
+    });
+    const promo = await stripe.promotionCodes.create({
+      coupon: coupon.id,
+      code: 'test10',
+    });
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
@@ -19,6 +28,9 @@ exports.handler = async (event, context) => {
         },
       ],
       mode: "payment",
+        discounts: [{
+        promotion_code: 'promo_123', // ID z předchozího kroku (ne textový kód!)
+      }],
       success_url: "https://tigry.art/posters/",
       cancel_url: "https://tigry.art/",
     });
