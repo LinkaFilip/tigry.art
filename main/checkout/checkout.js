@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const applyBtn = document.getElementById('apply_btn');
 
   promoInput.addEventListener('input', () => {
-    const code = promoInput.value.trim().toUpperCase();
+    const code = promoInput.value.toUpperCase();
     const isValid = validPromoCodes.includes(code);
 
     applyBtn.disabled = !isValid;
