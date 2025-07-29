@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const SHIPPING_COST = {
-    AU: 1200, AT: 900, BE: 900, CA: 1400, CZ: 500, DK: 1000, FI: 1000, FR: 900,
-    DE: 800, HK: 1500, IE: 1000, IL: 1300, IT: 900, JP: 1500, MY: 1500, NL: 900,
-    NZ: 1400, NO: 1200, PL: 800, PT: 900, SG: 1500, KR: 1500, ES: 900, SE: 1000,
-    CH: 1000, AE: 1500, GB: 1000, US: 1200,
+    AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
+    DE: 300, HK: 300, IE: 300, IL: 300, IT: 300, JP: 1500, MY: 300, NL: 300,
+    NZ: 300, NO: 300, PL: 300, PT: 300, SG: 300, KR: 300, ES: 300, SE: 300,
+    CH: 300, AE: 300, GB: 300, US: 300,
   };
 
   let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
