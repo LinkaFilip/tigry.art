@@ -24,54 +24,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     const country = getSelectedCountry();
     return SHIPPING_COST[country] || 0;  // v centech
   };
-  const paymentRequest = stripe.paymentRequest({
-  country: getSelectedCountry(), // Nebo CZ, pokud chceš testovat z ČR
-  currency: 'eur',
-  total: {
-    label: 'Celková cena',
-    amount: Math.round((calculateSubtotal() + getSelectedShipping()) * 100), // v centech
-  },
-  requestPayerName: true,
-  requestPayerEmail: true,
-});
-const style = {
-  base: {
-    fontSize: '16px',
-    color: '#000000',
-    '::placeholder': { color: '#aaa' },
-    backgroundColor: "white",
-  },
-  invalid: {
-    color: '#e5424d'
-  }
-};
-  let elements = stripe.elements();
-  let cardNumber = elements.create('cardNumber', {style});
-  let cardExpiry = elements.create('cardExpiry', {style});
-  let cardCvc = elements.create('cardCvc', {style});
+  const createPaymentRequest = () => {
+    const paymentRequest = stripe.paymentRequest({
+      country: getSelectedCountry(),
+      currency: "eur",
+      total: {
+        label: "Celková cena",
+        amount: Math.round((calculateSubtotal() + getSelectedShipping() / 100) * 100),
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
+    });
 
-  cardNumber.mount('#card-number-element');
-  cardExpiry.mount('#card-expiry-element');
-  cardCvc.mount('#card-cvc-element');
+    const prButton = elements.create("paymentRequestButton", {
+      paymentRequest,
+      style: {
+        paymentRequestButton: {
+          type: "default",
+          theme: "dark",
+          height: "44px",
+        },
+      },
+    });
 
-const prButton = elements.create('paymentRequestButton', {
-  paymentRequest: paymentRequest,
-  style: {
-    paymentRequestButton: {
-      type: 'default',
-      theme: 'dark',
-      height: '44px',
-    },
-  },
-});
-
-paymentRequest.canMakePayment().then(function(result) {
-  if (result) {
-    prButton.mount('#payment_request_button');
-  } else {
-    document.getElementById('payment_request_button').style.display = 'none';
-  }
-});
+    paymentRequest.canMakePayment().then(result => {
+      if (result) {
+        prButton.mount("#payment_request_button");
+      } else {
+        document.getElementById("payment_request_button").style.display = "none";
+      }
+    });
+  };
 
 
 
