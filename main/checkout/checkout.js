@@ -8,8 +8,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
   let elements = stripe.elements();
-  let card = elements.create("card");
-  card.mount("#card-element");
+  let cardNumber = elements.create('cardNumber');
+  let cardExpiry = elements.create('cardExpiry');
+  let cardCvc = elements.create('cardCvc');
+
+  cardNumber.mount('#card-number-element');
+  cardExpiry.mount('#card-expiry-element');
+  cardCvc.mount('#card-cvc-element');
 
   const selectElement = document.getElementById("Select0");
   const payButton = document.getElementById("pay-button");
@@ -184,7 +189,7 @@ payButton.addEventListener("click", async () => {
     try {
       const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
-          card: card,
+          card: cardNumber,
           billing_details: {
             name: `${firstName} ${lastName}`,
             email: email,
