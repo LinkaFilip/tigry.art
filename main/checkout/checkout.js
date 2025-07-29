@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return SHIPPING_COST[country] || 0;  // v centech
   };
   const paymentRequest = stripe.paymentRequest({
-  country: 'DE', // Nebo CZ, pokud chceš testovat z ČR
+  country: getSelectedCountry, // Nebo CZ, pokud chceš testovat z ČR
   currency: 'eur',
   total: {
     label: 'Celková cena',
@@ -53,6 +53,7 @@ const style = {
   cardNumber.mount('#card-number-element');
   cardExpiry.mount('#card-expiry-element');
   cardCvc.mount('#card-cvc-element');
+
 const prButton = elements.create('paymentRequestButton', {
   paymentRequest: paymentRequest,
   style: {
@@ -66,9 +67,9 @@ const prButton = elements.create('paymentRequestButton', {
 
 paymentRequest.canMakePayment().then(function(result) {
   if (result) {
-    prButton.mount('#payment-request_button');
+    prButton.mount('#payment_request_button');
   } else {
-    document.getElementById('payment-request_button').style.display = 'none';
+    document.getElementById('payment_request_button').style.display = 'none';
   }
 });
 
