@@ -171,6 +171,7 @@ payButton.addEventListener("click", async () => {
       payButton.textContent = "Zaplatit";
       return;
     }
+
     const email = document.getElementById('email').value;
     const firstName = document.getElementById('TextField0').value;
     const lastName = document.getElementById('TextField1').value;
@@ -179,49 +180,55 @@ payButton.addEventListener("click", async () => {
     const city = document.getElementById('TextField5').value;
     const country = document.getElementById('Select0').value;
     const phone = document.getElementById('TextField6').value;
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: card,
-        billing_details: {
+
+    try {
+      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: `${firstName} ${lastName}`,
+            email: email,
+            phone: phone,
+            address: {
+              line1: address1,
+              postal_code: postalCode,
+              city: city,
+              country: country
+            }
+          }
+        },
+        shipping: {
           name: `${firstName} ${lastName}`,
-          email: email,
-          phone: phone,
           address: {
             line1: address1,
             postal_code: postalCode,
             city: city,
             country: country
           }
-        }
-      },
-      shipping: {
-        name: `${firstName} ${lastName}`,
-        address: {
-          line1: address1,
-          postal_code: postalCode,
-          city: city,
-          country: country
-        }
-      },
-    });
+        },
+      });
 
-    if (result.error) {
-      alert(result.error.message);
-      payButton.disabled = false;
-      payButton.textContent = "Zaplatit";
-    } else {
-      if (result.paymentIntent.status === "succeeded") {
+      if (error) {
+        alert(error.message);
+        payButton.disabled = false;
+        payButton.textContent = "Zaplatit";
+      } else if (paymentIntent && paymentIntent.status === "succeeded") {
         document.cookie = "cart=; Max-Age=0; path=/";
         location.href = "/posters/?success=true";
       }
+
+    } catch (err) {
+      alert("Chyba při zpracování platby: " + err.message);
+      payButton.disabled = false;
+      payButton.textContent = "Zaplatit";
     }
+
   } catch (err) {
-    alert("Chyba při zpracování platby: " + err.message);
+    alert("Chyba při komunikaci se serverem: " + err.message);
     payButton.disabled = false;
     payButton.textContent = "Zaplatit";
   }
-  console.log("Cart:", cart);
-console.log("Shipping Fee (cents):", shippingFeeCents);
-});
 
-});
+  console.log("Cart:", cart);
+  console.log("Shipping Fee (cents):", shippingFeeCents);
+})});
