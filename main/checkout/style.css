@@ -30354,6 +30354,13 @@ section._1fragem32._1fragemms {
     box-shadow: 0 0 0 1px var(--x-default-color-accent);
     background-color: transparent;
 }
+#card-number-element:target,
+#card-expiry-element:target,¨
+#card-cvc-element:target{
+    border-color: var(--x-default-color-accent);
+    box-shadow: 0 0 0 1px var(--x-default-color-accent);
+    background-color: transparent;
+}
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
