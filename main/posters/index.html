@@ -323,4 +323,35 @@
     </main>
     <div class="Overlay_overlay__hwjQ3 Overlay_light__VICDK" style="pointer-events: none;opacity: 0;visibility: hidden;"></div>
   </body>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".ProductTags_tag").forEach(tagEl => {
+    tagEl.addEventListener("click", (e) => {
+      e.preventDefault();
+      const tag = tagEl.dataset.tag;
+      const url = new URL(window.location.href);
+      url.searchParams.set("tag", tag);
+      window.location.href = url.toString();
+    });
+  });
+});
+
+function filterByTagFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedTag = urlParams.get("tag");
+
+  if (!selectedTag) return;
+
+  document.querySelectorAll(".FeaturedProductsModule_tileWrapper").forEach(product => {
+    const tags = product.dataset.tags.split(",");
+    if (!tags.includes(selectedTag)) {
+      product.style.display = "none";
+    } else {
+      product.style.display = "";
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", filterByTagFromURL);
+  </script>
 </html>
