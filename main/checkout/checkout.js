@@ -116,7 +116,7 @@ promoInput.addEventListener("input", updatePrices);
       container.appendChild(itemDiv);
     });
   }; 
-  
+  selectElement.addEventListener("change", updatePrices);
   const createPaymentRequest = () => {
     const paymentRequest = stripe.paymentRequest({
       country: getSelectedCountry(),
