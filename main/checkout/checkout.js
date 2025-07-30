@@ -193,10 +193,7 @@ promoInput.addEventListener("input", updatePrices);
       payButton.textContent = "Zaplatit";
       return;
     }
-
-    const shippingFee = getSelectedShipping();
     const country = getSelectedCountry();
-    const promoCode = document.getElementById('ReductionsInput0').value.trim().toUpperCase();
     
 function applyDiscount(price) {
   const code = promoInput.value.trim().toUpperCase();
@@ -207,17 +204,17 @@ function applyDiscount(price) {
 }
 
 const subtotal = calculateSubtotal();
-const shipping = getSelectedShipping() / 100;
+const shipping = getSelectedShipping();
 const totalBeforeDiscount = subtotal + shipping;
 const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      body: JSON.stringify({
         items: getCartFromCookie(),
         country: getSelectedCountry(),
-        shippingFee: shipping * 100,
+        shippingFee: shipping,
         promoCode: promoInput.value.trim().toUpperCase(),
         calculatedTotal: totalAfterDiscount * 100,
       }),

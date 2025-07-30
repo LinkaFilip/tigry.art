@@ -35,21 +35,25 @@ exports.handler = async (event) => {
       totalInCents += product.price * quantity;
     }
 
-    let discount = 0;
-    const code = promoCode?.toUpperCase();
-    const promo = PROMO_CODES[code];
+let discount = 0;
+const code = promoCode?.toUpperCase();
+const promo = PROMO_CODES[code];
 
-    if (promo?.percent_off) {
-      discount = (totalInCents * promo.percent_off) / 100;
-    }
+const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
 
-    const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
-    const expectedAmount = totalInCents + shippingFeeInCents - discount;
+if (promo?.percent_off) {
+  discount = Math.round((totalInCents + shippingFeeInCents) * promo.percent_off / 100);
+}
 
-    if (
-      typeof calculatedTotal !== "number" ||
-      Math.abs(expectedAmount - calculatedTotal) > 1
-    ) {
+const expectedAmount = totalInCents + shippingFeeInCents - discount;
+
+if (Math.abs(expectedAmount - calculatedTotal) > 1) {
+  return {
+    statusCode: 400,
+    body: JSON.stringify({ error: 'Price mismatch between client and server.' }),
+  };
+}
+{
       return {
         statusCode: 400,
         body: JSON.stringify({ error: 'Price mismatch between client and server.' }),
