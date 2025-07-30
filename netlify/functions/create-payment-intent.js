@@ -48,7 +48,7 @@ if (promo?.percent_off) {
 
 const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
 
-const expectedAmount = totalInCents + shippingFeeInCents - discount;
+const amount = calculatedTotal || totalInCents + shippingFeeInCents - discount;
 if (Math.abs(expectedAmount - calculatedTotal) > 1) { // tolerance 1 cent
   return {
     statusCode: 400,
@@ -58,7 +58,7 @@ if (Math.abs(expectedAmount - calculatedTotal) > 1) { // tolerance 1 cent
 
 console.log({ totalInCents, discount, shippingFeeInCents, amount });
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculatedTotal,
+    amount: amount,
     currency: 'eur',
     automatic_payment_methods: { enabled: true },
     metadata: {
@@ -81,4 +81,5 @@ console.log({ totalInCents, discount, shippingFeeInCents, amount });
       body: JSON.stringify({ error: error.message }),
     };
   }
+  
 };
