@@ -21,7 +21,7 @@ exports.handler = async (event, context) => {
       // Vytvoř promo kód
       await stripe.promotionCodes.create({
         code: "TEST10",
-        coupon: coupon.id,
+        coupon: "dj10yHzz",
       });
 
       console.log("✅ Promo kód TEST10 byl vytvořen.");
