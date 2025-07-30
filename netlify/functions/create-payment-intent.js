@@ -3,6 +3,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 exports.handler = async (event) => {
   try {
     const { items, country, promoCode } = JSON.parse(event.body);
+    const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
     const subtotal = items.reduce((sum, item) => {
       const priceInCents = Math.round(item.price * 100);
       return sum + priceInCents * item.quantity;
@@ -33,10 +34,16 @@ exports.handler = async (event) => {
     const totalBeforeDiscount = subtotal + shipping;
     const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
     const totalAmount = totalBeforeDiscount - discountAmount;
+
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalAmount,
       currency: "eur",
       automatic_payment_methods: { enabled: true },
+        metadata: {
+          order_summary: cartItems,
+          country: country,
+          promo_code: promoCode || "none",
+        },
     });
 
     return {
