@@ -12,7 +12,6 @@ const PRODUCTS = {
   'poster005': { name: 'Uganda – poster', price: Number(process.env.PRODUCT_POSTER_E) || 1000 },
 };
 
-
 exports.handler = async (event) => {
   try {
     if (!event.body) {
@@ -23,63 +22,66 @@ exports.handler = async (event) => {
     }
 
     const { items, country, shippingFee, promoCode, calculatedTotal } = JSON.parse(event.body);
-    console.log('Přijaté položky:', items);
-    console.log('Země:', country);
 
-let totalInCents = 0;
-for (const { id, quantity } of items) {
-  const product = PRODUCTS[id];
-  if (!product) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: `Unknown product ${id}` }),
-    };
-  }
-  totalInCents += product.price * quantity;
-}
-
-let discount = 0;
-const code = promoCode?.toUpperCase();
-const promo = PROMO_CODES[code];
-
-if (promo?.percent_off) {
-  discount = (totalInCents * promo.percent_off) / 100;
-}
-
-const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
-
-const amount = calculatedTotal || totalInCents + shippingFeeInCents - discount;
-if (Math.abs(expectedAmount - calculatedTotal) > 1) { // tolerance 1 cent
-  return {
-    statusCode: 400,
-    body: JSON.stringify({ error: 'Price mismatch between client and server.' }),
-  };
-}
-
-console.log({ totalInCents, discount, shippingFeeInCents, amount });
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: amount,
-    currency: 'eur',
-    automatic_payment_methods: { enabled: true },
-    metadata: {
-      items: items.map(item => {
-        const product = PRODUCTS[item.id];
-        const name = product ? product.name : item.id;
-        return `${name} ×${item.quantity}`;
-      }).join(', ')
+    let totalInCents = 0;
+    for (const { id, quantity } of items) {
+      const product = PRODUCTS[id];
+      if (!product) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: `Unknown product ${id}` }),
+        };
+      }
+      totalInCents += product.price * quantity;
     }
-  });
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
-  };} 
-  catch (error) {
+    let discount = 0;
+    const code = promoCode?.toUpperCase();
+    const promo = PROMO_CODES[code];
+
+    if (promo?.percent_off) {
+      discount = (totalInCents * promo.percent_off) / 100;
+    }
+
+    const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
+    const expectedAmount = totalInCents + shippingFeeInCents - discount;
+
+    // Ověření: jestli se calculatedTotal liší od očekávaného max o 1 cent (kvůli zaokrouhlení)
+    if (
+      typeof calculatedTotal !== "number" ||
+      Math.abs(expectedAmount - calculatedTotal) > 1
+    ) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Price mismatch between client and server.' }),
+      };
+    }
+
+    console.log({ totalInCents, discount, shippingFeeInCents, expectedAmount });
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: calculatedTotal,
+      currency: 'eur',
+      automatic_payment_methods: { enabled: true },
+      metadata: {
+        items: items.map(item => {
+          const product = PRODUCTS[item.id];
+          const name = product ? product.name : item.id;
+          return `${name} ×${item.quantity}`;
+        }).join(', ')
+      }
+    });
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
+    };
+
+  } catch (error) {
     console.error("Payment Intent Error:", error);
     return {
       statusCode: 400,
       body: JSON.stringify({ error: error.message }),
     };
   }
-  
 };
