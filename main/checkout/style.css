@@ -13441,7 +13441,8 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
     padding-top: var(--x-spacing-small-200);
     padding-bottom: var(--x-spacing-small-200);
     min-height: 4.5em;
-    min-height: 3lh
+    min-height: 3lh;
+    justify-items: center;
 }
 
 ._4ptW6 {
@@ -30324,11 +30325,6 @@ html:not(:active-view-transition-type(payment-icons)) ._6f3AR {
 
 .kTI19 {
     padding-top: 1.7rem;
-}
-@media(max-width: 1000px){
-.g9gqqf1.g9gqqf0._1fragemp3.g9gqqfc.g9gqqfa._1fragemue.g9gqqf6.g9gqqf2._1fragemod._1fragemoh{
-    padding: 2.1rem;
-}
 }
 p._1tx8jg70._1fragemms._1tx8jg7c._1tx8jg7b._1fragemp3._1tx8jg715._1tx8jg71d._1tx8jg71f {
     padding-left: var(--layout-margin);
