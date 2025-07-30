@@ -14,9 +14,8 @@ exports.handler = async (event) => {
       return { statusCode: 400, body: JSON.stringify({ error: "Request body is empty" }) };
     }
 
-    const { items, shippingFee, promoCode, calculatedTotal } = JSON.parse(event.body);
+    const { items, shippingFee = 0, promoCode } = JSON.parse(event.body);
 
-    // Spočítat celkovou cenu produktů
     let totalInCents = 0;
     for (const { id, quantity } of items) {
       const product = PRODUCTS[id];
@@ -26,15 +25,12 @@ exports.handler = async (event) => {
       totalInCents += product.price * quantity;
     }
 
-    // Převod shipping fee na centy
     const shippingFeeInCents = parseInt(shippingFee) || 0;
 
     let discount = 0;
 
-    // Ověření a výpočet slevy z promo kódu přes Stripe API
     if (promoCode) {
       const upperCode = promoCode.toUpperCase();
-
       const promoList = await stripe.promotionCodes.list({
         code: upperCode,
         active: true,
@@ -46,8 +42,6 @@ exports.handler = async (event) => {
       }
 
       const promo = promoList.data[0];
-
-      // Načíst detail kuponu
       const coupon = await stripe.coupons.retrieve(promo.coupon.id);
 
       if (coupon.percent_off) {
@@ -55,16 +49,12 @@ exports.handler = async (event) => {
       }
     }
 
-    const expectedAmount = totalInCents + shippingFeeInCents - discount;
+    const finalAmount = totalInCents + shippingFeeInCents - discount;
 
-    // Kontrola, zda cena souhlasí s tím, co klient poslal
-    if (Math.abs(expectedAmount - calculatedTotal) > 1) {
-      return { statusCode: 400, body: JSON.stringify({ error: "Price mismatch between client and server." }) };
-    }
+    // Tady nemusíš kontrolovat calculatedTotal, protože ho klient nepošle.
 
-    // Vytvořit payment intent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: calculatedTotal,
+      amount: finalAmount,
       currency: "eur",
       automatic_payment_methods: { enabled: true },
       metadata: {
@@ -78,13 +68,11 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
+      body: JSON.stringify({ clientSecret: paymentIntent.client_secret, finalAmount }),
     };
+
   } catch (error) {
     console.error("Payment Intent Error:", error);
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: error.message }),
-    };
+    return { statusCode: 400, body: JSON.stringify({ error: error.message }) };
   }
 };
