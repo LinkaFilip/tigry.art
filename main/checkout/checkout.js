@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const shippingSummary = document.getElementById("shipping-summary");
 
   const getCartFromCookie = () => {
-    const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
-    return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
+    const cartCookie = localStorage.getItem("cart");
+    return cartCookie ? JSON.parse(stored) : [];
   };
 
   const calculateSubtotal = () => {
