@@ -28638,7 +28638,11 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
     grid-template-areas: var(--x-shell-content-template-areas);
     grid-template-columns: var(--x-shell-content-template-columns)
 }
-
+@media screen and (max-width: 999px) {
+    .c3A19{
+        padding: 2.1rem;
+    }
+}
 @media screen and (min-width: 1000px) {
     .cm5pp:not(.U3Rye) .bMbg6~.c3A19 {
         border-radius:var(--x-border-radius-large) var(--x-border-radius-large) 0 0;
