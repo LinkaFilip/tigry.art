@@ -97,6 +97,31 @@ document.addEventListener("DOMContentLoaded", () => {
     cartPanel.classList.toggle("Cart_open__Hlx3_");
     renderCart();
   });
+  element.addEventListener("click", () => {
+    const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
+    const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
+
+    if (isOpen) {
+      element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
+      element.innerHTML = bagSVG;
+
+      overlay.style.opacity = "0";
+      overlay.style.visibility = "hidden";
+      overlay.style.pointerEvents = "none";
+      cartPanel.style.transform = isMobile ? "translate(0, -100%)" : "translate(100%, 0)";
+    } else {
+      element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
+      element.innerHTML = crossSVG;
+
+      overlay.style.opacity = "1";
+      overlay.style.visibility = "inherit";
+      overlay.style.pointerEvents = "auto";
+      cartPanel.style.transform = "translate(0, 0)";
+    }
+
+    cartPanel.classList.toggle("Cart_open__Hlx3_");
+    renderCart();
+  });
 
   panel.addEventListener("click", function (event) {
     if (event.target.classList.contains("remove-item")) {
