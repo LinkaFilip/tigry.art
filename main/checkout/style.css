@@ -13625,7 +13625,7 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
 }
 
 .i4DWM {
-    display: var(--x-shell-order-summary-display);
+    display: block;
     grid-area: order-summary
 }
 
