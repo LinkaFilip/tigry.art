@@ -30,34 +30,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getSelectedCountry = () => selectElement.value;
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
 
-
-  const promoInput = document.getElementById("ReductionsInput0");
-
-  const updatePrices = () => {
-      const subtotalPriceEl = document.getElementById("subtotal-price");
+  const subtotalPriceEl = document.getElementById("subtotal-price");
   const totalPriceEl = document.getElementById("total-price");
 
   const promoInput = document.getElementById("ReductionsInput0");
 
-  promoInput.addEventListener("input", () => {
-    const code = promoInput.value.trim().toUpperCase();    
-    const originalPrice = calculateSubtotal();
-    if (code === "TEST10") {
-      const discountedPrice = originalPrice * 0.9;
-      subtotalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
-      const totalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
-      totalPriceEl.textContent = totalPrice;
-    } else {
-      subtotalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
-    }
-  });
+function applyDiscount(price) {
+  const code = promoInput.value.trim().toUpperCase();
+  if (code === "TEST10") {
+    return price * 0.9;
+  }
+  return price;
+}
+
+  const updatePrices = () => {
     const subtotal = calculateSubtotal();
     const shipping = getSelectedShipping();
-    const total = subtotal + shipping / 100;
+    const total = subtotal + shipping / 100;    
+    const discountedTotal = applyDiscount(total);
 
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
-    totalDisplay.textContent = `€ ${total.toFixed(2)}`;
+    totalDisplay.textContent = `€ ${discountedTotal.toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
   };
 
