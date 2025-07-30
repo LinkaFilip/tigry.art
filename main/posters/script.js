@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isOpen) {
       element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
       element.innerHTML = bagSVG;
-
+      clickableElement.style.display = "block";
       overlay.style.opacity = "0";
       overlay.style.visibility = "hidden";
       overlay.style.pointerEvents = "none";
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
-
+      clickableElement.style.display = "none";
       overlay.style.opacity = "1";
       overlay.style.visibility = "inherit";
       overlay.style.pointerEvents = "auto";
@@ -104,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isOpen) {
       element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
       element.innerHTML = bagSVG;
+      clickableElement.style.display = "block";
 
       overlay.style.opacity = "0";
       overlay.style.visibility = "hidden";
@@ -112,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
+      clickableElement.style.display = "none";
 
       overlay.style.opacity = "1";
       overlay.style.visibility = "inherit";
