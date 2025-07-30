@@ -175,7 +175,8 @@ promoInput.addEventListener("input", updatePrices);
     updatePrices();
   });
 const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
-containerIfMobile.textContent = `EUR ${calculateSubtotal().toFixed(2) + getSelectedShipping().toFixed(2)}`;
+
+containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping()) / 100).toFixed(2)}`;
   // Handle card payment
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
