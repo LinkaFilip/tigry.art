@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const shippingSummary = document.getElementById("shipping-summary");
 
   const getCartFromCookie = () => {
-    const cartCookie = localStorage.getItem("cart");
-    return cartCookie ? JSON.parse(stored) : [];
+    const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
+    return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
   };
 
   const calculateSubtotal = () => {
@@ -33,22 +33,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const promoInput = document.getElementById("ReductionsInput0");
 
-const updatePrices = () => {
-  const subtotal = calculateSubtotal(); // v centech
-  const shipping = getSelectedShipping(); // v centech
-  const totalBeforeDiscount = subtotal + shipping;
+function applyDiscount(price) {
+  const code = promoInput.value.trim().toUpperCase();
+  if (code === "TEST10") {
+    return price * 0.9;
+  }
+  return price;
+}
 
-  const code = promoInput?.value.trim().toUpperCase() || "";
-  const discountPercent = code === "TEST10" ? 10 : 0;
+  const updatePrices = () => {
+    const subtotal = calculateSubtotal();
+    const shipping = getSelectedShipping();
+    const totalBeforeDiscount = subtotal + shipping / 100;
 
-  const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
-  const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+    const code = promoInput.value.trim().toUpperCase();
+    const discountPercent = code === "TEST10" ? 10 : 0;
 
-  subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
-  totalDisplay.textContent = `€ ${(totalAfterDiscount / 100).toFixed(2)}`;
-  shippingSummary.textContent = `Shipping to ${selectElement?.options[selectElement.selectedIndex].text || "?"} – € ${(shipping / 100).toFixed(2)}`;
-};
+    const discountAmount = totalBeforeDiscount * (discountPercent / 100);
+    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+
+    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${shipping.toFixed(2) / 100}`;
+    totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
+    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
+  };
 promoInput.addEventListener("input", updatePrices);
 
   const renderProductFromCart = () => {
@@ -187,12 +195,12 @@ promoInput.addEventListener("input", updatePrices);
     }
     const country = getSelectedCountry();
     
-function applyDiscount(priceInCents) {
+function applyDiscount(price) {
   const code = promoInput.value.trim().toUpperCase();
   if (code === "TEST10") {
-    return Math.round(priceInCents * 0.9); // sleva 10 %, zaokrouhleno na celé centy
+    return price * 0.9;
   }
-  return priceInCents;
+  return price;
 }
 
 const subtotal = calculateSubtotal();
@@ -208,7 +216,7 @@ const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
         country: getSelectedCountry(),
         shippingFee: shipping,
         promoCode: promoInput.value.trim().toUpperCase(),
-        calculatedTotal: Math.round(totalAfterDiscount),
+        calculatedTotal: totalAfterDiscount * 100,
       }),
     });
 
