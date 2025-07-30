@@ -29,13 +29,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const getSelectedCountry = () => selectElement.value;
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
+
   const totalPriceEl = document.getElementById("subtotal-price");
 
   const promoInput = document.getElementById("ReductionsInput0");
 
   promoInput.addEventListener("input", () => {
     const code = promoInput.value.trim().toUpperCase();    
-    const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
+    const originalPrice = calculateSubtotal();
     if (code === "TEST10") {
       const discountedPrice = originalPrice * 0.9;
       totalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
