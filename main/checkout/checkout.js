@@ -33,22 +33,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const promoInput = document.getElementById("ReductionsInput0");
 
-  const updatePrices = () => {
-    const subtotal = calculateSubtotal();
-    const shipping = getSelectedShipping();
-    const totalBeforeDiscount = subtotal + shipping / 100;
+const updatePrices = () => {
+  const subtotal = calculateSubtotal(); // v centech
+  const shipping = getSelectedShipping(); // v centech
+  const totalBeforeDiscount = subtotal + shipping;
 
-    const code = promoInput.value.trim().toUpperCase();
-    const discountPercent = code === "TEST10" ? 10 : 0;
+  const code = promoInput?.value.trim().toUpperCase() || "";
+  const discountPercent = code === "TEST10" ? 10 : 0;
 
-    const discountAmount = totalBeforeDiscount * (discountPercent / 100);
-    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+  const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
+  const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${shipping.toFixed(2) / 100}`;
-    totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
-    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
-  };
+  subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+  totalDisplay.textContent = `€ ${(totalAfterDiscount / 100).toFixed(2)}`;
+  shippingSummary.textContent = `Shipping to ${selectElement?.options[selectElement.selectedIndex].text || "?"} – € ${(shipping / 100).toFixed(2)}`;
+};
 promoInput.addEventListener("input", updatePrices);
 
   const renderProductFromCart = () => {
