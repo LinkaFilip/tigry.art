@@ -174,7 +174,9 @@ promoInput.addEventListener("input", updatePrices);
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
-
+const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
+containerIfMobile.textContent = `EUR ${(calculateSubtotal() / 100).toFixed(2)}`;
+console.log(calculateSubtotal());
   // Handle card payment
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
@@ -197,9 +199,8 @@ function applyDiscount(price) {
   return price;
 }
 
-const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
-containerIfMobile.textContent = `EUR ${(calculateSubtotal() / 100).toFixed(2)}`;
-console.log(calculateSubtotal());
+
+
 const subtotal = calculateSubtotal();
 const shipping = getSelectedShipping();
 const totalBeforeDiscount = subtotal + shipping;
