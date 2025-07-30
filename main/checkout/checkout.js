@@ -240,17 +240,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
   const totalPriceEl = document.getElementById("subtotal-price");
 
-  const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
 
   promoInput.addEventListener("input", () => {
-    const code = promoInput.value.trim().toUpperCase();
-
+    const code = promoInput.value.trim().toUpperCase();    
+    const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
     if (code === "TEST10") {
       const discountedPrice = originalPrice * 0.9;
       totalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
     } else {
       totalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
     }
-    updatePrices();
   });
+  updatePrices();
 });
