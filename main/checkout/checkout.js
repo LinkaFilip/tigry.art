@@ -41,7 +41,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (code === "TEST10") {
       const discountedPrice = originalPrice * 0.9;
       subtotalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
-      totalPriceEl.textContent = subtotalPriceEl + getSelectedShipping() / 100;
+      const totalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
+      totalPriceEl.textContent = totalPrice;
     } else {
       subtotalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
     }
