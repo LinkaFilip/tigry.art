@@ -45,7 +45,7 @@ exports.handler = async (event) => {
       const coupon = await stripe.coupons.retrieve(promo.coupon.id);
 
       if (coupon.percent_off) {
-        discount = Math.round((totalInCents + shippingFeeInCents) * coupon.percent_off / 100);
+        discount = Math.round((totalInCents + shippingFeeInCents) * promo.percent_off / 100);
       }
     }
 
