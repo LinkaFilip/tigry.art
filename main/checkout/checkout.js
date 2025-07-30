@@ -1,21 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const validPromoCodes = ['TEST10'];
 
-  const promoInput = document.getElementById('ReductionsInput0');
-  const applyBtn = document.getElementById('apply_btn');
-let promoCode = null;
-let discountPercent = 0;
-applyBtn.addEventListener('click', () => {
-  const code = promoInput.value.trim().toUpperCase();
-  if (validPromoCodes.includes(code)) {
-    promoCode = code;
-    if (code === 'TEST10') {
-      discountPercent = 10;
-    }
-
-    updatePrices();
-  }
-});
   const SHIPPING_COST = {
     AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
     DE: 300, HK: 300, IE: 300, IL: 300, IT: 300, JP: 1500, MY: 300, NL: 300,
@@ -126,7 +110,7 @@ applyBtn.addEventListener('click', () => {
       currency: "eur",
       total: {
         label: "Celková cena",
-        amount: Math.round((calculateSubtotal() + getSelectedShipping() / 100) * 100),
+        amount: (calculateSubtotal() + getSelectedShipping() / 100) * 100,
       },
       promoCode: promoInput.value.trim() ,
       requestPayerName: true,
@@ -251,6 +235,21 @@ applyBtn.addEventListener('click', () => {
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       document.cookie = "cart=; Max-Age=0; path=/";
       location.href = "/posters/?success=true";
+    }
+  });
+  const discountInput = document.getElementById("ReductionsInput0");
+  const totalPriceEl = document.getElementById("total-price");
+
+  const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100) * 100;
+
+  discountInput.addEventListener("input", () => {
+    const code = discountInput.value.trim().toUpperCase();
+
+    if (code === "TEST10") {
+      const discountedPrice = originalPrice * 0.9;
+      totalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
+    } else {
+      totalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
     }
   });
 });
