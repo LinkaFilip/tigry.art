@@ -53,12 +53,7 @@ if (Math.abs(expectedAmount - calculatedTotal) > 1) {
     body: JSON.stringify({ error: 'Price mismatch between client and server.' }),
   };
 }
-{
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Price mismatch between client and server.' }),
-      };
-    }
+
 
     console.log({ totalInCents, discount, shippingFeeInCents, expectedAmount });
 

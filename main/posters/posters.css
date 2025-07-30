@@ -4884,7 +4884,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
     max-height: 100%;
     flex: 1 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     justify-content: space-between;
     overflow-y: auto;
     padding-top: 16px;
