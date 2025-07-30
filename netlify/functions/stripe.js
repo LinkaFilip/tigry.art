@@ -28,9 +28,6 @@ exports.handler = async (event, context) => {
         },
       ],
       mode: "payment",
-        discounts: [{
-        promotion_code: 'promo_123', // ID z předchozího kroku (ne textový kód!)
-      }],
       success_url: "https://tigry.art/posters/",
       cancel_url: "https://tigry.art/",
     });
