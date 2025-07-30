@@ -50,10 +50,10 @@ exports.handler = async (event) => {
     }
 
     const finalAmount = totalInCents + shippingFeeInCents - discount;
-console.log("Subtotal (cents):", totalInCents);
-console.log("Shipping (cents):", shippingFeeInCents);
-console.log("Discount (cents):", discount);
-console.log("Final amount (cents):", finalAmount);
+    console.log("Subtotal (cents):", totalInCents);
+    console.log("Shipping (cents):", shippingFeeInCents);
+    console.log("Discount (cents):", discount);
+    console.log("Final amount (cents):", finalAmount);
     // Tady nemusíš kontrolovat calculatedTotal, protože ho klient nepošle.
 
     const paymentIntent = await stripe.paymentIntents.create({

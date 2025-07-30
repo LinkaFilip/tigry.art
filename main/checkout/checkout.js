@@ -216,7 +216,7 @@ const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
         country: getSelectedCountry(),
         shippingFee: shipping,
         promoCode: promoInput.value.trim().toUpperCase(),
-        calculatedTotal: totalAfterDiscount * 100,
+        calculatedTotal: Math.round(totalAfterDiscount * 100),
       }),
     });
 
