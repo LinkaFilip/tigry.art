@@ -22,17 +22,7 @@ exports.handler = async (event) => {
     }
 
     const { items, country, shippingFee, promoCode, calculatedTotal } = JSON.parse(event.body);
-    console.log({
-      items,
-      country,
-      shippingFee,
-      promoCode,
-      calculatedTotal,
-      totalInCents,
-      discount,
-      shippingFeeInCents,
-      expectedAmount,
-    });
+
     let totalInCents = 0;
     for (const { id, quantity } of items) {
       const product = PRODUCTS[id];
@@ -56,7 +46,6 @@ exports.handler = async (event) => {
     const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
     const expectedAmount = totalInCents + shippingFeeInCents - discount;
 
-    // Ověření: jestli se calculatedTotal liší od očekávaného max o 1 cent (kvůli zaokrouhlení)
     if (
       typeof calculatedTotal !== "number" ||
       Math.abs(expectedAmount - calculatedTotal) > 1
@@ -81,7 +70,17 @@ exports.handler = async (event) => {
         }).join(', ')
       }
     });
-
+    console.log({
+      items,
+      country,
+      shippingFee,
+      promoCode,
+      calculatedTotal,
+      totalInCents,
+      discount,
+      shippingFeeInCents,
+      expectedAmount,
+    });
     return {
       statusCode: 200,
       body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
@@ -94,4 +93,5 @@ exports.handler = async (event) => {
       body: JSON.stringify({ error: error.message }),
     };
   }
+  
 };
