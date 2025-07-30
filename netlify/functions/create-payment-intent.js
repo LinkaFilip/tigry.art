@@ -1,84 +1,58 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
-const PRODUCTS = {
-  'poster001': { name: 'Japan – poster', price: Number(process.env.PRODUCT_POSTER_A) || 1000 },
-  'poster002': { name: 'Mexico – poster', price: Number(process.env.PRODUCT_POSTER_B) || 1000 },
-  'poster003': { name: 'Czechia – poster', price: Number(process.env.PRODUCT_POSTER_C) || 1000 },
-  'poster004': { name: 'Middle East – poster', price: Number(process.env.PRODUCT_POSTER_D) || 1000 },
-  'poster005': { name: 'Uganda – poster', price: Number(process.env.PRODUCT_POSTER_E) || 1000 },
-};
-
 exports.handler = async (event) => {
   try {
-    if (!event.body) {
-      return { statusCode: 400, body: JSON.stringify({ error: "Request body is empty" }) };
-    }
+    const { items, country, promoCode } = JSON.parse(event.body);
 
-    const { items, shippingFee = 0, promoCode } = JSON.parse(event.body);
+    // 1. Spočítej subtotal
+    const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const SHIPPING_COST = {
+      AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
+      DE: 300, HK: 300, IE: 300, IL: 300, IT: 300, JP: 1500, MY: 300, NL: 300,
+      NZ: 300, NO: 300, PL: 300, PT: 300, SG: 300, KR: 300, ES: 300, SE: 300,
+      CH: 300, AE: 300, GB: 300, US: 300,
+    };
+    const shipping = SHIPPING_COST[country] || 0;
 
-    let totalInCents = 0;
-    for (const { id, quantity } of items) {
-      const product = PRODUCTS[id];
-      if (!product) {
-        return { statusCode: 400, body: JSON.stringify({ error: `Unknown product id: ${id}` }) };
-      }
-      totalInCents += product.price * quantity;
-    }
+    let discountPercent = 0;
 
-    const shippingFeeInCents = parseInt(shippingFee) || 0;
-
-    let discount = 0;
-
+    // 2. Ověř promo kód přes Stripe
     if (promoCode) {
-      const upperCode = promoCode.toUpperCase();
-      const promoList = await stripe.promotionCodes.list({
-        code: upperCode,
+      const codes = await stripe.promotionCodes.list({
+        code: promoCode,
         active: true,
         limit: 1,
       });
 
-      if (promoList.data.length === 0) {
-        return { statusCode: 400, body: JSON.stringify({ error: "Invalid promo code." }) };
-      }
-
-      const promo = promoList.data[0];
-      const coupon = await stripe.coupons.retrieve(promo.coupon.id);
-
-      if (coupon.percent_off) {
-        discount = Math.round((totalInCents + shippingFeeInCents) * promo.percent_off / 100);
+      if (codes.data.length > 0) {
+        const coupon = codes.data[0].coupon;
+        if (coupon.percent_off) {
+          discountPercent = coupon.percent_off;
+        }
       }
     }
 
-    const finalAmount = totalInCents + shippingFeeInCents - discount;
-    console.log("Subtotal (cents):", totalInCents);
-    console.log("Shipping (cents):", shippingFeeInCents);
-    console.log("Discount (cents):", discount);
-    console.log("Final amount (cents):", finalAmount);
-    // Tady nemusíš kontrolovat calculatedTotal, protože ho klient nepošle.
+    // 3. Spočítej výslednou částku
+    const totalBeforeDiscount = subtotal + shipping;
+    const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
+    const totalAmount = totalBeforeDiscount - discountAmount;
 
+    // 4. Stripe PaymentIntent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: finalAmount,
+      amount: totalAmount,
       currency: "eur",
       automatic_payment_methods: { enabled: true },
-      metadata: {
-        items: items.map(({ id, quantity }) => {
-          const product = PRODUCTS[id];
-          return `${product ? product.name : id} ×${quantity}`;
-        }).join(", "),
-        promoCode: promoCode || "",
-      },
     });
-console.log("Subtotal (cents):", totalInCents);
-console.log("Shipping (cents):", shippingFeeInCents);
-console.log("Discount (cents):", discount);
-console.log("Final amount (cents):", finalAmount);
+
     return {
       statusCode: 200,
-      body: JSON.stringify({ clientSecret: paymentIntent.client_secret, finalAmount }),
+      body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
     };
-
-  } catch (error) {
-    console.error("Payment Intent Error:", error);
-    return { statusCode: 400, body: JSON.stringify({ error: error.message }) };
+  } catch (err) {
+    console.error("Stripe error:", err.message);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: err.message }),
+    };
   }
 };
