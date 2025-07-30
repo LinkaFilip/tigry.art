@@ -30,8 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getSelectedCountry = () => selectElement.value;
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
 
-  const subtotalPriceEl = document.getElementById("subtotal-price");
-  const totalPriceEl = document.getElementById("total-price");
 
   const promoInput = document.getElementById("ReductionsInput0");
 
@@ -54,6 +52,7 @@ function applyDiscount(price) {
     totalDisplay.textContent = `€ ${discountedTotal.toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
   };
+promoInput.addEventListener("input", updatePrices);
 
   const renderProductFromCart = () => {
     const cart = getCartFromCookie();
@@ -251,5 +250,5 @@ function applyDiscount(price) {
       location.href = "/posters/?success=true";
     }
   });
-
+updatePrices();
 });
