@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const element = document.querySelector(".CartIndicator_icon__AFivB");
+  const clickableElement = document.querySelector(".CartIndicator_label__KOYQo");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
 
@@ -71,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   element.innerHTML = bagSVG;
 
-  element.addEventListener("click", () => {
+  clickableElement.addEventListener("click", () => {
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
 
