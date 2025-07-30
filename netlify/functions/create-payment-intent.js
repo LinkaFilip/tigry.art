@@ -3,8 +3,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 exports.handler = async (event) => {
   try {
     const { items, country, promoCode } = JSON.parse(event.body);
-
-    // 1. Spočítej subtotal
     const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const SHIPPING_COST = {
       AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
@@ -15,8 +13,6 @@ exports.handler = async (event) => {
     const shipping = SHIPPING_COST[country] || 0;
 
     let discountPercent = 0;
-
-    // 2. Ověř promo kód přes Stripe
     if (promoCode) {
       const codes = await stripe.promotionCodes.list({
         code: promoCode,
@@ -31,13 +27,9 @@ exports.handler = async (event) => {
         }
       }
     }
-
-    // 3. Spočítej výslednou částku
     const totalBeforeDiscount = subtotal + shipping;
     const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
     const totalAmount = totalBeforeDiscount - discountAmount;
-
-    // 4. Stripe PaymentIntent
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalAmount,
       currency: "eur",
