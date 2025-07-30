@@ -246,8 +246,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const code = promoInput.value.trim().toUpperCase();
 
     if (code === "TEST10") {
-      const discountedPrice = originalPrice * 0.9;
-      totalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
+      const originalPrice = originalPrice * 0.9;
+      totalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
     } else {
       totalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
     }
