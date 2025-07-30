@@ -51,9 +51,9 @@ function applyDiscount(price) {
 
     const discountAmount = totalBeforeDiscount * (discountPercent / 100);
     const totalAfterDiscount = totalBeforeDiscount - discountAmount;
-    
+
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${shipping.toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${shipping.toFixed(2) / 100}`;
     totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
   };
@@ -197,6 +197,12 @@ promoInput.addEventListener("input", updatePrices);
     const shippingFee = getSelectedShipping();
     const country = getSelectedCountry();
     const promoCode = document.getElementById('ReductionsInput0').value.trim().toUpperCase();
+    
+const subtotal = calculateSubtotal();
+const shipping = getSelectedShipping() / 100;
+const totalBeforeDiscount = subtotal + shipping;
+const discountAmount = calculateDiscount(totalBeforeDiscount); // např. 10 %
+const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
