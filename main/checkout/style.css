@@ -28779,7 +28779,7 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
 }
 
 .i4DWM {
-    display: var(--x-shell-order-summary-display);
+    display: block;
     grid-area: order-summary
 }
 
@@ -30324,11 +30324,6 @@ html:not(:active-view-transition-type(payment-icons)) ._6f3AR {
 
 .kTI19 {
     padding-top: 1.7rem;
-}
-@media(min-width: 1000px){
-.g9gqqf1.g9gqqf0._1fragemp3.g9gqqfc.g9gqqfa._1fragemue.g9gqqf6.g9gqqf2._1fragemod._1fragemoh{
-    padding: 2.1rem;
-}
 }
 p._1tx8jg70._1fragemms._1tx8jg7c._1tx8jg7b._1fragemp3._1tx8jg715._1tx8jg71d._1tx8jg71f {
     padding-left: var(--layout-margin);
