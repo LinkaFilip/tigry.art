@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   const updatePrices = () => {
-  const subtotalPriceEl = document.getElementById("subtotal-price");
+      const subtotalPriceEl = document.getElementById("subtotal-price");
   const totalPriceEl = document.getElementById("total-price");
 
   const promoInput = document.getElementById("ReductionsInput0");
