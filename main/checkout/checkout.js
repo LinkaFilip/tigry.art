@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       location.href = "/posters/?success=true";
     }
   });
-  const totalPriceEl = document.getElementById("total-price");
+  const totalPriceEl = document.getElementById("subtotal-price");
 
   const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
 
@@ -251,5 +251,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
       totalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
     }
+    updatePrices();
   });
 });
