@@ -11,7 +11,17 @@ const PRODUCTS = {
   'poster004': { name: 'Middle East – poster', price: Number(process.env.PRODUCT_POSTER_D) || 1000 },
   'poster005': { name: 'Uganda – poster', price: Number(process.env.PRODUCT_POSTER_E) || 1000 },
 };
-
+console.log({
+  items,
+  country,
+  shippingFee,
+  promoCode,
+  calculatedTotal,
+  totalInCents,
+  discount,
+  shippingFeeInCents,
+  expectedAmount,
+});
 exports.handler = async (event) => {
   try {
     if (!event.body) {
