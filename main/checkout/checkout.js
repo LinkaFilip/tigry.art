@@ -29,6 +29,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const getSelectedCountry = () => selectElement.value;
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
+  const totalPriceEl = document.getElementById("subtotal-price");
+
+  const promoInput = document.getElementById("ReductionsInput0");
+
+  promoInput.addEventListener("input", () => {
+    const code = promoInput.value.trim().toUpperCase();    
+    const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
+    if (code === "TEST10") {
+      const discountedPrice = originalPrice * 0.9;
+      totalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
+    } else {
+      totalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
+    }
+  });
 
   const updatePrices = () => {
     const subtotal = calculateSubtotal();
@@ -103,7 +117,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       container.appendChild(itemDiv);
     });
   }; 
-  const promoInput = document.getElementById("ReductionsInput0");
   
   const createPaymentRequest = () => {
     const paymentRequest = stripe.paymentRequest({
@@ -238,18 +251,5 @@ document.addEventListener("DOMContentLoaded", async () => {
       location.href = "/posters/?success=true";
     }
   });
-  const totalPriceEl = document.getElementById("subtotal-price");
 
-
-  promoInput.addEventListener("input", () => {
-    const code = promoInput.value.trim().toUpperCase();    
-    const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
-    if (code === "TEST10") {
-      const discountedPrice = originalPrice * 0.9;
-      totalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
-    } else {
-      totalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
-    }
-  });
-  updatePrices();
 });
