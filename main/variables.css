@@ -145,7 +145,7 @@ nav span {
     position: fixed;
     flex-direction: row;
     z-index: 150000;
-    margin-top: 15px;
+    margin-top: var(--layout-margin);
 }
 .MenuCover_menuCover__2c3ab {
     padding-left: var(--layout-margin);
@@ -154,5 +154,5 @@ nav span {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
