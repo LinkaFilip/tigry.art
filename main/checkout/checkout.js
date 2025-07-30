@@ -214,7 +214,13 @@ const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cart, shippingFee, country, promoCode: promoCode, calculatedTotal: totalAfterDiscount * 100}),
+        body: JSON.stringify({
+        items: getCartFromCookie(),
+        country: getSelectedCountry(),
+        shippingFee: shipping * 100,
+        promoCode: promoInput.value.trim().toUpperCase(),
+        calculatedTotal: totalAfterDiscount * 100,
+      }),
     });
 
     const data = await response.json();
