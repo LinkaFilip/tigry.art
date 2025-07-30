@@ -198,11 +198,18 @@ promoInput.addEventListener("input", updatePrices);
     const country = getSelectedCountry();
     const promoCode = document.getElementById('ReductionsInput0').value.trim().toUpperCase();
     
+function applyDiscount(price) {
+  const code = promoInput.value.trim().toUpperCase();
+  if (code === "TEST10") {
+    return price * 0.9;
+  }
+  return price;
+}
+
 const subtotal = calculateSubtotal();
 const shipping = getSelectedShipping() / 100;
 const totalBeforeDiscount = subtotal + shipping;
-const discountAmount = calculateDiscount(totalBeforeDiscount); // např. 10 %
-const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
