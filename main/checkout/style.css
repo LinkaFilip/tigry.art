@@ -30325,7 +30325,7 @@ html:not(:active-view-transition-type(payment-icons)) ._6f3AR {
 .kTI19 {
     padding-top: 1.7rem;
 }
-@media(max-width: 1000px){
+@media(min-width: 1000px){
 .g9gqqf1.g9gqqf0._1fragemp3.g9gqqfc.g9gqqfa._1fragemue.g9gqqf6.g9gqqf2._1fragemod._1fragemoh{
     padding: 2.1rem;
 }
