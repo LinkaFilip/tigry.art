@@ -33,13 +33,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const promoInput = document.getElementById("ReductionsInput0");
 
-function applyDiscount(price) {
-  const code = promoInput.value.trim().toUpperCase();
-  if (code === "TEST10") {
-    return price * 0.9;
-  }
-  return price;
-}
 
   const updatePrices = () => {
     const subtotal = calculateSubtotal();
@@ -63,6 +56,7 @@ promoInput.addEventListener("input", updatePrices);
     const cart = getCartFromCookie();
     const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
     container.innerHTML = "";
+
 
     cart.forEach(item => {
       const itemDiv = document.createElement('section');
@@ -202,6 +196,10 @@ function applyDiscount(price) {
   }
   return price;
 }
+
+const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
+containerIfMobile.textContent = "";
+containerIfMobile.textContent = calculateSubtotal();
 
 const subtotal = calculateSubtotal();
 const shipping = getSelectedShipping();
