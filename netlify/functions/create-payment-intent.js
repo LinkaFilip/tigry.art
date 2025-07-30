@@ -1,8 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
-
-const PROMO_CODES = {
-  'TEST10': { percent_off: 10 },
-};
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 const PRODUCTS = {
   'poster001': { name: 'Japan – poster', price: Number(process.env.PRODUCT_POSTER_A) || 1000 },
@@ -15,76 +11,75 @@ const PRODUCTS = {
 exports.handler = async (event) => {
   try {
     if (!event.body) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: "Request body is empty" }),
-      };
+      return { statusCode: 400, body: JSON.stringify({ error: "Request body is empty" }) };
     }
 
-    const { items, country, shippingFee, promoCode, calculatedTotal } = JSON.parse(event.body);
+    const { items, shippingFee, promoCode, calculatedTotal } = JSON.parse(event.body);
 
+    // Spočítat celkovou cenu produktů
     let totalInCents = 0;
     for (const { id, quantity } of items) {
       const product = PRODUCTS[id];
       if (!product) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ error: `Unknown product ${id}` }),
-        };
+        return { statusCode: 400, body: JSON.stringify({ error: `Unknown product id: ${id}` }) };
       }
       totalInCents += product.price * quantity;
     }
 
-let discount = 0;
-const code = promoCode?.toUpperCase();
-const promo = PROMO_CODES[code];
+    // Převod shipping fee na centy
+    const shippingFeeInCents = parseInt(shippingFee) || 0;
 
-const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
+    let discount = 0;
 
-if (promo?.percent_off) {
-  discount = Math.round((totalInCents + shippingFeeInCents) * promo.percent_off / 100);
-}
+    // Ověření a výpočet slevy z promo kódu přes Stripe API
+    if (promoCode) {
+      const upperCode = promoCode.toUpperCase();
 
-const expectedAmount = totalInCents + shippingFeeInCents - discount;
+      const promoList = await stripe.promotionCodes.list({
+        code: upperCode,
+        active: true,
+        limit: 1,
+      });
 
-if (Math.abs(expectedAmount - calculatedTotal) > 1) {
-  return {
-    statusCode: 400,
-    body: JSON.stringify({ error: 'Price mismatch between client and server.' }),
-  };
-}
+      if (promoList.data.length === 0) {
+        return { statusCode: 400, body: JSON.stringify({ error: "Invalid promo code." }) };
+      }
 
+      const promo = promoList.data[0];
 
-    console.log({ totalInCents, discount, shippingFeeInCents, expectedAmount });
+      // Načíst detail kuponu
+      const coupon = await stripe.coupons.retrieve(promo.coupon.id);
 
+      if (coupon.percent_off) {
+        discount = Math.round((totalInCents + shippingFeeInCents) * coupon.percent_off / 100);
+      }
+    }
+
+    const expectedAmount = totalInCents + shippingFeeInCents - discount;
+
+    // Kontrola, zda cena souhlasí s tím, co klient poslal
+    if (Math.abs(expectedAmount - calculatedTotal) > 1) {
+      return { statusCode: 400, body: JSON.stringify({ error: "Price mismatch between client and server." }) };
+    }
+
+    // Vytvořit payment intent
     const paymentIntent = await stripe.paymentIntents.create({
       amount: calculatedTotal,
-      currency: 'eur',
+      currency: "eur",
       automatic_payment_methods: { enabled: true },
       metadata: {
-        items: items.map(item => {
-          const product = PRODUCTS[item.id];
-          const name = product ? product.name : item.id;
-          return `${name} ×${item.quantity}`;
-        }).join(', ')
-      }
+        items: items.map(({ id, quantity }) => {
+          const product = PRODUCTS[id];
+          return `${product ? product.name : id} ×${quantity}`;
+        }).join(", "),
+        promoCode: promoCode || "",
+      },
     });
-    console.log({
-      items,
-      country,
-      shippingFee,
-      promoCode,
-      calculatedTotal,
-      totalInCents,
-      discount,
-      shippingFeeInCents,
-      expectedAmount,
-    });
+
     return {
       statusCode: 200,
       body: JSON.stringify({ clientSecret: paymentIntent.client_secret }),
     };
-
   } catch (error) {
     console.error("Payment Intent Error:", error);
     return {
@@ -92,5 +87,4 @@ if (Math.abs(expectedAmount - calculatedTotal) > 1) {
       body: JSON.stringify({ error: error.message }),
     };
   }
-  
 };
