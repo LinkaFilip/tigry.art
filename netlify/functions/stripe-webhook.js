@@ -30,6 +30,8 @@ exports.handler = async (event) => {
     case 'charge.succeeded':
       console.log('Charge succeeded for amount:', stripeEvent.data.object.amount);
       break;
+    case 'coupon.created':
+      break;
     default:
       console.log('Unhandled event type:', stripeEvent.type);
   }
