@@ -22,9 +22,10 @@ exports.handler = async (event) => {
       };
     }
 
-    const { items, shippingFee, country, promoCode } = JSON.parse(event.body);
+    const { items, country, shippingFee, promoCode, calculatedTotal } = JSON.parse(event.body);
     console.log('Přijaté položky:', items);
     console.log('Země:', country);
+
 let totalInCents = 0;
 for (const { id, quantity } of items) {
   const product = PRODUCTS[id];
@@ -46,10 +47,18 @@ if (promo?.percent_off) {
 }
 
 const shippingFeeInCents = promo?.free_shipping ? 0 : (parseInt(shippingFee) || 0);
-const amount = totalInCents + shippingFeeInCents - discount;
+
+const expectedAmount = totalInCents + shippingFeeInCents - discount;
+if (Math.abs(expectedAmount - calculatedTotal) > 1) { // tolerance 1 cent
+  return {
+    statusCode: 400,
+    body: JSON.stringify({ error: 'Price mismatch between client and server.' }),
+  };
+}
+
 console.log({ totalInCents, discount, shippingFeeInCents, amount });
   const paymentIntent = await stripe.paymentIntents.create({
-    amount,
+    amount: calculatedTotal,
     currency: 'eur',
     automatic_payment_methods: { enabled: true },
     metadata: {
