@@ -13413,7 +13413,7 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
 }
 
 :is(.WtpiW:hover,.WtpiW:focus) ._4ptW6 {
-    color: var(--x-default-color-accent-hovered)
+    color: black;
 }
 
 .gDe8o .WtpiW {
@@ -28567,7 +28567,7 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
 }
 
 :is(.WtpiW:hover,.WtpiW:focus) ._4ptW6 {
-    color: var(--x-default-color-accent-hovered)
+    color: black;
 }
 
 .gDe8o .WtpiW {
@@ -30459,4 +30459,19 @@ button#pay-button {
 ._1fragemue, ._1fragemuf:hover {
     background-color: var(--x-default-color-background);
     color: var(--x-default-color-text);
+}
+span._4ptW6 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+span.fCEli {
+    margin-right: var(--x-spacing-small-200);
+}
+.WtpiW {
+    background: var(--x-default-color-background-subdued);
+    transition: outline var(--x-duration-base) var(--x-timing-base);
+    position: relative;
+    z-index: 2;
+    --x-default-color-icon: currentcolor;
 }
