@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       container.appendChild(itemDiv);
     });
   }; 
+  const promoInput = document.getElementById("ReductionsInput0");
   
   const createPaymentRequest = () => {
     const paymentRequest = stripe.paymentRequest({
@@ -237,13 +238,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       location.href = "/posters/?success=true";
     }
   });
-  const discountInput = document.getElementById("ReductionsInput0");
   const totalPriceEl = document.getElementById("total-price");
 
   const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100) * 100;
 
-  discountInput.addEventListener("input", () => {
-    const code = discountInput.value.trim().toUpperCase();
+  promoInput.addEventListener("input", () => {
+    const code = promoInput.value.trim().toUpperCase();
 
     if (code === "TEST10") {
       const discountedPrice = originalPrice * 0.9;
