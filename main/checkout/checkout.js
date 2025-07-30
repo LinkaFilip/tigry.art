@@ -33,14 +33,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const promoInput = document.getElementById("ReductionsInput0");
 
-function applyDiscount(price) {
-  const code = promoInput.value.trim().toUpperCase();
-  if (code === "TEST10") {
-    return price * 0.9;
-  }
-  return price;
-}
-
   const updatePrices = () => {
     const subtotal = calculateSubtotal();
     const shipping = getSelectedShipping();
@@ -52,7 +44,7 @@ function applyDiscount(price) {
     const discountAmount = totalBeforeDiscount * (discountPercent / 100);
     const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-    subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
+    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     shippingDisplay.textContent = `€ ${shipping.toFixed(2) / 100}`;
     totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
@@ -195,12 +187,12 @@ promoInput.addEventListener("input", updatePrices);
     }
     const country = getSelectedCountry();
     
-function applyDiscount(price) {
+function applyDiscount(priceInCents) {
   const code = promoInput.value.trim().toUpperCase();
   if (code === "TEST10") {
-    return price * 0.9;
+    return Math.round(priceInCents * 0.9); // sleva 10 %, zaokrouhleno na celé centy
   }
-  return price;
+  return priceInCents;
 }
 
 const subtotal = calculateSubtotal();
@@ -216,7 +208,7 @@ const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
         country: getSelectedCountry(),
         shippingFee: shipping,
         promoCode: promoInput.value.trim().toUpperCase(),
-        calculatedTotal: totalAfterDiscount * 100,
+        calculatedTotal: Math.round(totalAfterDiscount),
       }),
     });
 
