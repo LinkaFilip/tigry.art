@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getSelectedCountry = () => selectElement.value;
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
 
-  const totalPriceEl = document.getElementById("subtotal-price");
+  const subtotalPriceEl = document.getElementById("subtotal-price");
+  const totalPriceEl = document.getElementById("total-price");
 
   const promoInput = document.getElementById("ReductionsInput0");
 
@@ -39,9 +40,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const originalPrice = calculateSubtotal();
     if (code === "TEST10") {
       const discountedPrice = originalPrice * 0.9;
-      totalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
+      subtotalPriceEl.textContent = `€ ${discountedPrice.toFixed(2)}`;
+      totalPriceEl.textContent = subtotalPriceEl + getSelectedShipping() / 100;
     } else {
-      totalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
+      subtotalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
     }
   });
 
