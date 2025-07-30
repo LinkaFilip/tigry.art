@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
   const totalPriceEl = document.getElementById("total-price");
 
-  const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100) * 100;
+  const originalPrice = (calculateSubtotal() + getSelectedShipping() / 100);
 
   promoInput.addEventListener("input", () => {
     const code = promoInput.value.trim().toUpperCase();
