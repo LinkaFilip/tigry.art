@@ -198,8 +198,7 @@ function applyDiscount(price) {
 }
 
 const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
-containerIfMobile.textContent = "";
-containerIfMobile.textContent = calculateSubtotal();
+containerIfMobile.textContent = `EUR ${(calculateSubtotal() / 100).toFixed(2)}`;
 
 const subtotal = calculateSubtotal();
 const shipping = getSelectedShipping();
