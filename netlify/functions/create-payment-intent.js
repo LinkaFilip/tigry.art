@@ -26,7 +26,7 @@ exports.handler = async (event) => {
       if (codes.data.length > 0) {
         const coupon = codes.data[0].coupon;
         if (coupon.percent_off) {
-          discountPercent = coupon.percent_off;
+          discountPercent = 10;
         }
       }
     }
