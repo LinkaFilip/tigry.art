@@ -51,10 +51,10 @@ function applyDiscount(price) {
 
     const discountAmount = totalBeforeDiscount * (discountPercent / 100);
     const totalAfterDiscount = totalBeforeDiscount - discountAmount;
-
+    
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
-    totalDisplay.textContent = `€ ${discountedTotal.toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${shipping.toFixed(2)}`;
+    totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
   };
 promoInput.addEventListener("input", updatePrices);
