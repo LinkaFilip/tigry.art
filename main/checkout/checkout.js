@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
 
 
+  const promoInput = document.getElementById("ReductionsInput0");
 
   const updatePrices = () => {
       const subtotalPriceEl = document.getElementById("subtotal-price");
