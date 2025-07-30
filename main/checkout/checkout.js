@@ -30,6 +30,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getSelectedCountry = () => selectElement.value;
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
 
+
+
+  const updatePrices = () => {
   const subtotalPriceEl = document.getElementById("subtotal-price");
   const totalPriceEl = document.getElementById("total-price");
 
@@ -47,8 +50,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       subtotalPriceEl.textContent = `€ ${originalPrice.toFixed(2)}`;
     }
   });
-
-  const updatePrices = () => {
     const subtotal = calculateSubtotal();
     const shipping = getSelectedShipping();
     const total = subtotal + shipping / 100;
