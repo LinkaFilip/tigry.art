@@ -18,8 +18,6 @@
             transform-style: preserve-3d;
             transition: transform 0.5s;
           }
-
-          /* Animace rotace kolem Y osy */
           @keyframes spin {
             from {
               transform: rotateY(0deg);
@@ -28,18 +26,15 @@
               transform: rotateY(360deg);
             }
           }
-
-          /* při hoveru spustíme animaci */
           .card:hover .inner {
             animation: spin 4s linear infinite;
           }
 
           .face {
-            position: absolute;
+            position: relative;
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 12px;
             overflow: hidden;
             background-size: cover;
             background-position: center;
