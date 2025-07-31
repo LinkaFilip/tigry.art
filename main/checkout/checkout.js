@@ -34,10 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const promoInput = document.getElementById("ReductionsInput0");
 
 let currentDiscount = 0;
-function applyDiscount(percent) {
-  currentDiscount = percent;
-  updatePrices();
-}
+applyDiscount(10);
 
 function updatePrices() {
   const subtotal = calculateSubtotal();
