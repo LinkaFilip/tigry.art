@@ -21,6 +21,9 @@
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
           }
           @keyframes spin {
@@ -36,9 +39,9 @@
           }
 
           .face {
-            position: relative;
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            width: 80%;
+            height: 80%;
             backface-visibility: hidden;
             overflow: hidden;
             background-size: cover;
