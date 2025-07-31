@@ -6,6 +6,7 @@
       shadow.innerHTML = `
         <style>
           .card {
+            padding: 0px;
             width: 300px;
             height: 400px;
             perspective: 1000px;
