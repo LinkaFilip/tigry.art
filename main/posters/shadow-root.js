@@ -46,7 +46,7 @@
           }
 
           .front {
-
+            transform: rotateY(180deg);
           }
 
           .back {
