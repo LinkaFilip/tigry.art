@@ -239,6 +239,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       payButton.textContent = "Zaplatit";
       return;
     }
+    const shipping = getSelectedShipping();
     const country = getSelectedCountry();
     const totalBeforeDiscount = calculateSubtotal() * 100 + getSelectedShipping();
     const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
