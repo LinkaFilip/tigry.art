@@ -240,7 +240,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
     const country = getSelectedCountry();
-    const totalBeforeDiscount = calculateSubtotal() + getSelectedShipping();
+    const totalBeforeDiscount = calculateSubtotal() * 100 + getSelectedShipping();
     const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 
     console.log(totalBeforeDiscount, totalAfterDiscount);
