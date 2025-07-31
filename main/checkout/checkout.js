@@ -61,9 +61,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const promoInput = document.getElementById("ReductionsInput0");
 
   let currentDiscount = 0;
-  function applyDiscount(percent) {
+  function applyDiscount(percent, totalBeforeDiscount) {
+    const discountAmount = totalBeforeDiscount * (percent / 100);
+    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
     currentDiscount = percent;
-    updatePrices();
+    return totalAfterDiscount;
   }
 
   function updatePrices() {
