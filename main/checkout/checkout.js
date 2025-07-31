@@ -47,7 +47,7 @@ function updatePrices() {
   const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
   const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-  subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
+  subtotalDisplay.textContent = `€ ${(subtotal).toFixed(2)}`;
   shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
   totalDisplay.textContent = `€ ${(totalAfterDiscount / 100).toFixed(2)}`;
 }
