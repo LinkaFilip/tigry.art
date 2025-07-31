@@ -61,25 +61,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   const promoInput = document.getElementById("ReductionsInput0");
 
   let currentDiscount = 0;
-  function applyDiscount(percent, totalBeforeDiscount) {
-    const discountAmount = totalBeforeDiscount * (percent / 100);
-    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
-    currentDiscount = percent;
-    return totalAfterDiscount;
-  }
+function applyDiscount(percent) {
+  currentDiscount = percent;
+  updatePrices();
+}
 
-  function updatePrices() {
-    const subtotal = calculateSubtotal();
-    const shipping = getSelectedShipping();
-    const totalBeforeDiscount = subtotal * 100 + shipping;
+function updatePrices() {
+  const subtotal = calculateSubtotal();
+  const shipping = getSelectedShipping();
+  const totalBeforeDiscount = subtotal * 100 + shipping;
 
-    const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
-    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+  const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
+  const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
-    totalDisplay.textContent = `€ ${(totalAfterDiscount / 100).toFixed(2)}`;
-  }
+  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+  totalDisplay.textContent = `€ ${(totalAfterDiscount / 100).toFixed(2)}`;
+}
+
   promoInput.addEventListener("input", async () => {
     const code = promoInput.value.trim().toUpperCase();
 
@@ -97,7 +96,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       applyDiscount(0);
     }
   });
-  promoInput.addEventListener("input", updatePrices);
 updatePrices();
   const renderProductFromCart = () => {
     const cart = getCartFromCookie();
