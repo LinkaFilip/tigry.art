@@ -1,0 +1,77 @@
+  class RotatingCard extends HTMLElement {
+    constructor() {
+      super();
+      const shadow = this.attachShadow({ mode: 'open' });
+
+      shadow.innerHTML = `
+        <style>
+          .card {
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+          }
+
+          .inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+          }
+
+          /* Animace rotace kolem Y osy */
+          @keyframes spin {
+            from {
+              transform: rotateY(0deg);
+            }
+            to {
+              transform: rotateY(360deg);
+            }
+          }
+
+          /* při hoveru spustíme animaci */
+          .card:hover .inner {
+            animation: spin 4s linear infinite;
+          }
+
+          .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+          }
+
+          .front {
+
+          }
+
+          .back {
+            transform: rotateY(180deg);
+          }
+        </style>
+
+        <div class="card">
+          <div class="inner">
+            <div class="face front"></div>
+            <div class="face back"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    connectedCallback() {
+      const frontFace = this.shadowRoot.querySelector('.front');
+      const backFace = this.shadowRoot.querySelector('.back');
+      const frontUrl = this.getAttribute('front-img') || '';
+      const backUrl = this.getAttribute('back-img') || '';
+
+      frontFace.style.backgroundImage = `url('${frontUrl}')`;
+      backFace.style.backgroundImage = `url('${backUrl}')`;
+    }
+  }
+
+  customElements.define('rotating-card', RotatingCard);
