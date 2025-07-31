@@ -17,6 +17,10 @@
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.5s;
+
+            display: flex;
+            align-items: centr;
+
           }
           @keyframes spin {
             from {
