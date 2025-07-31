@@ -246,7 +246,7 @@ updatePrices();
     const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
     const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-    console.log(totalBeforeDiscount, totalAfterDiscount);
+    console.log(totalBeforeDiscount, totalAfterDiscount, discountAmount);
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
