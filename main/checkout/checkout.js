@@ -42,7 +42,7 @@ function applyDiscount(percent) {
 function updatePrices() {
   const subtotal = calculateSubtotal();
   const shipping = getSelectedShipping();
-  const totalBeforeDiscount = subtotal + shipping;
+  const totalBeforeDiscount = (subtotal * 100) + shipping;
 
   const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
   const totalAfterDiscount = totalBeforeDiscount - discountAmount;
