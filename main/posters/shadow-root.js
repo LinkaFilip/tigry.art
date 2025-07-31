@@ -9,6 +9,7 @@
             width: 300px;
             height: 400px;
             perspective: 1000px;
+            display flex;
           }
 
           .inner {
@@ -17,8 +18,6 @@
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.5s;
-
-            display: flex;
 
           }
           @keyframes spin {
