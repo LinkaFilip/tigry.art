@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalBeforeDiscount = subtotal * 100 + shipping;
 
     const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
-    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+    const totalAfterDiscount = applyDiscount(10, totalBeforeDiscount);
 
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
