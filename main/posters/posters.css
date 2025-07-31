@@ -84,7 +84,8 @@ html:not(.dev) {
     position: relative;
     width: 100%;
     display: block;
-    overflow: hidden
+    overflow: hidden;
+    background-image: url(https://tigry.art/images/poster.webp);
 }
 
 .ResponsiveImage_image__K_qtD {
