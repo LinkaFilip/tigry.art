@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const shipping = getSelectedShipping();
     const country = getSelectedCountry();
     const totalBeforeDiscount = calculateSubtotal() * 100 + getSelectedShipping();
-    const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
+    const totalAfterDiscount = applyDiscount(10, totalBeforeDiscount);
 
     console.log(totalBeforeDiscount, totalAfterDiscount);
 
