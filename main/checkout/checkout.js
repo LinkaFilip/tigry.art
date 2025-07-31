@@ -216,6 +216,8 @@ const shipping = getSelectedShipping();
 const totalBeforeDiscount = subtotal + shipping;
 const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 
+console.log(subtotal, shipping, totalBeforeDiscount, totalAfterDiscount);
+
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
