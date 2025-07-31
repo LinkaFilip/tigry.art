@@ -4,7 +4,6 @@ exports.handler = async (event, context) => {
   try {
     console.log("Starting session creation...");
 
-    // Nejprve zjistíme, jestli promo code "TEST10" už existuje
     const existing = await stripe.promotionCodes.list({
       code: "TEST10",
       active: true,
@@ -12,24 +11,21 @@ exports.handler = async (event, context) => {
     });
 
     if (existing.data.length === 0) {
-      // Vytvoř kupon
       const coupon = await stripe.coupons.create({
         percent_off: 10,
         duration: "forever",
       });
 
-      // Vytvoř promo kód
       await stripe.promotionCodes.create({
         code: "TEST10",
         coupon: "dj10yHzz",
       });
 
-      console.log("✅ Promo kód TEST10 byl vytvořen.");
+      console.log("Promo kód TEST10 byl vytvořen.");
     } else {
-      console.log("ℹ️ Promo kód TEST10 už existuje, nebude vytvořen znovu.");
+      console.log("ℹPromo kód TEST10 už existuje, nebude vytvořen znovu.");
     }
 
-    // Vytvoření platby
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [

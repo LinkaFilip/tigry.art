@@ -2,7 +2,6 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 exports.handler = async (event) => {
-  // event.body je string, pokud je base64 encoded, musíš dekódovat
   let payload = event.body;
   if (event.isBase64Encoded) {
     payload = Buffer.from(event.body, 'base64').toString('utf8');

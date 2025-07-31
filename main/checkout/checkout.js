@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const subtotalDisplay = document.getElementById("subtotal-price");
   const shippingDisplay = document.getElementById("shipping-price");
   const totalDisplay = document.getElementById("total-price");
-  const shippingSummary = document.getElementById("shipping-summary");
 
   const getCartFromCookie = () => {
     const cartCookie = document.cookie
@@ -133,11 +132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
                           <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
                             <picture>
-                              <img src="${
-                                item.image
-                              }" style="width: 100%; height: 100%; object-fit: contain;" alt="${
-        item.name
-      }">
+                              <img src="${item.image}" style="width: 100%; height: 100%; object-fit: contain;" alt="${item.name}">
                             </picture>
                             <div class="_1m6j2n3m _1m6j2n3l _1fragemmi">
                               <div class="_99ss3s1 _99ss3s0 _1fragemni _1fragem87 _1fragempn _99ss3s6 _99ss3s2 _1fragem3c _99ss3sh _99ss3sc _99ss3sa _1fragemjb _1fragemhi _99ss3su _99ss3sp _1fragemq8 _1fragemqe _1fragemqq _1fragemqk">
@@ -152,16 +147,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                   </div>
                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
                     <div class="_1fragem32 _1fragemms dDm6x">
-                      <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${
-                        item.name
-                      }</p>
+                      <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${item.name}</p>
                       <p class="_1fragem12">${item.description || ""}</p>
                     </div>
                   </div>
                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox" style="--_16s97g73w: 6.4rem;">
-                    <span style="display: flex; justify-content: flex-end;">€ ${(
-                      item.price * item.quantity
-                    ).toFixed(2)}</span>
+                    <span style="display: flex; justify-content: flex-end;">€ ${(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -207,7 +198,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   };
 
-  // Mount Stripe Elements
   const style = {
     base: {
       fontSize: "16px",
@@ -223,12 +213,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   cardExpiry.mount("#card-expiry-element");
   cardCvc.mount("#card-cvc-element");
 
-  // Init render
   renderProductFromCart();
   updatePrices();
   createPaymentRequest();
 
-  // Update prices when country changes
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
@@ -240,7 +228,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     calculateSubtotal() +
     getSelectedShipping() / 100
   ).toFixed(2)}`;
-  // Handle card payment
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
     payButton.textContent = "Processing...";
@@ -256,7 +243,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalBeforeDiscount = calculateSubtotal() + getSelectedShipping();
     const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 
-    console.log(subtotal, shipping, totalBeforeDiscount, totalAfterDiscount);
+    console.log(totalBeforeDiscount, totalAfterDiscount);
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
