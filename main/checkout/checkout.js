@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalBeforeDiscount = subtotal * 100 + shipping;
 
     const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
-    const totalAfterDiscount = applyDiscount(10, totalBeforeDiscount);
+    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
@@ -97,7 +97,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       applyDiscount(0);
     }
   });
-
+  promoInput.addEventListener("input", updatePrices);
+updatePrices();
   const renderProductFromCart = () => {
     const cart = getCartFromCookie();
     const container = document.querySelector(
