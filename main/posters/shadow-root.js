@@ -10,6 +10,9 @@
             height: 400px;
             perspective: 1000px;
             display flex;
+            justify-content: center;
+            align-content: center;
+
           }
 
           .inner {
