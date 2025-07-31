@@ -1,38 +1,13 @@
 document.addEventListener("DOMContentLoaded", async () => {
+
   const SHIPPING_COST = {
-    AU: 300,
-    AT: 300,
-    BE: 300,
-    CA: 300,
-    CZ: 300,
-    DK: 300,
-    FI: 300,
-    FR: 300,
-    DE: 300,
-    HK: 300,
-    IE: 300,
-    IL: 300,
-    IT: 300,
-    JP: 1500,
-    MY: 300,
-    NL: 300,
-    NZ: 300,
-    NO: 300,
-    PL: 300,
-    PT: 300,
-    SG: 300,
-    KR: 300,
-    ES: 300,
-    SE: 300,
-    CH: 300,
-    AE: 300,
-    GB: 300,
-    US: 300
+    AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
+    DE: 300, HK: 300, IE: 300, IL: 300, IT: 300, JP: 1500, MY: 300, NL: 300,
+    NZ: 300, NO: 300, PL: 300, PT: 300, SG: 300, KR: 300, ES: 300, SE: 300,
+    CH: 300, AE: 300, GB: 300, US: 300,
   };
 
-  const stripe = Stripe(
-    "pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb"
-  );
+  const stripe = Stripe("pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb");
   const elements = stripe.elements();
 
   const selectElement = document.getElementById("Select0");
@@ -40,14 +15,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   const subtotalDisplay = document.getElementById("subtotal-price");
   const shippingDisplay = document.getElementById("shipping-price");
   const totalDisplay = document.getElementById("total-price");
+  const shippingSummary = document.getElementById("shipping-summary");
 
   const getCartFromCookie = () => {
-    const cartCookie = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("cart="));
-    return cartCookie
-      ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1]))
-      : [];
+    const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
+    return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
   };
 
   const calculateSubtotal = () => {
@@ -58,63 +30,42 @@ document.addEventListener("DOMContentLoaded", async () => {
   const getSelectedCountry = () => selectElement.value;
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
 
+
   const promoInput = document.getElementById("ReductionsInput0");
 
-  let currentDiscount = 0;
-function applyDiscount(percent) {
-  currentDiscount = percent;
-  updatePrices();
-}
 
-function updatePrices() {
-  const subtotal = calculateSubtotal();
-  const shipping = getSelectedShipping();
-  const totalBeforeDiscount = subtotal * 100 + shipping;
+  const updatePrices = () => {
+    const subtotal = calculateSubtotal();
+    const shipping = getSelectedShipping();
+    const totalBeforeDiscount = subtotal + shipping / 100;
 
-  const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
-  const totalAfterDiscount = totalBeforeDiscount - discountAmount;
-
-  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-  shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
-  totalDisplay.textContent = `€ ${(totalAfterDiscount / 100).toFixed(2)}`;
-}
-
-  promoInput.addEventListener("input", async () => {
     const code = promoInput.value.trim().toUpperCase();
+    const discountPercent = code === "TEST10" ? 10 : 0;
 
-    const res = await fetch("/.netlify/functions/validate-promo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ promoCode: code })
-    });
+    const discountAmount = totalBeforeDiscount * (discountPercent / 100);
+    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-    const data = await res.json();
+    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+    shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+    totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
+    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
+  };
+promoInput.addEventListener("input", updatePrices);
 
-    if (data.valid) {
-      applyDiscount(data.percent_off);
-    } else {
-      applyDiscount(0);
-    }
-  });
-updatePrices();
   const renderProductFromCart = () => {
     const cart = getCartFromCookie();
-    const container = document.querySelector(
-      "._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73"
-    );
+    const container = document.querySelector("._1ip0g651._1ip0g650._1fragemms._1fragem41._1fragem5a._1fragem73");
     container.innerHTML = "";
 
-    cart.forEach((item) => {
-      const itemDiv = document.createElement("section");
-      itemDiv.className =
-        "_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8";
+
+    cart.forEach(item => {
+      const itemDiv = document.createElement('section');
+      itemDiv.className = '_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8';
       itemDiv.innerHTML = `
         <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
           <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh; overflow: hidden;">
             <div class="_6zbcq522 _1fragemth">
-              <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">${
-                item.name
-              }</h3>
+              <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">${item.name}</h3>
             </div>
             <div role="table" aria-labelledby="ResourceList0" class="_6zbcq56 _6zbcq55 _1fragem3c _1fragemou _6zbcq5o _6zbcq5c _1fragem50 _6zbcq516">
               <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou _6zbcq51d _6zbcq51c _1fragemth">
@@ -149,7 +100,7 @@ updatePrices();
                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
                     <div class="_1fragem32 _1fragemms dDm6x">
                       <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${item.name}</p>
-                      <p class="_1fragem12">${item.description || ""}</p>
+                      <p class="_1fragem12">${item.description || ''}</p>
                     </div>
                   </div>
                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox" style="--_16s97g73w: 6.4rem;">
@@ -163,7 +114,7 @@ updatePrices();
       `;
       container.appendChild(itemDiv);
     });
-  };
+  }; 
   selectElement.addEventListener("change", updatePrices);
   const createPaymentRequest = () => {
     const paymentRequest = stripe.paymentRequest({
@@ -171,11 +122,11 @@ updatePrices();
       currency: "eur",
       total: {
         label: "Celková cena",
-        amount: (calculateSubtotal() + getSelectedShipping() / 100) * 100
+        amount: (calculateSubtotal() + getSelectedShipping() / 100) * 100,
       },
-      promoCode: promoInput.value.trim(),
+      promoCode: promoInput.value.trim() ,
       requestPayerName: true,
-      requestPayerEmail: true
+      requestPayerEmail: true,
     });
 
     const prButton = elements.create("paymentRequestButton", {
@@ -184,28 +135,28 @@ updatePrices();
         paymentRequestButton: {
           type: "default",
           theme: "dark",
-          height: "44px"
-        }
-      }
+          height: "44px",
+        },
+      },
     });
 
-    paymentRequest.canMakePayment().then((result) => {
+    paymentRequest.canMakePayment().then(result => {
       if (result) {
         prButton.mount("#payment_request_button");
       } else {
-        document.getElementById("payment_request_button").style.display =
-          "none";
+        document.getElementById("payment_request_button").style.display = "none";
       }
     });
   };
 
+  // Mount Stripe Elements
   const style = {
     base: {
       fontSize: "16px",
       color: "#000000",
-      "::placeholder": { color: "#aaa" }
+      "::placeholder": { color: "#aaa" },
     },
-    invalid: { color: "#e5424d" }
+    invalid: { color: "#e5424d" },
   };
   const cardNumber = elements.create("cardNumber", { style });
   const cardExpiry = elements.create("cardExpiry", { style });
@@ -214,54 +165,46 @@ updatePrices();
   cardExpiry.mount("#card-expiry-element");
   cardCvc.mount("#card-cvc-element");
 
+  // Init render
   renderProductFromCart();
   updatePrices();
   createPaymentRequest();
 
+  // Update prices when country changes
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
-  const containerIfMobile = document.querySelector(
-    "._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l"
-  );
+const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
 
-  containerIfMobile.textContent = `EUR ${(
-    calculateSubtotal() +
-    getSelectedShipping() / 100
-  ).toFixed(2)}`;
+containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping() / 100)).toFixed(2)}`;
+  // Handle card payment
   payButton.addEventListener("click", async () => {
-    const promoCode = promoInput.value.trim().toUpperCase();
-    let discountPercent = 0;
-
-    if (promoCode) {
-      const res = await fetch("/.netlify/functions/validate-promo", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ promoCode })
-      });
-      const data = await res.json();
-      if (data.valid) {
-        discountPercent = data.percent_off;
-      }
-    }
-
     payButton.disabled = true;
     payButton.textContent = "Processing...";
 
     const cart = getCartFromCookie();
     if (!cart.length) {
+      alert("Cart is empty.");
       payButton.disabled = false;
       payButton.textContent = "Zaplatit";
       return;
     }
-    const shipping = getSelectedShipping();
     const country = getSelectedCountry();
-    const totalBeforeDiscount = calculateSubtotal() * 100 + getSelectedShipping();
+    
+function applyDiscount(price) {
+  const code = promoInput.value.trim().toUpperCase();
+  if (code === "TEST10") {
+    return price * 0.9;
+  }
+  return price;
+}
 
-    const discountAmount = totalBeforeDiscount * (discountPercent / 100);
-    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-    console.log(totalBeforeDiscount, totalAfterDiscount, discountAmount);
+
+const subtotal = calculateSubtotal();
+const shipping = getSelectedShipping();
+const totalBeforeDiscount = subtotal + shipping;
+const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
@@ -271,8 +214,8 @@ updatePrices();
         country: getSelectedCountry(),
         shippingFee: shipping,
         promoCode: promoInput.value.trim().toUpperCase(),
-        calculatedTotal: Math.round(totalAfterDiscount),
-      })
+        calculatedTotal: totalAfterDiscount * 100,
+      }),
     });
 
     const data = await response.json();
@@ -291,34 +234,31 @@ updatePrices();
     const city = document.getElementById("TextField5").value;
     const phone = document.getElementById("TextField6").value;
 
-    const { error, paymentIntent } = await stripe.confirmCardPayment(
-      data.clientSecret,
-      {
-        payment_method: {
-          card: cardNumber,
-          billing_details: {
-            name: `${firstName} ${lastName}`,
-            email,
-            phone,
-            address: {
-              line1: address1,
-              postal_code: postalCode,
-              city,
-              country
-            }
-          }
-        },
-        shipping: {
+    const { error, paymentIntent } = await stripe.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: cardNumber,
+        billing_details: {
           name: `${firstName} ${lastName}`,
+          email,
+          phone,
           address: {
             line1: address1,
             postal_code: postalCode,
             city,
-            country
-          }
-        }
-      }
-    );
+            country,
+          },
+        },
+      },
+      shipping: {
+        name: `${firstName} ${lastName}`,
+        address: {
+          line1: address1,
+          postal_code: postalCode,
+          city,
+          country,
+        },
+      },
+    });
 
     if (error) {
       alert(error.message);
@@ -329,5 +269,5 @@ updatePrices();
       location.href = "/posters/?success=true";
     }
   });
-  updatePrices();
+updatePrices();
 });
