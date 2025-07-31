@@ -230,6 +230,21 @@ updatePrices();
     getSelectedShipping() / 100
   ).toFixed(2)}`;
   payButton.addEventListener("click", async () => {
+    const promoCode = promoInput.value.trim().toUpperCase();
+    let discountPercent = 0;
+
+    if (promoCode) {
+      const res = await fetch("/.netlify/functions/validate-promo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ promoCode })
+      });
+      const data = await res.json();
+      if (data.valid) {
+        discountPercent = data.percent_off;
+      }
+    }
+    
     payButton.disabled = true;
     payButton.textContent = "Processing...";
 
