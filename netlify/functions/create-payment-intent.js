@@ -16,35 +16,39 @@ exports.handler = async (event) => {
     };
     const shipping = SHIPPING_COST[country] || 0;
 
-    let discountPercent = 0;
-    if (promoCode) {
-      const codes = await stripe.promotionCodes.list({
-        code: promoCode,
-        active: true,
-        limit: 1,
-      });
+let discountPercent = 0;
 
-      if (codes.data.length > 0) {
-        const coupon = codes.data[0].coupon;
-        if (coupon.percent_off) {
-          discountPercent = 10;
-        }
-      }
+if (promoCode) {
+  const codes = await stripe.promotionCodes.list({
+    code: promoCode,
+    active: true,
+    limit: 1,
+  });
+
+  if (codes.data.length > 0) {
+    const coupon = codes.data[0].coupon;
+    if (coupon.percent_off) {
+      discountPercent = coupon.percent_off; // ✅ použij dynamickou hodnotu
     }
-    const totalBeforeDiscount = subtotal + shipping;
-    const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
-    const totalAmount = totalBeforeDiscount - discountAmount;
+  }
+}
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: totalAmount,
-      currency: "eur",
-      automatic_payment_methods: { enabled: true },
-        metadata: {
-          order_summary: cartItems,
-          country: country,
-          promo_code: promoCode || "none",
-        },
-    });
+const totalBeforeDiscount = subtotal + shipping;
+const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
+const totalAmount = totalBeforeDiscount - discountAmount;
+
+const paymentIntent = await stripe.paymentIntents.create({
+  amount: totalAmount,
+  currency: "eur",
+  automatic_payment_methods: { enabled: true },
+  metadata: {
+    order_summary: JSON.stringify(cartItems), // přidej to jako string
+    country: country,
+    promo_code: promoCode || "none",
+    discount_percent: discountPercent.toString(), // volitelné
+    discount_amount: discountAmount.toString()     // volitelné
+  },
+});
 
     return {
       statusCode: 200,
