@@ -19,7 +19,6 @@
             transition: transform 0.5s;
 
             display: flex;
-            align-items: centr;
 
           }
           @keyframes spin {
