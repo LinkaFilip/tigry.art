@@ -235,7 +235,6 @@ updatePrices();
 
     const cart = getCartFromCookie();
     if (!cart.length) {
-      alert("Cart is empty.");
       payButton.disabled = false;
       payButton.textContent = "Zaplatit";
       return;
@@ -243,7 +242,9 @@ updatePrices();
     const shipping = getSelectedShipping();
     const country = getSelectedCountry();
     const totalBeforeDiscount = calculateSubtotal() * 100 + getSelectedShipping();
-    const totalAfterDiscount = applyDiscount(10, totalBeforeDiscount);
+
+    const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
+    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
     console.log(totalBeforeDiscount, totalAfterDiscount);
 
