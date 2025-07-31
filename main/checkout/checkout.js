@@ -34,23 +34,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   const promoInput = document.getElementById("ReductionsInput0");
 
 
-  const updatePrices = () => {
-    const subtotal = calculateSubtotal();
-    const shipping = getSelectedShipping();
-    const totalBeforeDiscount = subtotal + shipping / 100;
 
-    const code = promoInput.value.trim().toUpperCase();
-    const discountPercent = code === "TEST10" ? 10 : 0;
+function updatePrices() {
+  const subtotal = calculateSubtotal();
+  const shipping = getSelectedShipping();
+  const totalBeforeDiscount = subtotal + shipping;
 
-    const discountAmount = totalBeforeDiscount * (discountPercent / 100);
-    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+  const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
+  const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-    shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
-    totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
-    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
-  };
-promoInput.addEventListener("input", updatePrices);
+  subtotalDisplay.textContent = `€ ${(subtotal / 100).toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+  totalDisplay.textContent = `€ ${(totalAfterDiscount / 100).toFixed(2)}`;
+}
+promoInput.addEventListener("input", async () => {
+  const code = promoInput.value.trim().toUpperCase();
+
+  const res = await fetch("/.netlify/functions/validate-promo", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ promoCode: code }),
+  });
+
+  const data = await res.json();
+
+  if (data.valid) {
+    applyDiscount(data.percent_off);
+  } else {
+    applyDiscount(0);
+  }
+});
 
   const renderProductFromCart = () => {
     const cart = getCartFromCookie();
@@ -190,13 +203,10 @@ containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShippi
       return;
     }
     const country = getSelectedCountry();
-    
-function applyDiscount(price) {
-  const code = promoInput.value.trim().toUpperCase();
-  if (code === "TEST10") {
-    return price * 0.9;
-  }
-  return price;
+let currentDiscount = 0;
+function applyDiscount(percent) {
+  currentDiscount = percent;
+  updatePrices();
 }
 
 
