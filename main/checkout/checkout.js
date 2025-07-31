@@ -244,7 +244,7 @@ updatePrices();
         discountPercent = data.percent_off;
       }
     }
-    
+
     payButton.disabled = true;
     payButton.textContent = "Processing...";
 
@@ -258,7 +258,7 @@ updatePrices();
     const country = getSelectedCountry();
     const totalBeforeDiscount = calculateSubtotal() * 100 + getSelectedShipping();
 
-    const discountAmount = totalBeforeDiscount * (currentDiscount / 100);
+    const discountAmount = totalBeforeDiscount * (discountPercent / 100);
     const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
     console.log(totalBeforeDiscount, totalAfterDiscount, discountAmount);
