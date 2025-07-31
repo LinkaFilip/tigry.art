@@ -12,7 +12,6 @@
             perspective: 1000px;
             display flex;
             align-content: center;
-            justify-content: center;
 
           }
 
