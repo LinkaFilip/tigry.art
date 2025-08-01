@@ -80,12 +80,18 @@ html:not(.dev) {
     height: 100%
 }
 
+.ResponsiveImage_imageContainer__zPndE:hover {
+    background-image: url(https://tigry.art/images/poster.webp);
+    width: 100%;
+    transition: .5s;
+    height: 100%;
+}
 .ResponsiveImage_imageContainer__zPndE {
     position: relative;
     width: 100%;
     display: block;
     overflow: hidden;
-    background-image: url(https://tigry.art/images/poster.webp);
+    transition: .5s ease-in-out;
 }
 
 .ResponsiveImage_image__K_qtD {
@@ -1267,10 +1273,11 @@ button.add-to-cart {
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-top: 164px;
     margin-bottom: 64px
 }
-
+.FeaturedProductsModule_featuredProductsModule:nth-child(1) {
+    margin-top: 164px;
+}
 .FeaturedProductsModule_header__elHYe {
     justify-content: space-between;
     margin-bottom: 16px
