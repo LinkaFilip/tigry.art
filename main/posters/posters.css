@@ -5775,3 +5775,8 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
         padding-bottom:40px
     }
 }
+@media (max-width: 1024px) {
+    .Section_specialSection{
+        display: none;
+    }
+}
