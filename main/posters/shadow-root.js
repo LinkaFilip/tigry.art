@@ -54,6 +54,16 @@
           .back {
             transform: rotateY(180deg);
           }
+            @media (max-width: 1000px) {
+              .rotate {
+                animation: spin 2s linear infinite;
+              }
+            }
+
+            @keyframes spin {
+              from { transform: rotate(0deg); }
+              to   { transform: rotate(360deg); }
+            }
         </style>
 
         <div class="card">
