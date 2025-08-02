@@ -62,33 +62,47 @@ class RotatingCard extends HTMLElement {
     `;
   }
 
-  connectedCallback() {
-    const frontFace = this.shadow.querySelector('.front');
-    const backFace = this.shadow.querySelector('.back');
-    const inner = this.shadow.querySelector('.inner');
-    const frontUrl = this.getAttribute('front-img') || '';
-    const backUrl = this.getAttribute('back-img') || '';
+connectedCallback() {
+  const frontFace = this.shadowRoot.querySelector('.front');
+  const backFace = this.shadowRoot.querySelector('.back');
+  const inner = this.shadowRoot.querySelector('.inner');
+  const frontUrl = this.getAttribute('front-img') || '';
+  const backUrl = this.getAttribute('back-img') || '';
 
-    frontFace.style.backgroundImage = `url('${frontUrl}')`;
-    backFace.style.backgroundImage = `url('${backUrl}')`;
+  frontFace.style.backgroundImage = `url('${frontUrl}')`;
+  backFace.style.backgroundImage = `url('${backUrl}')`;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting && window.innerWidth <= 1000) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (window.innerWidth > 1000) return;
+
+      for (const entry of entries) {
+        const card = entry.target;
+        const inner = card.shadowRoot.querySelector('.inner');
+
+        if (entry.isIntersecting) {
+          // Odstraníme rotaci ze všech ostatních karet
+          document.querySelectorAll('rotating-card').forEach(el => {
+            if (el !== card) {
+              el.shadowRoot.querySelector('.inner')?.classList.remove('rotate-always');
+            }
+          });
+
+          // Přidáme rotaci této jediné kartě
           inner.classList.add('rotate-always');
         } else {
           inner.classList.remove('rotate-always');
         }
-      },
-      {
-        root: null,
-        threshold: 0.5 // prvek musí být alespoň z 50 % viditelný
       }
-    );
+    },
+    {
+      root: null,
+      threshold: 0.6, // musí být alespoň 60 % vidět
+    }
+  );
 
-    observer.observe(this);
-  }
+  observer.observe(this);
+}
 }
 
 customElements.define('rotating-card', RotatingCard);
