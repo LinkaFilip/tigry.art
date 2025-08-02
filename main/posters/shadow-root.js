@@ -72,20 +72,22 @@ class RotatingCard extends HTMLElement {
     frontFace.style.backgroundImage = `url('${frontUrl}')`;
     backFace.style.backgroundImage = `url('${backUrl}')`;
 
-    // Přidání rotace pokud šířka <= 1000px
-    const updateRotation = () => {
-      if (window.innerWidth <= 1000) {
-        inner.classList.add('rotate-always');
-      } else {
-        inner.classList.remove('rotate-always');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && window.innerWidth <= 1000) {
+          inner.classList.add('rotate-always');
+        } else {
+          inner.classList.remove('rotate-always');
+        }
+      },
+      {
+        root: null,
+        threshold: 0.5 // prvek musí být alespoň z 50 % viditelný
       }
-    };
+    );
 
-    // Zavoláme ihned
-    updateRotation();
-
-    // Posloucháme změny velikosti
-    window.addEventListener('resize', updateRotation);
+    observer.observe(this);
   }
 }
 
