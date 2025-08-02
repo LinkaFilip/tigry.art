@@ -61,8 +61,8 @@
             }
 
             @keyframes spin {
-              from { transform: rotate(0deg); }
-              to   { transform: rotate(360deg); }
+              from { transform: rotateY(0deg); }
+              to   { transform: rotateY(360deg); }
             }
         </style>
 
