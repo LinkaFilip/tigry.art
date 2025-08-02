@@ -1,89 +1,92 @@
-  class RotatingCard extends HTMLElement {
-    constructor() {
-      super();
-      const shadow = this.attachShadow({ mode: 'open' });
+class RotatingCard extends HTMLElement {
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: 'open' });
 
-      shadow.innerHTML = `
-        <style>
-          .card {
-            padding: 0px;
-            width: 300px;
-            height: 400px;
-            perspective: 1000px;
-            display flex;
-            align-content: center;
+    this.shadow.innerHTML = `
+      <style>
+        .card {
+          padding: 0px;
+          width: 300px;
+          height: 400px;
+          perspective: 1000px;
+          display: flex;
+          align-content: center;
+        }
 
-          }
+        .inner {
+          width: 100%;
+          height: 100%;
+          position: relative;
+          transform-style: preserve-3d;
+          transition: transform 0.5s;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
 
-          .inner {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        @keyframes spin {
+          from { transform: rotateY(0deg); }
+          to   { transform: rotateY(360deg); }
+        }
 
-          }
-          @keyframes spin {
-            from {
-              transform: rotateY(0deg);
-            }
-            to {
-              transform: rotateY(360deg);
-            }
-          }
-          .card:hover .inner {
-            animation: spin 4s linear infinite;
-          }
+        .card:hover .inner {
+          animation: spin 4s linear infinite;
+        }
 
-          .face {
-            position: absolute;
-            width: 80%;
-            height: 80%;
-            backface-visibility: hidden;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-          }
+        .rotate-always {
+          animation: spin 4s linear infinite !important;
+        }
 
-          .front {
-          }
+        .face {
+          position: absolute;
+          width: 80%;
+          height: 80%;
+          backface-visibility: hidden;
+          overflow: hidden;
+          background-size: cover;
+          background-position: center;
+        }
 
-          .back {
-            transform: rotateY(180deg);
-          }
-            @media (max-width: 1000px) {
-              .rotate {
-                animation: spin 2s linear infinite;
-              }
-            }
+        .back {
+          transform: rotateY(180deg);
+        }
+      </style>
 
-            @keyframes spin {
-              from { transform: rotateY(0deg); }
-              to   { transform: rotateY(360deg); }
-            }
-        </style>
-
-        <div class="card">
-          <div class="inner">
-            <div class="face front"></div>
-            <div class="face back"></div>
-          </div>
+      <div class="card">
+        <div class="inner">
+          <div class="face front"></div>
+          <div class="face back"></div>
         </div>
-      `;
-    }
-
-    connectedCallback() {
-      const frontFace = this.shadowRoot.querySelector('.front');
-      const backFace = this.shadowRoot.querySelector('.back');
-      const frontUrl = this.getAttribute('front-img') || '';
-      const backUrl = this.getAttribute('back-img') || '';
-
-      frontFace.style.backgroundImage = `url('${frontUrl}')`;
-      backFace.style.backgroundImage = `url('${backUrl}')`;
-    }
+      </div>
+    `;
   }
 
-  customElements.define('rotating-card', RotatingCard);
+  connectedCallback() {
+    const frontFace = this.shadow.querySelector('.front');
+    const backFace = this.shadow.querySelector('.back');
+    const inner = this.shadow.querySelector('.inner');
+    const frontUrl = this.getAttribute('front-img') || '';
+    const backUrl = this.getAttribute('back-img') || '';
+
+    frontFace.style.backgroundImage = `url('${frontUrl}')`;
+    backFace.style.backgroundImage = `url('${backUrl}')`;
+
+    // Přidání rotace pokud šířka <= 1000px
+    const updateRotation = () => {
+      if (window.innerWidth <= 1000) {
+        inner.classList.add('rotate-always');
+      } else {
+        inner.classList.remove('rotate-always');
+      }
+    };
+
+    // Zavoláme ihned
+    updateRotation();
+
+    // Posloucháme změny velikosti
+    window.addEventListener('resize', updateRotation);
+  }
+}
+
+customElements.define('rotating-card', RotatingCard);
