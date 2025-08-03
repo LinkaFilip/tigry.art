@@ -81,7 +81,6 @@ html:not(.dev) {
 }
 
 .ResponsiveImage_imageContainer__zPndE:hover {
-    background-image: url(https://tigry.art/images/poster.webp);
     width: 100%;
     transition: .5s;
     height: 100%;
