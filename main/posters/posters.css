@@ -83,7 +83,6 @@ html:not(.dev) {
 .ResponsiveImage_imageContainer__zPndE:hover {
     width: 100%;
     transition: .5s;
-    height: 100%;
 }
 .ResponsiveImage_imageContainer__zPndE {
     position: relative;
