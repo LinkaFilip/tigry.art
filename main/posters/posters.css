@@ -5779,6 +5779,6 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
         display: none;
     }
 }
-.FeaturedProductsModule_tileWrapper:nth-child(1).ResponsiveImage_imageContainer__zPndE:hover{
+.FeaturedProductsModule_tileWrapper:nth-child(1)>article>div>.SingleCardPreview_singleCardPreview__6eCRS>.SingleCardPreview_background__ksyy8>.ResponsiveImage_imageContainer__zPndE:hover{
 background-image: url(/images/background/Background-image.webp);
 }
