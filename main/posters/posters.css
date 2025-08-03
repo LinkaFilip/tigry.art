@@ -5779,3 +5779,6 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
         display: none;
     }
 }
+.ResponsiveImage_imageContainer__zPndE:nth-child(1){
+background-image: url(/images/background/Background-image.webp);
+}
