@@ -5778,6 +5778,6 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
         display: none;
     }
 }
-.FeaturedProductsModule_tileWrapper:nth-child(1)>article>div>.SingleCardPreview_singleCardPreview__6eCRS>.SingleCardPreview_cardContainer__irPkB>.SingleCardPreview_card__SWgno>.SingleCardPreview_cardFace__50iuL>.ResponsiveImage_imageContainer__zPndE{
+.FeaturedProductsModule_tileWrapper:nth-child(1)>article>div>.SingleCardPreview_singleCardPreview__6eCRS>.SingleCardPreview_cardContainer__irPkB>.SingleCardPreview_card__SWgno>.SingleCardPreview_cardFace__50iuL>.ResponsiveImage_imageContainer__zPndE:hover{
     background-image: url(/images/background/Background-image.webp);
 }
