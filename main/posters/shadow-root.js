@@ -1,7 +1,7 @@
 class RotatingCard extends HTMLElement {
   constructor() {
     super();
-    this.shadow = this.attachShadow({ mode: 'close' });
+    this.shadow = this.attachShadow({ mode: 'open' });
 
     this.shadow.innerHTML = `
       <style>
@@ -81,7 +81,6 @@ connectedCallback() {
         const inner = card.shadowRoot.querySelector('.inner');
 
         if (entry.isIntersecting) {
-          // Odstraníme rotaci ze všech ostatních karet
           document.querySelectorAll('rotating-card').forEach(el => {
             if (el !== card) {
               el.shadowRoot.querySelector('.inner')?.classList.remove('rotate-always');
