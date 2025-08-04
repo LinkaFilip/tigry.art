@@ -19,27 +19,7 @@ const packetaButton = document.getElementById("packeta-button");
   const shippingSummary = document.getElementById("shipping-summary");
 
 
-function updateUI() {
-  const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
-  const selectedValue = selectedRadio?.value;
 
-  if (selectedValue === "packeta") {
-    packetaButton.style.display = "inline-block";
-    payButton.disabled = !localStorage.getItem("selectedBranchId");
-  } else {
-    packetaButton.style.display = "none";
-    localStorage.removeItem("selectedBranchId");
-    localStorage.removeItem("selectedBranchName");
-    localStorage.removeItem("shippingMethod");
-    localStorage.removeItem("shippingFee");
-    payButton.disabled = false;
-  }
-}
-deliveryRadios.forEach(radio => {
-  radio.addEventListener("change", () => {
-    updateUI();
-  });
-});
 packetaButton.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -75,10 +55,31 @@ packetaButton.addEventListener("click", (e) => {
 
       packetaButton.innerText = `Zvoleno: ${point.name}`;
       updateUI();
+      updatePrices();
     }
   });
 });
-updateUI();
+function updateUI() {
+  const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+  const selectedValue = selectedRadio?.value;
+
+  if (selectedValue === "packeta") {
+    packetaButton.style.display = "inline-block";
+    payButton.disabled = !localStorage.getItem("selectedBranchId");
+  } else {
+    packetaButton.style.display = "none";
+    localStorage.removeItem("selectedBranchId");
+    localStorage.removeItem("selectedBranchName");
+    localStorage.removeItem("shippingMethod");
+    localStorage.removeItem("shippingFee");
+    payButton.disabled = false;
+  }
+}
+deliveryRadios.forEach(radio => {
+  radio.addEventListener("change", () => {
+    updateUI();
+  });
+});
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
     return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
@@ -237,7 +238,6 @@ promoInput.addEventListener("input", updatePrices);
 const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
 
 containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping() / 100)).toFixed(2)}`;
-  // Handle card payment
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
     payButton.textContent = "Processing...";
@@ -261,30 +261,31 @@ function applyDiscount(price) {
 
 
 
-const subtotal = calculateSubtotal();
-const shipping = getSelectedShipping();
-const totalBeforeDiscount = subtotal + shipping;
-const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
-const selectedBranchId = localStorage.getItem("packetaBranchId");
-const selectedBranchName = localStorage.getItem("packetaBranchName");
-const shippingFee = localStorage.getItem("shippingFee");
-if (!selectedBranchId) {
-  return;
-}
-const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
+  const promoCode = promoInput.value.trim().toUpperCase();
+  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
+  const selectedBranchId = localStorage.getItem("selectedBranchId");
+  const selectedBranchName = localStorage.getItem("selectedBranchName");
+  const shippingFee = localStorage.getItem("shippingFee");
+
+  if (deliveryMethod === "packeta" && !selectedBranchId) {
+    alert("Prosím vyberte pobočku Packeta.");
+    payButton.disabled = false;
+    payButton.textContent = "Zaplatit";
+    return;
+  }
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        items,
-        country,
-        promoCode,
-        deliveryMethod,
-        packetaBranchId: selectedBranchId || null,
-        packetaBranchName: selectedBranchName || null,
-        shippingFee: Number(shippingFee) || null,
+        items: cart,
+        country: country,
+        promoCode: promoCode,
+        deliveryMethod: deliveryMethod,
+        shippingFee: shippingFee,
+        packetaBranchId: selectedBranchId,
+        packetaBranchName: selectedBranchName
       }),
-    }).then(r => r.json()).then(console.log).catch(console.error);
+    })
 
     const data = await response.json();
     if (!data.clientSecret) {
