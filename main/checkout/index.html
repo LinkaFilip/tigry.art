@@ -378,18 +378,16 @@
                       <div id="card-cvc-element" style="background-color: transparent;"></div>
                     </div>
                     <h3>Způsob doručení</h3>
-                    <label>
-                      <input type="radio" name="deliveryMethod" value="packeta" checked>
-                      Zásilkovna – výdejní místo
-                    </label><br>
-                    <label>
-                      <input type="radio" name="deliveryMethod" value="courier">
-                      Kurýr – na vaši adresu
-                    </label><br>
-                    <label>
+                    <div style="display: grid;column-gap: 10px;grid-template-columns: repeat(3, 1fr);grid-template-rows: 1fr;">
+                    <label style="grid-area: 1 / 1 / 2 / 2">
+                      <input type="radio" name="deliveryMethod" value="packeta" checked="">Zásilkovna</label><br>
+                    <label style="grid-area: 1 / 3 / 2 / 4;">
+                      <input type="radio" name="deliveryMethod" value="courier">Kurýr</label><br>
+                    <label style="grid-area: 1 / 2 / 2 / 3;">
                       <input type="radio" name="deliveryMethod" value="personal">
                       Osobní odběr
                     </label>
+                  </div>
                   <button id="packeta-button">Vybrat výdejní místo</button>
                   <input type="hidden" id="packeta-branch-id" name="packeta_branch_id">
                     <button id="pay-button" type="submit">Pay now</button>
