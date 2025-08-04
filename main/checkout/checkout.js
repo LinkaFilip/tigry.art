@@ -51,7 +51,7 @@ packetaButton.addEventListener("click", (e) => {
         packetaButton.innerText = `Zvoleno: ${point.name}`;
         updateUI();
         localStorage.setItem('packetaBranchId', selectedBranchId);
-        localStorage.setItem('selectedBranchName', point.name);
+        localStorage.setItem('packetaBranchName', point.name);
       }
     }
   );
