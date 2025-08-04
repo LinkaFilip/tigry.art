@@ -30380,13 +30380,6 @@ button#pay-button {
 [type=checkbox], [type=radio]:checked {
     background: black;
 }
-label {
-    display: flex;
-    padding: 1rem;
-    border: 1px solid black;
-    border-radius: 6px;
-}
-
 input[type="radio"] {
     margin-right: 10px;
 }
