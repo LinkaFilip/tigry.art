@@ -15461,7 +15461,7 @@ button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focu
 }
 
 [type=checkbox],[type=radio] {
-    padding: 0;
+    padding: 1rem;
     border: 1px solid black;
 }
 
