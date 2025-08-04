@@ -229,6 +229,9 @@ const totalBeforeDiscount = subtotal + shipping;
 const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 const selectedBranchId = localStorage.getItem("packetaBranchId");
 const selectedBranchName = localStorage.getItem("packetaBranchName");
+if (!selectedBranchId) {
+  return;
+}
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
