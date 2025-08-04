@@ -232,6 +232,7 @@ const selectedBranchName = localStorage.getItem("packetaBranchName");
 if (!selectedBranchId) {
   return;
 }
+const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -241,6 +242,7 @@ if (!selectedBranchId) {
         shippingFee: shipping,
         promoCode: promoInput.value.trim().toUpperCase(),
         calculatedTotal: totalAfterDiscount * 100,
+        deliveryMethod: deliveryMethod,
         packetaBranchId: selectedBranchId,
         packetaBranchName: selectedBranchName
       }),

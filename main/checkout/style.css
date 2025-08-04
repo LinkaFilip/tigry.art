@@ -15461,7 +15461,8 @@ button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focu
 }
 
 [type=checkbox],[type=radio] {
-    padding: 0
+    padding: 0;
+    border: 1px solid black;
 }
 
 [hidden],template {
@@ -30375,4 +30376,7 @@ input:-webkit-autofill:active {
 }
 button#pay-button {
     border-radius: 8px;
+}
+[type=checkbox], [type=radio]:checked {
+    background: black;
 }

@@ -2,7 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.handler = async (event) => {
   try {
-    const {items, country, promoCode, packetaBranchId, packetaBranchName} = JSON.parse(event.body);
+    const {items, country, promoCode, packetaBranchId, packetaBranchName, deliveryMethod} = JSON.parse(event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
     const subtotal = items.reduce((sum, item) => {
       const priceInCents = Math.round(item.price * 100);
@@ -47,6 +47,7 @@ const paymentIntent = await stripe.paymentIntents.create({
     promo_code: promoCode || "none",
     discount_percent: discountPercent.toString(), // volitelné
     discount_amount: discountAmount.toString(),
+    delivery_method: deliveryMethod,
     packeta_branch_id: packetaBranchId || "none",
     packeta_branch_name: packetaBranchName || "none",
   },
