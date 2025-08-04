@@ -2,7 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.handler = async (event) => {
   try {
-    const {items, country, promoCode, packetaBranchId, packetaBranchName, deliveryMethod} = JSON.parse(event.body);
+    const {items, country, promoCode, packetaBranchId, packetaBranchName, deliveryMethod, shippingFee} = JSON.parse(event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
     const subtotal = items.reduce((sum, item) => {
       const priceInCents = Math.round(item.price * 100);
@@ -14,7 +14,8 @@ exports.handler = async (event) => {
       NZ: 300, NO: 300, PL: 300, PT: 300, SG: 300, KR: 300, ES: 300, SE: 300,
       CH: 300, AE: 300, GB: 300, US: 300,
     };
-    const shipping = SHIPPING_COST[country] || 0;
+const fallbackShipping = SHIPPING_COST[country] || 0;
+const shipping = typeof shippingFee === "number" ? shippingFee : fallbackShipping;
 
 let discountPercent = 0;
 
