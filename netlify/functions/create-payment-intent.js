@@ -13,7 +13,9 @@ exports.handler = async (event) => {
       packetaBranchStreet,
       packetaBranchCity,
       packetaBranchZip,
-      packetaBranchType
+      packetaBranchType,
+      selectedBranchLongitude,
+      selectedBranchLatitude,
 } = JSON.parse(event.body);
     console.log("Received body:", event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
@@ -67,6 +69,8 @@ const paymentIntent = await stripe.paymentIntents.create({
     packeta_branch_name: packetaBranchName || "none",
     packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}, ${packetaBranchZip}`,
     packeta_branch_type: packetaBranchType || "unknown",
+    selectedBranchLongitude,
+    selectedBranchLatitude,
   },
 });
 

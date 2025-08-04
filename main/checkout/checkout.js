@@ -56,6 +56,8 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem("selectedBranchCity", point.city);
       localStorage.setItem("selectedBranchZip", point.zip);
       localStorage.setItem("selectedBranchType", point.type);
+      localStorage.setItem("selectedBranchLongitude", point.longitude);
+      localStorage.setItem("selectedBranchLatitude", point.latitude);
 
       // Přidáme poznámku, že je tlačítko klikatelné pro změnu:
       packetaButton.innerText = `Zvoleno: ${point.name} (klikni pro změnu)`;
@@ -295,6 +297,8 @@ function applyDiscount(price) {
   const selectedBranchCity = localStorage.getItem("selectedBranchCity");
   const selectedBranchZip = localStorage.getItem("selectedBranchZip");
   const selectedBranchType = localStorage.getItem("selectedBranchType");
+  const selectedBranchLongitude = localStorage.getItem("selectedBranchLongitude");
+  const selectedBranchLatitude = localStorage.getItem("selectedBranchLatitude");
 
   if (deliveryMethod === "packeta" && !selectedBranchId) {
     alert("Prosím vyberte pobočku Packeta.");
@@ -317,6 +321,8 @@ function applyDiscount(price) {
         packetaBranchCity: selectedBranchCity,
         packetaBranchZip: selectedBranchZip,
         packetaBranchType: selectedBranchType,
+        selectedBranchLongitude: selectedBranchLongitude,
+        selectedBranchLatitude: selectedBranchLatitude,
       }),
     })
 
