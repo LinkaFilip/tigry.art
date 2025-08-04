@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
 let selectedBranchId = null;
-
+const deliveryRadios = document.querySelectorAll('input[name="deliveryMethod"]');
+const packetaButton = document.getElementById("packeta-button");
   const SHIPPING_COST = {
     AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
     DE: 300, HK: 300, IE: 300, IL: 300, IT: 300, JP: 1500, MY: 300, NL: 300,
