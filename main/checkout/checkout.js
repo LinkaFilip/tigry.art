@@ -121,6 +121,8 @@ deliveryRadios.forEach(radio => {
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
     updateMobileContainer();
   };
+const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
+
   const updateMobileContainer = () => {
   const subtotal = calculateSubtotal();
   let shipping = 0;
@@ -254,7 +256,6 @@ promoInput.addEventListener("input", updatePrices);
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
-const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
 
 containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping() / 100)).toFixed(2)}`;
   payButton.addEventListener("click", async () => {
