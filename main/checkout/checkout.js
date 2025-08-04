@@ -83,6 +83,10 @@ function updateUI() {
 }
 deliveryRadios.forEach(radio => {
   radio.addEventListener("change", () => {
+      document.querySelectorAll('.delivery-option').forEach(label => {
+        label.classList.remove('active');
+      });
+      radio.closest('label').classList.add('active');
     updateUI();
   });
 });
