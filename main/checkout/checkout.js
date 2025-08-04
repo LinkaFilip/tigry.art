@@ -38,32 +38,41 @@ deliveryRadios.forEach(radio => {
 });
 packetaButton.addEventListener("click", (e) => {
   e.preventDefault();
-    Packeta.Widget.pick({}, function(point) {
-      if (point) {
-        const type = point.pickup_point_type || point.type;
 
-        let shippingMethod = "packeta";
-        let shippingFee = 0;
+  Packeta.Widget.pick({}, function (point) {
+    if (point) {
+      const type = point.pickup_point_type || point.type;
 
-        if (type === "zbox" || point.name.includes("Z-BOX")) {
-          shippingMethod = "zbox";
-          shippingFee = 39;
-        } else if (point.name.toLowerCase().includes("večerní")) {
-          shippingMethod = "evening";
-          shippingFee = 89;
-        } else {
-          shippingMethod = "packeta";
-          shippingFee = 59;
-        }
+      let shippingMethod = "packeta";
+      let shippingFee = 0;
+      const countryCode = point.country.toLowerCase();
+      localStorage.setItem("countryCode", countryCode);
 
-        localStorage.setItem("selectedBranchId", point.id);
-        localStorage.setItem("selectedBranchName", point.name);
-        localStorage.setItem("shippingMethod", shippingMethod);
-        localStorage.setItem("shippingFee", shippingFee);
-
-        updateUI();
+      if (type === "zbox") {
+        shippingMethod = "zbox";
+      } else if (type === "external" || point.name.toLowerCase().includes("večerní")) {
+        shippingMethod = "evening";
       }
-    });
+
+      if (countryCode === "cz") {
+        if (shippingMethod === "zbox") shippingFee = 39;
+        else if (shippingMethod === "evening") shippingFee = 89;
+        else shippingFee = 59;
+      } else if (countryCode === "sk") {
+        shippingFee = 79;
+      } else {
+        shippingFee = 129;
+      }
+
+      localStorage.setItem("selectedBranchId", point.id);
+      localStorage.setItem("selectedBranchName", point.name);
+      localStorage.setItem("shippingMethod", shippingMethod);
+      localStorage.setItem("shippingFee", shippingFee);
+
+      packetaButton.innerText = `Zvoleno: ${point.name}`;
+      updateUI();
+    }
+  });
 });
 updateUI();
   const getCartFromCookie = () => {
@@ -218,8 +227,6 @@ promoInput.addEventListener("input", updatePrices);
   renderProductFromCart();
   updatePrices();
   createPaymentRequest();
-
-  // Update prices when country changes
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
@@ -265,13 +272,14 @@ const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:chec
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         items: getCartFromCookie(),
-        country: getSelectedCountry(),
-        shippingFee: shipping,
         promoCode: promoInput.value.trim().toUpperCase(),
         calculatedTotal: totalAfterDiscount * 100,
         deliveryMethod: deliveryMethod,
         packetaBranchId: selectedBranchId,
-        packetaBranchName: selectedBranchName
+        packetaBranchName: selectedBranchName,
+        country: localStorage.getItem("countryCode"),
+        shippingMethod: localStorage.getItem("shippingMethod"),
+        shippingFee: shippingFee,
       }),
     });
 
