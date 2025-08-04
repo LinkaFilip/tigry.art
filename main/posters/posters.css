@@ -1517,7 +1517,7 @@ button.add-to-cart {
 
 .AboutHeroModule_textContainer__JyGNN p {
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%
@@ -2150,7 +2150,7 @@ button.add-to-cart {
 
 .PostHeroModule_title__73iQh {
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%;
@@ -2311,7 +2311,7 @@ button.add-to-cart {
 
 .LegalHeroModule_title__eVEcC {
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%;
@@ -2786,7 +2786,7 @@ button.add-to-cart {
 .WavyText_wavyText__WLMq_>* {
     opacity: 0;
     margin: 0 1px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     font-size: 12px;
     letter-spacing: 0;
@@ -2849,7 +2849,7 @@ button.add-to-cart {
 }
 
 .Cursor_trailLetter__FAfZd {
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     font-size: 12px;
     letter-spacing: 0;
@@ -3004,31 +3004,12 @@ meter {
 :where([draggable=true]) {
     -webkit-user-drag: element
 }
-
-@font-face {
-    font-family: Affairs;
-    src: url(/fonts/Affairs-Regular.woff2) format("woff2"),url(/fonts/Affairs-Regular.woff) format("woff");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap
+@font-face { 
+  font-family: Geist;
+  font-display: swap;
+  font-weight: 400;
+  src: url(/Geist-Regular.ttf)
 }
-
-@font-face {
-    font-family: ABC Marfa;
-    src: url(/fonts/ABCMarfa-Regular.woff2) format("woff2"),url(/fonts/ABCMarfa-Regular.woff) format("woff");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap
-}
-
-@font-face {
-    font-family: ABC Marfa;
-    src: url(/fonts/ABCMarfa-Medium.woff2) format("woff2"),url(/fonts/ABCMarfa-Medium.woff) format("woff");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap
-}
-
 :root {
     --white: #fff;
     --white-transparent: hsla(0,0%,100%,0);
@@ -3182,7 +3163,7 @@ html.has-scroll-smooth .hide-on-smooth-scroll,html:not(.has-scroll-smooth) .hide
 
 .is-large-title {
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%
@@ -3222,7 +3203,7 @@ html.has-scroll-smooth .hide-on-smooth-scroll,html:not(.has-scroll-smooth) .hide
 
 .is-headline-serif {
     font-size: 32px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 100%
@@ -4085,7 +4066,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 .SearchInput_input__f5sSH {
     height: 24px;
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%;
@@ -4117,7 +4098,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 
 .SearchInput_input__f5sSH:-webkit-autofill,.SearchInput_input__f5sSH:-webkit-autofill:focus .SearchInput_input__f5sSH:-webkit-autofill,.SearchInput_input__f5sSH:-webkit-autofill:hover,.SearchInput_input__f5sSH:-webkit-autofill:hover .SearchInput_input__f5sSH:-webkit-autofill:focus {
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%;
@@ -4366,7 +4347,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 
 .Menu_navItem__Lr_p_ {
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%;
@@ -5128,7 +5109,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
     width: calc(4*var(--layout-column-width) + (4 - 1)*var(--layout-columns-gap));
     display: block;
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%;
@@ -5198,7 +5179,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 
 .Header_logo__sVu15 {
     font-size: 24px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 95%;
@@ -5444,7 +5425,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 .Footer_navItem__a8r0j {
     display: block;
     font-size: 32px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 100%;
@@ -5743,7 +5724,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 
 .CardPopUp_title__K5uDf * {
     font-size: 32px;
-    font-family: Affairs,Georgia,serif;
+    font-family: Geist,Georgia,serif;
     font-weight: 400;
     letter-spacing: -.03em;
     line-height: 100%
