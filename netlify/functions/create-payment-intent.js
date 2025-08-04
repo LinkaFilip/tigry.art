@@ -46,7 +46,9 @@ const paymentIntent = await stripe.paymentIntents.create({
     country: country,
     promo_code: promoCode || "none",
     discount_percent: discountPercent.toString(), // volitelné
-    discount_amount: discountAmount.toString()     // volitelné
+    discount_amount: discountAmount.toString(),     // volitelné
+    packeta_branch_id: selectedBranchId,
+    packeta_branch_name: selectedBranchName
   },
 });
 

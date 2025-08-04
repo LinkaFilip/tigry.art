@@ -1,5 +1,24 @@
 document.addEventListener("DOMContentLoaded", async () => {
-
+  
+let selectedBranchId = null;
+let selectedBranchName = null;
+document.getElementById("packeta-button").addEventListener("click", () => {
+  Packeta.Widget.pick(
+    {
+      webUrl: "https://www.zasilkovna.cz",
+      country: "cz",
+      language: "cs",
+      zpointId: null,
+    },
+    function(point) {
+      if (point) {
+        document.getElementById("packeta-branch-id").value = point.id;
+        document.getElementById("packeta-button").innerText = `Zvoleno: ${point.name}`;
+        console.log("Zvolené výdejní místo:", point);
+      }
+    }
+  );
+});
   const SHIPPING_COST = {
     AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
     DE: 300, HK: 300, IE: 300, IL: 300, IT: 300, JP: 1500, MY: 300, NL: 300,
@@ -205,7 +224,6 @@ const subtotal = calculateSubtotal();
 const shipping = getSelectedShipping();
 const totalBeforeDiscount = subtotal + shipping;
 const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
-
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -215,6 +233,8 @@ const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
         shippingFee: shipping,
         promoCode: promoInput.value.trim().toUpperCase(),
         calculatedTotal: totalAfterDiscount * 100,
+        packetaBranchId: selectedBranchId,
+        packetaBranchName: selectedBranchName
       }),
     });
 
@@ -272,20 +292,3 @@ const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 updatePrices();
 });
 
-document.getElementById("packeta-button").addEventListener("click", () => {
-  Packeta.Widget.pick(
-    {
-      webUrl: "https://www.zasilkovna.cz",
-      country: "cz",
-      language: "cs",
-      zpointId: null,
-    },
-    function(point) {
-      if (point) {
-        document.getElementById("packeta-branch-id").value = point.id;
-        document.getElementById("packeta-button").innerText = `Zvoleno: ${point.name}`;
-        console.log("Zvolené výdejní místo:", point);
-      }
-    }
-  );
-});
