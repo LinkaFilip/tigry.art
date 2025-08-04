@@ -380,16 +380,12 @@
                     </div>
                     <h3>Způsob doručení</h3>
                     <div style="display: grid;column-gap: 10px;grid-template-columns: repeat(3, 1fr);grid-template-rows: 1fr;">
-                    <label style="grid-area: 1 / 1 / 2 / 2; display: flex;padding: 1rem;border: 1px solid black;border-radius: 6px;" >
-                      <input type="radio" name="deliveryMethod" value="packeta" checked="">Zásilkovna</label><br>
-                    <label style="grid-area: 1 / 3 / 2 / 4; display: flex;padding: 1rem;border: 1px solid black;border-radius: 6px;">
-                      <input type="radio" name="deliveryMethod" value="courier">Kurýr</label><br>
-                    <label style="grid-area: 1 / 2 / 2 / 3;display: flex;padding: 1rem;border: 1px solid black;border-radius: 6px;">
-                      <input type="radio" name="deliveryMethod" value="personal">
-                      Osobní odběr
-                    </label>
+                    <label style="display: flex;padding: 1rem;border: 1px solid black;border-radius: 6px;" >
+                      <input type="radio" name="deliveryMethod" value="packeta" checked="">Packeta</label>
+                    <label style="display: flex;padding: 1rem;border: 1px solid black;border-radius: 6px;">
+                      <input type="radio" name="deliveryMethod" value="courier">Courier</label>
                   </div>
-                  <button id="packeta-button" type="button">Vybrat výdejní místo</button>
+                  <button id="packeta-button" type="button">Choose the parcel shop</button>
                   <input type="hidden" id="packeta-branch-id" name="packeta_branch_id">
                     <button id="pay-button" type="submit">Pay now</button>
                     <div id="error-message"></div>
