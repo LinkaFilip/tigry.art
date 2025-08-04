@@ -50,11 +50,12 @@ packetaButton.addEventListener("click", (e) => {
         selectedBranchId = point.id;
         packetaButton.innerText = `Zvoleno: ${point.name}`;
         updateUI();
+        localStorage.setItem('selectedBranchId', selectedBranchId);
+        localStorage.setItem('selectedBranchName', point.name);
       }
     }
   );
 });
-
 updateUI();
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
