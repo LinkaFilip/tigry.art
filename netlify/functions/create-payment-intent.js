@@ -15,7 +15,8 @@ exports.handler = async (event) => {
       CH: 300, AE: 300, GB: 300, US: 300,
     };
 const fallbackShipping = SHIPPING_COST[country] || 0;
-const shipping = typeof shippingFee === "number" ? shippingFee : fallbackShipping;
+const parsedShipping = Number(shippingFee);
+const shipping = !isNaN(parsedShipping) ? parsedShipping : fallbackShipping;
 
 let discountPercent = 0;
 

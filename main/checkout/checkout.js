@@ -281,11 +281,11 @@ const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:chec
         promoCode: promoInput.value.trim().toUpperCase(),
         calculatedTotal: totalAfterDiscount * 100,
         deliveryMethod: deliveryMethod,
-        packetaBranchId: isPacketa ? localStorage.getItem("selectedBranchId") : null,
-        packetaBranchName: isPacketa ? localStorage.getItem("selectedBranchName") : null,
+        packetaBranchId: isPacketa ? selectedBranchId : null,
+        packetaBranchName: isPacketa ? selectedBranchName : null,
         country: localStorage.getItem("countryCode"),
         shippingMethod: localStorage.getItem("shippingMethod"),
-        shippingFee: shippingFee,
+        shippingFee: Number(shippingFee) || null,
       }),
     });
 
