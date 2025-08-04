@@ -24814,8 +24814,6 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
 
 ._1ip0g651 {
     grid-template-columns: minmax(0,1fr);
-    display: flex;
-    flex-direction: column-reverse;
 }
 
 @supports not (grid-gap: 1px) {
