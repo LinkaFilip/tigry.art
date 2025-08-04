@@ -242,7 +242,7 @@ function renderCart() {
     </div>
   </div>
     `;
-    panel.insertBefore, panel.firstChild(div);
+    panel.insertBefore(div, panel.firstChild);
   });
 panel.querySelectorAll(".qty-btn").forEach(button => {
   button.addEventListener("click", () => {
