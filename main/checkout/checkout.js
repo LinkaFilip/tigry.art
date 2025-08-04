@@ -98,8 +98,14 @@ deliveryRadios.forEach(radio => {
 
 
   const updatePrices = () => {
-    const subtotal = calculateSubtotal();
-    const shipping = getSelectedShipping();
+    const subtotal = calculateSubtotal();    
+    let shipping = 0;
+    const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+    if (selectedRadio && selectedRadio.value === "packeta") {
+      shipping = Number(localStorage.getItem("shippingFee")) || 0;
+    } else {
+      shipping = SHIPPING_COST[getSelectedCountry()] || 0;
+    }
     const totalBeforeDiscount = subtotal + shipping / 100;
 
     const code = promoInput.value.trim().toUpperCase();
@@ -112,7 +118,19 @@ deliveryRadios.forEach(radio => {
     shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
     totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
+    updateMobileContainer();
   };
+  const updateMobileContainer = () => {
+  const subtotal = calculateSubtotal();
+  let shipping = 0;
+  const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+  if (selectedRadio && selectedRadio.value === "packeta") {
+    shipping = Number(localStorage.getItem("shippingFee")) || 0;
+  } else {
+    shipping = SHIPPING_COST[getSelectedCountry()] || 0;
+  }
+  containerIfMobile.textContent = `EUR ${ (subtotal + shipping / 100).toFixed(2) }`;
+};
 promoInput.addEventListener("input", updatePrices);
 
   const renderProductFromCart = () => {
