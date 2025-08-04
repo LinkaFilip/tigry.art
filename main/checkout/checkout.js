@@ -277,15 +277,13 @@ const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:chec
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        items: getCartFromCookie(),
-        promoCode: promoInput.value.trim().toUpperCase(),
-        calculatedTotal: totalAfterDiscount * 100,
-        deliveryMethod: deliveryMethod,
-        packetaBranchId: isPacketa ? selectedBranchId : null,
-        packetaBranchName: isPacketa ? selectedBranchName : null,
-        country: localStorage.getItem("countryCode"),
-        shippingMethod: localStorage.getItem("shippingMethod"),
-        shippingFee: Number(shippingFee) || null,
+        items,
+        country,
+        promoCode,
+        deliveryMethod,
+        packetaBranchId: localStorage.getItem("selectedBranchId") || null,
+        packetaBranchName: localStorage.getItem("selectedBranchName") || null,
+        shippingFee: Number(localStorage.getItem("shippingFee")) || null,
       }),
     });
 
