@@ -12,9 +12,12 @@ document.getElementById("packeta-button").addEventListener("click", () => {
     },
     function(point) {
       if (point) {
+        // Uložení do localStorage
+        localStorage.setItem("packetaBranchId", point.id);
+        localStorage.setItem("packetaBranchName", point.name);
+
         document.getElementById("packeta-branch-id").value = point.id;
         document.getElementById("packeta-button").innerText = `Zvoleno: ${point.name}`;
-        console.log("Zvolené výdejní místo:", point);
       }
     }
   );
