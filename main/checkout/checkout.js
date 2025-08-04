@@ -21,8 +21,7 @@ const packetaButton = document.getElementById("packeta-button");
 
 
 function updateUI() {
-  const selectedMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
-  if (selectedMethod === "packeta") {
+  if (deliveryRadios === "packeta") {
     packetaButton.style.display = "inline-block";
     payButton.disabled = !selectedBranchId;
   } else {
@@ -33,9 +32,8 @@ function updateUI() {
 }
 deliveryRadios.forEach(radio => {
   radio.addEventListener("change", () => {
-    const selected = document.querySelector('input[name="delivery-method"]:checked').value;
 
-    if (selected !== "packeta") {
+    if (deliveryRadios !== "packeta") {
       localStorage.removeItem("selectedBranchId");
       localStorage.removeItem("selectedBranchName");
       localStorage.removeItem("shippingMethod");
