@@ -50,7 +50,8 @@ packetaButton.addEventListener("click", (e) => {
         selectedBranchId = point.id;
         packetaButton.innerText = `Zvoleno: ${point.name}`;
         updateUI();
-        localStorage.setItem('selectedBranchId', selectedBranchId);
+        localStorage.setItem('packetaBranchId', selectedBranchId);
+        localStorage.setItem('selectedBranchName', point.name);
       }
     }
   );
@@ -245,6 +246,7 @@ const shipping = getSelectedShipping();
 const totalBeforeDiscount = subtotal + shipping;
 const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 const selectedBranchId = localStorage.getItem("packetaBranchId");
+const selectedBranchName = localStorage.getItem("packetaBranchName");
 if (!selectedBranchId) {
   return;
 }
