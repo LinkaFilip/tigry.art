@@ -51,7 +51,11 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem("selectedBranchId", point.id);
       localStorage.setItem("selectedBranchName", point.name);
       localStorage.setItem("shippingMethod", shippingMethod);
-      localStorage.setItem("shippingFee", shippingFee);
+      localStorage.setItem("shippingFee", shippingFee);    
+      localStorage.setItem("selectedBranchStreet", pickupPoint.street);
+      localStorage.setItem("selectedBranchCity", pickupPoint.city);
+      localStorage.setItem("selectedBranchZip", pickupPoint.zip);
+      localStorage.setItem("selectedBranchType", pickupPoint.type);
 
       // Přidáme poznámku, že je tlačítko klikatelné pro změnu:
       packetaButton.innerText = `Zvoleno: ${point.name} (klikni pro změnu)`;
@@ -283,9 +287,14 @@ function applyDiscount(price) {
 
   const promoCode = promoInput.value.trim().toUpperCase();
   const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
+  const shippingFee = localStorage.getItem("shippingFee");
+
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const selectedBranchName = localStorage.getItem("selectedBranchName");
-  const shippingFee = localStorage.getItem("shippingFee");
+  const selectedBranchStreet = localStorage.getItem("selectedBranchStreet");
+  const selectedBranchCity = localStorage.getItem("selectedBranchCity");
+  const selectedBranchZip = localStorage.getItem("selectedBranchZip");
+  const selectedBranchType = localStorage.getItem("selectedBranchType");
 
   if (deliveryMethod === "packeta" && !selectedBranchId) {
     alert("Prosím vyberte pobočku Packeta.");
@@ -303,7 +312,11 @@ function applyDiscount(price) {
         deliveryMethod: deliveryMethod,
         shippingFee: shippingFee,
         packetaBranchId: selectedBranchId,
-        packetaBranchName: selectedBranchName
+        packetaBranchName: selectedBranchName,
+        packetaBranchStreet: selectedBranchStreet,
+        packetaBranchCity: selectedBranchCity,
+        packetaBranchZip: selectedBranchZip,
+        packetaBranchType: selectedBranchType,
       }),
     })
 

@@ -2,7 +2,19 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.handler = async (event) => {
   try {
-    const {items, country, promoCode, packetaBranchId, packetaBranchName, deliveryMethod, shippingFee} = JSON.parse(event.body);
+    const {  
+      items,
+      country,
+      promoCode,
+      deliveryMethod,
+      shippingFee,
+      packetaBranchId,
+      packetaBranchName,
+      packetaBranchStreet,
+      packetaBranchCity,
+      packetaBranchZip,
+      packetaBranchType
+} = JSON.parse(event.body);
     console.log("Received body:", event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
     const subtotal = items.reduce((sum, item) => {
@@ -53,6 +65,8 @@ const paymentIntent = await stripe.paymentIntents.create({
     delivery_method: deliveryMethod,
     packeta_branch_id: packetaBranchId || "none",
     packeta_branch_name: packetaBranchName || "none",
+    packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}, ${packetaBranchZip}`,
+    packeta_branch_type: packetaBranchType || "unknown",
   },
 });
 
