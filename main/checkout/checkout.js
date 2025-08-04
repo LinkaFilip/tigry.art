@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-let selectedBranchId = null;
 const deliveryRadios = document.querySelectorAll('input[name="deliveryMethod"]');
 const packetaButton = document.getElementById("packeta-button");
   const SHIPPING_COST = {
@@ -281,11 +280,11 @@ const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:chec
         country,
         promoCode,
         deliveryMethod,
-        packetaBranchId: localStorage.getItem("selectedBranchId") || null,
-        packetaBranchName: localStorage.getItem("selectedBranchName") || null,
-        shippingFee: Number(localStorage.getItem("shippingFee")) || null,
+        packetaBranchId: selectedBranchId || null,
+        packetaBranchName: selectedBranchName || null,
+        shippingFee: Number(shippingFee) || null,
       }),
-    });
+    }).then(r => r.json()).then(console.log).catch(console.error);
 
     const data = await response.json();
     if (!data.clientSecret) {
