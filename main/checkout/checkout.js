@@ -18,9 +18,10 @@ const packetaButton = document.getElementById("packeta-button");
   const shippingDisplay = document.getElementById("shipping-price");
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.getElementById("shipping-summary");
+
+
 function updateUI() {
   const selectedMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
-
   if (selectedMethod === "packeta") {
     packetaButton.style.display = "inline-block";
     payButton.disabled = !selectedBranchId; // pokud není vybrané místo, tlačítko platit je disabled
@@ -35,7 +36,8 @@ deliveryRadios.forEach(radio => {
     updateUI();
   });
 });
-packetaButton.addEventListener("click", () => {
+packetaButton.addEventListener("click", (e) => {
+  e.preventDefault();
   Packeta.Widget.pick(
     {
       webUrl: "https://www.zasilkovna.cz",
