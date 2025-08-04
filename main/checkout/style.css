@@ -30384,3 +30384,7 @@ input[type="radio"] {
     margin-right: 10px;
     border-radius: 50%;
 }
+input:disabled, button:disabled {
+    cursor: auto;
+    background: #2f2f2f;
+}
