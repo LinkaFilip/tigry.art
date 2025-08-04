@@ -59,8 +59,7 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem("selectedBranchLongitude", point.longitude);
       localStorage.setItem("selectedBranchLatitude", point.latitude);
 
-      // Přidáme poznámku, že je tlačítko klikatelné pro změnu:
-      packetaButton.innerText = `Zvoleno: ${point.name} (klikni pro změnu)`;
+      packetaButton.innerText = `${point.name} (Click to change)`;
       updateUI();
     }
   });
@@ -272,7 +271,7 @@ containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShippi
     if (!cart.length) {
       alert("Cart is empty.");
       payButton.disabled = false;
-      payButton.textContent = "Zaplatit";
+      payButton.textContent = "Pay now";
       return;
     }
     const country = getSelectedCountry();
@@ -301,9 +300,8 @@ function applyDiscount(price) {
   const selectedBranchLatitude = localStorage.getItem("selectedBranchLatitude");
 
   if (deliveryMethod === "packeta" && !selectedBranchId) {
-    alert("Prosím vyberte pobočku Packeta.");
     payButton.disabled = false;
-    payButton.textContent = "Zaplatit";
+    payButton.textContent = "Pay now";
     return;
   }
     const response = await fetch("/.netlify/functions/create-payment-intent", {
@@ -330,7 +328,7 @@ function applyDiscount(price) {
     if (!data.clientSecret) {
       alert("Chyba při vytváření platby.");
       payButton.disabled = false;
-      payButton.textContent = "Zaplatit";
+      payButton.textContent = "Pay now";
       return;
     }
 
