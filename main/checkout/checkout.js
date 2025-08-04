@@ -1,27 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  
 let selectedBranchId = null;
-let selectedBranchName = null;
-document.getElementById("packeta-button").addEventListener("click", () => {
-  Packeta.Widget.pick(
-    {
-      webUrl: "https://www.zasilkovna.cz",
-      country: "cz",
-      language: "cs",
-      zpointId: null,
-    },
-    function(point) {
-      if (point) {
-        // Uložení do localStorage
-        localStorage.setItem("packetaBranchId", point.id);
-        localStorage.setItem("packetaBranchName", point.name);
 
-        document.getElementById("packeta-branch-id").value = point.id;
-        document.getElementById("packeta-button").innerText = `Zvoleno: ${point.name}`;
-      }
-    }
-  );
-});
   const SHIPPING_COST = {
     AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
     DE: 300, HK: 300, IE: 300, IL: 300, IT: 300, JP: 1500, MY: 300, NL: 300,
@@ -38,7 +17,42 @@ document.getElementById("packeta-button").addEventListener("click", () => {
   const shippingDisplay = document.getElementById("shipping-price");
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.getElementById("shipping-summary");
+function updateUI() {
+  const selectedMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
 
+  if (selectedMethod === "packeta") {
+    packetaButton.style.display = "inline-block";
+    payButton.disabled = !selectedBranchId; // pokud není vybrané místo, tlačítko platit je disabled
+  } else {
+    packetaButton.style.display = "none";
+    selectedBranchId = null; // smaž vybrané místo pokud změnil volbu
+    payButton.disabled = false; // u jiných metod může platit
+  }
+}
+deliveryRadios.forEach(radio => {
+  radio.addEventListener("change", () => {
+    updateUI();
+  });
+});
+packetaButton.addEventListener("click", () => {
+  Packeta.Widget.pick(
+    {
+      webUrl: "https://www.zasilkovna.cz",
+      country: "cz",
+      language: "cs",
+      zpointId: null,
+    },
+    function(point) {
+      if (point) {
+        selectedBranchId = point.id;
+        packetaButton.innerText = `Zvoleno: ${point.name}`;
+        updateUI();
+      }
+    }
+  );
+});
+
+updateUI();
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
     return cartCookie ? JSON.parse(decodeURIComponent(cartCookie.split("=")[1])) : [];
