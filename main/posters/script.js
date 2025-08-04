@@ -216,7 +216,7 @@ function renderCart() {
     div.innerHTML = `
   <div class="LineItem_lineItem__ZK2EH">
     <div class="LineItem_imageContainer__gDc0v">
-      <div class="ShopifyImage_shopifyImage__FC9OT" style="padding-top: 125%;">
+      <div class="ShopifyImage_shopifyImage__FC9OT" style="padding-top: 134%;">
         <img src="${item.image}" style="filter: none !important; z-index: 0 !important;">
       </div>
     </div>
