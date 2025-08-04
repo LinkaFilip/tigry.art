@@ -21,25 +21,25 @@ const packetaButton = document.getElementById("packeta-button");
 
 
 function updateUI() {
-  if (deliveryRadios === "packeta") {
+  const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+  const selectedValue = selectedRadio?.value;
+
+  if (selectedValue === "packeta") {
     packetaButton.style.display = "inline-block";
-    payButton.disabled = !selectedBranchId;
+    payButton.disabled = !localStorage.getItem("selectedBranchId");
   } else {
     packetaButton.style.display = "none";
-    selectedBranchId = null;
+    localStorage.removeItem("selectedBranchId");
+    localStorage.removeItem("selectedBranchName");
+    localStorage.removeItem("shippingMethod");
+    localStorage.removeItem("shippingFee");
     payButton.disabled = false;
   }
 }
 deliveryRadios.forEach(radio => {
   radio.addEventListener("change", () => {
-
-    if (deliveryRadios !== "packeta") {
-      localStorage.removeItem("selectedBranchId");
-      localStorage.removeItem("selectedBranchName");
-      localStorage.removeItem("shippingMethod");
-    }
+    updateUI();
   });
-  updateUI();
 });
 packetaButton.addEventListener("click", (e) => {
   e.preventDefault();
