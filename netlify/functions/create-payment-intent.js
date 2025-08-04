@@ -2,7 +2,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 exports.handler = async (event) => {
   try {
-    const { items, country, promoCode } = JSON.parse(event.body);
+    const {items, country, promoCode, packetaBranchId, packetaBranchName} = JSON.parse(event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
     const subtotal = items.reduce((sum, item) => {
       const priceInCents = Math.round(item.price * 100);
@@ -28,7 +28,7 @@ if (promoCode) {
   if (codes.data.length > 0) {
     const coupon = codes.data[0].coupon;
     if (coupon.percent_off) {
-      discountPercent = coupon.percent_off; // ✅ použij dynamickou hodnotu
+      discountPercent = coupon.percent_off;
     }
   }
 }
@@ -46,9 +46,9 @@ const paymentIntent = await stripe.paymentIntents.create({
     country: country,
     promo_code: promoCode || "none",
     discount_percent: discountPercent.toString(), // volitelné
-    discount_amount: discountAmount.toString(),     // volitelné
-    packeta_branch_id: selectedBranchId,
-    packeta_branch_name: selectedBranchName
+    discount_amount: discountAmount.toString(),
+    packeta_branch_id: packetaBranchId || "none",
+    packeta_branch_name: packetaBranchName || "none",
   },
 });
 
