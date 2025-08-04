@@ -53,7 +53,8 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem("shippingMethod", shippingMethod);
       localStorage.setItem("shippingFee", shippingFee);
 
-      packetaButton.innerText = `Zvoleno: ${point.name}`;
+      // Přidáme poznámku, že je tlačítko klikatelné pro změnu:
+      packetaButton.innerText = `Zvoleno: ${point.name} (klikni pro změnu)`;
       updateUI();
     }
   });
