@@ -39,13 +39,13 @@ packetaButton.addEventListener("click", (e) => {
       }
 
       if (countryCode === "cz") {
-        if (shippingMethod === "zbox") shippingFee = 3900;
-        else if (shippingMethod === "evening") shippingFee = 8900;
-        else shippingFee = 5900;
+        if (shippingMethod === "zbox") shippingFee = 300;
+        else if (shippingMethod === "evening") shippingFee = 550;
+        else shippingFee = 300;
       } else if (countryCode === "sk") {
-        shippingFee = 7900;
-      } else {
-        shippingFee = 12900;
+        if (shippingMethod === "zbox") shippingFee = 300;
+        else if (shippingMethod === "evening") shippingFee = 600;
+        else shippingFee = 400;
       }
 
       localStorage.setItem("selectedBranchId", point.id);
@@ -55,7 +55,6 @@ packetaButton.addEventListener("click", (e) => {
 
       packetaButton.innerText = `Zvoleno: ${point.name}`;
       updateUI();
-      updatePrices();
     }
   });
 });
@@ -73,7 +72,8 @@ function updateUI() {
     localStorage.removeItem("shippingMethod");
     localStorage.removeItem("shippingFee");
     payButton.disabled = false;
-  }
+  }  
+  updatePrices();
 }
 deliveryRadios.forEach(radio => {
   radio.addEventListener("change", () => {
