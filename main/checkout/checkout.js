@@ -38,23 +38,32 @@ deliveryRadios.forEach(radio => {
 });
 packetaButton.addEventListener("click", (e) => {
   e.preventDefault();
-  Packeta.Widget.pick(
-    {
-      webUrl: "https://www.zasilkovna.cz",
-      country: "cz",
-      language: "cs",
-      zpointId: null,
-    },
-    function(point) {
+    Packeta.Widget.pick({}, function(point) {
       if (point) {
-        selectedBranchId = point.id;
-        packetaButton.innerText = `Zvoleno: ${point.name}`;
+        const type = point.pickup_point_type || point.type;
+
+        let shippingMethod = "packeta";
+        let shippingFee = 0;
+
+        if (type === "zbox" || point.name.includes("Z-BOX")) {
+          shippingMethod = "zbox";
+          shippingFee = 39;
+        } else if (point.name.toLowerCase().includes("večerní")) {
+          shippingMethod = "evening";
+          shippingFee = 89;
+        } else {
+          shippingMethod = "packeta";
+          shippingFee = 59;
+        }
+
+        localStorage.setItem("selectedBranchId", point.id);
+        localStorage.setItem("selectedBranchName", point.name);
+        localStorage.setItem("shippingMethod", shippingMethod);
+        localStorage.setItem("shippingFee", shippingFee);
+
         updateUI();
-        localStorage.setItem('packetaBranchId', selectedBranchId);
-        localStorage.setItem('packetaBranchName', point.name);
       }
-    }
-  );
+    });
 });
 updateUI();
   const getCartFromCookie = () => {

@@ -30382,4 +30382,5 @@ button#pay-button {
 }
 input[type="radio"] {
     margin-right: 10px;
+    border-radius: 50%;
 }
