@@ -263,6 +263,7 @@ const totalBeforeDiscount = subtotal + shipping;
 const totalAfterDiscount = applyDiscount(totalBeforeDiscount);
 const selectedBranchId = localStorage.getItem("packetaBranchId");
 const selectedBranchName = localStorage.getItem("packetaBranchName");
+const shippingFee = localStorage.getItem("shippingFee");
 if (!selectedBranchId) {
   return;
 }
