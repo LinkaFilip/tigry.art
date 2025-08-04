@@ -10,10 +10,10 @@ exports.handler = async (event) => {
       return sum + priceInCents * item.quantity;
     }, 0);
     const SHIPPING_COST = {
-      AU: 300, AT: 300, BE: 300, CA: 300, CZ: 300, DK: 300, FI: 300, FR: 300,
-      DE: 300, HK: 300, IE: 300, IL: 300, IT: 300, JP: 1500, MY: 300, NL: 300,
-      NZ: 300, NO: 300, PL: 300, PT: 300, SG: 300, KR: 300, ES: 300, SE: 300,
-      CH: 300, AE: 300, GB: 300, US: 300,
+    AU: 4400, AT: 1480, BE: 1630, CA: 3700, CZ: 530, DK: 1944, FI: 2630, FR: 1944,
+    DE: 1200, HK: 4400, IE: 2150, IL: 4400, IT: 1944, JP: 4400, MY: 4400, NL: 1627,
+    NZ: 4275, NO: 4300, PL: 1025, PT: 2152, SG: 4400, KR: 4400, ES: 2360, SE: 2632,
+    CH: 4260, AE: 4275, GB: 2920, US: 3661,
     };
 const fallbackShipping = SHIPPING_COST[country] || 0;
 const parsedShipping = Number(shippingFee);
