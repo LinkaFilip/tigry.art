@@ -52,10 +52,10 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem("selectedBranchName", point.name);
       localStorage.setItem("shippingMethod", shippingMethod);
       localStorage.setItem("shippingFee", shippingFee);    
-      localStorage.setItem("selectedBranchStreet", pickupPoint.street);
-      localStorage.setItem("selectedBranchCity", pickupPoint.city);
-      localStorage.setItem("selectedBranchZip", pickupPoint.zip);
-      localStorage.setItem("selectedBranchType", pickupPoint.type);
+      localStorage.setItem("selectedBranchStreet", point.street);
+      localStorage.setItem("selectedBranchCity", point.city);
+      localStorage.setItem("selectedBranchZip", point.zip);
+      localStorage.setItem("selectedBranchType", point.type);
 
       // Přidáme poznámku, že je tlačítko klikatelné pro změnu:
       packetaButton.innerText = `Zvoleno: ${point.name} (klikni pro změnu)`;
