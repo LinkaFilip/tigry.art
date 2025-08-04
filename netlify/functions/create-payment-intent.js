@@ -3,6 +3,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET);
 exports.handler = async (event) => {
   try {
     const {items, country, promoCode, packetaBranchId, packetaBranchName, deliveryMethod, shippingFee} = JSON.parse(event.body);
+    console.log("Received body:", event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
     const subtotal = items.reduce((sum, item) => {
       const priceInCents = Math.round(item.price * 100);
