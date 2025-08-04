@@ -24,17 +24,24 @@ function updateUI() {
   const selectedMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
   if (selectedMethod === "packeta") {
     packetaButton.style.display = "inline-block";
-    payButton.disabled = !selectedBranchId; // pokud není vybrané místo, tlačítko platit je disabled
+    payButton.disabled = !selectedBranchId;
   } else {
     packetaButton.style.display = "none";
-    selectedBranchId = null; // smaž vybrané místo pokud změnil volbu
-    payButton.disabled = false; // u jiných metod může platit
+    selectedBranchId = null;
+    payButton.disabled = false;
   }
 }
 deliveryRadios.forEach(radio => {
   radio.addEventListener("change", () => {
-    updateUI();
+    const selected = document.querySelector('input[name="delivery-method"]:checked').value;
+
+    if (selected !== "packeta") {
+      localStorage.removeItem("selectedBranchId");
+      localStorage.removeItem("selectedBranchName");
+      localStorage.removeItem("shippingMethod");
+    }
   });
+  updateUI();
 });
 packetaButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -276,8 +283,8 @@ const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:chec
         promoCode: promoInput.value.trim().toUpperCase(),
         calculatedTotal: totalAfterDiscount * 100,
         deliveryMethod: deliveryMethod,
-        packetaBranchId: selectedBranchId,
-        packetaBranchName: selectedBranchName,
+        packetaBranchId: isPacketa ? localStorage.getItem("selectedBranchId") : null,
+        packetaBranchName: isPacketa ? localStorage.getItem("selectedBranchName") : null,
         country: localStorage.getItem("countryCode"),
         shippingMethod: localStorage.getItem("shippingMethod"),
         shippingFee: shippingFee,
