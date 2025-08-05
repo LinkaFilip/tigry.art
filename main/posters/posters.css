@@ -1181,8 +1181,7 @@ html:not(.dev) {
     padding-top: 0!important;
     height: 100%
 }
-
-.ProductTile_container__OU5uV,.ProductTile_details__hQzW4 {
+.ProductTile_details__hQzW4 {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
