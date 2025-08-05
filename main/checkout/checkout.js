@@ -71,7 +71,7 @@ function updateUI() {
   if (selectedValue === "packeta") {
     packetaButton.style.display = "inline-block";
     payButton.disabled = !localStorage.getItem("selectedBranchId");
-    payButton.style.margin = "16px 0px 16px 0px";
+    payButton.style.margin = "16px 0px 0px 0px";
   } else {
     packetaButton.style.display = "none";
     localStorage.removeItem("selectedBranchId");
