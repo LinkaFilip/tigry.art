@@ -7817,16 +7817,6 @@ ul,ol {
 }
 
 @media screen and (min-width: 1000px) {
-    #packeta-button{
-        margin: 16px 0px 16px;
-    }
-    .gridContainer_GridGroup__5jzs0__{
-        display: grid;
-        column-gap: 10px;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: 1fr; 
-        margin-top: 16px;
-    }
     ._16s97g78 {
         height:var(--_16s97g73)
     }
@@ -9633,6 +9623,16 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
 @media screen and (max-width: 999px) {
     ._17vfpuub {
         margin-top:1px
+    }    
+    #packeta-button{
+        margin: 16px 0px 16px;
+    }
+    .gridContainer_GridGroup__5jzs0__{
+        display: grid;
+        column-gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr; 
+        margin-top: 16px;
     }
 }
 
