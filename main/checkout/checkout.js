@@ -79,7 +79,7 @@ function updateUI() {
     localStorage.removeItem("shippingMethod");
     localStorage.removeItem("shippingFee");
     payButton.disabled = false;
-    payButton.style.margin = "16px 0px 0px 0px"
+    payButton.style.margin = "0px 0px 0px 0px";
   }  
   updatePrices();
 }
