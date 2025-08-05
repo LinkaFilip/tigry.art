@@ -9,6 +9,26 @@
     <priority>0.1</priority>
   </url>
   <url>
+    <loc>https://tigry.art/products/japan-landscape/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tigry.art/products/mexico-landscape/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tigry.art/products/czechia-landscape/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tigry.art/products/middleeast-landscape/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tigry.art/products/uganda-landscape/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://tigry.art/about_us/</loc>
     <priority>0.6</priority>
   </url>
