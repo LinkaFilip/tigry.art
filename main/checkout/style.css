@@ -28522,7 +28522,10 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
     -ms-grid-row: 4;
     -ms-grid-column: 1;
     grid-area: disclosure;
-    display: var(--x-shell-disclosure-display)
+    display: var(--x-shell-disclosure-display);
+    top: 0px;
+    position: sticky;
+    z-index: 150000;
 }
 
 .WtpiW,.ks0CH {
