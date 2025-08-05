@@ -30345,9 +30345,6 @@ html:not(:active-view-transition-type(payment-icons)) ._6f3AR {
 p._1tx8jg70._1fragemms._1tx8jg7c._1tx8jg7b._1fragemp3._1tx8jg715._1tx8jg71d._1tx8jg71f {
     padding-left: var(--layout-margin);
 }
-section._1fragem32._1fragemms {
-    padding-top: var(--layout-margin);
-}
 #card-number-element,
 #card-expiry-element,
 #card-cvc-element {
