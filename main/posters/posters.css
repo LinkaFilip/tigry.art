@@ -3558,7 +3558,7 @@ svg.icon circle[stroke],svg.icon path[stroke],svg.icon rect[stroke] {
 }
 
 ::selection {
-    color: var(--pale-yellow);
+    color: var(--yellow);
     background: transparent
 }
 .ProductTags_productTags__rUNUM {
