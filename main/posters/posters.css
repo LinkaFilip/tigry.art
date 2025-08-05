@@ -9,12 +9,12 @@
     --background-color-transparent: hsla(0,0%,100%,0);
     --grey: #f2f1ee;
     --grey-transparent: hsla(45,13%,94%,0);
-    --yellow: #ffd237;
-    --yellow-transparent: rgba(255,210,55,0);
-    --pale-yellow: #ffdf6b;
+    --yellow: #146757;
+    --yellow-transparent: rgba(117, 103, 51, 0);
+    --pale-yellow: #527c74;
     --pale-yellow-transparent: rgba(255,223,107,0);
     --pale-pink: #d09877;
-    --pale-pink-transparent: hsla(22,49%,64%,0);
+    --pale-pink-transparent: hsla(119, 49%, 64%, 0);
     --cement: #c8cfae;
     --cement-transparent: hsla(73,26%,75%,0);
     --army: #7a5f11;
