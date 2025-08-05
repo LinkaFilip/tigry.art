@@ -59,7 +59,7 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem("selectedBranchLongitude", point.longitude);
       localStorage.setItem("selectedBranchLatitude", point.latitude);
 
-      packetaButton.innerText = `${point.name} (Click to change)`;
+      packetaButton.innerText = `${point.name}`;
       updateUI();
     }
   });
