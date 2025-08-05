@@ -194,7 +194,9 @@
 *,*:after,*:before {
     box-sizing: border-box
 }
-
+body::-webkit-scrollbar, body::-webkit-scrollbar-button {
+    display: none;
+}
 html,body {
     margin: 0;
     width: 100%;
