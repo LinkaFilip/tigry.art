@@ -1185,7 +1185,7 @@ html:not(.dev) {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .ProductTile_details__hQzW4 {
