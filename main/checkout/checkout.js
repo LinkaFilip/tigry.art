@@ -71,7 +71,7 @@ function updateUI() {
   if (selectedValue === "packeta") {
     packetaButton.style.display = "inline-block";
     payButton.disabled = !localStorage.getItem("selectedBranchId");
-    payButton.style.margin = "16px 0px 0px 0px";
+    payButton.style.margin = "0px 0px 0px 0px";
   } else {
     packetaButton.style.display = "none";
     localStorage.removeItem("selectedBranchId");
@@ -275,7 +275,9 @@ containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShippi
 
     const cart = getCartFromCookie();
     if (!cart.length) {
-      alert("Cart is empty.");
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.textContent = "";
+      errorMessage.textContent = "Cart is empty";
       payButton.disabled = false;
       payButton.textContent = "Pay now";
       return;
@@ -331,8 +333,10 @@ function applyDiscount(price) {
     })
 
     const data = await response.json();
-    if (!data.clientSecret) {
-      alert("Chyba při vytváření platby.");
+    if (!data.clientSecret) {      
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.textContent = "";
+      errorMessage.textContent = "Error when creating a payment";
       payButton.disabled = false;
       payButton.textContent = "Pay now";
       return;
@@ -372,8 +376,10 @@ function applyDiscount(price) {
       },
     });
 
-    if (error) {
-      alert(error.message);
+    if (error) {      
+      const errorMessage = document.getElementById("error-message");
+      errorMessage.textContent = "";
+      errorMessage.textContent = error.message;
       payButton.disabled = false;
       payButton.textContent = "Zaplatit";
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
