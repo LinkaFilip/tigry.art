@@ -9619,7 +9619,12 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
     opacity: 1;
     transform: translateY(0)
 }
-
+.gridContainer_GridGroup__5jzs0__{
+        display: grid;
+        column-gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: 1fr; 
+    }
 @media screen and (max-width: 999px) {
     ._17vfpuub {
         margin-top:1px
@@ -9628,10 +9633,6 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
         margin: 16px 0px 16px;
     }
     .gridContainer_GridGroup__5jzs0__{
-        display: grid;
-        column-gap: 10px;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: 1fr; 
         margin-top: 16px;
     }
 }
