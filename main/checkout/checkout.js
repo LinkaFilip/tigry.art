@@ -243,8 +243,6 @@ promoInput.addEventListener("input", updatePrices);
       }
     });
   };
-
-  // Mount Stripe Elements
   const style = {
     base: {
       fontSize: "16px",
@@ -259,8 +257,6 @@ promoInput.addEventListener("input", updatePrices);
   cardNumber.mount("#card-number-element");
   cardExpiry.mount("#card-expiry-element");
   cardCvc.mount("#card-cvc-element");
-
-  // Init render
   renderProductFromCart();
   updatePrices();
   createPaymentRequest();
@@ -311,6 +307,16 @@ function applyDiscount(price) {
     payButton.disabled = false;
     payButton.textContent = "Pay now";
     return;
+  }else{
+    const element = document.querySelector(".jHvVd");
+    element.style.display = "none";
+  }
+  
+  if (deliveryMethod === "courier") {
+    const element = document.querySelector(".jHvVd");
+    element.style.display = "block";
+    element.style.borderRadius = "8px";
+    element.style.border = "1px solid block";
   }
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
