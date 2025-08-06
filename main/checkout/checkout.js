@@ -161,7 +161,7 @@ const updatePrices = () => {
     shipping = SHIPPING_COST[country] || 0;
   }
 
-  const totalBeforeDiscount = subtotal + shipping / 100;
+  const totalBeforeDiscount = subtotal + getSelectedShipping()/100;
 
   // Promo kód
   const code = promoInput.value.trim().toUpperCase();
