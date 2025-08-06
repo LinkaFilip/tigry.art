@@ -318,6 +318,7 @@ function applyDiscount(price) {
       body: JSON.stringify({
         items: cart,
         country: country,
+        getSelectedCountry: getSelectedCountry(),
         promoCode: promoCode,
         deliveryMethod: deliveryMethod,
         shippingFee: shippingFee,

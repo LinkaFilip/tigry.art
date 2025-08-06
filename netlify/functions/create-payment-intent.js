@@ -5,6 +5,7 @@ exports.handler = async (event) => {
     const {  
       items,
       country,
+      getSelectedCountry,
       promoCode,
       deliveryMethod,
       shippingFee,
@@ -29,7 +30,7 @@ exports.handler = async (event) => {
     NZ: 4275, NO: 4300, PL: 1025, PT: 2152, SG: 4400, KR: 4400, ES: 2360, SE: 2632,
     CH: 4260, AE: 4275, GB: 2920, US: 3661,
     };
-const fallbackShipping = SHIPPING_COST[country] || 0;
+const fallbackShipping = SHIPPING_COST[getSelectedCountry | country] || 0;
 const parsedShipping = Number(shippingFee);
 const shipping = !isNaN(parsedShipping) ? parsedShipping : fallbackShipping;
 
