@@ -68,7 +68,8 @@ packetaButton.addEventListener("click", (e) => {
     }
       if(point.name){
         shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
-      }else{
+      }
+      if(!point.name){
         shippingDisplay.textContent = "Enter shipping details";
       }
       packetaButton.innerText = `${point.name}`;
