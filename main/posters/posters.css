@@ -5382,9 +5382,9 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 @media(min-width: 1024px) {
     .Footer_navs__uk9Kz {
         display:grid;
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: repeat(1,1fr);
         grid-gap: var(--layout-columns-gap);
-        grid-column: 1/span 8
+        grid-column: 1/span 3;
     }
 }
 
