@@ -58,7 +58,19 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem("selectedBranchType", point.type);
       localStorage.setItem("selectedBranchLongitude", point.longitude);
       localStorage.setItem("selectedBranchLatitude", point.latitude);
-
+         
+    let shipping = 0;
+    const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+    if (selectedRadio && selectedRadio.value === "packeta") {
+      shipping = Number(localStorage.getItem("shippingFee")) || 0;
+    } else {
+      shipping = SHIPPING_COST[getSelectedCountry()] || 0;
+    }
+      if(point.name){
+        shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+      }else{
+        shippingDisplay.textContent = "Enter shipping details";
+      }
       packetaButton.innerText = `${point.name}`;
       updateUI();
     }
