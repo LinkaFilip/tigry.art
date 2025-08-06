@@ -120,6 +120,7 @@ deliveryRadios.forEach(radio => {
         label.classList.remove('active');
       });
       radio.closest('label').classList.add('active');
+    localStorage.setItem("shippingMethod", radio.value);
     updateUI();
   });
 });
@@ -143,7 +144,7 @@ deliveryRadios.forEach(radio => {
 const updatePrices = () => {
   const subtotal = calculateSubtotal();    
   const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
-  const deliveryMethod = localStorage.getItem("shippingMethod");
+  const deliveryMethod = selectedRadio?.value || localStorage.getItem("shippingMethod");
   const country = localStorage.getItem("countryCode");
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
