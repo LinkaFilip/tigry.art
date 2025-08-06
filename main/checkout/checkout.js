@@ -79,6 +79,7 @@ function updateUI() {
     if (space) {
       space.style.display = "none";
     }
+    shippingDisplay.textContent = "Enter the shipping details";
   } else {
     packetaButton.style.display = "none";
     localStorage.removeItem("selectedBranchId");
