@@ -160,12 +160,9 @@ deliveryRadios.forEach(radio => {
     const selectedBranchId = localStorage.getItem("selectedBranchId");
     const discountAmount = totalBeforeDiscount * (discountPercent / 100);
     const totalAfterDiscount = totalBeforeDiscount - discountAmount;
-    const isMissingInfo =
-      !country ||
-      !deliveryMethod ||
-      (["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId);
-
-    if (isMissingInfo) {
+    const isMissingInfo = !country || !deliveryMethod;
+    const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
+    if (isMissingInfo || needsBranch) {
       shippingDisplay.textContent = "Enter shipping details";
       return;
     }
