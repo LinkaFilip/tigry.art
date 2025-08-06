@@ -144,14 +144,19 @@ deliveryRadios.forEach(radio => {
 const updatePrices = () => {
   const subtotal = calculateSubtotal();    
   const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+
+  if (selectedRadio) {
+    localStorage.setItem("shippingMethod", selectedRadio.value);
+  }
+
   const deliveryMethod = selectedRadio?.value || localStorage.getItem("shippingMethod");
   const country = localStorage.getItem("countryCode");
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
 
-  // Použij shippingFee pouze pokud je validní
+  // Shipping fee výpočet
   let shipping = 0;
-  if (selectedRadio && selectedRadio.value === "packeta") {
+  if (deliveryMethod === "packeta") {
     shipping = shippingFee;
   } else {
     shipping = SHIPPING_COST[country] || 0;
@@ -159,13 +164,13 @@ const updatePrices = () => {
 
   const totalBeforeDiscount = subtotal + shipping / 100;
 
-  // Promo code
+  // Promo kód
   const code = promoInput.value.trim().toUpperCase();
   const discountPercent = code === "TEST10" ? 10 : 0;
   const discountAmount = totalBeforeDiscount * (discountPercent / 100);
   const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
-  // Kontroly
+  // Kontrola vstupů
   const isMissingInfo = !country || !deliveryMethod;
   const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
 
@@ -177,12 +182,11 @@ const updatePrices = () => {
     return;
   }
 
-  // Vykreslit částky
+  // Zobrazení cen
   subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
   totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
   shippingDisplay.textContent = `${(shipping / 100).toFixed(2)} €`;
 
-  // Název státu ze selectu
   const selectedCountryText = selectElement.options[selectElement.selectedIndex]?.text || country;
   shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(shipping / 100).toFixed(2)}`;
 
