@@ -159,7 +159,7 @@ const updatePrices = () => {
   if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
     shipping = shippingFee;
   } else {
-    shipping = SHIPPING_COST[country] || 0;
+    shipping = getSelectedShipping();
   }
 
   const totalBeforeDiscount = subtotal + shipping / 100;
