@@ -5387,7 +5387,9 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
         grid-column: 1/span 3;
     }
 }
-
+strong {
+    font-weight: 800;
+}
 .Footer_navContainer__iEW0B {
     margin-bottom: 24px
 }
