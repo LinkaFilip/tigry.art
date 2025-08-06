@@ -188,7 +188,7 @@ const updatePrices = () => {
   shippingDisplay.textContent = `${(shipping / 100).toFixed(2)} €`;
 
   const selectedCountryText = selectElement.options[selectElement.selectedIndex]?.text || country;
-  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(shipping / 100).toFixed(2)}`;
+  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(getSelectedShipping() / 100).toFixed(2)}`;
 
   updateMobileContainer();
 };
