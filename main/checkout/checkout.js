@@ -72,6 +72,8 @@ function updateUI() {
     packetaButton.style.display = "inline-block";
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
+    const element = document.querySelector("._1fragemui._1fragemq6._1fragemqc._1fragemqo._1fragemqi._1fragem32._1fragemg9._1fragemi2._1fragemeg._1fragemjv._1fragemms");
+    element.style.display = "none";
   } else {
     packetaButton.style.display = "none";
     localStorage.removeItem("selectedBranchId");
