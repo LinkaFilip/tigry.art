@@ -74,8 +74,11 @@ function updateUI() {
     payButton.style.margin = "0px 0px 0px 0px";
     const shownElement = document.querySelector(".jHvVd");
     shownElement.style.display = "none";
-    const space = document.querySelector("._1fragem32._1fragemms.gfFXW:nth-child(2)");
-    space.style.display = "none";
+    const all = document.querySelectorAll("._1fragem32._1fragemms.gfFXW");
+    const space = all[1];
+    if (space) {
+      space.style.display = "none";
+    }
   } else {
     packetaButton.style.display = "none";
     localStorage.removeItem("selectedBranchId");
