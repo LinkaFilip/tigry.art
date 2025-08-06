@@ -263,7 +263,23 @@ promoInput.addEventListener("input", updatePrices);
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
-
+deliveryRadios.forEach(radio => {
+  radio.addEventListener("change", () => {
+      if (deliveryMethod === "packeta" && !selectedBranchId) {
+    payButton.disabled = false;
+    payButton.textContent = "Pay now";
+    return;
+  }
+  
+  if (deliveryMethod === "courier") {
+    const element = document.querySelector(".jHvVd");
+    element.style.display = "block";
+    element.style.borderRadius = "8px";
+    element.style.border = "1px solid block";
+  }
+    updateUI();
+  });
+});
 containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping() / 100)).toFixed(2)}`;
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
@@ -302,23 +318,7 @@ function applyDiscount(price) {
   const selectedBranchType = localStorage.getItem("selectedBranchType");
   const selectedBranchLongitude = localStorage.getItem("selectedBranchLongitude");
   const selectedBranchLatitude = localStorage.getItem("selectedBranchLatitude");
-deliveryRadios.forEach(radio => {
-  radio.addEventListener("change", () => {
-      if (deliveryMethod === "packeta" && !selectedBranchId) {
-    payButton.disabled = false;
-    payButton.textContent = "Pay now";
-    return;
-  }
-  
-  if (deliveryMethod === "courier") {
-    const element = document.querySelector(".jHvVd");
-    element.style.display = "block";
-    element.style.borderRadius = "8px";
-    element.style.border = "1px solid block";
-  }
-    updateUI();
-  });
-});
+
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
