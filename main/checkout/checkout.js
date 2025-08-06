@@ -86,7 +86,7 @@ function updateUI() {
     payButton.style.margin = "0px 0px 0px 0px";
     const element = document.querySelector("._1fragemui._1fragemq6._1fragemqc._1fragemqo._1fragemqi._1fragem32._1fragemg9._1fragemi2._1fragemeg._1fragemjv._1fragemms");
     const shownElement = document.querySelector(".jHvVd");
-    shownElement.style.display = "none";
+    shownElement.style.display = "block";
     element.style.borderRadius = "8px";
     element.style.border = "1px solid black";
     const space = document.querySelector("._1fragem32._1fragemms.gfFXW:nth-child(2)");
