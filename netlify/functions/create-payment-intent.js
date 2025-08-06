@@ -22,10 +22,22 @@ exports.handler = async (event) => {
       const priceInCents = Math.round(item.price * 100);
       return sum + priceInCents * item.quantity;
     }, 0);
-    const shippingPrices  = {
-      packeta:{
+          if (type === "zbox") {
+        shippingMethod = "zbox";
+      } else if (type === "external" || point.name.toLowerCase().includes("večerní")) {
+        shippingMethod = "evening";
+      }
 
-      },
+      if (countryCode === "cz") {
+        if (shippingMethod === "zbox") shippingFee = 300;
+        else if (shippingMethod === "evening") shippingFee = 550;
+        else shippingFee = 300;
+      } else if (countryCode === "sk") {
+        if (shippingMethod === "zbox") shippingFee = 300;
+        else if (shippingMethod === "evening") shippingFee = 600;
+        else shippingFee = 400;
+      }
+    const shippingPrices  = {
       courier:{
         AU: 4400,
         AT: 1480,
