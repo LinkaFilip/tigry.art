@@ -154,14 +154,15 @@ const updatePrices = () => {
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
 
+  // Výpočet dopravy
   let shipping = 0;
-  if (deliveryMethod === "packeta") {
+  if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
     shipping = shippingFee;
   } else {
     shipping = SHIPPING_COST[country] || 0;
   }
 
-  const totalBeforeDiscount = subtotal + getSelectedShipping()/100;
+  const totalBeforeDiscount = subtotal + shipping / 100;
 
   // Promo kód
   const code = promoInput.value.trim().toUpperCase();
@@ -187,7 +188,7 @@ const updatePrices = () => {
   shippingDisplay.textContent = `${(shipping / 100).toFixed(2)} €`;
 
   const selectedCountryText = selectElement.options[selectElement.selectedIndex]?.text || country;
-  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(getSelectedShipping()/100).toFixed(2)}`;
+  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(shipping / 100).toFixed(2)}`;
 
   updateMobileContainer();
 };
