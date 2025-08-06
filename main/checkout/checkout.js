@@ -140,38 +140,53 @@ deliveryRadios.forEach(radio => {
   const promoInput = document.getElementById("ReductionsInput0");
 
 
-  const updatePrices = () => {
-    const subtotal = calculateSubtotal();    
-    let shipping = 0;
-    const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
-    if (selectedRadio && selectedRadio.value === "packeta") {
-      shipping = Number(localStorage.getItem("shippingFee")) || 0;
-    } else {
-      shipping = SHIPPING_COST[getSelectedCountry()] || 0;
-    }
-    const totalBeforeDiscount = subtotal + shipping / 100;
+const updatePrices = () => {
+  const subtotal = calculateSubtotal();    
+  const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+  const deliveryMethod = localStorage.getItem("shippingMethod");
+  const country = localStorage.getItem("countryCode");
+  const selectedBranchId = localStorage.getItem("selectedBranchId");
+  const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
 
-    const code = promoInput.value.trim().toUpperCase();
-    const discountPercent = code === "TEST10" ? 10 : 0;
+  // Použij shippingFee pouze pokud je validní
+  let shipping = 0;
+  if (selectedRadio && selectedRadio.value === "packeta") {
+    shipping = shippingFee;
+  } else {
+    shipping = SHIPPING_COST[country] || 0;
+  }
 
-    const country = localStorage.getItem("countryCode");
-    const deliveryMethod = localStorage.getItem("shippingMethod");
-    const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10);
-    const selectedBranchId = localStorage.getItem("selectedBranchId");
-    const discountAmount = totalBeforeDiscount * (discountPercent / 100);
-    const totalAfterDiscount = totalBeforeDiscount - discountAmount;
-    const isMissingInfo = !country || !deliveryMethod;
-    const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
-    if (isMissingInfo || needsBranch) {
-      shippingDisplay.textContent = "Enter shipping details";
-      return;
-    }
-    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-    totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
-    shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
-    shippingDisplay.textContent = `${(shippingFee / 100).toFixed(2)} €`;
-    updateMobileContainer();
-  };
+  const totalBeforeDiscount = subtotal + shipping / 100;
+
+  // Promo code
+  const code = promoInput.value.trim().toUpperCase();
+  const discountPercent = code === "TEST10" ? 10 : 0;
+  const discountAmount = totalBeforeDiscount * (discountPercent / 100);
+  const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+
+  // Kontroly
+  const isMissingInfo = !country || !deliveryMethod;
+  const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
+
+  if (isMissingInfo || needsBranch) {
+    shippingDisplay.textContent = "Enter shipping details";
+    subtotalDisplay.textContent = `–`;
+    totalDisplay.textContent = `–`;
+    shippingSummary.textContent = `–`;
+    return;
+  }
+
+  // Vykreslit částky
+  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+  totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
+  shippingDisplay.textContent = `${(shipping / 100).toFixed(2)} €`;
+
+  // Název státu ze selectu
+  const selectedCountryText = selectElement.options[selectElement.selectedIndex]?.text || country;
+  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(shipping / 100).toFixed(2)}`;
+
+  updateMobileContainer();
+};
 const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
 
   const updateMobileContainer = () => {
