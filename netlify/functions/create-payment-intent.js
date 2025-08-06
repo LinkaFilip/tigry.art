@@ -22,23 +22,30 @@ exports.handler = async (event) => {
       const priceInCents = Math.round(item.price * 100);
       return sum + priceInCents * item.quantity;
     }, 0);
-          if (type === "zbox") {
-        shippingMethod = "zbox";
-      } else if (type === "external" || point.name.toLowerCase().includes("večerní")) {
-        shippingMethod = "evening";
-      }
 
-      if (countryCode === "cz") {
-        if (shippingMethod === "zbox") shippingFee = 300;
-        else if (shippingMethod === "evening") shippingFee = 550;
-        else shippingFee = 300;
-      } else if (countryCode === "sk") {
-        if (shippingMethod === "zbox") shippingFee = 300;
-        else if (shippingMethod === "evening") shippingFee = 600;
-        else shippingFee = 400;
+let shipping = 0;
+
+    if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
+      const shippingTable = {
+        CZ: {
+          zbox: 300,
+          evening: 550,
+          packeta: 300,
+        },
+        SK: {
+          zbox: 300,
+          evening: 600,
+          packeta: 400,
+        },
+      };
+
+      const pricing = shippingTable[country];
+      if (pricing) {
+        shipping = pricing[deliveryMethod] || 0;
       }
-    const shippingPrices  = {
-      courier:{
+    }
+    if (deliveryMethod === "courier") {
+      const courierShippingPrices = {
         AU: 4400,
         AT: 1480,
         BE: 1630,
@@ -67,11 +74,11 @@ exports.handler = async (event) => {
         AE: 4275,
         GB: 2920,
         US: 3661,
-      }
-    };
-const deliveryPricing = shippingPrices[deliveryMethod] || {};
-const shipping = deliveryPricing[country] || 0;
+      };
 
+      shipping = courierShippingPrices[country] || 0;
+    }
+    
 let discountPercent = 0;
 
 if (promoCode) {
@@ -93,25 +100,26 @@ const totalBeforeDiscount = subtotal + shipping;
 const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
 const totalAmount = totalBeforeDiscount - discountAmount;
 
-const paymentIntent = await stripe.paymentIntents.create({
-  amount: totalAmount,
-  currency: "eur",
-  automatic_payment_methods: { enabled: true },
-  metadata: {
-    order_summary: JSON.stringify(cartItems), // přidej to jako string
-    country: country,
-    promo_code: promoCode || "none",
-    discount_percent: discountPercent.toString(), // volitelné
-    discount_amount: discountAmount.toString(),
-    delivery_method: deliveryMethod,
-    packeta_branch_id: packetaBranchId || "none",
-    packeta_branch_name: packetaBranchName || "none",
-    packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}, ${packetaBranchZip}`,
-    packeta_branch_type: packetaBranchType || "unknown",
-    selectedBranchLatitude,
-    selectedBranchLongitude,
-  },
-});
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: totalAmount,
+      currency: "eur",
+      automatic_payment_methods: { enabled: true },
+      metadata: {
+        order_summary: JSON.stringify(cartItems),
+        country: country,
+        promo_code: promoCode || "none",
+        discount_percent: discountPercent.toString(),
+        discount_amount: discountAmount.toString(),
+        delivery_method: deliveryMethod,
+        shipping_fee: shipping.toString(),
+        packeta_branch_id: packetaBranchId || "none",
+        packeta_branch_name: packetaBranchName || "none",
+        packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}, ${packetaBranchZip}`,
+        packeta_branch_type: packetaBranchType || "unknown",
+        selectedBranchLatitude,
+        selectedBranchLongitude,
+      },
+    });
 
     return {
       statusCode: 200,
