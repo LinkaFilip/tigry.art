@@ -5,10 +5,8 @@ exports.handler = async (event) => {
     const {  
       items,
       country,
-      getSelectedCountry,
       promoCode,
       deliveryMethod,
-      shippingFee,
       packetaBranchId,
       packetaBranchName,
       packetaBranchStreet,
@@ -17,22 +15,50 @@ exports.handler = async (event) => {
       packetaBranchType,
       selectedBranchLongitude,
       selectedBranchLatitude,
-} = JSON.parse(event.body);
+    } = JSON.parse(event.body);
     console.log("Received body:", event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
     const subtotal = items.reduce((sum, item) => {
       const priceInCents = Math.round(item.price * 100);
       return sum + priceInCents * item.quantity;
     }, 0);
-    const SHIPPING_COST = {
-    AU: 4400, AT: 1480, BE: 1630, CA: 3700, CZ: 530, DK: 1944, FI: 2630, FR: 1944,
-    DE: 1200, HK: 4400, IE: 2150, IL: 4400, IT: 1944, JP: 4400, MY: 4400, NL: 1627,
-    NZ: 4275, NO: 4300, PL: 1025, PT: 2152, SG: 4400, KR: 4400, ES: 2360, SE: 2632,
-    CH: 4260, AE: 4275, GB: 2920, US: 3661,
+    const shippingPrices  = {
+      packeta:{
+
+      },
+      courier:{
+        AU: 4400,
+        AT: 1480,
+        BE: 1630,
+        CA: 3700,
+        CZ: 530,
+        DK: 1944,
+        FI: 2630,
+        FR: 1944,
+        DE: 1200,
+        HK: 4400,
+        IE: 2150,
+        IL: 4400,
+        IT: 1944,
+        JP: 4400,
+        MY: 4400,
+        NL: 1627,
+        NZ: 4275,
+        NO: 4300,
+        PL: 1025,
+        PT: 2152,
+        SG: 4400,
+        KR: 4400,
+        ES: 2360,
+        SE: 2632,
+        CH: 4260,
+        AE: 4275,
+        GB: 2920,
+        US: 3661,
+      }
     };
-const fallbackShipping = SHIPPING_COST[getSelectedCountry | country] || 0;
-const parsedShipping = Number(shippingFee);
-const shipping = !isNaN(parsedShipping) ? parsedShipping : fallbackShipping;
+const deliveryPricing = shippingPrices[deliveryMethod] || {};
+const shipping = deliveryPricing[country] || 0;
 
 let discountPercent = 0;
 
