@@ -80,6 +80,10 @@ function updateUI() {
     localStorage.removeItem("shippingFee");
     payButton.disabled = false;
     payButton.style.margin = "0px 0px 0px 0px";
+    const element = document.querySelector(".jHvVd");
+    element.style.display = "block";
+    element.style.borderRadius = "8px";
+    element.style.border = "1px solid block";
   }  
   updatePrices();
 }
@@ -263,19 +267,7 @@ promoInput.addEventListener("input", updatePrices);
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
-  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
 
-deliveryRadios.forEach(radio => {
-  radio.addEventListener("change", () => {  
-  if (deliveryMethod === "courier") {
-    const element = document.querySelector(".jHvVd");
-    element.style.display = "block";
-    element.style.borderRadius = "8px";
-    element.style.border = "1px solid block";
-  }
-    updateUI();
-  });
-});
 containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping() / 100)).toFixed(2)}`;
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
