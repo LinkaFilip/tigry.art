@@ -302,8 +302,9 @@ function applyDiscount(price) {
   const selectedBranchType = localStorage.getItem("selectedBranchType");
   const selectedBranchLongitude = localStorage.getItem("selectedBranchLongitude");
   const selectedBranchLatitude = localStorage.getItem("selectedBranchLatitude");
-
-  if (deliveryMethod === "packeta" && !selectedBranchId) {
+deliveryRadios.forEach(radio => {
+  radio.addEventListener("change", () => {
+      if (deliveryMethod === "packeta" && !selectedBranchId) {
     payButton.disabled = false;
     payButton.textContent = "Pay now";
     return;
@@ -315,6 +316,10 @@ function applyDiscount(price) {
     element.style.borderRadius = "8px";
     element.style.border = "1px solid block";
   }
+    updateUI();
+  });
+});
+
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
