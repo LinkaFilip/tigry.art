@@ -83,7 +83,7 @@ function updateUI() {
     const element = document.querySelector(".jHvVd");
     element.style.display = "block";
     element.style.borderRadius = "8px";
-    element.style.border = "1px solid block";
+    element.style.border = "1px solid black";
   }  
   updatePrices();
 }
@@ -382,7 +382,7 @@ function applyDiscount(price) {
       errorMessage.textContent = "";
       errorMessage.textContent = error.message;
       payButton.disabled = false;
-      payButton.textContent = "Zaplatit";
+      payButton.textContent = "Pay now";
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       document.cookie = "cart=; Max-Age=0; path=/";
       location.href = "/posters/?success=true";
