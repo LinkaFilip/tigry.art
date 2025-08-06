@@ -166,7 +166,7 @@ deliveryRadios.forEach(radio => {
       (["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId);
 
     if (isMissingInfo) {
-      shippingElement.textContent = "Enter shipping details";
+      shippingDisplay.textContent = "Enter shipping details";
       return;
     }
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
