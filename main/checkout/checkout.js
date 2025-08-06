@@ -173,7 +173,7 @@ const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt
   } else {
     shipping = SHIPPING_COST[getSelectedCountry()] || 0;
   }
-  //shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
   containerIfMobile.textContent = `EUR ${ (subtotal + shipping / 100).toFixed(2) }`;
 };
 promoInput.addEventListener("input", updatePrices);
