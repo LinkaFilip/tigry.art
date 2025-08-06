@@ -153,8 +153,6 @@ const updatePrices = () => {
   const country = localStorage.getItem("countryCode");
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
-
-  // Výpočet dopravy
   let shipping = 0;
   if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
     shipping = shippingFee;
@@ -169,8 +167,6 @@ const updatePrices = () => {
   const discountPercent = code === "TEST10" ? 10 : 0;
   const discountAmount = totalBeforeDiscount * (discountPercent / 100);
   const totalAfterDiscount = totalBeforeDiscount - discountAmount;
-
-  // Kontrola vstupů
   const isMissingInfo = !country || !deliveryMethod;
   const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
 
@@ -181,8 +177,6 @@ const updatePrices = () => {
     shippingSummary.textContent = `–`;
     return;
   }
-
-  // Zobrazení cen
   subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
   totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
   shippingDisplay.textContent = `${(shipping / 100).toFixed(2)} €`;
