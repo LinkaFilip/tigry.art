@@ -154,12 +154,25 @@ deliveryRadios.forEach(radio => {
     const code = promoInput.value.trim().toUpperCase();
     const discountPercent = code === "TEST10" ? 10 : 0;
 
+    const country = localStorage.getItem("countryCode");
+    const deliveryMethod = localStorage.getItem("shippingMethod");
+    const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10);
+    const selectedBranchId = localStorage.getItem("selectedBranchId");
     const discountAmount = totalBeforeDiscount * (discountPercent / 100);
     const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+    const isMissingInfo =
+      !country ||
+      !deliveryMethod ||
+      (["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId);
 
+    if (isMissingInfo) {
+      shippingElement.textContent = "Enter shipping details";
+      return;
+    }
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
     shippingSummary.textContent = `Shipping to ${selectElement.options[selectElement.selectedIndex].text} – € ${(shipping / 100).toFixed(2)}`;
+    shippingDisplay.textContent = `${(shippingFee / 100).toFixed(2)} €`;
     updateMobileContainer();
   };
 const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
