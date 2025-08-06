@@ -154,7 +154,6 @@ const updatePrices = () => {
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
 
-  // Shipping fee výpočet
   let shipping = 0;
   if (deliveryMethod === "packeta") {
     shipping = shippingFee;
@@ -188,7 +187,7 @@ const updatePrices = () => {
   shippingDisplay.textContent = `${(shipping / 100).toFixed(2)} €`;
 
   const selectedCountryText = selectElement.options[selectElement.selectedIndex]?.text || country;
-  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(shipping / 100).toFixed(2)}`;
+  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${getSelectedShipping().toFixed(2)}`;
 
   updateMobileContainer();
 };
