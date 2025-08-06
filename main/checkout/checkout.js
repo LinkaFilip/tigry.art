@@ -263,6 +263,8 @@ promoInput.addEventListener("input", updatePrices);
   selectElement.addEventListener("change", () => {
     updatePrices();
   });
+  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
+
 deliveryRadios.forEach(radio => {
   radio.addEventListener("change", () => {
       if (deliveryMethod === "packeta" && !selectedBranchId) {
