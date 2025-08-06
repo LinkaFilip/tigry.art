@@ -89,8 +89,11 @@ function updateUI() {
     shownElement.style.display = "block";
     element.style.borderRadius = "8px";
     element.style.border = "1px solid black";
-    const space = document.querySelector("._1fragem32._1fragemms.gfFXW:nth-child(2)");
-    space.style.display = "block";
+    const all = document.querySelectorAll("._1fragem32._1fragemms.gfFXW");
+    const space = all[1];
+    if (space) {
+      space.style.display = "block";
+    }
   }  
   updatePrices();
 }
