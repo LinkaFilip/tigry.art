@@ -171,6 +171,7 @@ const updatePrices = () => {
 
   if (isMissingInfo || needsBranch) {
     shippingDisplay.textContent = "Enter shipping details";
+    subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     totalDisplay.textContent = `–`;
     shippingSummary.textContent = `–`;
     return;
