@@ -307,9 +307,6 @@ function applyDiscount(price) {
     payButton.disabled = false;
     payButton.textContent = "Pay now";
     return;
-  }else{
-    const element = document.querySelector(".jHvVd");
-    element.style.display = "none";
   }
   
   if (deliveryMethod === "courier") {
