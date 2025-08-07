@@ -169,8 +169,8 @@ const updatePrices = () => {
   const isMissingInfo = !country || !deliveryMethod;
   const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
 
-  if (isMissingInfo || needsBranch) {
-    shippingDisplay.textContent = "Enter shipping details";
+  if (needsBranch) {
+    shippingDisplay.textContent = "Vyberte výdejní místo";
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     totalDisplay.textContent = `–`;
     shippingSummary.textContent = `–`;
@@ -182,7 +182,10 @@ const updatePrices = () => {
 
   const selectedCountryText = selectElement.options[selectElement.selectedIndex]?.text || country;
   shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(getSelectedShipping() / 100).toFixed(2)}`;
-
+  
+  if (!country || !deliveryMethod) {
+    console.warn("Chybí země nebo způsob dopravy!");
+  }
   updateMobileContainer();
 };
 const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt1a._19gi7yt1l");
