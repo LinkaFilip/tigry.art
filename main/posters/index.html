@@ -633,7 +633,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!selectedTag) return;
 
   document.querySelectorAll(".FeaturedProductsModule_tileWrapper").forEach(product => {
-    const tags = (product.dataset.tags || "").split(",");
+    const rawTags = product.dataset.tags;
+    
+    if (!rawTags) {
+      product.style.display = "none";
+      return;
+    }
+
+    const tags = rawTags.split(",").map(tag => tag.trim());
+
     if (!tags.includes(selectedTag)) {
       product.style.display = "none";
     } else {
