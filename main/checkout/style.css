@@ -9634,6 +9634,12 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
     .gridContainer_GridGroup__5jzs0__{
         margin: 16px 0px 16px 0px;
     }
+    .gridContainer_GridGroup__5jzs0__ {
+        display: grid;
+        row-gap: 8px;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: 1fr;
+    }
 }
 
 @media all and (min-width: 1000px) {
