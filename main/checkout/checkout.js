@@ -86,9 +86,9 @@ function updateUI() {
 
     const selectedBranchId = localStorage.getItem("selectedBranchId");
     const selectedBranchName = localStorage.getItem("selectedBranchName");
-    packetaButton.innerText = selectedBranchId ? selectedBranchName : "Vybrat výdejní místo";
+    packetaButton.innerText = selectedBranchId ? selectedBranchName : "Choose the parcel shop";
     payButton.disabled = !selectedBranchId;
-    
+
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
     const shownElement = document.querySelector(".jHvVd");
@@ -175,7 +175,7 @@ const updatePrices = () => {
   const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
 
   if (needsBranch) {
-    shippingDisplay.textContent = "Vyberte výdejní místo";
+    shippingDisplay.textContent = "Choose the parcel shop";
     subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
     totalDisplay.textContent = `–`;
     shippingSummary.textContent = `–`;
