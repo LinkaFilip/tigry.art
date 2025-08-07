@@ -1273,7 +1273,7 @@ button.add-to-cart {
     display: flex;
     flex-direction: column;
     position: relative;
-    margin-bottom: 64px
+    margin-bottom: 8px;
 }
 .FeaturedProductsModule_featuredProductsModule:nth-child(1) {
     margin-top: 164px;
