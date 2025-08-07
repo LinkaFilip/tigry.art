@@ -1,12 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="659.23" height="660.7"><svg id="SvgjsSvg1055" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 659.23 660.7">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><style>
+    #light-icon {
+      display: inline;
+    }
+    #dark-icon {
+      display: none;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #light-icon {
+        display: none;
+      }
+      #dark-icon {
+        display: inline;
+      }
+    }
+  </style><g id="light-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1053)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(1.567889620570712,0,0,1.567889620570712,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="637.8" height="637.8"><svg id="Vrstva_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 637.8 637.8">
   <!-- Generator: Adobe Illustrator 29.5.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 141)  -->
   <defs>
     <style>
       .st0 {
-        display: none;
+        fill: #fff;
       }
 
-      .st0, .st1 {
+      .st1 {
         fill: #146757;
       }
 
@@ -14,10 +30,28 @@
         fill: #d45a3d;
       }
     </style>
-  </defs>
-  <circle class="st0" cx="482.6" cy="517.09" r="329.51"></circle>
-  <path class="st1" d="M329.87-1.46C147.41-1.46-.5,146.46-.5,328.92c0,142.42,90.13,263.8,216.46,310.2l46.22-239.32h133.76l62.69,233.45c118.49-50.19,201.61-167.56,201.61-304.34C660.24,146.45,512.33-1.46,329.87-1.46h0Z"></path>
-  <path class="st2" d="M464.31,235.36h-20.49v-35.31c0-13.23-10.82-24.05-24.05-24.05h-180.34c-13.23,0-24.05,10.82-24.05,24.05v35.31h-19.94c-24.03,0-43.69,19.66-43.69,43.69v138.92c0,24.03,19.66,43.69,43.69,43.69h54.92l8.09-41.74c-10.04-1.16-19.27-9.25-19.27-19.6v-4.18c0-11.14,9.03-20.17,20.17-20.17h142.51c11.14,0,20.17,9.03,20.17,20.17v4.18c0,10.55-8.1,19.19-18.42,20.08l9.83,41.27h50.88c24.03,0,43.69-19.66,43.69-43.69v-138.92c0-24.03-19.66-43.69-43.69-43.69h-.01ZM399.01,241.84h-136.83v-16.61c0-8.78,7.18-15.96,15.96-15.96h104.9c8.78,0,15.96,7.18,15.96,15.96v16.61h.01Z"></path>
-</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: none; } }
-</style></svg>
+  <clipPath id="SvgjsClipPath1053"><rect width="1000" height="1000" x="0" y="0" rx="500" ry="500"></rect></clipPath></defs>
+  <rect class="st0" x="110.79" y="334.02" width="417.66" height="296.17"></rect>
+  <path class="st1" d="M318.9-10.39C136.44-10.39-11.47,137.53-11.47,319.99c0,142.42,90.13,263.8,216.46,310.2l46.22-239.32h133.76l62.69,233.45c118.49-50.19,201.61-167.56,201.61-304.34,0-182.46-147.91-330.37-330.37-330.37h0Z"></path>
+  <path class="st2" d="M453.34,226.43h-20.49v-35.31c0-13.23-10.82-24.05-24.05-24.05h-180.34c-13.23,0-24.05,10.82-24.05,24.05v35.31h-19.94c-24.03,0-43.69,19.66-43.69,43.69v138.92c0,24.03,19.66,43.69,43.69,43.69h54.92l8.09-41.74c-10.04-1.16-19.27-9.25-19.27-19.6v-4.18c0-11.14,9.03-20.17,20.17-20.17h142.51c11.14,0,20.17,9.03,20.17,20.17v4.18c0,10.55-8.1,19.19-18.42,20.08l9.83,41.27h50.88c24.03,0,43.69-19.66,43.69-43.69v-138.92c0-24.03-19.66-43.69-43.69-43.69h-.01,0ZM388.04,232.91h-136.83v-16.61c0-8.78,7.18-15.96,15.96-15.96h104.9c8.78,0,15.96,7.18,15.96,15.96v16.61h.01Z"></path>
+</svg></svg></g></g></svg></g><g id="dark-icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="1000"><g clip-path="url(#SvgjsClipPath1054)"><rect width="1000" height="1000" fill="#ffffff"></rect><g transform="matrix(1.567889620570712,0,0,1.567889620570712,0,0)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="637.8" height="637.8"><svg id="Vrstva_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 637.8 637.8">
+  <!-- Generator: Adobe Illustrator 29.5.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 141)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #fff;
+      }
+
+      .st1 {
+        fill: #146757;
+      }
+
+      .st2 {
+        fill: #d45a3d;
+      }
+    </style>
+  <clipPath id="SvgjsClipPath1054"><rect width="1000" height="1000" x="0" y="0" rx="500" ry="500"></rect></clipPath></defs>
+  <rect class="st0" x="110.79" y="334.02" width="417.66" height="296.17"></rect>
+  <path class="st1" d="M318.9-10.39C136.44-10.39-11.47,137.53-11.47,319.99c0,142.42,90.13,263.8,216.46,310.2l46.22-239.32h133.76l62.69,233.45c118.49-50.19,201.61-167.56,201.61-304.34,0-182.46-147.91-330.37-330.37-330.37h0Z"></path>
+  <path class="st2" d="M453.34,226.43h-20.49v-35.31c0-13.23-10.82-24.05-24.05-24.05h-180.34c-13.23,0-24.05,10.82-24.05,24.05v35.31h-19.94c-24.03,0-43.69,19.66-43.69,43.69v138.92c0,24.03,19.66,43.69,43.69,43.69h54.92l8.09-41.74c-10.04-1.16-19.27-9.25-19.27-19.6v-4.18c0-11.14,9.03-20.17,20.17-20.17h142.51c11.14,0,20.17,9.03,20.17,20.17v4.18c0,10.55-8.1,19.19-18.42,20.08l9.83,41.27h50.88c24.03,0,43.69-19.66,43.69-43.69v-138.92c0-24.03-19.66-43.69-43.69-43.69h-.01,0ZM388.04,232.91h-136.83v-16.61c0-8.78,7.18-15.96,15.96-15.96h104.9c8.78,0,15.96,7.18,15.96,15.96v16.61h.01Z"></path>
+</svg></svg></g></g></svg></g></svg>
