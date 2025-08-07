@@ -166,7 +166,6 @@ const updatePrices = () => {
   const discountPercent = code === "TEST10" ? 10 : 0;
   const discountAmount = totalBeforeDiscount * (discountPercent / 100);
   const totalAfterDiscount = totalBeforeDiscount - discountAmount;
-  const isMissingInfo = !country || !deliveryMethod;
   const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
 
   if (needsBranch) {
