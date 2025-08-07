@@ -79,7 +79,7 @@
         </div>
       </div>
       <div class="FeaturedProductsModule">
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Landscape">
           <article>
             <a href="/products/Japan-landscape" class="ProductTile_container__OU5uV">
               <div>
@@ -126,7 +126,7 @@
             </a>
           </article>
         </div>
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Landscape">
           <article>
             <a href="/products/Mexico-landscape" class="ProductTile_container__OU5uV">
               <div>
@@ -172,7 +172,7 @@
             </a>
           </article>
         </div>
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Landscape">
           <article>
             <a href="/products/Czechia-landscape" class="ProductTile_container__OU5uV">
               <div>
@@ -219,7 +219,7 @@
             </a>
           </article>
         </div>
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Landscape">
           <article>
             <a href="/products/MiddleEast-landscape" class="ProductTile_container__OU5uV">
               <div>
@@ -297,7 +297,7 @@
       </section>
       <section class="FeaturedProductSection FeaturedProductsModule_featuredProductsModule Section_section Section_gutter">
       <div class="FeaturedProductsModule">
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Landscape">
           <article>
             <a href="/products/Uganda-landscape" class="ProductTile_container__OU5uV">
               <div>
@@ -344,7 +344,7 @@
             </a>
           </article>
         </div>
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Texture">
           <article>
             <a href="/products/Japan-texture" class="ProductTile_container__OU5uV">
               <div>
@@ -382,6 +382,7 @@
                   <h3 class="ProductTile_title__ERaXV">Japan</h3>
                   <div class="ProductTile_productTags ProductTags_productTags">
                     <a class="ProductTags_tag ProductTags_isLink Link_link___2y9H" data-tag="Poster" href="">Poster</a>
+                    <a class="ProductTags_tag ProductTags_isLink Link_link___2y9H" data-tag="Texture" href="">Texture</a>
                   </div>
                 </div>
                   <div class="ProductTile_price__JoNoT">€ 10.00</div>
@@ -390,7 +391,7 @@
             </a>
           </article>
         </div>
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Texture">
           <article>
             <a href="/products/Mexico-texture" class="ProductTile_container__OU5uV">
               <div>
@@ -437,7 +438,7 @@
             </a>
           </article>
         </div>
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Texture">
           <article>
             <a href="/products/Czechia-texture" class="ProductTile_container__OU5uV">
               <div>
@@ -484,7 +485,7 @@
             </a>
           </article>
         </div>
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Texture">
           <article>
             <a href="/products/MiddleEast-texture" class="ProductTile_container__OU5uV">
               <div>
@@ -531,7 +532,7 @@
             </a>
           </article>
         </div>
-        <div class="FeaturedProductsModule_tileWrapper">
+        <div class="FeaturedProductsModule_tileWrapper" data-tag="Poster, Texture">
           <article>
             <a href="/products/Uganda-texture" class="ProductTile_container__OU5uV">
               <div>
@@ -626,14 +627,18 @@
   </body>
   <script>
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".Link_link___2y9H").forEach(tagEl => {
-    tagEl.addEventListener("click", (e) => {
-      e.preventDefault();
-      const tag = tagEl.dataset.tag;
-      const url = new URL(window.location.href);
-      url.searchParams.set("tag", tag);
-      window.location.href = url.toString();
-    });
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedTag = urlParams.get("tag");
+
+  if (!selectedTag) return;
+
+  document.querySelectorAll(".FeaturedProductsModule_tileWrapper").forEach(product => {
+    const tags = (product.dataset.tags || "").split(",");
+    if (!tags.includes(selectedTag)) {
+      product.style.display = "none";
+    } else {
+      product.style.display = "";
+    }
   });
 });
 
