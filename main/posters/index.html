@@ -625,5 +625,55 @@
     </section>
   </footer>
 
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedTag = urlParams.get("tag");
+
+  if (!selectedTag) return;
+
+  document.querySelectorAll(".FeaturedProductsModule_tileWrapper").forEach(product => {
+    const rawTags = product.dataset.tags;
+
+    if (!rawTags) {
+      product.style.display = "none";
+      return;
+    }
+
+    const tags = rawTags.split(",").map(tag => tag.trim());
+
+    if (!tags.includes(selectedTag)) {
+      product.style.display = "none";
+    } else {
+      product.style.display = "";
+    }
+  });
+});
+
+function filterByTagFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const selectedTag = urlParams.get("tag");
+
+  if (!selectedTag) return;
+
+  document.querySelectorAll(".FeaturedProductsModule_tileWrapper").forEach(product => {
+    const rawTags = product.dataset.tags;
+
+    if (!rawTags) {
+      product.style.display = "none";
+      return;
+    }
+
+    const tags = rawTags.split(",").map(tag => tag.trim());
+
+    if (!tags.includes(selectedTag)) {
+      product.style.display = "none";
+    } else {
+      product.style.display = "";
+    }
+  });
+}
+ 
+  </script>
   </body>
 </html>
