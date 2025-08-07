@@ -169,7 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function addToCart(product) {
   if (!product.id || !product.name || isNaN(product.price)) {
-    console.warn("Neplatný produkt:", product);
     return;
   }
 

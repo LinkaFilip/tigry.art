@@ -71,6 +71,7 @@ connectedCallback() {
 
   frontFace.style.backgroundImage = `url('${frontUrl}')`;
   backFace.style.backgroundImage = `url('${backUrl}')`;
+  backFace.style.background = "white";
 
   const observer = new IntersectionObserver(
     (entries) => {

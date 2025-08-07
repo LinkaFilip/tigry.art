@@ -161,8 +161,7 @@ const updatePrices = () => {
   }
 
   const totalBeforeDiscount = subtotal + shipping / 100;
-
-  // Promo kód
+  
   const code = promoInput.value.trim().toUpperCase();
   const discountPercent = code === "TEST10" ? 10 : 0;
   const discountAmount = totalBeforeDiscount * (discountPercent / 100);
