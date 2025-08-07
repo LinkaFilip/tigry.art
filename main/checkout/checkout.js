@@ -83,6 +83,12 @@ function updateUI() {
 
   if (selectedValue === "packeta") {
     packetaButton.style.display = "inline-block";
+
+    const selectedBranchId = localStorage.getItem("selectedBranchId");
+    const selectedBranchName = localStorage.getItem("selectedBranchName");
+    packetaButton.innerText = selectedBranchId ? selectedBranchName : "Vybrat výdejní místo";
+    payButton.disabled = !selectedBranchId;
+    
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
     const shownElement = document.querySelector(".jHvVd");
