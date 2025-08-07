@@ -30386,7 +30386,6 @@ input:-webkit-autofill:active {
 }
 button#pay-button {
     border-radius: 6px;
-    margin-top: 16px;
 }
 [type=checkbox], [type=radio]:checked {
     background: black;
