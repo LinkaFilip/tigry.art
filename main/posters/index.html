@@ -257,7 +257,7 @@
         </div>
       </div>
       </section>
-      <section class="FeaturedProductSection FeaturedProductsModule_featuredProductsModule Section_section Section_gutter Section_specialSection">
+      <section class="Section_Featured__showcase FeaturedProductSection FeaturedProductsModule_featuredProductsModule Section_section Section_gutter Section_specialSection">
       <div class="ImagesModule_imagesGrid__OGs8S desktopOnly Section_section__mRxGN Section_grid__SVwCl">
         <div class="ImagesModule_tileWrapper__Iz9T_ ImagesModule_doubleTile__cJn6h">
           <div class="ImagesModule_imageContainer__KWIs3">
@@ -621,6 +621,12 @@ document.addEventListener("DOMContentLoaded", () => {
       product.style.display = "";
     }
   });
+  if (selectedTag) {
+    const featuredSection = document.querySelector(".Section_Featured__showcase");
+    if (featuredSection) {
+      featuredSection.style.display = "none";
+    }
+  }
 });
 
 function filterByTagFromURL() {
