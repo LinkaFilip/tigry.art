@@ -199,11 +199,8 @@ packetaButton.addEventListener("click", () => {
     const cart = getCartFromCookie();
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
-console.log(selectElement.value)
   const getSelectedCountry = () => selectElement.value;
-  console.log(getSelectedCountry());
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
-  console.log(getCurrentShipping());
   document.getElementById("Select0").addEventListener("change", () => {
   getSelectedShipping();
   updatePrices();
@@ -260,7 +257,6 @@ const updatePrices = () => {
   shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(shipping / 100).toFixed(2)}`;
   
   if (!localStorage.getItem("countryCode") || !deliveryMethod) {
-    console.warn("Chybí země nebo způsob dopravy!");
   }
   updateMobileContainer();
 };
@@ -423,7 +419,6 @@ paymentRequest.on('shippingaddresschange', (event) => {
   });
 });
   if (!paymentRequest) {
-    console.error("PaymentRequest není vytvořen");
     return;
   }
   paymentRequest.on('paymentmethod', async (event) => {
@@ -436,7 +431,6 @@ paymentRequest.on('shippingaddresschange', (event) => {
 
   if (confirmError) {
     event.complete('fail');
-    console.error(confirmError.message);
   } else {
     event.complete('success');
   }
@@ -462,7 +456,7 @@ paymentRequest.on('shippingaddresschange', (event) => {
       container.style.display = "none";
     }
   }).catch(err => {
-    console.error("Chyba při canMakePayment:", err);
+    console.error(err);
   });
 };
 
