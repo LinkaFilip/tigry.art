@@ -3,14 +3,14 @@ const { v4: uuidv4 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
-const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseUrl = 'https://hhzratwfjumkidragfed.supabase.co';
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing SUPABASE_URL or SUPABASE_ANON_KEY environment variables');
 }
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 exports.handler = async (event) => {
   try {

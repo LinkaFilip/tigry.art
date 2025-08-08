@@ -42,8 +42,6 @@ export const handler = async (event) => {
       console.error('Objednávka nenalezena pro PaymentIntent ID:', paymentIntent.id);
       return { statusCode: 400, body: 'Order not found' };
     }
-
-    // Aktualizuj status objednávky na "paid"
     const order = orders[0];
     const { error: updateError } = await supabase
       .from('orders')
