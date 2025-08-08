@@ -311,7 +311,11 @@ let paymentRequestButton = null;
 
 const createPaymentRequest = () => {
   if (paymentRequestButton) {
-    paymentRequestButton.unmount();
+    try {
+      paymentRequestButton.unmount();
+    } catch (e) {
+      console.warn("Unmount failed:", e);
+    }
     paymentRequestButton = null;
   }
 
@@ -352,7 +356,6 @@ const createPaymentRequest = () => {
           },
         },
       });
-
       paymentRequestButton.mount(container);
     } else {
       container.style.display = "none";
