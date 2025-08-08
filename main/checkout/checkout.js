@@ -612,7 +612,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       body: JSON.stringify({
         items: cart,
         country: country,
-        getSelectedCountry: getSelectedCountry(),
         promoCode: promoCode,
         deliveryMethod: deliveryMethod,
         packetaBranchId: selectedBranchId,
