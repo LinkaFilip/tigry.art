@@ -120,6 +120,7 @@ function updateUI() {
 
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
+    enableGooglePayIfAvailable();
 
     const shownElement = document.querySelector(".jHvVd");
     shownElement.style.display = "none";
