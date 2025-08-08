@@ -345,7 +345,7 @@ let paymentRequestButton = null;
 
 const createPaymentRequest = () => {
   const subtotal = calculateSubtotal() * 100;
-  const shipping = parseInt(localStorage.getItem("shippingFee"));
+  const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
   const country = (selectElement.value || "CZ").toUpperCase();
 
   if (paymentRequestButton) {
