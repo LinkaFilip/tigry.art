@@ -306,7 +306,7 @@ promoInput.addEventListener("input", updatePrices);
     });
   }; 
   selectElement.addEventListener("change", updatePrices);
-  
+
 let paymentRequestButton;
 
 
@@ -341,17 +341,22 @@ let shipping = parseInt(localStorage.getItem("shippingFee"));
     },
   });
 
+  if (!paymentRequest) {
+    console.error("PaymentRequest není vytvořen");
+    return;
+  }
   paymentRequest.canMakePayment().then(result => {
     const container = document.getElementById("payment_request_button");
+    container
     if (result) {
       container.innerHTML = "";
-      prButton.mount("#payment_request_button");
+      prButton.mount(container);
     } else {
       container.style.display = "none";
     }
   });
-  
-  paymentRequestButton.mount('#payment-request-button-container');
+  const container = document.getElementById("payment_request_button");
+  paymentRequestButton.mount(container);
 };
 
 
