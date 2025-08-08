@@ -88,7 +88,7 @@ packetaButton.addEventListener("click", (e) => {
     }
   });
 });
-const getCurrentShippingFee = () => {
+const getCurrentShipping = () => {
   const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value || localStorage.getItem("shippingMethod");
   if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
     return parseInt(localStorage.getItem("shippingFee")) || 0;
