@@ -185,9 +185,7 @@ const updatePrices = () => {
   }
 
   const deliveryMethod = selectedRadio?.value || localStorage.getItem("shippingMethod");
-  const country = localStorage.getItem("countryCode");
-  const selectedBranchId = localStorage.getItem("selectedBranchId");
-
+  
   let shipping = 0;
 
   if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
@@ -197,13 +195,14 @@ const updatePrices = () => {
     localStorage.setItem("shippingFee", shipping);
   }
 
-  localStorage.setItem("shippingFee", shippingFee);
   const totalBeforeDiscount = subtotal + shipping / 100;
   
   const code = promoInput.value.trim().toUpperCase();
   const discountPercent = code === "TEST10" ? 10 : 0;
   const discountAmount = totalBeforeDiscount * (discountPercent / 100);
   const totalAfterDiscount = totalBeforeDiscount - discountAmount;
+
+  const selectedBranchId = localStorage.getItem("selectedBranchId");
   const needsBranch = ["packeta", "zbox", "evening"].includes(deliveryMethod) && !selectedBranchId;
 
   if (needsBranch) {
@@ -213,14 +212,15 @@ const updatePrices = () => {
     shippingSummary.textContent = `–`;
     return;
   }
-  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
-  totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
-  shippingDisplay.textContent = `${(shipping / 100).toFixed(2)} €`;
 
-  const selectedCountryText = selectElement.options[selectElement.selectedIndex]?.text || country;
-  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(getSelectedShipping() / 100).toFixed(2)}`;
+  subtotalDisplay.textContent = `€ ${subtotal.toFixed(2)}`;
+  shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+  totalDisplay.textContent = `€ ${totalAfterDiscount.toFixed(2)}`;
+
+  const selectedCountryText = selectElement.options[selectElement.selectedIndex]?.text || localStorage.getItem("countryCode");
+  shippingSummary.textContent = `Shipping to ${selectedCountryText} – € ${(shipping / 100).toFixed(2)}`;
   
-  if (!country || !deliveryMethod) {
+  if (!localStorage.getItem("countryCode") || !deliveryMethod) {
     console.warn("Chybí země nebo způsob dopravy!");
   }
   updateMobileContainer();
