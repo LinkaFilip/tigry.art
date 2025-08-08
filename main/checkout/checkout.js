@@ -139,10 +139,6 @@ function updateUI() {
   }  
   updatePrices();
 }
-selectElement.addEventListener("change", () => {
-  updatePrices();
-  createPaymentRequest();
-});
 deliveryRadios.forEach(radio => {
   radio.addEventListener("change", () => {
       document.querySelectorAll('.delivery-option').forEach(label => {
@@ -302,7 +298,7 @@ promoInput.addEventListener("input", updatePrices);
       container.appendChild(itemDiv);
     });
   }; 
-  selectElement.addEventListener("change", updatePrices);
+  selectElement.addEventListener("change", updatePrices, createPaymentRequest());
 
 let paymentRequest = null;
 let paymentRequestButton = null;
