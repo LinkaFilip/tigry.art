@@ -103,12 +103,15 @@ function updateUI() {
     packetaButton.style.display = "inline-block";
 
     const selectedBranchId = localStorage.getItem("selectedBranchId");
+    const container = document.getElementById("payment_request_button");
     const selectedBranchName = localStorage.getItem("selectedBranchName");
     packetaButton.innerText = selectedBranchId ? selectedBranchName : "Choose the parcel shop";
     payButton.disabled = !selectedBranchId;
 
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
+    container.style.pointerEvents = "visible";
+    container.style.opacity = "1";
     const shownElement = document.querySelector(".jHvVd");
     shownElement.style.display = "none";
     const all = document.querySelectorAll("._1fragem32._1fragemms.gfFXW");
