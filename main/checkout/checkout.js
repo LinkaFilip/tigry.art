@@ -1,6 +1,8 @@
 window.addEventListener("beforeunload", () => {
   const cartData = localStorage.getItem("cart");
-  localStorage.clear();
+  ['selectedBranchId', 'selectedBranchName', 'shippingMethod', 'shippingFee', 'selectedBranchStreet', 'selectedBranchCity', 'selectedBranchZip', 'selectedBranchType', 'selectedBranchLongitude', 'selectedBranchLatitude'].forEach(key => {
+    localStorage.removeItem(key);
+  });
   if (cartData !== null) {
     localStorage.setItem("cart", cartData);
   }
@@ -391,7 +393,7 @@ const createPaymentRequest = () => {
     console.error("Chyba při canMakePayment:", err);
   });
 };
-selectElement.addEventListener("change", updatePrices, createPaymentRequest());
+selectElement.addEventListener("change", updatePrices(), createPaymentRequest());
 
   const style = {
     base: {
