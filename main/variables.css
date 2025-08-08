@@ -130,6 +130,7 @@ nav span {
 .Section_section__mRxGN.Section_gutter__BS6Ao {
     z-index: 150000;
     padding-left: var(--layout-margin);
+    padding-right: var(--layout-margin);
 }
 @media (min-width: 1024px) {
     .Header_header{
