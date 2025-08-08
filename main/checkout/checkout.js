@@ -186,9 +186,9 @@ const updatePrices = () => {
   
   if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {shippingFee}
   else if (deliveryMethod === "courier") {
-      localStorage.setItem("shippingFee", SHIPPING_COST[selectElement.value] || 0);
+      localStorage.setItem(getSelectedShipping());
   } else {
-      localStorage.setItem("shippingFee", SHIPPING_COST[selectElement.value] || 0);
+      localStorage.setItem(getSelectedShipping());
   }
 
   localStorage.setItem("shippingFee", shippingFee);
