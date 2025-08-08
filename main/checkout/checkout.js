@@ -297,21 +297,17 @@ promoInput.addEventListener("input", updatePrices);
 
 const createPaymentRequest = () => {
   const subtotal = calculateSubtotal();
-
-  // Zjištění aktuální metody dopravy
   const deliveryMethod =
     document.querySelector('input[name="deliveryMethod"]:checked')?.value ||
     localStorage.getItem("shippingMethod");
 
-  // Výpočet ceny dopravy (stejně jako v updatePrices)
-  let shipping = 0;
+  let shipping = 0;  
   if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
-    shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
+      shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
   } else {
-    shipping = SHIPPING_COST[selectElement.value] || 0;
+      shipping = SHIPPING_COST[selectElement.value] || 0;
   }
-
-  // Přepočet na centy
+  
   const totalAmount = Math.round((subtotal + shipping / 100) * 100);
 
   const paymentRequest = stripe.paymentRequest({
