@@ -308,17 +308,22 @@ promoInput.addEventListener("input", updatePrices);
   selectElement.addEventListener("change", updatePrices);
 
 let paymentRequestButton = null;
+let prButton = null;
+let paymentRequest = null;
 
 const createPaymentRequest = () => {
+  const subtotal = calculateSubtotal() * 100;
+  const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
+  const country = selectElement.value || "cz";
+  
   if (paymentRequestButton) {
     paymentRequestButton.unmount();
     paymentRequestButton = null;
+    prButton = null;
+    paymentRequest = null;
   }
-  const subtotal = calculateSubtotal() * 100;
-  const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
-  const country = selectElement.value || "eur";
 
-  const paymentRequest = stripe.paymentRequest({
+  paymentRequest = stripe.paymentRequest({
     country: country,
     currency: "eur",
     total: {
@@ -334,7 +339,7 @@ const createPaymentRequest = () => {
     return;
   }
 
-  const prButton = elements.create("paymentRequestButton", {
+  prButton = elements.create("paymentRequestButton", {
     paymentRequest,
     style: {
       paymentRequestButton: {
@@ -349,7 +354,7 @@ const createPaymentRequest = () => {
     if (result) {
       container.innerHTML = "";
       prButton.mount(container);
-      paymentRequestButton = prButton;  // uložíme instanci, abychom mohli odmountovat později
+      paymentRequestButton = prButton;
     } else {
       container.style.display = "none";
     }
