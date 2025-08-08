@@ -18,8 +18,22 @@ exports.handler = async (event) => {
     } = JSON.parse(event.body);
     console.log("Received body:", event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
+    const productsDB = {
+      "poster001": 1000,
+      "poster002": 1000,
+      "poster003": 1000,
+      "poster004": 1000,
+      "poster005": 1000,
+      "poster006": 1000,
+      "poster007": 1000,
+      "poster008": 1000,
+      "poster009": 1000,
+      "poster010": 1000,
+    };
+    
     const subtotal = items.reduce((sum, item) => {
-      const priceInCents = Math.round(item.price * 100);
+      const priceInCents = productsDB[item.id];
+      if (!priceInCents) throw new Error(`Unknown product ID: ${item.id}`);
       return sum + priceInCents * item.quantity;
     }, 0);
 
