@@ -1,8 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { v4: uuidv4 } = require('uuid');
-import { createClient } from '@supabase/supabase-js';
-import 'dotenv/config';
 const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config();
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
