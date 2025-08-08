@@ -17,7 +17,18 @@ const packetaButton = document.getElementById("packeta-button");
   const shippingDisplay = document.getElementById("shipping-price");
   const totalDisplay = document.getElementById("total-price");
   const shippingSummary = document.getElementById("shipping-summary");
-
+function clearShippingData() {  
+      localStorage.setItem("selectedBranchId");
+      localStorage.setItem("selectedBranchName");
+      localStorage.setItem("shippingMethod");
+      localStorage.setItem("shippingFee");    
+      localStorage.setItem("selectedBranchStreet");
+      localStorage.setItem("selectedBranchCity");
+      localStorage.setItem("selectedBranchZip");
+      localStorage.setItem("selectedBranchType");
+      localStorage.setItem("selectedBranchLongitude");
+      localStorage.setItem("selectedBranchLatitude");
+}
 
 
 packetaButton.addEventListener("click", (e) => {
@@ -137,6 +148,7 @@ deliveryRadios.forEach(radio => {
         label.classList.remove('active');
       });
       radio.closest('label').classList.add('active');
+    clearShippingData();
     localStorage.setItem("shippingMethod", radio.value);
     updateUI();
     updatePrices();
@@ -361,6 +373,7 @@ selectElement.addEventListener("change", () => {
 });
 document.querySelectorAll('input[name="deliveryMethod"]').forEach(radio => {
   radio.addEventListener("change", () => {
+    clearShippingData();
     updatePrices();
     createPaymentRequest();
   });
