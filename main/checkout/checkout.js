@@ -376,7 +376,6 @@ document.querySelectorAll('input[name="deliveryMethod"]').forEach(radio => {
   radio.addEventListener("change", () => {
     clearShippingData();
     updatePrices();
-    createPaymentRequest();
   });
 });
 
