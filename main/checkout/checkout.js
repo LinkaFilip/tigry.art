@@ -391,10 +391,9 @@ const createPaymentRequest = () => {
   ],
   });
 paymentRequest.on('shippingaddresschange', (event) => {
-  // Můžeš zde podle adresy změnit nabídku dopravy, ceny apod.
   let shippingOptions = [];
 
-  if (event.shippingAddress.country === 'US') {
+  if (event.shippingAddress.country === 'CZ') {
     shippingOptions = [
       {
         id: 'free-shipping',
@@ -406,7 +405,7 @@ paymentRequest.on('shippingaddresschange', (event) => {
         id: 'express-shipping',
         label: 'Express shipping',
         detail: 'Delivery within 2 days',
-        amount: 500,
+        amount: 300,
       }
     ];
   } else {
@@ -420,13 +419,12 @@ paymentRequest.on('shippingaddresschange', (event) => {
     ];
   }
 
-  // Aktualizuj paymentRequest s možnostmi dopravy
   event.updateWith({
     status: 'success',
     shippingOptions,
     total: {
       label: 'Total',
-      amount: 1000 + shippingOptions[0].amount, // aktualizuj cenu podle dopravy
+      amount: 1000 + shippingOptions[0].amount,
     }
   });
 });
