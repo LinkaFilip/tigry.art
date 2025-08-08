@@ -179,10 +179,13 @@ const updatePrices = () => {
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
   let shipping = 0;
-  if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
-    shipping = shippingFee;
+  
+  if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
+      localStorage.setItem("shippingFee", vypocitanaCenaPacketty);
+  } else if (deliveryMethod === "courier") {
+      localStorage.setItem("shippingFee", SHIPPING_COST[selectElement.value] || 0);
   } else {
-    shipping = getSelectedShipping();
+      localStorage.setItem("shippingFee", SHIPPING_COST[selectElement.value] || 0);
   }
 
   const totalBeforeDiscount = subtotal + shipping / 100;
@@ -300,14 +303,8 @@ const createPaymentRequest = () => {
   const deliveryMethod =
     document.querySelector('input[name="deliveryMethod"]:checked')?.value ||
     localStorage.getItem("shippingMethod");
+const shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
 
-  let shipping = 0;  
-  if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
-      shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
-  } else {
-      shipping = SHIPPING_COST[selectElement.value] || 0;
-  }
-  
   const totalAmount = Math.round((subtotal + shipping / 100) * 100);
 
   const paymentRequest = stripe.paymentRequest({
