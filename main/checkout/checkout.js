@@ -307,56 +307,59 @@ promoInput.addEventListener("input", updatePrices);
   }; 
   selectElement.addEventListener("change", updatePrices);
 
-let paymentRequestButton;
-
+let paymentRequestButton = null;
 
 const createPaymentRequest = () => {
   if (paymentRequestButton) {
-  paymentRequestButton.unmount();
-  paymentRequestButton = null;
-}
-  const subtotal = calculateSubtotal() * 100;
-let shipping = parseInt(localStorage.getItem("shippingFee"));
+    paymentRequestButton.unmount();
+    paymentRequestButton = null;
+  }
 
+  const subtotal = calculateSubtotal() * 100;
+  const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
+  const country = selectElement.value || "eur";
 
   const paymentRequest = stripe.paymentRequest({
-    country: selectElement.value,
+    country: country,
     currency: "eur",
     total: {
       label: "Celková cena",
-      amount: (subtotal + shipping),
+      amount: subtotal + shipping,
     },
     requestPayerName: true,
     requestPayerEmail: true,
-  });
-
-  const prButton = elements.create("paymentRequestButton", {
-    paymentRequest,
-    style: {
-      paymentRequestButton: {
-        type: "default",
-        theme: "dark",
-        height: "44px",
-      },
-    },
   });
 
   if (!paymentRequest) {
     console.error("PaymentRequest není vytvořen");
     return;
   }
+
   paymentRequest.canMakePayment().then(result => {
     const container = document.getElementById("payment_request_button");
-    container
+
     if (result) {
+      container.style.display = "block";
       container.innerHTML = "";
-      prButton.mount(container);
+
+      paymentRequestButton = elements.create("paymentRequestButton", {
+        paymentRequest,
+        style: {
+          paymentRequestButton: {
+            type: "default",
+            theme: "dark",
+            height: "44px",
+          },
+        },
+      });
+
+      paymentRequestButton.mount(container);
     } else {
       container.style.display = "none";
     }
+  }).catch(error => {
+    console.error("Chyba při canMakePayment:", error);
   });
-  const container = document.getElementById("payment_request_button");
-  paymentRequestButton.mount(container);
 };
 
 
