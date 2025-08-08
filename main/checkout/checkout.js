@@ -121,8 +121,8 @@ function updateUI() {
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
 
-    if(payButton.disabled = false){
-      container.style.pointerEvents = "visible";
+    if(!payButton.disabled){
+      container.style.pointerEvents = "auto";
       container.style.opacity = "1";
     }else{      
       container.style.pointerEvents = "none";
@@ -145,8 +145,8 @@ function updateUI() {
     payButton.disabled = false;
     payButton.style.margin = "0px 0px 0px 0px";
 
-    if(payButton.disabled = false){
-      container.style.pointerEvents = "visible";
+    if(!payButton.disabled){
+      container.style.pointerEvents = "auto";
       container.style.opacity = "1";
     }else{      
       container.style.pointerEvents = "none";
