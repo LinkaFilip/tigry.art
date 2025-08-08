@@ -1,9 +1,17 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { v4: uuidv4 } = require('uuid');
-import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import 'dotenv/config';
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+const { createClient } = require('@supabase/supabase-js');
+
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing SUPABASE_URL or SUPABASE_ANON_KEY environment variables');
+}
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 exports.handler = async (event) => {
   try {
