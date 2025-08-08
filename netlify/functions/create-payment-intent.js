@@ -1,24 +1,9 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { v4: uuidv4 } = require('uuid');
-const fs = require('fs');
-const path = require('path');
-const ordersFile = path.join(__dirname, 'orders.json');
-
-function readOrders() {
-  if (!fs.existsSync(ordersFile)) return [];
-  const data = fs.readFileSync(ordersFile, 'utf8');
-  return JSON.parse(data);
-}
-
-function writeOrders(orders) {
-  fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
-}
-
-function addOrder(order) {
-  const orders = readOrders();
-  orders.push(order);
-  writeOrders(orders);
-}
+import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
+import 'dotenv/config';
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 exports.handler = async (event) => {
   try {
@@ -153,14 +138,22 @@ exports.handler = async (event) => {
       },
     });
 
-    addOrder({
-      id: uuidv4(),
-      paymentIntentId: paymentIntent.id,
+    const { data, error } = await supabase.from('orders').insert([{
+      payment_intent_id: paymentIntent.id,
       items,
-      totalAmount,
+      total_amount: totalAmount,
       status: 'pending',
-      createdAt: new Date().toISOString(),
-    });
+      country,
+      delivery_method: deliveryMethod,
+      packeta_branch_id: packetaBranchId || null,
+      packeta_branch_name: packetaBranchName || null,
+      packeta_branch_address: packetaBranchStreet && packetaBranchCity ? `${packetaBranchStreet}, ${packetaBranchCity}` : null,
+      created_at: new Date().toISOString(),
+    }]);
+    if (error) {
+      console.error('Chyba při ukládání objednávky do DB:', error);
+      return { statusCode: 500, body: JSON.stringify({ error: 'Database error' }) };
+    }
 
     return {
       statusCode: 200,

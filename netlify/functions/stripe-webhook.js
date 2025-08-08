@@ -1,53 +1,13 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET);
+import Stripe from 'stripe';
+import { createClient } from '@supabase/supabase-js';
+import 'dotenv/config';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET);
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-require('dotenv').config();
 
-const fs = require('fs').promises;
-const path = require('path');
-const ordersFile = path.join(__dirname, 'orders.json');
-
-async function readOrders() {
-  try {
-    const data = await fs.readFile(ordersFile, 'utf8');
-    return JSON.parse(data);
-  } catch (err) {
-    if (err.code === 'ENOENT') return [];
-    throw err;
-  }
-}
-
-async function writeOrders(orders) {
-  await fs.writeFile(ordersFile, JSON.stringify(orders, null, 2));
-}
-
-async function addOrder(order) {
-  const orders = await readOrders();
-  orders.push(order);
-  await writeOrders(orders);
-}
-
-async function getOrderByPaymentIntentId(paymentIntentId) {
-  const orders = await readOrders();
-  return orders.find(order => order.paymentIntentId === paymentIntentId) || null;
-}
-
-async function updateOrderStatus(orderId, status) {
-  const orders = await readOrders();
-  let updated = false;
-  const newOrders = orders.map(order => {
-    if (order.id === orderId) {
-      updated = true;
-      return { ...order, status };
-    }
-    return order;
-  });
-  if (updated) {
-    await writeOrders(newOrders);
-  }
-  return updated;
-}
-
-exports.handler = async (event) => {
+export const handler = async (event) => {
   let payload = event.body;
   if (event.isBase64Encoded) {
     payload = Buffer.from(event.body, 'base64').toString('utf8');
@@ -60,49 +20,46 @@ exports.handler = async (event) => {
     stripeEvent = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
   } catch (err) {
     console.error('Webhook signature verification failed:', err.message);
-    return {
-      statusCode: 400,
-      body: `Webhook Error: ${err.message}`
-    };
+    return { statusCode: 400, body: `Webhook Error: ${err.message}` };
   }
 
-  console.log('Webhook received:', stripeEvent.type);
+  if (stripeEvent.type === 'payment_intent.succeeded') {
+    const paymentIntent = stripeEvent.data.object;
 
-  switch (stripeEvent.type) {
-    case 'payment_intent.succeeded': {
-      const paymentIntent = stripeEvent.data.object;
-      console.log(`PaymentIntent succeeded: ${paymentIntent.id}`);
+    // Najdi objednávku podle payment_intent_id v Supabase
+    const { data: orders, error } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('payment_intent_id', paymentIntent.id)
+      .limit(1);
 
-      const order = await getOrderByPaymentIntentId(paymentIntent.id);
-      if (!order) {
-        console.error(`Order not found for PaymentIntent ID: ${paymentIntent.id}`);
-        return {
-          statusCode: 400,
-          body: 'Order not found'
-        };
-      }
-      if (order.totalAmount !== paymentIntent.amount_received) {
-        console.error(`Payment amount mismatch: order ${order.totalAmount} vs payment ${paymentIntent.amount_received}`);
-      }
-      const updated = await updateOrderStatus(order.id, 'paid');
-      if (updated) {
-        console.log(`Order ${order.id} status updated to paid`);
-      } else {
-        console.error(`Failed to update order status for order ${order.id}`);
-      }
-      break;
+    if (error) {
+      console.error('Chyba při hledání objednávky:', error);
+      return { statusCode: 500, body: 'Database error' };
     }
-    case 'charge.succeeded':
-      console.log('Charge succeeded for amount:', stripeEvent.data.object.amount);
-      break;
-    case 'coupon.created':
-      break;
-    default:
-      console.log('Unhandled event type:', stripeEvent.type);
+
+    if (!orders || orders.length === 0) {
+      console.error('Objednávka nenalezena pro PaymentIntent ID:', paymentIntent.id);
+      return { statusCode: 400, body: 'Order not found' };
+    }
+
+    // Aktualizuj status objednávky na "paid"
+    const order = orders[0];
+    const { error: updateError } = await supabase
+      .from('orders')
+      .update({ status: 'paid', paid_at: new Date().toISOString() })
+      .eq('id', order.id);
+
+    if (updateError) {
+      console.error('Chyba při aktualizaci statusu:', updateError);
+      return { statusCode: 500, body: 'Update error' };
+    }
+
+    console.log(`Objednávka ${order.id} byla označena jako zaplacená.`);
   }
 
   return {
     statusCode: 200,
-    body: 'Webhook received successfully',
+    body: 'Webhook processed',
   };
 };
