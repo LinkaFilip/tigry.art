@@ -297,22 +297,29 @@ promoInput.addEventListener("input", updatePrices);
 
 const createPaymentRequest = () => {
   const subtotal = calculateSubtotal();
-  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value
-    || localStorage.getItem("shippingMethod");
+
+  // Zjištění aktuální metody dopravy
+  const deliveryMethod =
+    document.querySelector('input[name="deliveryMethod"]:checked')?.value ||
+    localStorage.getItem("shippingMethod");
+
+  // Výpočet ceny dopravy (stejně jako v updatePrices)
   let shipping = 0;
-  if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
+  if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
     shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
   } else {
     shipping = SHIPPING_COST[selectElement.value] || 0;
   }
-  const totalAmount = subtotal + shipping / 100;
+
+  // Přepočet na centy
+  const totalAmount = Math.round((subtotal + shipping / 100) * 100);
 
   const paymentRequest = stripe.paymentRequest({
     country: selectElement.value,
     currency: "eur",
     total: {
       label: "Celková cena",
-      amount: Math.round(totalAmount * 100),
+      amount: totalAmount,
     },
     requestPayerName: true,
     requestPayerEmail: true,
@@ -330,11 +337,12 @@ const createPaymentRequest = () => {
   });
 
   paymentRequest.canMakePayment().then(result => {
+    const container = document.getElementById("payment_request_button");
     if (result) {
-      document.getElementById("payment_request_button").innerHTML = "";
+      container.innerHTML = "";
       prButton.mount("#payment_request_button");
     } else {
-      document.getElementById("payment_request_button").style.display = "none";
+      container.style.display = "none";
     }
   });
 };
@@ -363,6 +371,20 @@ selectElement.addEventListener("change", () => {
   updatePrices();
   createPaymentRequest();
 });
+document.querySelectorAll('input[name="deliveryMethod"]').forEach(radio => {
+  radio.addEventListener("change", () => {
+    updatePrices();
+    createPaymentRequest();
+  });
+});
+if (typeof packetaButton !== "undefined") {
+  packetaButton.addEventListener("click", () => {
+    setTimeout(() => {
+      updatePrices();
+      createPaymentRequest();
+    }, 0);
+  });
+}
 
 containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping() / 100)).toFixed(2)}`;
   payButton.addEventListener("click", async () => {
