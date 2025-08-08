@@ -181,7 +181,7 @@ const updatePrices = () => {
   let shipping = 0;
   
   if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
-      localStorage.setItem("shippingFee", vypocitanaCenaPacketty);
+      localStorage.setItem("shippingFee", getCurrentShipping());
   } else if (deliveryMethod === "courier") {
       localStorage.setItem("shippingFee", SHIPPING_COST[selectElement.value] || 0);
   } else {
@@ -300,19 +300,15 @@ promoInput.addEventListener("input", updatePrices);
 
 const createPaymentRequest = () => {
   const subtotal = calculateSubtotal();
-  const deliveryMethod =
-    document.querySelector('input[name="deliveryMethod"]:checked')?.value ||
-    localStorage.getItem("shippingMethod");
 const shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
 
-  const totalAmount = Math.round((subtotal + shipping / 100) * 100);
 
   const paymentRequest = stripe.paymentRequest({
     country: selectElement.value,
     currency: "eur",
     total: {
       label: "Celková cena",
-      amount: totalAmount,
+      amount: (subtotal + shipping).toFixed(2),
     },
     requestPayerName: true,
     requestPayerEmail: true,
