@@ -59,7 +59,7 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem("selectedBranchLongitude", point.longitude);
       localStorage.setItem("selectedBranchLatitude", point.latitude);
          
-    const shipping = parseInt(localStorage.getItem("shippingFee"));
+    let shipping = parseInt(localStorage.getItem("shippingFee"));
     const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
     if (selectedRadio && selectedRadio.value === "packeta") {
       shipping = Number(localStorage.getItem("shippingFee")) || 0;
@@ -178,7 +178,7 @@ const updatePrices = () => {
   const country = localStorage.getItem("countryCode");
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const shippingFee = parseInt(localStorage.getItem("shippingFee"));
-const shipping = parseInt(localStorage.getItem("shippingFee"));
+let shipping = parseInt(localStorage.getItem("shippingFee"));
   
   if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
       localStorage.setItem("shippingFee", getCurrentShipping());
@@ -219,7 +219,7 @@ const containerIfMobile = document.querySelector("._19gi7yt0._19gi7yt12._19gi7yt
 
   const updateMobileContainer = () => {
   const subtotal = calculateSubtotal();
-const shipping = parseInt(localStorage.getItem("shippingFee"));
+let shipping = parseInt(localStorage.getItem("shippingFee"));
   const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
   if (selectedRadio && selectedRadio.value === "packeta") {
     shipping = Number(localStorage.getItem("shippingFee")) || 0;
@@ -300,7 +300,7 @@ promoInput.addEventListener("input", updatePrices);
 
 const createPaymentRequest = () => {
   const subtotal = calculateSubtotal() * 100;
-const shipping = parseInt(localStorage.getItem("shippingFee"));
+let shipping = parseInt(localStorage.getItem("shippingFee"));
 
 
   const paymentRequest = stripe.paymentRequest({
