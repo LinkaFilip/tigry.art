@@ -187,14 +187,14 @@ const updatePrices = () => {
   const deliveryMethod = selectedRadio?.value || localStorage.getItem("shippingMethod");
   const country = localStorage.getItem("countryCode");
   const selectedBranchId = localStorage.getItem("selectedBranchId");
-  const shippingFee = parseInt(localStorage.getItem("shippingFee"));
-  let shipping = parseInt(localStorage.getItem("shippingFee"));
-  
-  if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {shippingFee}
-  else if (deliveryMethod === "courier") {
-      localStorage.setItem("shippingFee", getSelectedShipping());
+
+  let shipping = 0;
+
+  if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
+    shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
   } else {
-      localStorage.setItem("shippingFee", getSelectedShipping());
+    shipping = SHIPPING_COST[selectElement.value] || 0;
+    localStorage.setItem("shippingFee", shipping);
   }
 
   localStorage.setItem("shippingFee", shippingFee);
