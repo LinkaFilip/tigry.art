@@ -311,14 +311,9 @@ let paymentRequestButton = null;
 
 const createPaymentRequest = () => {
   if (paymentRequestButton) {
-    try {
-      paymentRequestButton.unmount();
-    } catch (e) {
-      console.warn("Unmount failed:", e);
-    }
+    paymentRequestButton.unmount();
     paymentRequestButton = null;
   }
-  elements = stripe.elements();
   const subtotal = calculateSubtotal() * 100;
   const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
   const country = selectElement.value || "eur";
@@ -339,29 +334,18 @@ const createPaymentRequest = () => {
     return;
   }
 
+
   paymentRequest.canMakePayment().then(result => {
     const container = document.getElementById("payment_request_button");
-
     if (result) {
-      container.style.display = "block";
       container.innerHTML = "";
-
-      paymentRequestButton = elements.create("paymentRequestButton", {
-        paymentRequest,
-        style: {
-          paymentRequestButton: {
-            type: "default",
-            theme: "dark",
-            height: "44px",
-          },
-        },
-      });
-      paymentRequestButton.mount(container);
+      prButton.mount(container);
+      paymentRequestButton = prButton;  // uložíme instanci, abychom mohli odmountovat později
     } else {
       container.style.display = "none";
     }
-  }).catch(error => {
-    console.error("Chyba při canMakePayment:", error);
+  }).catch(err => {
+    console.error("Chyba při canMakePayment:", err);
   });
 };
 
