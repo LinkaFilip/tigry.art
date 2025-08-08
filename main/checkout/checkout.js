@@ -310,6 +310,10 @@ promoInput.addEventListener("input", updatePrices);
 
 
 const createPaymentRequest = () => {
+  if (paymentRequestButton) {
+  paymentRequestButton.unmount();
+  paymentRequestButton = null;
+}
   const subtotal = calculateSubtotal() * 100;
 let shipping = parseInt(localStorage.getItem("shippingFee"));
 
@@ -345,6 +349,8 @@ let shipping = parseInt(localStorage.getItem("shippingFee"));
       container.style.display = "none";
     }
   });
+  
+  paymentRequestButton.mount('#payment-request-button-container');
 };
 
 
