@@ -332,6 +332,7 @@ const createPaymentRequest = () => {
     console.error("PaymentRequest není vytvořen");
     return;
   }
+  if(!paymentRequestButton){
   const prButton = elements.create("paymentRequestButton", {
     paymentRequest,
     style: {
@@ -342,19 +343,21 @@ const createPaymentRequest = () => {
       },
     },
   });
-
-  paymentRequest.canMakePayment().then(result => {
+    paymentRequest.canMakePayment().then(result => {
     const container = document.getElementById("payment_request_button");
     if (result) {
       container.innerHTML = "";
       prButton.mount(container);
-      paymentRequestButton = prButton; // uložíme pro pozdější unmount
+      paymentRequestButton = prButton;
     } else {
       container.style.display = "none";
     }
   }).catch(err => {
     console.error("Chyba při canMakePayment:", err);
   });
+  }
+
+
 };
   const style = {
     base: {
