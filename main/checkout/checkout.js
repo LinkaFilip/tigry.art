@@ -298,7 +298,6 @@ promoInput.addEventListener("input", updatePrices);
       container.appendChild(itemDiv);
     });
   }; 
-  selectElement.addEventListener("change", updatePrices, createPaymentRequest());
 
 let paymentRequest = null;
 let paymentRequestButton = null;
@@ -351,6 +350,8 @@ const createPaymentRequest = () => {
     console.error("Chyba při canMakePayment:", err);
   });
 };
+selectElement.addEventListener("change", updatePrices, createPaymentRequest());
+
   const style = {
     base: {
       fontSize: "16px",
