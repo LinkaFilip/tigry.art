@@ -111,9 +111,10 @@ function updateUI() {
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
 
-    container.style.pointerEvents = "visible";
-    container.style.opacity = "1";
-
+    if(selectedBranchName){
+      container.style.pointerEvents = "visible";
+      container.style.opacity = "1";
+    }
     const shownElement = document.querySelector(".jHvVd");
     shownElement.style.display = "none";
     const all = document.querySelectorAll("._1fragem32._1fragemms.gfFXW");
@@ -133,7 +134,7 @@ function updateUI() {
 
     container.style.pointerEvents = "visible";
     container.style.opacity = "1";
-    
+
     const element = document.querySelector("._1fragemui._1fragemq6._1fragemqc._1fragemqo._1fragemqi._1fragem32._1fragemg9._1fragemi2._1fragemeg._1fragemjv._1fragemms");
     const shownElement = document.querySelector(".jHvVd");
     shownElement.style.display = "block";
