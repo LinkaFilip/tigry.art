@@ -7,7 +7,7 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SER
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-export const handler = async (event) => {
+exports.handler = async (event) => {
   let payload = event.body;
   if (event.isBase64Encoded) {
     payload = Buffer.from(event.body, 'base64').toString('utf8');
@@ -25,8 +25,6 @@ export const handler = async (event) => {
 
   if (stripeEvent.type === 'payment_intent.succeeded') {
     const paymentIntent = stripeEvent.data.object;
-
-    // Najdi objednávku podle payment_intent_id v Supabase
     const { data: orders, error } = await supabase
       .from('orders')
       .select('*')
