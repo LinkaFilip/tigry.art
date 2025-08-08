@@ -156,10 +156,8 @@ deliveryRadios.forEach(radio => {
   });
 });
 packetaButton.addEventListener("click", () => {
-  setTimeout(() => {
     updatePrices();
     createPaymentRequest();
-  }, 0);
 });
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
