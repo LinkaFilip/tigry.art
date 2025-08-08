@@ -627,10 +627,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         getSelectedCountry: getSelectedCountry(),
         promoCode: promoCode,
         deliveryMethod: deliveryMethod,
+        shippingFee: shippingFee,
         packetaBranchId: selectedBranchId,
         packetaBranchName: selectedBranchName,
         packetaBranchStreet: selectedBranchStreet,
         packetaBranchCity: selectedBranchCity,
+        packetaBranchZip: selectedBranchZip,
+        packetaBranchType: selectedBranchType,
+        selectedBranchLongitude: selectedBranchLongitude,
+        selectedBranchLatitude: selectedBranchLatitude
       })
     });
 
