@@ -144,7 +144,7 @@ function updateUI() {
     localStorage.removeItem("shippingFee");
     payButton.disabled = false;
     payButton.style.margin = "0px 0px 0px 0px";
-
+    const container = document.getElementById("payment_request_button");
     if(!payButton.disabled){
       container.style.pointerEvents = "auto";
       container.style.opacity = "1";
