@@ -346,11 +346,20 @@ promoInput.addEventListener("input", updatePrices);
 
 let paymentRequest = null;
 let paymentRequestButton = null;
+function applyDiscount(price) {
+  const code = promoInput.value.trim().toUpperCase();
 
+  switch (code) {
+    case "TEST10":
+      return price * 0.9;
+    default:
+      return price;
+  }
+}
 function calculateTotalAmount() {
   const subtotal = calculateSubtotal() * 100;
   const shipping = getCurrentShipping();
-  const promoDiscount = calculatePromoDiscount(subtotal + shipping);
+  const promoDiscount = applyDiscount(subtotal + shipping);
   return subtotal + shipping - promoDiscount;
 }
 const createPaymentRequest = () => {
@@ -451,13 +460,7 @@ containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShippi
     }
     const country = getSelectedCountry();
     
-function applyDiscount(price) {
-  const code = promoInput.value.trim().toUpperCase();
-  if (code === "TEST10") {
-    return price * 0.9;
-  }
-  return price;
-}
+
 
 
 
