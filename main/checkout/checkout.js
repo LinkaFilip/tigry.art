@@ -289,42 +289,55 @@ promoInput.addEventListener("input", updatePrices);
     });
   }; 
   selectElement.addEventListener("change", updatePrices);
-  const createPaymentRequest = () => {
 
-  const shipping = getCurrentShipping();
-  const totalAmount = calculateSubtotal() + shipping / 100;
 
-    const paymentRequest = stripe.paymentRequest({
-      country: getSelectedCountry(),
-      currency: "eur",
-      total: {
-        label: "Celková cena",
+
+const createPaymentRequest = () => {
+  const subtotal = calculateSubtotal();
+  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value
+    || localStorage.getItem("shippingMethod");
+  let shipping = 0;
+  if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
+    shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
+  } else {
+    shipping = SHIPPING_COST[selectElement.value] || 0;
+  }
+  const totalAmount = subtotal + shipping / 100;
+
+  const paymentRequest = stripe.paymentRequest({
+    country: selectElement.value,
+    currency: "eur",
+    total: {
+      label: "Celková cena",
       amount: Math.round(totalAmount * 100),
-      },
-      promoCode: promoInput.value.trim() ,
-      requestPayerName: true,
-      requestPayerEmail: true,
-    });
+    },
+    requestPayerName: true,
+    requestPayerEmail: true,
+  });
 
-    const prButton = elements.create("paymentRequestButton", {
-      paymentRequest,
-      style: {
-        paymentRequestButton: {
-          type: "default",
-          theme: "dark",
-          height: "44px",
-        },
+  const prButton = elements.create("paymentRequestButton", {
+    paymentRequest,
+    style: {
+      paymentRequestButton: {
+        type: "default",
+        theme: "dark",
+        height: "44px",
       },
-    });
+    },
+  });
 
-    paymentRequest.canMakePayment().then(result => {
-      if (result) {
-        prButton.mount("#payment_request_button");
-      } else {
-        document.getElementById("payment_request_button").style.display = "none";
-      }
-    });
-  };
+  paymentRequest.canMakePayment().then(result => {
+    if (result) {
+      document.getElementById("payment_request_button").innerHTML = "";
+      prButton.mount("#payment_request_button");
+    } else {
+      document.getElementById("payment_request_button").style.display = "none";
+    }
+  });
+};
+
+
+
   const style = {
     base: {
       fontSize: "16px",
