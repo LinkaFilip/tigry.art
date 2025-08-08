@@ -121,13 +121,9 @@ const totalAmount = totalBeforeDiscount - discountAmount;
         discount_percent: discountPercent.toString(),
         discount_amount: discountAmount.toString(),
         delivery_method: deliveryMethod,
-        shipping_fee: shipping.toString(),
         packeta_branch_id: packetaBranchId || "none",
         packeta_branch_name: packetaBranchName || "none",
         packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}`,
-        packeta_branch_type: packetaBranchType || "unknown",
-        selectedBranchLatitude,
-        selectedBranchLongitude,
       },
     });
 
