@@ -380,9 +380,56 @@ const createPaymentRequest = () => {
     },
     requestPayerName: true,
     requestPayerEmail: true,
-    requestShipping: true,
+    requestShipping: true,  
+    shippingOptions: [
+    {
+      id: 'free-shipping',
+      label: 'Free shipping',
+      detail: 'Delivery within 5 days',
+      amount: 0,
+    },
+  ],
   });
+paymentRequest.on('shippingaddresschange', (event) => {
+  // Můžeš zde podle adresy změnit nabídku dopravy, ceny apod.
+  let shippingOptions = [];
 
+  if (event.shippingAddress.country === 'US') {
+    shippingOptions = [
+      {
+        id: 'free-shipping',
+        label: 'Free shipping',
+        detail: 'Delivery within 5 days',
+        amount: 0,
+      },
+      {
+        id: 'express-shipping',
+        label: 'Express shipping',
+        detail: 'Delivery within 2 days',
+        amount: 500,
+      }
+    ];
+  } else {
+    shippingOptions = [
+      {
+        id: 'international',
+        label: 'International shipping',
+        detail: 'Delivery within 10 days',
+        amount: 1500,
+      }
+    ];
+  }
+
+  // Aktualizuj paymentRequest s možnostmi dopravy
+  event.updateWith({
+    status: 'success',
+    shippingOptions,
+    total: {
+      label: 'Total',
+      amount: 1000 + shippingOptions[0].amount, // aktualizuj cenu podle dopravy
+    }
+  });
+});
   if (!paymentRequest) {
     console.error("PaymentRequest není vytvořen");
     return;
