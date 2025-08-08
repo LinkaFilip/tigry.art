@@ -120,11 +120,11 @@ function updateUI() {
 
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
-
-    if(!payButton.disabled){
+    
+    if(payButton.disabled === false){
       container.style.pointerEvents = "auto";
       container.style.opacity = "1";
-    }else{      
+    }else if(payButton.disabled === true){      
       container.style.pointerEvents = "none";
       container.style.opacity = ".7";
     }
@@ -145,10 +145,10 @@ function updateUI() {
     payButton.disabled = false;
     payButton.style.margin = "0px 0px 0px 0px";
     const container = document.getElementById("payment_request_button");
-    if(!payButton.disabled){
+    if(payButton.disabled === false){
       container.style.pointerEvents = "auto";
       container.style.opacity = "1";
-    }else{      
+    }else if(payButton.disabled === true){      
       container.style.pointerEvents = "none";
       container.style.opacity = ".7";
     }
