@@ -166,7 +166,7 @@ console.log(selectElement.value)
   const getSelectedCountry = () => selectElement.value;
   console.log(getSelectedCountry());
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
-  selectElement.value.addEventListener("change", getSelectedShipping());
+  selectElement.addEventListener("change", getSelectedShipping());
   console.log(getCurrentShipping());
 
 
