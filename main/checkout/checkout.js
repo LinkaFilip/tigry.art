@@ -396,15 +396,9 @@ paymentRequest.on('shippingaddresschange', (event) => {
   if (event.shippingAddress.country === 'CZ') {
     shippingOptions = [
       {
-        id: 'free-shipping',
-        label: 'Free shipping',
+        id: 'in-europe',
+        label: 'Shipping in central Europe',
         detail: 'Delivery within 5 days',
-        amount: 0,
-      },
-      {
-        id: 'express-shipping',
-        label: 'Express shipping',
-        detail: 'Delivery within 2 days',
         amount: 300,
       }
     ];
