@@ -1,3 +1,10 @@
+window.addEventListener("beforeunload", () => {
+  const cartData = localStorage.getItem("cart");
+  localStorage.clear();
+  if (cartData !== null) {
+    localStorage.setItem("cart", cartData);
+  }
+});
 document.addEventListener("DOMContentLoaded", async () => {
 const deliveryRadios = document.querySelectorAll('input[name="deliveryMethod"]');
 const packetaButton = document.getElementById("packeta-button");
@@ -120,7 +127,7 @@ function updateUI() {
 
     payButton.disabled = !localStorage.getItem("selectedBranchId");
     payButton.style.margin = "0px 0px 0px 0px";
-    
+
     if(payButton.disabled === false){
       container.style.pointerEvents = "auto";
       container.style.opacity = "1";
