@@ -598,11 +598,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     const deliveryMethod = document.querySelector(
       'input[name="deliveryMethod"]:checked'
     ).value;
+    const shippingFee = localStorage.getItem("shippingFee");
 
     const selectedBranchId = localStorage.getItem("selectedBranchId");
     const selectedBranchName = localStorage.getItem("selectedBranchName");
     const selectedBranchStreet = localStorage.getItem("selectedBranchStreet");
     const selectedBranchCity = localStorage.getItem("selectedBranchCity");
+    const selectedBranchZip = localStorage.getItem("selectedBranchZip");
+    const selectedBranchType = localStorage.getItem("selectedBranchType");
+    const selectedBranchLongitude = localStorage.getItem(
+      "selectedBranchLongitude"
+    );
+    const selectedBranchLatitude = localStorage.getItem(
+      "selectedBranchLatitude"
+    );
     if (deliveryMethod === "packeta" && !selectedBranchId) {
       payButton.disabled = false;
       payButton.textContent = "Pay now";
