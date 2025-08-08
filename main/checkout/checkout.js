@@ -88,10 +88,10 @@ packetaButton.addEventListener("click", (e) => {
     }
   });
 });
-const getCurrentShipping = () => {
-  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value;
+const getCurrentShippingFee = () => {
+  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value || localStorage.getItem("shippingMethod");
   if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
-    return parseInt(localStorage.getItem("shippingFee"));
+    return parseInt(localStorage.getItem("shippingFee")) || 0;
   }
   return SHIPPING_COST[selectElement.value] || 0;
 };
@@ -122,6 +122,7 @@ function updateUI() {
     localStorage.removeItem("selectedBranchId");
     localStorage.removeItem("selectedBranchName");
     localStorage.removeItem("shippingMethod");
+    localStorage.removeItem("shippingFee");
     payButton.disabled = false;
     payButton.style.margin = "0px 0px 0px 0px";
     const element = document.querySelector("._1fragemui._1fragemq6._1fragemqc._1fragemqo._1fragemqi._1fragem32._1fragemg9._1fragemi2._1fragemeg._1fragemjv._1fragemms");
