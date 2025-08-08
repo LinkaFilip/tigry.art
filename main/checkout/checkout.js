@@ -322,7 +322,6 @@ const createPaymentRequest = () => {
     prButton = null;
     paymentRequest = null;
   }
-
   paymentRequest = stripe.paymentRequest({
     country: country,
     currency: "eur",
@@ -362,9 +361,6 @@ const createPaymentRequest = () => {
     console.error("Chyba při canMakePayment:", err);
   });
 };
-
-
-
   const style = {
     base: {
       fontSize: "16px",
@@ -387,6 +383,11 @@ selectElement.addEventListener("change", () => {
   updatePrices();
   createPaymentRequest();
 });
+
+renderProductFromCart();
+updatePrices();
+createPaymentRequest();
+
 document.querySelectorAll('input[name="deliveryMethod"]').forEach(radio => {
   radio.addEventListener("change", () => {
     clearShippingData();
