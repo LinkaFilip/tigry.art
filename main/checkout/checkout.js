@@ -347,6 +347,12 @@ promoInput.addEventListener("input", updatePrices);
 let paymentRequest = null;
 let paymentRequestButton = null;
 
+function calculateTotalAmount() {
+  const subtotal = calculateSubtotal() * 100;
+  const shipping = getCurrentShipping();
+  const promoDiscount = calculatePromoDiscount(subtotal + shipping);
+  return subtotal + shipping - promoDiscount;
+}
 const createPaymentRequest = () => {
   const subtotal = calculateSubtotal() * 100;
   const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
@@ -361,10 +367,11 @@ const createPaymentRequest = () => {
     currency: "eur",
     total: {
       label: "Celková cena",
-      amount: subtotal + shipping,
+      amount: calculateTotalAmount(),
     },
     requestPayerName: true,
     requestPayerEmail: true,
+    requestShipping: true,
   });
 
   if (!paymentRequest) {
