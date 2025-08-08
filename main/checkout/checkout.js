@@ -334,7 +334,16 @@ const createPaymentRequest = () => {
     return;
   }
 
-
+  const prButton = elements.create("paymentRequestButton", {
+    paymentRequest,
+    style: {
+      paymentRequestButton: {
+        type: "default",
+        theme: "dark",
+        height: "44px",
+      },
+    },
+  });
   paymentRequest.canMakePayment().then(result => {
     const container = document.getElementById("payment_request_button");
     if (result) {
