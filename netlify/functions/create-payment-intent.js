@@ -5,6 +5,7 @@ exports.handler = async (event) => {
     const {  
       items,
       country,
+      getSelectedCountry,
       promoCode,
       deliveryMethod,
       packetaBranchId,
