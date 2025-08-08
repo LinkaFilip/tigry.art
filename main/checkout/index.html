@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Platba kartou</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Tigry.art" />
+    <link rel="manifest" href="/images/favicon/site.webmanifest" />
+    <link rel="manifest" href="/manifest.json">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://widget.packeta.com/v6/www/js/library.js"></script>
+    <script src="packeta.js"></script>
+    <style>
+      form {
+        max-width: 400px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: #f9f9f9;
+      }
+      #card-element{
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        background: white;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background: black;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 6px;
+      }
+      #error-message {
+        color: red;
+        margin-top: 1rem;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+<div class="g9gqqf1 g9gqqf0 _1fragemp3 g9gqqfc g9gqqfa _1fragemue g9gqqf6 g9gqqf2 _1fragemod _1fragemoh">
+  <div class="_1fragem32 _1fragemms">
+    <div class="_1fragem32 _1fragemms">
+      <a href="#checkout-main" class="_9sntZ">Skip to content</a>
+      <div class="cm5pp g9PS6 U3Rye FeQiM oYrwu _1fragemoh _1fragemod _1fragemue">
+        <aside class="nMPKH iYA3J">
+          <button aria-controls="disclosure_details" aria-expanded="false" class="WtpiW">
+            <span class="smIFm">
+              <span>
+                <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s _1fragempq">
+                  <span class="_19gi7yt1n _19gi7yt1m _1fragemth">Original price</span>
+                  <p translate="no" class="_1tx8jg70 _1fragemms _1tx8jg7g _1tx8jg7f _1fragemp5 _1tx8jg715 _1tx8jg71d _1tx8jg71f notranslate">
+                    <strong style="color: black;" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1l"></strong>
+                  </p>
+                </div>
+              </span>
+              </span>
+
+            </span>
+          </button>
+          <div id="disclosure_details" hidden="" class="_94sxtb1 _94sxtb0 _1fragemkz _1frageml9 _1fragemms _1fragemu2 _94sxtbd _94sxtb6 _1fragemtr" style="height: 0px;">
+            <div></div>
+          </div>
+        </aside>
+        <div class="c3A19">
+          <div class="_9F1Rf GI5Fn _1fragemoh _1fragemoc _1fragemum">
+            <div class="gdtca">
+              <main id="checkout-main" class="djSdi">
+                <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem5b _1fragem7s _1fragem74">
+                  <form id="payment-form" class="km09ry0 _1fragem37">
+                    <div class="km09ry1 _1fragemms">
+                      <div>
+                        <section aria-label="Contact" class="_17kya4ui _17kya4ug _1fragemoh _17kya4up _17kya4uk _1fragemod _1fragemue _1fragem32 _1fragemg4 _1fragemh4 _1fragemi7 _1fragemix _1fragemeb _1fragemfb _1fragemk0 _1fragemkq _1fragemms">
+                          <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s">
+                            <div>
+                              <div>
+                                <section aria-label="Express checkout" class="_1fragem32 _1fragemms">
+                                  <div data-count="3" class="_1fragem32 _1fragemms OTERX">
+                                    <div class="o1z23">
+                                      <h3 class="_4aXW0" style="margin-bottom: calc(-1 * var(--x-spacing-small-500));font-size: var(--x-typography-size-default);font-weight: var(--x-typography-primary-weight-base);color: var(--x-default-color-text-subdued);">Express checkout</h3>
+                                      </div>
+                                      <div class="kTI19">
+                                        <div class="DUnBb" style="padding-bottom: 16px;">
+                                          <div id="payment_request_button" class="iRnuh pUo2R XHLFs Pnahu">
+                                            <div id="payment_request_button" class="StripeElement">
+                                              <div class="__PrivateStripeElement" style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;">
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="_1fragem32 _1fragemg9 _1fragemeq _1fragemms">
+                                      <div class="mg7oix2 mg7oix0 _1fragemms mg7oix1 mg7oix7 mg7oix6 _1fragempm mg7oixc mg7oixa mg7oix9 _1fragem3c _1fragemni _1fragema mg7oixe mg7oix3">
+                                        <div class="mg7oixj">
+                                          <p class="_1tx8jg70 _1fragemms _1tx8jg715 _1tx8jg71d _1tx8jg75 _1tx8jg72 _1fragemti _1tx8jg71f">
+                                            <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1b _19gi7yt1g">OR</span></p>
+                                            <span role="separator"></span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </section>
+                                </div>
+                              </div>
+                            </div>
+                        <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5z _1fragem7s">
+                          <div>
+                            <div>
+                              <div>
+                                <div class="bSo96">
+                                  <h2 id="contact" class="n8k95w1 n8k95w0 _1fragemms n8k95w2 n8k95wg">Contact</h2>
+                                </div>
+                                <div class="_16s97g75f"></div>
+                                <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem50 _1fragem6t">
+                                  <div>
+                                    <div class="_4jeq6k0 _1fragemms _1fragem41 _1fragem50 _1fragem6t _1fragemnc _16s97g7f _16s97g7p _16s97g71j _16s97g71t" style="--_16s97g7a: 1fr; --_16s97g7k: minmax(0, 1fr); --_16s97g71e: minmax(0, 1fr); --_16s97g71o: minmax(0, 1fr);">
+                                      <div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                                        <div class="cektnc0 _1fragemms cektnc5">
+                                          <label id="email-label" for="email" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                            <span class="cektnca">
+                                              <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">Email or mobile phone number</span>
+                                            </span>
+                                          </label>
+                                          <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                            <input id="email" name="email" placeholder="Email or mobile phone number" required="" type="text" inputmode="text" aria-required="true" aria-labelledby="email-label" autocomplete="shipping email" autofocus="true" autocapitalize="off" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2u11 _7ozb2u1j _7ozb2ur">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </section>
+                        <div class="_1fragem32 _1fragemms gfFXW">
+                          <div class="_16s97g74v _16s97g760"></div>
+                        </div>
+                      </div>
+                      <div>
+                        <div>
+                          <section class="_17kya4ui _17kya4ug _1fragemoh _17kya4up _17kya4uk _1fragemod _1fragemue _1fragem32 _1fragemg4 _1fragemh4 _1fragemi7 _1fragemix _1fragemeb _1fragemfb _1fragemk0 _1fragemkq _1fragemms">
+                            <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem50 _1fragem6t">
+                              <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem4g _1fragem69">
+                                <h2 id="deliveryAddress" class="n8k95w1 n8k95w0 _1fragemms n8k95w2 n8k95wg">Delivery</h2>
+                              </div>
+                              <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5f _1fragem78">
+                                <section aria-label="Shipping address" class="_1fragem32 _1fragemms">
+                                  <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem50 _1fragem6t">
+                                    <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5f _1fragem78">
+                                      <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem50 _1fragem6t">
+                                        <div>
+                                          <div id="shippingAddressForm">
+                                            <div aria-hidden="false" aria-busy="false" class="r62YW">
+                                              <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem50 _1fragem6t">
+                                                <div class="_4jeq6k0 _1fragemms _1fragem41 _1fragem50 _1fragem6t _1fragemnc _1fragemn8 _16s97g7f _16s97g7p _16s97g71j _16s97g71t" style="--_16s97g7a: minmax(0, 1fr); --_16s97g7k: minmax(auto, max-content); --_16s97g71e: minmax(0, 1fr); --_16s97g71o: minmax(auto, max-content);">
+                                                  <div class="RD23h _1k3449n1 _1k3449n0 _1fragemoi _10vrn9p1 _10vrn9p0 _10vrn9p4">
+                                                    <div>
+                                                      <div class="VZudx _1k3449n1 _1k3449n0 _1fragemoi">
+                                                        <label for="Select0" class="QCxaD A9HkF">
+                                                          <span class="XDBWz">
+                                                            <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">Country/Region</span>
+                                                          </span>
+                                                        </label>
+                                                        <select name="countryCode" id="Select0" required="" autocomplete="shipping country" class="ZHJU6 _1k3449n5 _1k3449n3 _1fragemue oAlPg IWR5K tu1VS">
+                                                          <option value="AU">Australia</option>
+                                                          <option value="AT">Austria</option>
+                                                          <option value="BE">Belgium</option>
+                                                          <option value="CA">Canada</option>
+                                                          <option value="CZ">Czechia</option>
+                                                          <option value="DK">Denmark</option>
+                                                          <option value="FI">Finland</option>
+                                                          <option value="FR">France</option>
+                                                          <option value="DE">Germany</option>
+                                                          <option value="HK">Hong Kong SAR</option>
+                                                          <option value="IE">Ireland</option>
+                                                          <option value="IL">Israel</option>
+                                                          <option value="IT">Italy</option>
+                                                          <option value="JP">Japan</option>
+                                                          <option value="MY">Malaysia</option>
+                                                          <option value="NL">Netherlands</option>
+                                                          <option value="NZ">New Zealand</option>
+                                                          <option value="NO">Norway</option>
+                                                          <option value="PL">Poland</option>
+                                                          <option value="PT">Portugal</option>
+                                                          <option value="SG">Singapore</option>
+                                                          <option value="KR">South Korea</option>
+                                                          <option value="ES">Spain</option>
+                                                          <option value="SE">Sweden</option>
+                                                          <option value="CH">Switzerland</option>
+                                                          <option value="AE">United Arab Emirates</option>
+                                                          <option value="GB">United Kingdom</option>
+                                                          <option value="US">United States</option>
+                                                        </select>
+                                                        <!-- <div class="VXrUd">
+                                                          <span class="a8x1wu2 a8x1wu1 _1fragempm _1fragem2x _1fragemlo _1fragemle a8x1wu9 a8x1wui a8x1wum a8x1wuk _1fragem32 a8x1wup a8x1wuo a8x1wuw">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" focusable="false" aria-hidden="true" class="a8x1wuy a8x1wux _1fragem32 _1fragempm _1fragemlo _1fragemle _1fragemot">
+                                                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.75 7.354 9.396a.5.5 0 0 1-.708 0L2 4.75"></path>
+                                                            </svg>
+                                                          </span>
+                                                        </div>-->
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="_4jeq6k0 _1fragemms _1fragem41 _1fragem50 _1fragem6t _1fragemnc _1fragemn8 _16s97g7f _16s97g7p _16s97g71j _16s97g71t" style="--_16s97g7a: minmax(0, 1fr); --_16s97g7k: minmax(auto, max-content); --_16s97g71e: minmax(0, 1fr); --_16s97g71o: minmax(auto, max-content);">
+                                                  <div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                                                    <div class="cektnc0 _1fragemms cektnc5">
+                                                      <label id="TextField0-label" for="TextField0" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                                        <span class="cektnca">
+                                                          <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">First name</span>
+                                                        </span>
+                                                      </label>
+                                                      <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                                        <input id="TextField0" name="firstName" placeholder="First name" required="" type="text" aria-required="true" aria-labelledby="TextField0-label" autocomplete="shipping given-name" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2u11 _7ozb2u1j _7ozb2ur">
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                                                    <div class="cektnc0 _1fragemms cektnc5">
+                                                      <label id="TextField1-label" for="TextField1" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                                        <span class="cektnca">
+                                                          <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">Last name</span>
+                                                        </span>
+                                                      </label>
+                                                      <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                                        <input id="TextField1" name="lastName" placeholder="Last name" required="" type="text" aria-required="true" aria-labelledby="TextField1-label" autocomplete="shipping family-name" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2u11 _7ozb2u1j _7ozb2ur">
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="_4jeq6k0 _1fragemms _1fragem41 _1fragem50 _1fragem6t _1fragemnc _1fragemn8 _16s97g7f _16s97g7p _16s97g71j _16s97g71t" style="--_16s97g7a: minmax(0, 1fr); --_16s97g7k: minmax(auto, max-content); --_16s97g71e: minmax(0, 1fr); --_16s97g71o: minmax(auto, max-content);">
+                                                  <div class="wfKnD">
+                                                    <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem4q _1fragem6j">
+                                                      <div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                                                        <div class="cektnc0 _1fragemms cektnc5">
+                                                          <label id="TextField2-label" for="TextField2" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                                            <span class="cektnca">
+                                                              <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">Address</span>
+                                                            </span>
+                                                          </label>
+                                                          <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                                            <input id="TextField2" name="address1" placeholder="Address" required="" type="text" aria-required="true" aria-labelledby="TextField2-label" autocomplete="shipping address-line1" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2u11 _7ozb2u1j _7ozb2ur">
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="_4jeq6k0 _1fragemms _1fragem41 _1fragem50 _1fragem6t _1fragemnc _1fragemn8 _16s97g7f _16s97g7p _16s97g71j _16s97g71t" style="--_16s97g7a: minmax(0, 1fr); --_16s97g7k: minmax(auto, max-content); --_16s97g71e: minmax(0, 1fr); --_16s97g71o: minmax(auto, max-content);"><div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                                                  <div class="cektnc0 _1fragemms cektnc5">
+                                                    <label id="TextField3-label" for="TextField3" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                                      <span class="cektnca">
+                                                        <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">Apartment, suite, etc. (optional)</span>
+                                                      </span>
+                                                    </label>
+                                                    <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                                      <input id="TextField3" name="address2" placeholder="Apartment, suite, etc. (optional)" type="text" aria-required="false" aria-labelledby="TextField3-label" autocomplete="shipping address-line2" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2u11 _7ozb2u1j _7ozb2ur">
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="_4jeq6k0 _1fragemms _1fragem41 _1fragem50 _1fragem6t _1fragemnc _1fragemn8 _16s97g7f _16s97g7p _16s97g71j _16s97g71t" style="--_16s97g7a: minmax(0, 1fr); --_16s97g7k: minmax(auto, max-content); --_16s97g71e: minmax(0, 1fr); --_16s97g71o: minmax(auto, max-content);">
+                                                <div class="hDo51">
+                                                  <div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                                                    <div class="cektnc0 _1fragemms cektnc5">
+                                                      <label id="TextField4-label" for="TextField4" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                                        <span class="cektnca">
+                                                          <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">Postal code</span>
+                                                        </span>
+                                                      </label>
+                                                      <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                                        <input id="TextField4" name="postalCode" placeholder="Postal code" required="" type="text" inputmode="text" aria-required="true" aria-labelledby="TextField4-label" autocomplete="shipping postal-code" autocapitalize="characters" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2u11 _7ozb2u1j _7ozb2ur">
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                                                  <div class="cektnc0 _1fragemms cektnc5">
+                                                    <label id="TextField5-label" for="TextField5" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                                      <span class="cektnca">
+                                                        <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">City</span>
+                                                      </span>
+                                                    </label>
+                                                    <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                                      <input id="TextField5" name="city" placeholder="City" required="" type="text" aria-required="true" aria-labelledby="TextField5-label" autocomplete="shipping address-level2" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2u11 _7ozb2u1j _7ozb2ur">
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="_4jeq6k0 _1fragemms _1fragem41 _1fragem50 _1fragem6t _1fragemnc _1fragemn8 _16s97g7f _16s97g7p _16s97g71j _16s97g71t" style="--_16s97g7a: minmax(0, 1fr); --_16s97g7k: minmax(auto, max-content); --_16s97g71e: minmax(0, 1fr); --_16s97g71o: minmax(auto, max-content);">
+                                                <div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                                                  <div class="cektnc0 _1fragemms cektnc5">
+                                                    <label id="TextField6-label" for="TextField6" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                                      <span class="cektnca">
+                                                        <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">Phone (optional)</span>
+                                                      </span>
+                                                    </label>
+                                                    <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                                      <input id="TextField6" name="phone" placeholder="Phone (optional)" type="tel" aria-required="false" aria-labelledby="TextField6-label" autocomplete="shipping tel" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2uv _7ozb2uu _1fragemqa _1fragemqm _7ozb2u10 _7ozb2u1j _7ozb2ur">
+                                                      <div class="_7ozb2u1h _7ozb2u1g _1fragemms _1fragemu9 _1fragemnp _1fragemop _7ozb2u1i">
+                                                        <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8w">
+                                                          <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragema _1fragemni _1fragem50 _1fragem6t _1fragem8w">
+                                                              <span class="a8x1wu2 a8x1wu1 _1fragempm _1fragem2x _1fragemlo _1fragemle a8x1wu9 a8x1wui a8x1wum a8x1wuk _1fragem32 a8x1wur a8x1wuo a8x1wuw"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" focusable="false" aria-hidden="true" class="a8x1wuy a8x1wux _1fragem32 _1fragempm _1fragemlo _1fragemle _1fragemot">
+                                                                <g clip-path="url(#a)">
+                                                                  <circle cx="7" cy="7" r="5.5"></circle>
+                                                                  <path stroke-linejoin="round" d="M6.99 10.24h.02v.02h-.02z"></path>
+                                                                  <path stroke-linecap="round" d="M5.5 5.25a1.5 1.5 0 1 1 2.428 1.179C7.494 6.77 7 7.198 7 7.75"></path>
+                                                                </g>
+                                                                <defs>
+                                                                  <clipPath id="a"><path fill="#fff" d="M0 0h14v14H0z"></path></clipPath>
+                                                                </defs>
+                                                              </svg>
+                                                            </span>
+                                                          </button>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="_197l2of1e _1fragemth _1fragem32 _1fragemms">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_firstName" name="firstName" autocomplete="shipping given-name" aria-label="First name">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_lastName" name="lastName" autocomplete="shipping family-name" aria-label="Last name">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_address1" name="address1" autocomplete="shipping address-line1" aria-label="Address">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_address2" name="address2" autocomplete="shipping address-line2" aria-label="Apartment, suite, etc.">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_city" name="city" autocomplete="shipping address-level2" aria-label="City">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_country" name="country" autocomplete="shipping country" aria-label="Country/Region">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_zone" name="zone" autocomplete="shipping address-level1" aria-label="Province">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_address_level1" name="address-level1" autocomplete="shipping address-level1" aria-label="Province">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_province" name="province" autocomplete="shipping address-level1" aria-label="Province">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_postalCode" name="postalCode" autocomplete="shipping postal-code" aria-label="Postal code">
+                                            <input type="text" tabindex="-1" aria-hidden="true" id="autofill_phone" name="phone" autocomplete="shipping tel" aria-label="Phone">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem50 _1fragem6t">
+                                    <h3 id="shippingMethod" class="n8k95w1 n8k95w0 _1fragemms n8k95w3 n8k95wg">Shipping method</h3>
+                                    <div class="jHvVd" style="display: none;">
+                                      <div class="_1fragemui _1fragemq6 _1fragemqc _1fragemqo _1fragemqi _1fragem32 _1fragemg9 _1fragemi2 _1fragemeg _1fragemjv _1fragemms">
+                                        <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem4q _1fragem6j _1fragempp">
+                                          <p id="shipping-summary" class="_1tx8jg70 _1fragemms _1tx8jg715 _1tx8jg71e _1tx8jg71f">Enter your shipping address to view available shipping methods.</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </section>
+                      <div class="_1fragem32 _1fragemms gfFXW" style="display: none;">
+                        <div class="_16s97g74v _16s97g760"></div>
+                      </div>
+                    </div>
+                  </div>
+                      <section></section>
+                    </div>
+
+                    <div id="card-number-element" style="background-color: transparent; margin-bottom: 16px;"></div>
+                    <div style="margin-bottom: 16px;" class="_4jeq6k0 _1fragemms _1fragem41 _1fragem50 _1fragem6t _1fragemnc _1fragemn8 _16s97g7f _16s97g7p _16s97g71j _16s97g71t">
+                      <div id="card-expiry-element" style="background-color: transparent;"></div>
+                      <div id="card-cvc-element" style="background-color: transparent;"></div>
+                    </div>
+                    <h3>Delivery method</h3>
+                    <div class="gridContainer_GridGroup__5jzs0__">
+                    <label style="display: flex;padding: 1rem;border: 1px solid #d6d6d6;border-radius: 6px;" class="delivery-option active">
+                      <input type="radio" name="deliveryMethod" value="packeta" checked>Packeta</label>
+                    <label style="display: flex;padding: 1rem;border: 1px solid #d6d6d6;border-radius: 6px;" class="delivery-option">
+                      <input type="radio" name="deliveryMethod" value="courier">Courier</label>
+
+                  </div>
+                  <div style="display: flex; flex-direction: column;">
+                    <button id="packeta-button" type="button">Choose the parcel shop</button>
+                    <input type="hidden" id="packeta-branch-id" name="packeta_branch_id">
+                    <button id="pay-button" type="submit" disabled>Pay now</button>
+                  </div>
+                    <div id="error-message"></div>
+                  </form>
+                </div>
+              </main>
+            </div>
+          </div>
+          <div class="i4DWM _1fragemoh _1fragemoe _1fragemue">
+            <div class="_4QenE">
+              <aside>
+                <div>
+                  <section class="_1fragem32 _1fragemms">
+                      <h2 class="n8k95wh _1fragemth">Order summary</h2>
+                      <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem5a _1fragem73" style="margin-bottom: 16px;">
+                </div>
+                <div id="gift-card-field" class="_94sxtb1 _94sxtb0 _1fragemkz _1frageml9 _1fragemms _1fragemu2 _94sxtbb _94sxtb4 _1fragemtp" style="height: auto; overflow: visible;"><div>
+                  <section class="_1fragem32 _1fragemms">
+                    <h3 id="checkout-main-header-reductions" tabindex="-1" class="n8k95wh _1fragemth">Discount</h3>
+                    <div class="_1ip0g651 _1ip0g650 _1fragemms _1fragem41 _1fragem50 _1fragem6t">
+                      <form action="" method="POST" novalidate="" id="Form0" class="km09ry0 _1fragem37">
+                        <div class="km09ry1 _1fragemms">
+                            <div class="_7ozb2u2 _7ozb2u1 _1fragem4g _1fragem69 _1fragemms _1fragem41 _10vrn9p1 _10vrn9p0 _10vrn9p4 _7ozb2u4 _7ozb2u3 _1fragemoi">
+                              <div class="cektnc0 _1fragemms cektnc5">
+                                <label id="ReductionsInput0-label" for="ReductionsInput0" class="cektnc3 cektnc1 _1fragemmi _1fragemtg _1fragemu9 _1fragemtv _1fragemtq _1fragemu5 _1fragemu6">
+                                  <span class="cektnca">
+                                    <span class="rermvf1 rermvf0 _1fragemkz _1frageml9 _1fragem32">Discount code</span>
+                                  </span>
+                                </label>
+                                <div class="_7ozb2u6 _7ozb2u5 _1fragemms _1fragem41 _1fragemos _1fragemtv _1fragemtq _1fragemu5 _1fragemu8 _7ozb2uc _7ozb2ua _1fragemoi _1fragemue _7ozb2ul _7ozb2uh">
+                                  <input id="ReductionsInput0" name="reductions" placeholder="Discount code" type="text" aria-labelledby="ReductionsInput0-label" autocomplete="on" class="_7ozb2uq _7ozb2up _1fragemms _1fragemu9 _1fragempm _1fragemtf _7ozb2ut _7ozb2us _1fragemtv _1fragemtq _1fragemu5 _7ozb2u11 _7ozb2u1j _7ozb2ur">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="_197l2of1e _1fragemth _1fragem32 _1fragemms">
+                                <button type="submit" tabindex="-1" aria-hidden="true">Submit</button>
+                              </div>
+                            </form>
+                          </div>
+                        </section>
+                      </div>
+                    </div>
+                    <section class="_1fragem32 _1fragemms" style="margin-top: 16px;">
+                      <div class="nfgb6p2 _1fragemth">
+                        <h3 id="MoneyLine-Heading0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">Cost summary</h3>
+                      </div>
+                      <div role="table" aria-labelledby="MoneyLine-Heading0">
+                        <div role="rowgroup" class="nfgb6p2 _1fragemth">
+                          <div role="row">
+                            <div role="columnheader">Item</div>
+                            <div role="columnheader">Value</div>
+                          </div>
+                        </div>
+                        <div role="rowgroup" class="nfgb6p1 nfgb6p0 _1fragem41 nfgb6p3">
+                          <div role="row" class="_1qy6ue60 _1qy6ue69 _1qy6ue61 _1qy6ue67 _1qy6ue65 _1fragem4l _1fragem6e _1fragem41">
+                            <div role="rowheader" class="_1qy6ue6b">
+                              <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g">Subtotal</span>
+                            </div>
+                            <div role="cell" class="_1qy6ue6c">
+                              <span translate="no" class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">
+                                <p id="subtotal-price"></p></span>
+                            </div>
+                          </div>
+                          <div role="row" class="_1qy6ue60 _1qy6ue6a _1qy6ue61 _1qy6ue67 _1qy6ue65 _1fragem4l _1fragem6e _1fragem41">
+                            <div role="rowheader" class="_1qy6ue6b">
+                              <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8w">
+                                <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragema _1fragemni _1fragem4g _1fragem69 _1fragem8w">
+                                  <span class="_19gi7yt0 _19gi7yt12 _19gi7yt1a _19gi7yt1g">Shipping</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div role="cell" class="_1qy6ue6c">
+                              <span translate="no" class="_19gi7yt0 _19gi7yt7 _19gi7yt12 _19gi7yt1a _19gi7yt1g notranslate">
+                                <p id="shipping-price"></p>
+                              </span>
+                            </div>
+                          </div>
+                          <div role="row" class="_1x41w3p1 _1x41w3p0 _1fragem41 _1fragemni _1x41w3p2">
+                            <div role="rowheader" class="_1x41w3p6">
+                              <strong class="_19gi7yt0 _19gi7ytk _19gi7ytj _1fragemp5 _19gi7yt12 _19gi7yt1a _19gi7yt1l">Total</strong>
+                            </div>
+                            <div role="cell" class="_1x41w3p7">
+                              <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8w">
+                                <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemnh _1fragem4l _1fragem6e _1fragem8w">
+                                  <abbr class="_1qifbzv1 _1qifbzv0 _1fragemtl">
+                                    <span translate="no" class="_19gi7yt0 _19gi7yte _19gi7ytd _1fragemp2 _19gi7yt12 _19gi7yt1b _19gi7yt1g notranslate">EUR</span>
+                                  </abbr>
+                                  <strong translate="no" class="_19gi7yt0 _19gi7ytk _19gi7ytj _1fragemp5 _19gi7yt12 _19gi7yt1a _19gi7yt1l notranslate">
+                                    <p id="total-price"></p>
+                                  </strong>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </section>
+              </div>
+            </aside>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+      window.location.href = "/posters/";
+    }
+  });
+</script>
+
+<script src="checkout.js"></script>
+  </body>
+</html>

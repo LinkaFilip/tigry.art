@@ -1,0 +1,25 @@
+{
+  "name": "tigry.art",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "netlify:open": "netlify open",
+    "deploy": "git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinkaFilip/tigry.art.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LinkaFilip/tigry.art/issues"
+  },
+  "homepage": "https://github.com/LinkaFilip/tigry.art#readme",
+  "description": "",
+  "dependencies": {
+    "stripe": "^18.3.0"
+  }
+}

@@ -1,47 +1,52 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <title>Platba</title>
-  <script src="https://js.stripe.com/v3/"></script>
-  <link rel="stylesheet" href="variables.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tigry.art</title>
+  <link rel="stylesheet" href="variables.css" />  
+  <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="/posters/posters.css">
+<link rel="icon" type="image/png" href="/images/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/images/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Tigry.art" />
+<link rel="manifest" href="/images/favicon/site.webmanifest" />
+
 </head>
 <body>
-  <h1>Objednávka plakátu – 300 Kč</h1>
+<img src="/images/poster.webp" alt="background">
+<header class="Header_header">
+        <div class="MenuCover_menuCover__2c3ab">
+          <div class="menu">
+            <span style="padding-left: .7rem;width: auto;height: auto;top: 50%;transform: translateY(-50%);position: relative;display: inline-block;transition: .5s;">
+                <a class="a_clr_blc__a_clrBlc_Fe3a9" style="font-weight: 800; " href="/">Tigry.art</a>
+            </span>
+            <nav>
+              <span>
+                <a href="/posters/" class="first_a a_clr_blc__a_clrBlc_Fe3a9">Posters</a>
+              </span>
+              <span>
+                <a href="/about/" class="second_a a_clr_blc__a_clrBlc_Fe3a9">About us</a>
+              </span>
+            </nav>
+            <span style="top: 50%;transform: translateY(-50%);position: relative;width: .9rem;display: inline-block;transition: 3s;">
+              <span class="main-dot" style="translate: none;rotate: none;scale: none;transform: translate(-50%, -50%);--tw-translate-x: -50%;--tw-translate-y: -50%;left: 50%;position: absolute;top: 50%;width: .3rem;height: .3rem;display: block;transition: .5s;">
+                  <span class="dot dot1" style="translate: none;rotate: none;scale: none;transform: translate(100%, -100%);"></span>
+                  <span class="dot dot2" style="translate: none;rotate: none;scale: none;transform: translate(-100%, -100%);"></span>
+                  <span class="dot dot3" style="translate: none; rotate: none; scale: none; transform: translate(-100%, 100%);"></span>
+                  <span class="dot dot4" style="translate: none; rotate: none; scale: none; transform: translate(100%, 100%);"></span>
+              </span>
+            </span>    
+          </div>
+        </div>
+      
 
-  <form id="payment-form">
-    <div id="card-element"></div>
-    <button type="submit">Zaplatit</button>
-    <div id="payment-message"></div>
-  </form>
-
-  <script>
-    const stripe = Stripe("pk_live_51LpXXlEqK4P4Y8FRmvpDyFPIhKGiJCVCgYE1gMsYK6C7mjzJvFK8PAQlN9coFjtGeKuvVMAMO4iKHePrFRwNrSDM00wFzIJwxA");
-
-    fetch("/.netlify/functions/create-payment-intent", { method: "POST" })
-      .then(res => res.json())
-      .then(data => {
-        const elements = stripe.elements();
-        const card = elements.create("card");
-        card.mount("#card-element");
-
-        document.getElementById("payment-form").addEventListener("submit", async (event) => {
-          event.preventDefault();
-          const result = await stripe.confirmCardPayment(data.clientSecret, {
-            payment_method: {
-              card: card
-            }
-          });
-
-          if (result.error) {
-            document.getElementById("payment-message").innerText = "Chyba: " + result.error.message;
-          } else {
-            if (result.paymentIntent.status === 'succeeded') {
-              document.getElementById("payment-message").innerText = "Platba proběhla úspěšně!";
-            }
-          }
-        });
-      });
-  </script>
+    </header>
+<svg width="400" height="400" viewBox="0 0 50 40" fill="none" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <path d="M44.984 21.5948C33.7423 23.8404 24.0218 26.1233 13.3078 19.9695C5.08952 15.2491 5.20033 16.3697 0.931802 8.34035" stroke="currentColor" stroke-width="1.5" stroke-linecap=""></path>
+                                    <path d="M36.471 35.5442C38.9826 31.2211 42.1312 26.8694 44.21 22.299C44.3699 21.9474 44.9061 21.2702 44.7791 20.8708C43.874 18.0238 36.9287 20.0719 34.8823 18.707" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+                                </svg>
 </body>
 </html>
