@@ -144,7 +144,10 @@ deliveryRadios.forEach(radio => {
   });
 });
 packetaButton.addEventListener("click", () => {
-  setTimeout(() => createPaymentRequest(), 0);
+  setTimeout(() => {
+    updatePrices();
+    createPaymentRequest();
+  }, 0);
 });
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
@@ -355,9 +358,11 @@ const createPaymentRequest = () => {
   renderProductFromCart();
   updatePrices();
   createPaymentRequest();
-  selectElement.addEventListener("change", () => {
-    updatePrices();
-  });
+
+selectElement.addEventListener("change", () => {
+  updatePrices();
+  createPaymentRequest();
+});
 
 containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping() / 100)).toFixed(2)}`;
   payButton.addEventListener("click", async () => {
