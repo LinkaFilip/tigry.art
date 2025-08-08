@@ -342,112 +342,57 @@ promoInput.addEventListener("input", updatePrices);
     });
   }; 
 
-//let paymentRequest = null;
-//let paymentRequestButton = null;
-//
-//const createPaymentRequest = () => {
-//  const subtotal = calculateSubtotal() * 100;
-//  const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
-//  const country = (selectElement.value || "CZ").toUpperCase();
-//
-//  if (paymentRequestButton) {
-//    paymentRequestButton.unmount();
-//    paymentRequestButton = null;
-//  }
-//  paymentRequest = stripe.paymentRequest({
-//    country: country,
-//    currency: "eur",
-//    total: {
-//      label: "Celková cena",
-//      amount: subtotal + shipping,
-//    },
-//    requestPayerName: true,
-//    requestPayerEmail: true,
-//  });
-//
-//  if (!paymentRequest) {
-//    console.error("PaymentRequest není vytvořen");
-//    return;
-//  }
-//  const prButton = elements.create("paymentRequestButton", {
-//    paymentRequest,
-//    style: {
-//      paymentRequestButton: {
-//        type: "default",
-//        theme: "dark",
-//        height: "44px",
-//      },
-//    },
-//  });
-//
-//  paymentRequest.canMakePayment().then(result => {
-//    const container = document.getElementById("payment_request_button");
-//    if (result) {
-//      container.innerHTML = "";
-//      prButton.mount(container);
-//      paymentRequestButton = prButton; // uložíme pro pozdější unmount
-//    } else {
-//      container.style.display = "none";
-//    }
-//  }).catch(err => {
-//    console.error("Chyba při canMakePayment:", err);
-//  });
-//};
 let paymentRequest = null;
+let paymentRequestButton = null;
 
-function createPaymentRequest() {
-  const subtotal = calculateSubtotal();
-  const shippingFee = parseInt(localStorage.getItem("shippingFee")) || 0;
-  const totalAmount = subtotal + shippingFee / 100;
+const createPaymentRequest = () => {
+  const subtotal = calculateSubtotal() * 100;
+  const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
+  const country = (selectElement.value || "CZ").toUpperCase();
 
-  paymentRequest = stripe.paymentRequest({
-    country: getSelectedCountry() || 'US',
-    currency: 'eur',
-    total: {
-      label: 'Total',
-      amount: Math.round(totalAmount * 100),
-    },
-    requestShipping: true,
-    shippingOptions: [
-    ],
-  });
-
-  paymentRequest.on('shippingaddresschange', (ev) => {
-    ev.updateWith({status: 'success', total: {
-      label: 'Total',
-      amount: Math.round(totalAmount * 100),
-    }});
-  });
-
-  enableGooglePayIfAvailable();
-}
-
-document.querySelectorAll('input[name="deliveryMethod"]').forEach(radio => {
-  radio.addEventListener('change', () => {
-    updateShippingFeeBasedOnDeliveryMethod();
-    createPaymentRequest();
-    updatePrices();
-  });
-});
-
-function updateShippingFeeBasedOnDeliveryMethod() {
-  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value;
-  let shippingFee = 0;
-  if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
-    shippingFee = parseInt(localStorage.getItem("shippingFee")) || 0;
-  } else {
-    shippingFee = SHIPPING_COST[getSelectedCountry()] || 0;
+  if (paymentRequestButton) {
+    paymentRequestButton.unmount();
+    paymentRequestButton = null;
   }
-  localStorage.setItem("shippingFee", shippingFee);
-}
+  paymentRequest = stripe.paymentRequest({
+    country: country,
+    currency: "eur",
+    total: {
+      label: "Celková cena",
+      amount: subtotal + shipping,
+    },
+    requestPayerName: true,
+    requestPayerEmail: true,
+  });
 
-selectElement.addEventListener('change', () => {
-  updateShippingFeeBasedOnDeliveryMethod();
-  createPaymentRequest();
-  updatePrices();
-});
+  if (!paymentRequest) {
+    console.error("PaymentRequest není vytvořen");
+    return;
+  }
+  const prButton = elements.create("paymentRequestButton", {
+    paymentRequest,
+    style: {
+      paymentRequestButton: {
+        type: "default",
+        theme: "dark",
+        height: "44px",
+      },
+    },
+  });
 
-createPaymentRequest();
+  paymentRequest.canMakePayment().then(result => {
+    const container = document.getElementById("payment_request_button");
+    if (result) {
+      container.innerHTML = "";
+      prButton.mount(container);
+      paymentRequestButton = prButton; // uložíme pro pozdější unmount
+    } else {
+      container.style.display = "none";
+    }
+  }).catch(err => {
+    console.error("Chyba při canMakePayment:", err);
+  });
+};
 
 
 selectElement.addEventListener("change", updatePrices(), createPaymentRequest());
