@@ -315,7 +315,7 @@ const createPaymentRequest = () => {
   const subtotal = calculateSubtotal() * 100;
   const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
   const country = selectElement.value || "cz";
-  
+
   if (paymentRequestButton) {
     paymentRequestButton.unmount();
     paymentRequestButton = null;
@@ -394,12 +394,11 @@ document.querySelectorAll('input[name="deliveryMethod"]').forEach(radio => {
     createPaymentRequest();
   });
 });
-if (typeof packetaButton !== "undefined") {
+
+if (packetaButton) {
   packetaButton.addEventListener("click", () => {
-    setTimeout(() => {
-      updatePrices();
-      createPaymentRequest();
-    }, 0);
+    updatePrices();
+    createPaymentRequest();
   });
 }
 
