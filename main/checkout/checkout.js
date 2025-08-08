@@ -237,7 +237,7 @@ const updatePrices = () => {
   const totalBeforeDiscount = subtotal + shipping / 100;
   
   const code = promoInput.value.trim().toUpperCase();
-  const discountPercent = code === "TEST10" ? 10 : 0;
+  const discountPercent = code === "TEST10" ? 20 : 0;
   const discountAmount = totalBeforeDiscount * (discountPercent / 100);
   const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
@@ -351,7 +351,7 @@ function applyDiscount(price) {
 
   switch (code) {
     case "TEST10":
-      return price * 0.9;
+      return price * 0.8;
     default:
       return price;
   }
@@ -439,7 +439,6 @@ paymentRequest.on('shippingaddresschange', (event) => {
     console.error(confirmError.message);
   } else {
     event.complete('success');
-    // třeba redirect nebo update UI
   }
 });
   const prButton = elements.create("paymentRequestButton", {
