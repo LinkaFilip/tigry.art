@@ -85,6 +85,7 @@ packetaButton.addEventListener("click", (e) => {
       }
       packetaButton.innerText = `${point.name}`;
       updateUI();
+      createPaymentRequest();
     }
   });
 });
@@ -384,12 +385,6 @@ document.querySelectorAll('input[name="deliveryMethod"]').forEach(radio => {
   });
 });
 
-if (packetaButton) {
-  packetaButton.addEventListener("click", () => {
-    updatePrices();
-    createPaymentRequest();
-  });
-}
 
 containerIfMobile.textContent = `EUR ${((calculateSubtotal() + getSelectedShipping() / 100)).toFixed(2)}`;
   payButton.addEventListener("click", async () => {
