@@ -432,6 +432,22 @@ paymentRequest.on('shippingaddresschange', (event) => {
     console.error("PaymentRequest není vytvořen");
     return;
   }
+  paymentRequest.on('paymentmethod', async (event) => {
+  // Tady budeš řešit platbu (viz předchozí odpověď)
+  const {error: confirmError} = await stripe.confirmCardPayment(
+    clientSecret,
+    {payment_method: event.paymentMethod.id},
+    {handleActions: false}
+  );
+
+  if (confirmError) {
+    event.complete('fail');
+    console.error(confirmError.message);
+  } else {
+    event.complete('success');
+    // třeba redirect nebo update UI
+  }
+});
   const prButton = elements.create("paymentRequestButton", {
     paymentRequest,
     style: {
