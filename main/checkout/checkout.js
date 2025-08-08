@@ -80,7 +80,7 @@ packetaButton.addEventListener("click", (e) => {
 const getCurrentShipping = () => {
   const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value;
   if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
-    return parseInt(localStorage.getItem("shippingFee"), 10) || 0;
+    return parseInt(localStorage.getItem("shippingFee"));
   }
   return SHIPPING_COST[selectElement.value] || 0;
 };
@@ -177,7 +177,7 @@ const updatePrices = () => {
   const deliveryMethod = selectedRadio?.value || localStorage.getItem("shippingMethod");
   const country = localStorage.getItem("countryCode");
   const selectedBranchId = localStorage.getItem("selectedBranchId");
-  const shippingFee = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
+  const shippingFee = parseInt(localStorage.getItem("shippingFee"));
   let shipping = 0;
   
   if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
@@ -300,7 +300,7 @@ promoInput.addEventListener("input", updatePrices);
 
 const createPaymentRequest = () => {
   const subtotal = calculateSubtotal();
-const shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
+const shipping = parseInt(localStorage.getItem("shippingFee"));
 
 
   const paymentRequest = stripe.paymentRequest({
@@ -308,7 +308,7 @@ const shipping = parseInt(localStorage.getItem("shippingFee"), 10) || 0;
     currency: "eur",
     total: {
       label: "Celková cena",
-      amount: (subtotal + shipping).toFixed(2),
+      amount: (subtotal + shipping),
     },
     requestPayerName: true,
     requestPayerEmail: true,
