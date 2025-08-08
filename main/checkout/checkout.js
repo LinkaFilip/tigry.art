@@ -162,9 +162,12 @@ packetaButton.addEventListener("click", () => {
     const cart = getCartFromCookie();
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   };
-
+console.log(selectElement)
   const getSelectedCountry = () => selectElement.value;
+  console.log(getSelectedCountry());
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
+  console.log(getCurrentShipping());
+
 
 
   const promoInput = document.getElementById("ReductionsInput0");
