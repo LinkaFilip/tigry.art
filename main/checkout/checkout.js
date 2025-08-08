@@ -305,20 +305,17 @@ promoInput.addEventListener("input", updatePrices);
   }; 
   selectElement.addEventListener("change", updatePrices);
 
-let paymentRequestButton = null;
-let prButton = null;
 let paymentRequest = null;
+let paymentRequestButton = null;
 
-function createPaymentRequest() {
+const createPaymentRequest = () => {
   const subtotal = calculateSubtotal() * 100;
   const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
-  const country = selectElement.value || "cz";
+  const country = (selectElement.value || "CZ").toUpperCase();
 
   if (paymentRequestButton) {
     paymentRequestButton.unmount();
     paymentRequestButton = null;
-    prButton = null;
-    paymentRequest = null;
   }
   paymentRequest = stripe.paymentRequest({
     country: country,
@@ -335,8 +332,7 @@ function createPaymentRequest() {
     console.error("PaymentRequest není vytvořen");
     return;
   }
-
-  prButton = elements.create("paymentRequestButton", {
+  const prButton = elements.create("paymentRequestButton", {
     paymentRequest,
     style: {
       paymentRequestButton: {
@@ -346,12 +342,13 @@ function createPaymentRequest() {
       },
     },
   });
+
   paymentRequest.canMakePayment().then(result => {
     const container = document.getElementById("payment_request_button");
     if (result) {
       container.innerHTML = "";
       prButton.mount(container);
-      paymentRequestButton = prButton;
+      paymentRequestButton = prButton; // uložíme pro pozdější unmount
     } else {
       container.style.display = "none";
     }
