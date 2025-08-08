@@ -77,6 +77,13 @@ packetaButton.addEventListener("click", (e) => {
     }
   });
 });
+const getCurrentShipping = () => {
+  const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked')?.value;
+  if (["packeta", "zbox", "evening"].includes(deliveryMethod)) {
+    return parseInt(localStorage.getItem("shippingFee"), 10) || 0;
+  }
+  return SHIPPING_COST[selectElement.value] || 0;
+};
 function updateUI() {
   const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
   const selectedValue = selectedRadio?.value;
@@ -120,6 +127,10 @@ function updateUI() {
   }  
   updatePrices();
 }
+selectElement.addEventListener("change", () => {
+  updatePrices();
+  createPaymentRequest();
+});
 deliveryRadios.forEach(radio => {
   radio.addEventListener("change", () => {
       document.querySelectorAll('.delivery-option').forEach(label => {
@@ -128,7 +139,12 @@ deliveryRadios.forEach(radio => {
       radio.closest('label').classList.add('active');
     localStorage.setItem("shippingMethod", radio.value);
     updateUI();
+    updatePrices();
+    createPaymentRequest();
   });
+});
+packetaButton.addEventListener("click", () => {
+  setTimeout(() => createPaymentRequest(), 0);
 });
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
@@ -274,12 +290,16 @@ promoInput.addEventListener("input", updatePrices);
   }; 
   selectElement.addEventListener("change", updatePrices);
   const createPaymentRequest = () => {
+
+  const shipping = getCurrentShipping();
+  const totalAmount = calculateSubtotal() + shipping / 100;
+
     const paymentRequest = stripe.paymentRequest({
       country: getSelectedCountry(),
       currency: "eur",
       total: {
         label: "Celková cena",
-        amount: (calculateSubtotal() + getSelectedShipping() / 100) * 100,
+      amount: Math.round(totalAmount * 100),
       },
       promoCode: promoInput.value.trim() ,
       requestPayerName: true,
