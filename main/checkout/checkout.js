@@ -180,9 +180,8 @@ const updatePrices = () => {
   const shippingFee = parseInt(localStorage.getItem("shippingFee"));
 let shipping = parseInt(localStorage.getItem("shippingFee"));
   
-  if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
-      localStorage.setItem("shippingFee", getCurrentShipping());
-  } else if (deliveryMethod === "courier") {
+  if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {shippingFee}
+  else if (deliveryMethod === "courier") {
       localStorage.setItem("shippingFee", SHIPPING_COST[selectElement.value] || 0);
   } else {
       localStorage.setItem("shippingFee", SHIPPING_COST[selectElement.value] || 0);
