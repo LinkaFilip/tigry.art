@@ -124,7 +124,7 @@ const totalAmount = totalBeforeDiscount - discountAmount;
         shipping_fee: shipping.toString(),
         packeta_branch_id: packetaBranchId || "none",
         packeta_branch_name: packetaBranchName || "none",
-        packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}, ${packetaBranchZip}`,
+        packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}`,
         packeta_branch_type: packetaBranchType || "unknown",
         selectedBranchLatitude,
         selectedBranchLongitude,
