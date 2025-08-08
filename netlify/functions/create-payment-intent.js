@@ -1,4 +1,24 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
+const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
+const path = require('path');
+const ordersFile = path.join(__dirname, 'orders.json');
+
+function readOrders() {
+  if (!fs.existsSync(ordersFile)) return [];
+  const data = fs.readFileSync(ordersFile, 'utf8');
+  return JSON.parse(data);
+}
+
+function writeOrders(orders) {
+  fs.writeFileSync(ordersFile, JSON.stringify(orders, null, 2));
+}
+
+function addOrder(order) {
+  const orders = readOrders();
+  orders.push(order);
+  writeOrders(orders);
+}
 
 exports.handler = async (event) => {
   try {
@@ -12,8 +32,14 @@ exports.handler = async (event) => {
       packetaBranchStreet,
       packetaBranchCity,
     } = JSON.parse(event.body);
+
+    if (!Array.isArray(items) || items.length === 0) {
+      throw new Error("No items in the cart");
+    }
+
     console.log("Received body:", event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
+    
     const productsDB = {
       "poster001": 1000,
       "poster002": 1000,
@@ -33,7 +59,7 @@ exports.handler = async (event) => {
       return sum + priceInCents * item.quantity;
     }, 0);
 
-let shipping = 0;
+    let shipping = 0;
 
     if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
       const shippingTable = {
@@ -88,27 +114,27 @@ let shipping = 0;
 
       shipping = courierShippingPrices[country] || 0;
     }
-    
-let discountPercent = 0;
 
-if (promoCode) {
-  const codes = await stripe.promotionCodes.list({
-    code: promoCode,
-    active: true,
-    limit: 1,
-  });
+    let discountPercent = 0;
 
-  if (codes.data.length > 0) {
-    const coupon = codes.data[0].coupon;
-    if (coupon.percent_off) {
-      discountPercent = coupon.percent_off;
+    if (promoCode) {
+      const codes = await stripe.promotionCodes.list({
+        code: promoCode,
+        active: true,
+        limit: 1,
+      });
+
+      if (codes.data.length > 0) {
+        const coupon = codes.data[0].coupon;
+        if (coupon.percent_off) {
+          discountPercent = coupon.percent_off;
+        }
+      }
     }
-  }
-}
 
-const totalBeforeDiscount = subtotal + shipping;
-const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
-const totalAmount = totalBeforeDiscount - discountAmount;
+    const totalBeforeDiscount = subtotal + shipping;
+    const discountAmount = Math.round(totalBeforeDiscount * (discountPercent / 100));
+    const totalAmount = totalBeforeDiscount - discountAmount;
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalAmount,
@@ -125,6 +151,15 @@ const totalAmount = totalBeforeDiscount - discountAmount;
         packeta_branch_name: packetaBranchName || "none",
         packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}`,
       },
+    });
+
+    addOrder({
+      id: uuidv4(),
+      paymentIntentId: paymentIntent.id,
+      items,
+      totalAmount,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
     });
 
     return {
