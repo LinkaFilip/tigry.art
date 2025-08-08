@@ -85,7 +85,6 @@ packetaButton.addEventListener("click", (e) => {
       }
       packetaButton.innerText = `${point.name}`;
       updateUI();
-      createPaymentRequest();
     }
   });
 });
