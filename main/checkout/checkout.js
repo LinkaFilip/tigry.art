@@ -386,7 +386,6 @@ selectElement.addEventListener("change", () => {
 
 renderProductFromCart();
 updatePrices();
-createPaymentRequest();
 
 document.querySelectorAll('input[name="deliveryMethod"]').forEach(radio => {
   radio.addEventListener("change", () => {
