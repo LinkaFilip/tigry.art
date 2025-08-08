@@ -306,7 +306,8 @@ promoInput.addEventListener("input", updatePrices);
     });
   }; 
   selectElement.addEventListener("change", updatePrices);
-
+  
+let paymentRequestButton;
 
 
 const createPaymentRequest = () => {
