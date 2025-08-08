@@ -152,12 +152,10 @@ deliveryRadios.forEach(radio => {
     localStorage.setItem("shippingMethod", radio.value);
     updateUI();
     updatePrices();
-    createPaymentRequest();
   });
 });
 packetaButton.addEventListener("click", () => {
     updatePrices();
-    createPaymentRequest();
 });
   const getCartFromCookie = () => {
     const cartCookie = document.cookie.split("; ").find(row => row.startsWith("cart="));
@@ -332,7 +330,6 @@ const createPaymentRequest = () => {
     console.error("PaymentRequest není vytvořen");
     return;
   }
-  if(!paymentRequestButton){
   const prButton = elements.create("paymentRequestButton", {
     paymentRequest,
     style: {
@@ -343,21 +340,19 @@ const createPaymentRequest = () => {
       },
     },
   });
-    paymentRequest.canMakePayment().then(result => {
+
+  paymentRequest.canMakePayment().then(result => {
     const container = document.getElementById("payment_request_button");
     if (result) {
       container.innerHTML = "";
       prButton.mount(container);
-      paymentRequestButton = prButton;
+      paymentRequestButton = prButton; // uložíme pro pozdější unmount
     } else {
       container.style.display = "none";
     }
   }).catch(err => {
     console.error("Chyba při canMakePayment:", err);
   });
-  }
-
-
 };
   const style = {
     base: {
@@ -377,10 +372,6 @@ const createPaymentRequest = () => {
   updatePrices();
   createPaymentRequest();
 
-selectElement.addEventListener("change", () => {
-  updatePrices();
-  createPaymentRequest();
-});
 
 renderProductFromCart();
 updatePrices();
