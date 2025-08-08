@@ -368,7 +368,6 @@ selectElement.addEventListener("change", updatePrices, createPaymentRequest());
   cardCvc.mount("#card-cvc-element");
   renderProductFromCart();
   updatePrices();
-  createPaymentRequest();
 
 
 renderProductFromCart();
