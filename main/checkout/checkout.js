@@ -438,8 +438,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     return subtotal + shipping - promoDiscount;
   }
   const createPaymentRequest = () => {
-    const subtotal = calculateSubtotal() * 100;
-    const shipping = parseInt(localStorage.getItem("shippingFee")) || 0;
     const country = (selectElement.value || "CZ").toUpperCase();
 
     if (paymentRequestButton) {
@@ -598,20 +596,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const deliveryMethod = document.querySelector(
       'input[name="deliveryMethod"]:checked'
     ).value;
-    const shippingFee = localStorage.getItem("shippingFee");
 
     const selectedBranchId = localStorage.getItem("selectedBranchId");
     const selectedBranchName = localStorage.getItem("selectedBranchName");
     const selectedBranchStreet = localStorage.getItem("selectedBranchStreet");
     const selectedBranchCity = localStorage.getItem("selectedBranchCity");
-    const selectedBranchZip = localStorage.getItem("selectedBranchZip");
-    const selectedBranchType = localStorage.getItem("selectedBranchType");
-    const selectedBranchLongitude = localStorage.getItem(
-      "selectedBranchLongitude"
-    );
-    const selectedBranchLatitude = localStorage.getItem(
-      "selectedBranchLatitude"
-    );
     if (deliveryMethod === "packeta" && !selectedBranchId) {
       payButton.disabled = false;
       payButton.textContent = "Pay now";
@@ -627,15 +616,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         getSelectedCountry: getSelectedCountry(),
         promoCode: promoCode,
         deliveryMethod: deliveryMethod,
-        shippingFee: shippingFee,
         packetaBranchId: selectedBranchId,
         packetaBranchName: selectedBranchName,
         packetaBranchStreet: selectedBranchStreet,
         packetaBranchCity: selectedBranchCity,
-        packetaBranchZip: selectedBranchZip,
-        packetaBranchType: selectedBranchType,
-        selectedBranchLongitude: selectedBranchLongitude,
-        selectedBranchLatitude: selectedBranchLatitude
       })
     });
 

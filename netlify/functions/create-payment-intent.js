@@ -11,10 +11,6 @@ exports.handler = async (event) => {
       packetaBranchName,
       packetaBranchStreet,
       packetaBranchCity,
-      packetaBranchZip,
-      packetaBranchType,
-      selectedBranchLongitude,
-      selectedBranchLatitude,
     } = JSON.parse(event.body);
     console.log("Received body:", event.body);
     const cartItems = items.map((item) => `${item.name} (x${item.quantity})`).join(", ");
@@ -30,7 +26,7 @@ exports.handler = async (event) => {
       "poster009": 1000,
       "poster010": 1000,
     };
-    
+
     const subtotal = items.reduce((sum, item) => {
       const priceInCents = productsDB[item.id];
       if (!priceInCents) throw new Error(`Unknown product ID: ${item.id}`);
