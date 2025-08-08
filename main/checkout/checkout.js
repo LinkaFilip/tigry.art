@@ -182,7 +182,7 @@ const updatePrices = () => {
   const country = localStorage.getItem("countryCode");
   const selectedBranchId = localStorage.getItem("selectedBranchId");
   const shippingFee = parseInt(localStorage.getItem("shippingFee"));
-let shipping = parseInt(localStorage.getItem("shippingFee"));
+  let shipping = parseInt(localStorage.getItem("shippingFee"));
   
   if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {shippingFee}
   else if (deliveryMethod === "courier") {
@@ -191,6 +191,7 @@ let shipping = parseInt(localStorage.getItem("shippingFee"));
       localStorage.setItem("shippingFee", SHIPPING_COST[selectElement.value] || 0);
   }
 
+  localStorage.setItem("shippingFee", shippingFee);
   const totalBeforeDiscount = subtotal + shipping / 100;
   
   const code = promoInput.value.trim().toUpperCase();
