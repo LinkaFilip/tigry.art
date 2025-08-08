@@ -45,7 +45,7 @@ packetaButton.addEventListener("click", (e) => {
 
       if (type === "zbox") {
         shippingMethod = "zbox";
-      } else if (type === "external" || point.name.toLowerCase().includes("večerní")) {
+      } else if (type === "external" || point.name.toLowerCase().includes("evening")) {
         shippingMethod = "evening";
       }
 
