@@ -205,7 +205,9 @@ console.log(selectElement.value)
   const getSelectedShipping = () => SHIPPING_COST[getSelectedCountry()] || 0;
   console.log(getCurrentShipping());
   document.getElementById("Select0").addEventListener("change", () => {
-    getSelectedShipping();
+  getSelectedShipping();
+  updatePrices();
+  updateUI();
   })
 
 
@@ -385,7 +387,7 @@ const createPaymentRequest = () => {
     if (result) {
       container.innerHTML = "";
       prButton.mount(container);
-      paymentRequestButton = prButton; // uložíme pro pozdější unmount
+      paymentRequestButton = prButton;
     } else {
       container.style.display = "none";
     }
