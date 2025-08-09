@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const stripe = Stripe(process.env.STRIPE_SECRET);
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // POZOR: use service role for server-side writes
+const supabaseKey = process.env.SUPABASE_KEY;
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 if (!supabaseUrl || !supabaseKey) {
