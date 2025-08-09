@@ -513,15 +513,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
         ];
       }
-
-      event.updateWith({
-        status: "success",
-        shippingOptions,
-        total: {
-          label: "Total",
-          amount: 1000 + shippingOptions[0].amount
-        }
-      });
     });
     if (!paymentRequest) {
       return;
@@ -539,21 +530,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         event.complete("success");
       }
     });
-    const prButton = elements.create("paymentRequestButton", {
-      paymentRequest,
-      style: {
-        paymentRequestButton: {
-          type: "default",
-          theme: "dark",
-          height: "44px"
-        }
-      }
-    });
+
 
     paymentRequest
       .canMakePayment()
       .then((result) => {
-        const container = document.getElementById("payment_request_button");
+        const container = document.getElementById(null);
         if (result) {
           container.innerHTML = "";
           prButton.mount(container);
