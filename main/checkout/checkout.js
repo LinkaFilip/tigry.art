@@ -111,12 +111,12 @@ packetaButton.addEventListener("click", (e) => {
       shippingMethod = "evening";
     }
     if (countryCode === "cz") {
-      shippingFee = shippingMethod === "evening" ? 550 : 200;
+      shippingFee = shippingMethod === "evening" ? 550 : 300;
     } else if (countryCode === "sk") {
       if (shippingMethod === "zbox") shippingFee = 200;
       else if (shippingMethod === "evening") shippingFee = 600;
-      else shippingFee = 200; 
-
+      else shippingFee = 200;
+    }
     const details = {
       selectedBranchId: point.id,
       selectedBranchName: point.name,
