@@ -1,16 +1,10 @@
 exports.handler = async function(event, context) {
   try {
     const data = JSON.parse(event.body);
+    const apiPassword = process.env.PACKETA_API_PASSWORD;
 
-    // Tady napiš svůj request na Packeta API, např.:
-    const response = await fetch('https://www.zasilkovna.cz/api/rest', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/xml',  // nebo podle API
-        'Authorization': 'Basic ...'        // nebo jiný auth, pokud je potřeba
-      },
-      body: `<createPacket>
-               <apiPassword>tvůjApiPassword</apiPassword>
+    const xmlBody = `<createPacket>
+               <apiPassword>${apiPassword}</apiPassword>
                <packetAttributes>
                  <number>${data.number}</number>
                  <name>${data.name}</name>
@@ -23,7 +17,14 @@ exports.handler = async function(event, context) {
                  <weight>${data.weight}</weight>
                  <eshop>${data.eshop}</eshop>
                </packetAttributes>
-             </createPacket>`
+             </createPacket>`;
+
+    const response = await fetch('https://www.zasilkovna.cz/api/rest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/xml',
+      },
+      body: xmlBody
     });
 
     if (!response.ok) {
@@ -34,7 +35,7 @@ exports.handler = async function(event, context) {
       };
     }
 
-    const responseData = await response.text(); // nebo .json() podle API
+    const responseData = await response.text();
     return {
       statusCode: 200,
       body: JSON.stringify({ success: true, data: responseData }),
