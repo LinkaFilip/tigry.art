@@ -601,6 +601,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       payButton.textContent = "Pay now";
       return;
     }
+  const number = `ORD-${Date.now()}`;
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
@@ -614,6 +615,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         packetaBranchName: selectedBranchName,
         packetaBranchStreet: selectedBranchStreet,
         packetaBranchCity: selectedBranchCity,
+        number: number
       })
     });
 
@@ -653,7 +655,7 @@ if (data.clientSecret) {
         addressId: selectedBranchId,
         cod: 0,
         value: 1000,
-        weight: 5,
+        weight: 0.7,
         eshop: "Tigry.art"
       }),
     });
