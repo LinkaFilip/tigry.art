@@ -659,42 +659,54 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 if (data.clientSecret) {
-      const email = document.getElementById("email").value;
-      const firstName = document.getElementById("TextField0").value;
-      const lastName = document.getElementById("TextField1").value;
-      const address1 = document.getElementById("TextField2").value;
-      const postalCode = document.getElementById("TextField4").value;
-      const city = document.getElementById("TextField5").value;
-      const phone = document.getElementById("TextField6").value;
-      const number = `ORD-${Date.now()}`;
-      const packetaResponse = await fetch("/.netlify/functions/create-packeta-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          number: number,
-          name:firstName,
-          surname:lastName,
-          email:email,
-          phone:phone || null,
-          addressId: selectedBranchId,
-          cod: 0,
-          value: 1000,
-          weight: 500,
-          eshop: "Tigry.art"
-        }),
-      });
+  const email = document.getElementById("email").value;
+  const firstName = document.getElementById("TextField0").value;
+  const lastName = document.getElementById("TextField1").value;
+  const phone = document.getElementById("TextField6").value || null;
 
-  const packetaData = await packetaResponse.json();
+  if (!selectedBranchId) {
+    console.error("Branch ID není vybrán");
+    payButton.disabled = false;
+    return;
+  }
 
+  const number = `ORD-${Date.now()}`;
 
-  if (packetaData.success) {
-  } else {
+  try {
+    const packetaResponse = await fetch("/.netlify/functions/create-packeta-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        number,
+        name: firstName,
+        surname: lastName,
+        email,
+        phone,
+        addressId: selectedBranchId,
+        cod: 0,
+        value: 1000,
+        weight: 500,
+        eshop: "Tigry.art"
+      }),
+    });
+
+    const packetaData = await packetaResponse.json();
+
+    if (packetaData.success) {
+      payButton.textContent = "Objednávka vytvořena ✔️";
+    } else {
+      console.error("Chyba v Packeta API:", packetaData);
+      payButton.disabled = false;
+    }
+  } catch (err) {
+    console.error("Chyba při volání Packeta API:", err);
     payButton.disabled = false;
   }
 } else {
   payButton.textContent = "Error creating payment";
   payButton.disabled = false;
 }
+  
     const email = document.getElementById("email").value;
     const firstName = document.getElementById("TextField0").value;
     const lastName = document.getElementById("TextField1").value;
