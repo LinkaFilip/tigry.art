@@ -685,7 +685,7 @@ if (data.clientSecret) {
         addressId: selectedBranchId,
         cod: 0,
         value: 1000,
-        weight: 500,
+        weight: 5,
         eshop: "Tigry.art"
       }),
     });
