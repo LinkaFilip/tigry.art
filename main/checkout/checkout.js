@@ -532,21 +532,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
 
-    paymentRequest
-      .canMakePayment()
-      .then((result) => {
-        const container = document.getElementById(null);
-        if (result) {
-          container.innerHTML = "";
-          prButton.mount(container);
-          paymentRequestButton = prButton;
-        } else {
-          container.style.display = "none";
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+
   };
 
   selectElement.addEventListener(
