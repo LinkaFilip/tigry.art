@@ -91,68 +91,66 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("selectedBranchLatitude");
   }
 
-  packetaButton.addEventListener("click", (e) => {
-    e.preventDefault();
+packetaButton.addEventListener("click", (e) => {
+  e.preventDefault();
 
-    Packeta.Widget.pick({apiKey: "45e618492867392e"}, function (point) {
-      if (point) {
-        const type = point.pickup_point_type || point.type;
+  Packeta.Widget.pick({ apiKey: "45e618492867392e" }, (point) => {
+    if (!point) return;
 
-        let shippingMethod = "packeta";
-        let shippingFee = 0;
-        const countryCode = point.country.toLowerCase();
-        localStorage.setItem("countryCode", countryCode);
+    const type = point.pickup_point_type || point.type || "";
+    const countryCode = point.country?.toLowerCase() || "cz";
 
-        if (type === "zbox") {
-          shippingMethod = "zbox";
-        } else if (
-          type === "external" ||
-          point.name.toLowerCase().includes("evening")
-        ) {
-          shippingMethod = "evening";
-        }
+    localStorage.setItem("countryCode", countryCode);
 
-        if (countryCode === "cz") {
-          if (shippingMethod === "zbox") shippingFee = 300;
-          else if (shippingMethod === "evening") shippingFee = 550;
-          else shippingFee = 300;
-        } else if (countryCode === "sk") {
-          if (shippingMethod === "zbox") shippingFee = 300;
-          else if (shippingMethod === "evening") shippingFee = 600;
-          else shippingFee = 400;
-        }
+    let shippingMethod = "packeta";
+    let shippingFee = 0;
 
-        localStorage.setItem("selectedBranchId", point.id);
-        localStorage.setItem("selectedBranchName", point.name);
-        localStorage.setItem("shippingMethod", shippingMethod);
-        localStorage.setItem("shippingFee", shippingFee);
-        localStorage.setItem("selectedBranchStreet", point.street);
-        localStorage.setItem("selectedBranchCity", point.city);
-        localStorage.setItem("selectedBranchZip", point.zip);
-        localStorage.setItem("selectedBranchType", point.type);
-        localStorage.setItem("selectedBranchLongitude", point.longitude);
-        localStorage.setItem("selectedBranchLatitude", point.latitude);
+    if (type === "zbox") {
+      shippingMethod = "zbox";
+    } else if (type === "external" || point.name?.toLowerCase().includes("evening")) {
+      shippingMethod = "evening";
+    }
+    if (countryCode === "cz") {
+      shippingFee = shippingMethod === "evening" ? 550 : 200;
+    } else if (countryCode === "sk") {
+      if (shippingMethod === "zbox") shippingFee = 200;
+      else if (shippingMethod === "evening") shippingFee = 600;
+      else shippingFee = 200; 
 
-        let shipping = parseInt(localStorage.getItem("shippingFee"));
-        const selectedRadio = document.querySelector(
-          'input[name="deliveryMethod"]:checked'
-        );
-        if (selectedRadio && selectedRadio.value === "packeta") {
-          shipping = Number(localStorage.getItem("shippingFee")) || 0;
-        } else {
-          shipping = SHIPPING_COST[getSelectedCountry()] || 0;
-        }
-        if (point.name) {
-          shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
-        }
-        if (!point.name) {
-          shippingDisplay.textContent = "Enter shipping details";
-        }
-        packetaButton.innerText = `${point.name}`;
-        updateUI();
-      }
-    });
+    const details = {
+      selectedBranchId: point.id,
+      selectedBranchName: point.name,
+      selectedBranchStreet: point.street,
+      selectedBranchCity: point.city,
+      selectedBranchZip: point.zip,
+      selectedBranchType: point.type,
+      selectedBranchLongitude: point.longitude,
+      selectedBranchLatitude: point.latitude,
+      shippingMethod,
+      shippingFee
+    };
+
+    Object.entries(details).forEach(([key, value]) =>
+      localStorage.setItem(key, value)
+    );
+
+    // Aktualizace UI
+    const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
+    let shipping = SHIPPING_COST[getSelectedCountry()] || shippingFee || 0;
+
+    if (selectedRadio?.value === "packeta") {
+      shipping = shippingFee;
+    }
+
+    shippingDisplay.textContent = point.name
+      ? `€ ${(shipping / 100).toFixed(2)}`
+      : "Enter shipping details";
+
+    packetaButton.innerText = point.name || "Choose the parcel shop";
+
+    updateUI();
   });
+});
   const getCurrentShipping = () => {
     const deliveryMethod =
       document.querySelector('input[name="deliveryMethod"]:checked')?.value ||
@@ -182,7 +180,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       packetaButton.style.display = "inline-block";
 
       const selectedBranchId = localStorage.getItem("selectedBranchId");
-      const container = document.getElementById("payment_request_button");
       const selectedBranchName = localStorage.getItem("selectedBranchName");
       packetaButton.innerText = selectedBranchId
         ? selectedBranchName
@@ -193,11 +190,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       payButton.style.margin = "0px 0px 0px 0px";
 
       if (payButton.disabled === false) {
-        container.style.pointerEvents = "auto";
-        container.style.opacity = "1";
       } else if (payButton.disabled === true) {
-        container.style.pointerEvents = "none";
-        container.style.opacity = ".7";
       }
       const shownElement = document.querySelector(".jHvVd");
       shownElement.style.display = "none";
@@ -215,14 +208,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       localStorage.removeItem("shippingFee");
       payButton.disabled = false;
       payButton.style.margin = "0px 0px 0px 0px";
-      const container = document.getElementById("payment_request_button");
-      if (payButton.disabled === false) {
-        container.style.pointerEvents = "auto";
-        container.style.opacity = "1";
-      } else if (payButton.disabled === true) {
-        container.style.pointerEvents = "none";
-        container.style.opacity = ".7";
-      }
 
       const element = document.querySelector(
         "._1fragemui._1fragemq6._1fragemqc._1fragemqo._1fragemqi._1fragem32._1fragemg9._1fragemi2._1fragemeg._1fragemjv._1fragemms"
@@ -500,7 +485,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             id: "in-europe",
             label: "Shipping in central Europe",
             detail: "Delivery within 5 days",
-            amount: 300
+            amount: 200
           }
         ];
       } else {
