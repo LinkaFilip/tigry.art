@@ -19,6 +19,19 @@ window.addEventListener("beforeunload", () => {
   }
 });
 document.addEventListener("DOMContentLoaded", async () => {
+  async function fetchPacketaBranches() {
+  try {
+    const response = await fetch("/.netlify/functions/packeta");
+    if (!response.ok) {
+      throw new Error("Chyba při načítání dat z Packeta API");
+    }
+    const data = await response.json();
+    return data; // to je ten seznam poboček
+  } catch (error) {
+    console.error("Error fetching Packeta branches:", error);
+    return null;
+  }
+}
   const deliveryRadios = document.querySelectorAll(
     'input[name="deliveryMethod"]'
   );
@@ -81,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   packetaButton.addEventListener("click", (e) => {
     e.preventDefault();
 
-    Packeta.Widget.pick({}, function (point) {
+    Packeta.Widget.pick({apiKey: "45e618492867392e"}, function (point) {
       if (point) {
         const type = point.pickup_point_type || point.type;
 
