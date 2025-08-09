@@ -661,13 +661,13 @@ if (data.clientSecret) {
     const packetaData = await packetaResponse.json();
 
     if (packetaData.success) {
-      payButton.textContent = "Objednávka vytvořena ✔️";
+      payButton.textContent = "Order created!";
     } else {
-      console.error("Chyba v Packeta API:", packetaData);
+      console.error("Error in Packeta API:", packetaData);
       payButton.disabled = false;
     }
   } catch (err) {
-    console.error("Chyba při volání Packeta API:", err);
+    console.error("Error when calling Packeta API:", err);
     payButton.disabled = false;
   }
 } else {
