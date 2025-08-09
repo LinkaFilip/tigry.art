@@ -666,21 +666,20 @@ if (data.clientSecret) {
       const postalCode = document.getElementById("TextField4").value;
       const city = document.getElementById("TextField5").value;
       const phone = document.getElementById("TextField6").value;
-      
+      const number = `ORD-${Date.now()}`;
       const packetaResponse = await fetch("/.netlify/functions/create-packeta-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          number: number,
           name:firstName,
           surname:lastName,
           email:email,
+          phone:phone || null,
           addressId: selectedBranchId,
           cod: 0,
-          value: 2500,
+          value: 0,
           weight: 500,
-          packetaBranchName: selectedBranchName,
-          packetaBranchStreet: selectedBranchStreet,
-          packetaBranchCity: selectedBranchCity,
           eshop: "Tigry.art"
         }),
       });
