@@ -1,5 +1,3 @@
-const fetch = require("node-fetch"); // pokud není v prostředí, můžeš použít native fetch v Netlify
-
 function escapeXml(unsafe) {
   return unsafe
     .replace(/&/g, "&amp;")
