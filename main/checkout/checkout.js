@@ -450,6 +450,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const promoDiscount = applyDiscount(subtotal + shipping);
     return subtotal + shipping - promoDiscount;
   }
+  async function createPacket(data) {
+  const res = await fetch("/.netlify/functions/create-packet", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error("Packeta API error: " + errorText);
+  }
+
+  const json = await res.json();
+  return json;
+}
   const createPaymentRequest = () => {
     const country = (selectElement.value || "CZ").toUpperCase();
 
@@ -643,7 +658,44 @@ document.addEventListener("DOMContentLoaded", async () => {
       payButton.textContent = "Pay now";
       return;
     }
+if (data.clientSecret) {
+      const email = document.getElementById("email").value;
+      const firstName = document.getElementById("TextField0").value;
+      const lastName = document.getElementById("TextField1").value;
+      const address1 = document.getElementById("TextField2").value;
+      const postalCode = document.getElementById("TextField4").value;
+      const city = document.getElementById("TextField5").value;
+      const phone = document.getElementById("TextField6").value;
+      
+      const packetaResponse = await fetch("/.netlify/functions/create-packeta-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name:firstName,
+          surname:lastName,
+          email:email,
+          addressId: selectedBranchId,
+          cod: 0,
+          value: 2500,
+          weight: 500,
+          packetaBranchName: selectedBranchName,
+          packetaBranchStreet: selectedBranchStreet,
+          packetaBranchCity: selectedBranchCity,
+          eshop: "Tigry.art"
+        }),
+      });
 
+  const packetaData = await packetaResponse.json();
+
+
+  if (packetaData.success) {
+  } else {
+    payButton.disabled = false;
+  }
+} else {
+  payButton.textContent = "Error creating payment";
+  payButton.disabled = false;
+}
     const email = document.getElementById("email").value;
     const firstName = document.getElementById("TextField0").value;
     const lastName = document.getElementById("TextField1").value;
