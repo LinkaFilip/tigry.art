@@ -678,7 +678,7 @@ if (data.clientSecret) {
           phone:phone || null,
           addressId: selectedBranchId,
           cod: 0,
-          value: 0,
+          value: 1000,
           weight: 500,
           eshop: "Tigry.art"
         }),
