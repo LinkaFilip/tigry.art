@@ -29,11 +29,15 @@ exports.handler = async function(event, context) {
         </packetAttributes>
       </createPacket>`;
 
-    const response = await fetch("https://api.packeta.com/v1/packets", {
-      method: "POST",
-      headers: { "Content-Type": "application/xml" },
-      body: xml,
-    });
+console.log("Sending XML to Packeta:", xml);
+const response = await fetch("https://api.packeta.com/v1/packets", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/xml",
+  },
+  body: xml,
+});
+
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -41,7 +45,10 @@ exports.handler = async function(event, context) {
       return { statusCode: response.status, body: errorText };
     }
 
-    const result = await response.text();
+
+console.log("Packeta response status:", response.status);
+const result = await response.text();
+console.log("Packeta response text:", result);
 
     return {
       statusCode: 200,
