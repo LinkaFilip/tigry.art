@@ -5379,7 +5379,6 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 .Footer_navs__uk9Kz {
     display: flex;
     flex-direction: column;
-    grid-column: 1/span 2
 }
 
 @media(min-width: 1024px) {
