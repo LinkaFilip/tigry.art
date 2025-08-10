@@ -548,6 +548,7 @@ packetaButton.addEventListener("click", (e) => {
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
     payButton.textContent = "Processing...";
+    const number = `ORD-${Date.now()}`;
 
     const cart = getCartFromCookie();
     if (!cart.length) {
@@ -614,7 +615,6 @@ if (data.clientSecret) {
       return;
     }
   }
-  const number = `ORD-${Date.now()}`;
 
   try {
     const packetaResponse = await fetch("/.netlify/functions/create-packeta-order", {
