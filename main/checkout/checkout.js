@@ -646,11 +646,15 @@ if (data.clientSecret) {
     });
 
     const packetaData = await packetaResponse.json();
+    const shippingMethod = localStorage.getItem("shippingMethod");
 
-    if (packetaData.success) {
+    if (
+      (shippingMethod === "packeta" && packetaData.success) ||
+      shippingMethod === "courier"
+    ) {
       payButton.textContent = "Order created!";
     } else {
-      console.error("Error in Packeta API:", packetaData);
+      console.error("Error in shipping step:", packetaData);
       payButton.disabled = false;
     }
   } catch (err) {
