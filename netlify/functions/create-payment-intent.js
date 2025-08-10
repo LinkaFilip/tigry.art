@@ -62,14 +62,14 @@ exports.handler = async (event) => {
     if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
       const shippingTable = {
         CZ: {
-          zbox: 300,
+          zbox: 200,
           evening: 550,
-          packeta: 300,
+          packeta: 200,
         },
         SK: {
-          zbox: 300,
+          zbox: 200,
           evening: 600,
-          packeta: 400,
+          packeta: 200,
         },
       };
 
