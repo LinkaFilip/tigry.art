@@ -596,6 +596,10 @@ packetaButton.addEventListener("click", (e) => {
         country: country,
         promoCode: promoCode,
         deliveryMethod: deliveryMethod,
+        packetaBranchId: selectedBranchId || null,
+        packetaBranchName: selectedBranchName || null,
+        packetaBranchStreet: selectedBranchStreet || null,
+        packetaBranchCity: selectedBranchCity || null,
         number: number
       })
     });

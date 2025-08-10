@@ -25,6 +25,10 @@ exports.handler = async (event) => {
       country,
       promoCode,
       deliveryMethod,
+      //packetaBranchId,
+      //packetaBranchName,
+      //packetaBranchStreet,
+      //packetaBranchCity,
       number
     } = JSON.parse(event.body);
 
@@ -56,25 +60,25 @@ exports.handler = async (event) => {
 
     let shipping = 0;
 
-    if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
-      const shippingTable = {
-        CZ: {
-          zbox: 200,
-          evening: 550,
-          packeta: 200,
-        },
-        SK: {
-          zbox: 200,
-          evening: 600,
-          packeta: 200,
-        },
-      };
-
-      const pricing = shippingTable[country];
-      if (pricing) {
-        shipping = pricing[deliveryMethod] || 0;
-      }
-    }
+    //if (deliveryMethod === "packeta" || deliveryMethod === "zbox" || deliveryMethod === "evening") {
+    //  const shippingTable = {
+    //    CZ: {
+    //      zbox: 200,
+    //      evening: 550,
+    //      packeta: 200,
+    //    },
+    //    SK: {
+    //      zbox: 200,
+    //      evening: 600,
+    //      packeta: 200,
+    //    },
+    //  };
+//
+    //  const pricing = shippingTable[country];
+    //  if (pricing) {
+    //    shipping = pricing[deliveryMethod] || 0;
+    //  }
+    //}
     if (deliveryMethod === "courier") {
       const courierShippingPrices = {
         AU: 4400,
@@ -142,7 +146,10 @@ exports.handler = async (event) => {
         discount_percent: discountPercent.toString(),
         discount_amount: discountAmount.toString(),
         delivery_method: deliveryMethod,
-        order_number: number
+        //packeta_branch_id: packetaBranchId || "none",
+        //packeta_branch_name: packetaBranchName || "none",
+        //packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}`,
+        number: number
       },
     });
 
@@ -153,9 +160,9 @@ exports.handler = async (event) => {
       status: 'pending',
       country,
       delivery_method: deliveryMethod,
-      packeta_branch_id: packetaBranchId || null,
-      packeta_branch_name: packetaBranchName || null,
-      packeta_branch_address: packetaBranchStreet && packetaBranchCity ? `${packetaBranchStreet}, ${packetaBranchCity}` : null,
+      //packeta_branch_id: packetaBranchId || null,
+      //packeta_branch_name: packetaBranchName || null,
+      //packeta_branch_address: packetaBranchStreet && packetaBranchCity ? `${packetaBranchStreet}, ${packetaBranchCity}` : null,
       created_at: new Date().toISOString(),
     }]);
     if (error) {
