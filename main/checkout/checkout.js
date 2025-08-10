@@ -574,7 +574,6 @@ packetaButton.addEventListener("click", (e) => {
       payButton.textContent = "Pay now";
       return;
     }
-  const number = `ORD-${Date.now()}`;
 
     const response = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
