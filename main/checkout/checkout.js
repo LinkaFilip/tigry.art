@@ -614,7 +614,13 @@ if (data.clientSecret) {
   const firstName = document.getElementById("TextField0").value;
   const lastName = document.getElementById("TextField1").value;
   const phone = document.getElementById("TextField6").value || null;
+    const address1 = document.getElementById("TextField2").value;
+    const postalCode = document.getElementById("TextField4").value;
+    const city = document.getElementById("TextField5").value;
 
+  if (!email.trim() || !firstName.trim() || !lastName.trim() || !address1.trim() || !postalCode.trim() || !city.trim()) {
+    return;
+  }
 
   const shippingMethod = localStorage.getItem("shippingMethod");
   if(shippingMethod === "packeta"){
