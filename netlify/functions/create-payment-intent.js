@@ -25,10 +25,7 @@ exports.handler = async (event) => {
       country,
       promoCode,
       deliveryMethod,
-      packetaBranchId,
-      packetaBranchName,
-      packetaBranchStreet,
-      packetaBranchCity,
+      number
     } = JSON.parse(event.body);
 
     if (!Array.isArray(items) || items.length === 0) {
@@ -145,9 +142,7 @@ exports.handler = async (event) => {
         discount_percent: discountPercent.toString(),
         discount_amount: discountAmount.toString(),
         delivery_method: deliveryMethod,
-        packeta_branch_id: packetaBranchId || "none",
-        packeta_branch_name: packetaBranchName || "none",
-        packeta_branch_address: `${packetaBranchStreet}, ${packetaBranchCity}`,
+        order_number: number
       },
     });
 
