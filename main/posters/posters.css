@@ -5357,12 +5357,13 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 .Footer_footer__l_IPH {
     display: flex;
     flex-direction: column;
-    color: var(--black)
+    color: var(--black);
+    margin-top: var(--layout-margin);
 }
 
 @media(min-width: 1024px) {
     .Footer_footer__l_IPH:not(.Footer_hideLogo__DkUg6) {
-        min-height:calc(100vh - 2*var(--layout-margin))
+        min-height:calc(100vh - 20*var(--layout-margin))
     }
 
     .Footer_footer__l_IPH.Footer_announcementBarVisible__DUJQx {
