@@ -5387,7 +5387,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
         display:grid;
         grid-template-columns: repeat(1,1fr);
         grid-gap: var(--layout-columns-gap);
-        grid-column: 1/span 3;
+        grid-column: span 3;
     }
 }
 strong {
