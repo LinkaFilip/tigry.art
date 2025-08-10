@@ -545,9 +545,26 @@ packetaButton.addEventListener("click", (e) => {
     calculateSubtotal() +
     getSelectedShipping() / 100
   ).toFixed(2)}`;
+
+
+
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
     payButton.textContent = "Processing...";
+      const email = document.getElementById("email").value;
+      const firstName = document.getElementById("TextField0").value;
+      const lastName = document.getElementById("TextField1").value;
+      const phone = document.getElementById("TextField6").value || null;
+      const address1 = document.getElementById("TextField2").value;
+      const postalCode = document.getElementById("TextField4").value;
+      const city = document.getElementById("TextField5").value;
+
+      if (!email.trim() || !firstName.trim() || !lastName.trim() || !address1.trim() || !postalCode.trim() || !city.trim()) {
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.textContent = error.message || "There was an error during your payment";
+        payButton.disabled = false;
+        payButton.textContent = "Pay now";
+      }
     function generateOrderNumber() {
       const now = new Date();
       const datePart = now.toISOString().slice(0,10).replace(/-/g,"");
@@ -614,13 +631,6 @@ if (data.clientSecret) {
   const firstName = document.getElementById("TextField0").value;
   const lastName = document.getElementById("TextField1").value;
   const phone = document.getElementById("TextField6").value || null;
-    const address1 = document.getElementById("TextField2").value;
-    const postalCode = document.getElementById("TextField4").value;
-    const city = document.getElementById("TextField5").value;
-
-  if (!email.trim() || !firstName.trim() || !lastName.trim() || !address1.trim() || !postalCode.trim() || !city.trim()) {
-    return;
-  }
 
   const shippingMethod = localStorage.getItem("shippingMethod");
   if(shippingMethod === "packeta"){
@@ -668,18 +678,8 @@ if (data.clientSecret) {
   payButton.textContent = "Error creating payment";
   payButton.disabled = false;
 }
-  
-    const email = document.getElementById("email").value;
-    const firstName = document.getElementById("TextField0").value;
-    const lastName = document.getElementById("TextField1").value;
-    const address1 = document.getElementById("TextField2").value;
-    const postalCode = document.getElementById("TextField4").value;
-    const city = document.getElementById("TextField5").value;
-    const phone = document.getElementById("TextField6").value;
 
-  if (!email.trim() || !firstName.trim() || !lastName.trim() || !address1.trim() || !postalCode.trim() || !city.trim()) {
-    return;
-  }
+
     const { error, paymentIntent } = await stripe.confirmCardPayment(
       data.clientSecret,
       {
