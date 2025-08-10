@@ -550,9 +550,9 @@ packetaButton.addEventListener("click", (e) => {
     payButton.textContent = "Processing...";
     function generateOrderNumber() {
       const now = new Date();
-      const datePart = now.toISOString().slice(0,10).replace(/-/g,""); // YYYYMMDD
-      const timePart = now.toTimeString().slice(0,8).replace(/:/g,""); // HHMMSS
-      const randomPart = Math.floor(Math.random() * 9000) + 1000; // 4 číslice
+      const datePart = now.toISOString().slice(0,10).replace(/-/g,"");
+      const timePart = now.toTimeString().slice(0,8).replace(/:/g,"");
+      const randomPart = Math.floor(Math.random() * 9000) + 1000;
       return `ORD-${datePart}${timePart}-${randomPart}`;
     }
     const number = generateOrderNumber();
@@ -614,6 +614,8 @@ if (data.clientSecret) {
   const firstName = document.getElementById("TextField0").value;
   const lastName = document.getElementById("TextField1").value;
   const phone = document.getElementById("TextField6").value || null;
+
+
   const shippingMethod = localStorage.getItem("shippingMethod");
   if(shippingMethod === "packeta"){
     if (!selectedBranchId) {
@@ -669,6 +671,9 @@ if (data.clientSecret) {
     const city = document.getElementById("TextField5").value;
     const phone = document.getElementById("TextField6").value;
 
+  if (!email.trim() || !firstName.trim() || !lastName.trim() || !address1.trim() || !postalCode.trim() || !city.trim()) {
+    return;
+  }
     const { error, paymentIntent } = await stripe.confirmCardPayment(
       data.clientSecret,
       {
