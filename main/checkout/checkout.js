@@ -561,7 +561,7 @@ packetaButton.addEventListener("click", (e) => {
 
       if (!email.trim() || !firstName.trim() || !lastName.trim() || !address1.trim() || !postalCode.trim() || !city.trim()) {
         const errorMessage = document.getElementById("error-message");
-        errorMessage.textContent = error.message || "There was an error during your payment";
+        errorMessage.textContent = "There was an error during your payment. You have most likely forgotten to enter all of your shipping details.";
         payButton.disabled = false;
         payButton.textContent = "Pay now";
       }
