@@ -111,7 +111,7 @@ packetaButton.addEventListener("click", (e) => {
       shippingMethod = "evening";
     }
     if (countryCode === "cz") {
-      shippingFee = shippingMethod === "evening" ? 550 : 300;
+      shippingFee = shippingMethod === "evening" ? 550 : 200;
     } else if (countryCode === "sk") {
       if (shippingMethod === "zbox") shippingFee = 200;
       else if (shippingMethod === "evening") shippingFee = 600;
