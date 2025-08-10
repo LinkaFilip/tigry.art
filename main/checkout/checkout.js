@@ -19,19 +19,7 @@ window.addEventListener("beforeunload", () => {
   }
 });
 document.addEventListener("DOMContentLoaded", async () => {
-  async function fetchPacketaBranches() {
-  try {
-    const response = await fetch("/.netlify/functions/packeta");
-    if (!response.ok) {
-      throw new Error("Chyba při načítání dat z Packeta API");
-    }
-    const data = await response.json();
-    return data; // to je ten seznam poboček
-  } catch (error) {
-    console.error("Error fetching Packeta branches:", error);
-    return null;
-  }
-}
+
   const deliveryRadios = document.querySelectorAll(
     'input[name="deliveryMethod"]'
   );
@@ -605,6 +593,7 @@ packetaButton.addEventListener("click", (e) => {
     });
 
     const data = await response.json();
+    
     if (!data.clientSecret) {
       const errorMessage = document.getElementById("error-message");
       errorMessage.textContent = "";
@@ -618,13 +607,14 @@ if (data.clientSecret) {
   const firstName = document.getElementById("TextField0").value;
   const lastName = document.getElementById("TextField1").value;
   const phone = document.getElementById("TextField6").value || null;
-
-  if (!selectedBranchId) {
-    console.error("Branch ID není vybrán");
-    payButton.disabled = false;
-    return;
+  const shippingMethod = localStorage.getItem("shippingMethod");
+  if(shippingMethod === "packeta"){
+    if (!selectedBranchId) {
+      console.error("Branch ID není vybrán");
+      payButton.disabled = false;
+      return;
+    }
   }
-
   const number = `ORD-${Date.now()}`;
 
   try {
@@ -647,7 +637,6 @@ if (data.clientSecret) {
 
     const packetaData = await packetaResponse.json();
     const shippingMethod = localStorage.getItem("shippingMethod");
-
     if (
       (shippingMethod === "packeta" && packetaData.success) ||
       shippingMethod === "courier"
