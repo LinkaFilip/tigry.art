@@ -93,6 +93,9 @@ html:not(.dev) {
     transition: .5s ease-in-out;
     background-image: none;
     background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
 .ResponsiveImage_image__K_qtD {
