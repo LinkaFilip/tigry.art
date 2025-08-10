@@ -548,7 +548,14 @@ packetaButton.addEventListener("click", (e) => {
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
     payButton.textContent = "Processing...";
-    const number = `ORD-${Date.now()}`;
+    function generateOrderNumber() {
+      const now = new Date();
+      const datePart = now.toISOString().slice(0,10).replace(/-/g,""); // YYYYMMDD
+      const timePart = now.toTimeString().slice(0,8).replace(/:/g,""); // HHMMSS
+      const randomPart = Math.floor(Math.random() * 9000) + 1000; // 4 číslice
+      return `ORD-${datePart}${timePart}-${randomPart}`;
+    }
+    const number = generateOrderNumber();
 
     const cart = getCartFromCookie();
     if (!cart.length) {
