@@ -55,7 +55,14 @@
     --layout-width: calc(100vw - (2 * var(--layout-margin)));
     --layout-column-width: calc((var(--layout-width) - ((var(--layout-columns-count) - 1) * var(--layout-columns-gap))) / var(--layout-columns-count))
 }
-
+.stable_html{
+    opacity: 1;
+    --foreground-color: #000000;
+    --background-color: #FFFFFF;
+}
+.background_none{
+    background-image: none;
+}
 @media(min-width: 1024px) {
     :root {
         --layout-columns-count:12;
@@ -110,9 +117,13 @@ html:not(.dev) {
 }
 
 .ResponsiveImage_image__K_qtD.ResponsiveImage_fadeIn__yUrY2 {
-    opacity: 0
+    opacity: 1
 }
-
+.pixelated{
+    object-position: 50% 50%;
+    opacity: 1;
+    image-rendering: pixelated;
+}
 .ResponsiveImage_img__8DFNE.ResponsiveImage_ariaHidden__8G4ER {
     position: absolute;
     width: 1px;
@@ -133,11 +144,21 @@ html:not(.dev) {
         display:block
     }
 }
-
-.ResponsiveImage_mobileAspect__ny6nP {
-    display: block
+.block{
+    display: block;
 }
-
+.zeroPaddingRight{
+    padding-right: 0px;
+}
+.oP3uq{
+    transform: translate(100%, 0px); transition: transform 0.5s;
+}
+.ResponsiveImage_mobileAspect__ny6nP {
+    display: block;
+}
+.petZo{
+    opacity: 0; visibility: hidden; pointer-events: none;
+}
 @media(min-width: 1024px) {
     .ResponsiveImage_mobileAspect__ny6nP {
         display:none
@@ -3363,7 +3384,8 @@ html:not(.dev) {
 }
 
 html:not(.dev) body {
-    -ms-overflow-style: none
+    -ms-overflow-style: none;
+    display: flex;
 }
 
 html:not(.dev) body::-webkit-scrollbar {
