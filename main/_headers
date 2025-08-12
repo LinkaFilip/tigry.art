@@ -5,4 +5,3 @@ X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Access-Control-Allow-Origin: *
 Access-Control-Allow-Headers: Content-Type, Authorization
-Cross-Origin-Opener-Policy: same-origin
