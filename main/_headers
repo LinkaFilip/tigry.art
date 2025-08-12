@@ -5,7 +5,6 @@
     X-Frame-Options: SAMEORIGIN
     Access-Control-Allow-Origin: *
     Access-Control-Allow-Headers: Content-Type, Authorization
-    Referrer-Policy: strict-origin-when-cross-origin
 
 /images/*
   Cross-Origin-Resource-Policy: same-origin
