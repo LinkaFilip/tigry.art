@@ -158,3 +158,70 @@ nav span {
     justify-content: space-between;
     align-items: flex-start;
 }
+.Hc9ef {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(100%, 100%);
+}
+
+.eR3a5 {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(-100%, 100%);
+}
+
+.a7RO9 {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(-100%, -100%);
+}
+
+.po6ZX {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(100%, -100%);
+}
+
+span.main-dot.lowerParent {
+    translate: none;
+    rotate: none;
+    scale: none;
+    transform: translate(-50%, -50%);
+    --tw-translate-x: -50%;
+    --tw-translate-y: -50%;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    width: .3rem;
+    height: .3rem;
+    display: block;
+    transition: .5s;
+}
+
+span.topParent {
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    width: .9rem;
+    display: inline-block;
+    transition: 3s;
+}
+
+span.spanNav {
+    padding-left: .7rem;
+    width: auto;
+    height: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    display: inline-block;
+    transition: .5s;
+}
+
+a.a_clr_blc__a_clrBlc_Fe3a9.fontNav {
+    font-weight: 800;
+}
