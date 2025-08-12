@@ -448,7 +448,7 @@
   </div>
 </div>
 
-<script>
+<script nonce="{{nonce}}">
   document.addEventListener("DOMContentLoaded", () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -458,6 +458,6 @@
   });
 </script>
 
-<script src="checkout.js"></script>
+<script nonce="{{nonce}}" src="checkout.js"></script>
   </body>
 </html>
