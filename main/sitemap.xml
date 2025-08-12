@@ -3,53 +3,152 @@
   <url>
     <loc>https://tigry.art/posters/</loc>
     <priority>1.0</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/</loc>
     <priority>0.1</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/japan-landscape/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/mexico-landscape/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/czechia-landscape/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/middleeast-landscape/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/uganda-landscape/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/japan-texture/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/mexico-texture/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/czechia-texture/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/middleeast-texture/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/products/uganda-texture/</loc>
     <priority>0.6</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>https://tigry.art/about/</loc>
     <priority>0.3</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://tigry.art/terms-and-conditions/</loc>
+    <priority>0.3</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>https://tigry.art/privacy-policy/</loc>
+    <priority>0.3</priority>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
+  </url>
+  
+  <url>
+    <loc>https://filipl.art/</loc>
+    <lastmod>2025-07-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/contact/</loc>
+    <lastmod>2025-07-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/work/</loc>
+    <lastmod>2025-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/white_puppies/</loc>
+    <lastmod>2025-07-12</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/mandator/</loc>
+    <lastmod>2025-07-12</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/makulatura/</loc>
+    <lastmod>2025-07-12</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/the_sun_in_the_brightest_night/</loc>
+    <lastmod>2025-07-12</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/stencil_printing_sampler/</loc>
+    <lastmod>2025-07-13</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/the_last_one_before_bedtime/</loc>
+    <lastmod>2025-07-12</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://filipl.art/wrongly_developed_dreams/</loc>
+    <lastmod>2025-07-12</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>
