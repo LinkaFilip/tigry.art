@@ -1,5 +1,6 @@
 /*
-Content-Security-Policy: default-src 'self' https://tigry.art https://cdn.tigry.art; script-src 'self' https://js.stripe.com https://widget.packeta.com https://tigry.art 'nonce-{{nonce}}' 'unsafe-inline'; style-src 'self' 'unsafe-inline' data: https:; img-src 'self' data: https://tigry.art/images/ https://*.stripe.com; connect-src 'self' https://api.stripe.com https://*.supabase.co https://widget.packeta.com; font-src 'self' https://fonts.gstatic.com; frame-src https://js.stripe.com; object-src 'none';
+Content-Security-Policy: default-src 'self' https://tigry.art https://cdn.tigry.art; script-src 'self' https://js.stripe.com https://tigry.art 'nonce-{{nonce}}'; style-src 'self' https://tigry.art 'unsafe-inline'; img-src 'self' data: https://tigry.art/images/ https://*.stripe.com; connect-src 'self' https://api.stripe.com https://*.supabase.co; font-src 'self' https://fonts.gstatic.com; frame-src https://js.stripe.com; object-src 'none';
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Access-Control-Allow-Origin: *
