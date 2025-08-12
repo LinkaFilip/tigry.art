@@ -12,8 +12,8 @@
       <meta name="apple-mobile-web-app-title" content="Tigry.art" />
       <link rel="manifest" href="/images/favicon/site.webmanifest" />
       <link rel="stylesheet" href="posters.css">
-      <script nonce="{{nonce}}" src="script.js"></script>
-      <script nonce="{{nonce}}" src="shadow-root.js"></script>
+      <script  src="script.js"></script>
+      <script  src="shadow-root.js"></script>
   </head>
   <body style=" display: flex;">
     <header class="Header_header">
@@ -613,7 +613,7 @@
     </section>
   </footer>
 
-  <script nonce="{{nonce}}">
+  <script >
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const selectedTag = urlParams.get("tag");
