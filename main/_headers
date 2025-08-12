@@ -1,0 +1,7 @@
+/*
+  Content-Security-Policy: default-src 'self' cdn.tigry.art; script-src 'self' js.tigry.art 'unsafe-inline'; style-src 'self' css.tigry.art 'unsafe-inline'; img-src 'self' img.tigry.art https://*.stripe.com; connect-src 'self' https://api.stripe.com https://*.supabase.co; font-src 'self' font.example.com; frame-src https://js.stripe.com;
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Headers: Content-Type, Authorization
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
