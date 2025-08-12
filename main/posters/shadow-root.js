@@ -2,10 +2,11 @@ class RotatingCard extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: 'open' });
+    const nonce = window.__nonce__ || '';
 
-    // Statické styly s nonce
     const baseStyle = document.createElement('style');
-    baseStyle.setAttribute('nonce', 'c36e163701794a838fdc95384b3581a8');
+    if(nonce){baseStyle.setAttribute('nonce', nonce);
+      }
     baseStyle.textContent = `
       .card {
         padding: 0px;
