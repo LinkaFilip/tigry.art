@@ -215,8 +215,8 @@ function renderCart() {
     div.innerHTML = `
   <div class="LineItem_lineItem__ZK2EH">
     <div class="LineItem_imageContainer__gDc0v">
-      <div class="ShopifyImage_shopifyImage__FC9OT" style="padding-top: 134%;">
-        <img src="${item.image}" style="filter: none !important; z-index: 0 !important;">
+      <div class="ShopifyImage_shopifyImage__FC9OT j2RqE">
+        <img src="${item.image}" class="sKdUS">
       </div>
     </div>
     <div class="LineItem_lineItemInfo__4tov_">
@@ -226,7 +226,7 @@ function renderCart() {
           <span class="LineItem_totalPrice__KJ57U"><strong>${lineTotal.toFixed(2)} €</strong></span>
         </div>
       </div>
-<div class="LineItem_bottomRow__auvwE" style="">
+<div class="LineItem_bottomRow__auvwE">
   <div class="LineItem_quantitySelector__nUMsi QuantitySelector_quantitySelector__aZh48">
     <div class="QuantitySelector_quantity__4sUhH"><span class="QuantitySelector_qtyLabel___kOy2">Qty</span>
     <span>${quantity}</span>
@@ -235,7 +235,7 @@ function renderCart() {
 
         <button class="qty-btn increase QuantitySelector_adjustButton__B31Mr" data-id="${item.id}">+</button>
 </div>
-      <span class="remove-item" data-id="${item.id}" style="cursor:pointer; color:#000000; text-transform: uppercase; text-decoration:underline;">Remove</span>
+      <span class="remove-item QJmj9" data-id="${item.id}">Remove</span>
 
 </div>
     </div>
