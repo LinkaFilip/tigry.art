@@ -71,9 +71,9 @@ class RotatingCard extends HTMLElement {
   connectedCallback() {
     const frontUrl = this.getAttribute('front-img') || '';
     const backUrl = this.getAttribute('back-img') || '';
-
+    const nonce = window.__nonce__ || '';
     const imgStyle = document.createElement('style');
-    imgStyle.setAttribute('nonce', 'c36e163701794a838fdc95384b3581a8');
+    if (nonce) imgStyle.setAttribute('nonce', nonce);
     imgStyle.textContent = `
       .front { background-image: url('${frontUrl}'); }
       .back { background-image: url('${backUrl}'); background: white; }

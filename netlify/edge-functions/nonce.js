@@ -9,6 +9,7 @@ export default async (request, context) => {
     let body = await response.text();
     body = body.replaceAll("<script", `<script nonce="${nonce}"`);
     body = body.replaceAll("<style", `<style nonce="${nonce}"`);
+    body = body.replace("</head>",  `<script nonce="${nonce}">window.__nonce__ = "${nonce}";</script></head>`);
     response = new Response(body, response);
   }
 
