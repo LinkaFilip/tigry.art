@@ -72,7 +72,6 @@ class RotatingCard extends HTMLElement {
     const frontUrl = this.getAttribute('front-img') || '';
     const backUrl = this.getAttribute('back-img') || '';
 
-    // Dynamické styly pro obrázky také s nonce
     const imgStyle = document.createElement('style');
     imgStyle.setAttribute('nonce', 'c36e163701794a838fdc95384b3581a8');
     imgStyle.textContent = `
