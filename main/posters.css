@@ -1926,6 +1926,7 @@
                 position: relative;
                 left: 50%;
                 flex-direction: column;
+                top: 100vh;
             }
             .re7zG {
                 width: 100%;
@@ -1935,10 +1936,11 @@
             .tZP7a {
                 width: 50%;
                 height: 100vh;
+                top: 100vh;
                 left: 50%;
             }
             .re59f{
-                width: 50%;
-                height: 200vh;
-                left: 50%;
+                width: 100%;
+                height: 100vh;
+                left: 0%;
             }
