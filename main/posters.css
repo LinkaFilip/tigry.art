@@ -625,6 +625,7 @@
                 overflow-x: hidden
             }
 
+            body {
                 color: var(--foreground-color);
                 min-height: 100vh
             }
