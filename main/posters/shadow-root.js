@@ -27,24 +27,16 @@ class RotatingCard extends HTMLElement {
         justify-content: center;
         align-items: center;
       }
-      @media screen(min-width: 1000px){
-            @keyframes spin {
-              from { transform: rotateY(0deg); }
-              to   { transform: rotateY(360deg); }
-            }
-      }
-      @media screen(max-width: 999px){
-            @keyframes spin {
-              from { transform: none); }
-              to   { transform: none; }
-            }
+      @keyframes spin {
+        from { transform: rotateY(0deg); }
+        to   { transform: rotateY(360deg); }
       }
       .card:hover .inner {
         animation: spin 4s linear infinite;
       }
 
       .rotate-always {
-        animation: spin 4s linear infinite !important;
+        animation: spin 3s linear infinite !important;
       }
 
       .face {

@@ -27,7 +27,6 @@ body {
 img {
     object-fit: contain;
     z-index: -1;
-    filter: grayscale(1);
 }
 .menu:hover {
     width: 270px;
