@@ -1946,3 +1946,9 @@
                 text-transform: uppercase;
                 text-decoration:underline;
             }
+            .zuH36{
+                object-position: 50% 50%;
+                opacity: 1;
+                max-height: 66%;
+                top: 50%;transform: translateY(-50%);
+            }
