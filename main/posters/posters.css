@@ -92,28 +92,13 @@ html:not(.dev) {
     transition: .5s;
 }
 .ResponsiveImage_imageContainer__zPndE {
-    position: relative;
-    width: 100%;
     height: 100%;
-    display: block;
-    overflow: hidden;
-    transition: .5s ease-in-out;
-    background-image: none;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center
 }
 
 .ResponsiveImage_image__K_qtD {
-    position: absolute;
-    width: 100%;
+    width: 66%;
     height: 100%;
-    object-fit: cover;
-    top: 0;
     left: 0;
-    right: 0;
-    bottom: 0
 }
 
 .ResponsiveImage_image__K_qtD.ResponsiveImage_fadeIn__yUrY2 {
@@ -971,13 +956,6 @@ html:not(.dev) {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    top: 0;
-    bottom: 0;
-    left: 0!important;
-    right: 0!important;
-    visibility: hidden;
-    transform: none!important;
-    opacity: 0
 }
 
 .Gallery_galleryItem__gvUHn.Gallery_isActive__pPR86 {
@@ -3388,6 +3366,8 @@ html:not(.dev) {
 html:not(.dev) body {
     -ms-overflow-style: none;
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 html:not(.dev) body::-webkit-scrollbar {
@@ -3648,9 +3628,7 @@ span>a {
     grid-template-columns: repeat(var(--layout-columns-count),minmax(0,1fr));
     grid-gap: var(--layout-columns-gap)
 }
-img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fadeIn__yUrY2.lazyautosizes.lazyloaded {
-    filter: none;
-}
+img.ResponsiveImage_img__8DFNE.ResponsiveImage_image__K_qtD.ResponsiveImage_fadeIn__yUrY2.lazyautosizes.lazyloaded {filter: none;}
 
 
 
