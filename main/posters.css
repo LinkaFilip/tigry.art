@@ -1956,3 +1956,9 @@
                 object-position: 50% 50%;
                 opacity: 1;
             }
+            .Ht4ef{
+                translate: none;
+                rotate: none;
+                scale: none;
+                transform: translate(100%, 0px);
+            }
