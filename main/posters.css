@@ -1919,3 +1919,16 @@
                 opacity: 0;
                 visibility: hidden;
             }
+            section.ProductHero_productHero__MkZ26 {
+                width: 50%;
+                height: 100vh;
+                display: flex;
+                position: relative;
+                left: 50%;
+                flex-direction: column;
+            }
+            .re7zG {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
