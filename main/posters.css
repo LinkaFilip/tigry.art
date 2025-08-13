@@ -1962,3 +1962,8 @@
                 scale: none;
                 transform: translate(100%, 0px);
             }
+            .FepO9{
+                pointer-events:none;
+                opacity: 0;
+                visibility: hidden;
+            }
