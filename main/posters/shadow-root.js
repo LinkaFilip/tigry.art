@@ -33,6 +33,12 @@ class RotatingCard extends HTMLElement {
               to   { transform: rotateY(360deg); }
             }
       }
+      @media screen(max-width: 999px){
+            @keyframes spin {
+              from { transform: none); }
+              to   { transform: none; }
+            }
+      }
       .card:hover .inner {
         animation: spin 4s linear infinite;
       }
