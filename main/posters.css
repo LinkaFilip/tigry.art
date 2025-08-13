@@ -1496,7 +1496,7 @@
             }
 
             .DrawerDialog_closeBtn__xnBpW svg {
-                display: block;
+                display: none;
                 width: 12px;
                 height: 12px
             }

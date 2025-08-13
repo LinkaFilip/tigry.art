@@ -157,7 +157,9 @@ html:not(.dev) {
     display: block;
 }
 .petZo{
-    opacity: 0; visibility: hidden; pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 @media(min-width: 1024px) {
     .ResponsiveImage_mobileAspect__ny6nP {
