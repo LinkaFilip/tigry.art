@@ -3513,7 +3513,6 @@ html {
 }
 
 body {
-    background-color: var(--background-color);
     color: var(--foreground-color);
     min-height: 100vh
 }
