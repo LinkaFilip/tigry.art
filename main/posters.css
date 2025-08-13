@@ -1500,10 +1500,11 @@
                 .ProductHero_column__w_iud.ProductHero_galleryColumn__zWydb {
                     padding:0;
                     order: 2;
-                    width: 100%;
+                    width: 50%;
                     height: 100%;
                     position: absolute;
                     top: 0;
+                    left: 50%;
                 }
             }
 
