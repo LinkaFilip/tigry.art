@@ -31,13 +31,15 @@ class RotatingCard extends HTMLElement {
         from { transform: rotateY(0deg); }
         to   { transform: rotateY(360deg); }
       }
+      @media(min-width: 1000px){
       .card:hover .inner {
         animation: spin 4s linear infinite;
-      }
+      }}
 
+      @media(min-width: 1000px){  
       .rotate-always {
         animation: spin 3s linear infinite !important;
-      }
+      }}
 
       .face {
         position: absolute;
