@@ -108,10 +108,6 @@
             .Slider_container__v97Np {
                 display: flex
             }
-
-            .Gallery_gallery__dZECq {
-                /* display: block; */
-            }
             .a_clr_blc__a_clrBlc_Fe3a9{
                 color: #000000;
             }
@@ -206,9 +202,6 @@
 
             .Gallery_galleryItem__gvUHn.Gallery_isReady__9c6jK {
                 position: relative;
-            }
-
-            .Gallery_galleryItem__gvUHn>div {
             }
 
             .Gallery_galleryFooter__ZMJC_ {
@@ -1327,9 +1320,6 @@
                 height: 100%;
                 transform: translate(-50%,-50%);
                 z-index: 5
-            }
-
-            .SingleCardGallery_galleryImage__ZtO64 {
             }
 
             .SingleCardGallery_galleryImage__ZtO64>* {
