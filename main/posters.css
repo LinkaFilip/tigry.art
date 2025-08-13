@@ -1942,3 +1942,24 @@
                 height: 100vh;
                 left: 50%;
             }
+            @media (max-width: 999px) {
+                .SingleCardGallery_galleryContainer__Rdq2c{
+                    position: absolute;
+                    left: 50%;
+                    width: 100%;
+                    height: 100vh;
+                    transform: translate(-50%, 0%);
+                    z-index: 0;
+                }
+                section.ProductHero_productHero__MkZ26 {
+                    width: 100%;
+                    height: 100vh;
+                    display: flex;
+                    position: relative;
+                    flex-direction: column;
+                }
+                .tZP7a {
+                    width: 100%;
+                    height: 100vh;
+                }
+            }
