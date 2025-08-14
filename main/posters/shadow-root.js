@@ -69,53 +69,58 @@ class RotatingCard extends HTMLElement {
     this.shadow.appendChild(wrapper);
   }
 
-  connectedCallback() {
-    const frontUrl = this.getAttribute('front-img') || '';
-    const backUrl = this.getAttribute('back-img') || '';
-    const nonce = window.__nonce__ || '';
-    const imgStyle = document.createElement('style');
-    if (nonce) imgStyle.setAttribute('nonce', nonce);
-    imgStyle.textContent = `
-      .front { background-image: url('${frontUrl}'); }
-      .back { background-image: url('${backUrl}'); background: white; }
-    `;
-    this.shadow.appendChild(imgStyle);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (window.innerWidth > 1000) return;
+connectedCallback() {
+  const frontUrl = this.getAttribute('front-img') || '';
+  const backUrl = this.getAttribute('back-img') || '';
+  const nonce = window.__nonce__ || '';
+  const imgStyle = document.createElement('style');
+  if (nonce) imgStyle.setAttribute('nonce', nonce);
+  imgStyle.textContent = `
+    .front { background-image: url('${frontUrl}'); }
+    .back { background-image: url('${backUrl}'); background: white; }
+  `;
+  this.shadow.appendChild(imgStyle);
 
-        for (const entry of entries) {
-          const card = entry.target;
-          const inner = card.shadowRoot.querySelector('.inner');
+  const observer = new IntersectionObserver((entries) => {
+    if (window.innerWidth > 1000) return;
 
-          if (entry.isIntersecting) {
-            document.querySelectorAll('rotating-card').forEach(el => {
-              if (el !== card) {
-                el.shadowRoot.querySelector('.inner')?.classList.remove('rotate-always');
-                el.closest('.ResponsiveImage_imageContainer__zPndE')?.style.backgroundImage = '';
-              }
-            });
+    for (const entry of entries) {
+      const card = entry.target;
+      const inner = card.shadowRoot.querySelector('.inner');
 
-            inner.classList.add('rotate-always');
-            
-            const bgUrl = card.getAttribute('background') || '';
-            if (bgUrl) {
-              card.closest('.ResponsiveImage_imageContainer__zPndE').style.backgroundImage = `url('${bgUrl}')`;
-              card.closest('.ResponsiveImage_imageContainer__zPndE').style.backgroundSize = 'cover';
-              card.closest('.ResponsiveImage_imageContainer__zPndE').style.backgroundPosition = 'center';
+      if (entry.isIntersecting) {
+        document.querySelectorAll('rotating-card').forEach(el => {
+          if (el !== card) {
+            el.shadowRoot.querySelector('.inner')?.classList.remove('rotate-always');
+            const otherContainer = el.closest('.ResponsiveImage_imageContainer__zPndE');
+            if (otherContainer) {
+              otherContainer.style.backgroundImage = '';
             }
-
-          } else {
-            inner.classList.remove('rotate-always');
-            card.closest('.ResponsiveImage_imageContainer__zPndE').style.backgroundImage = '';
           }
-        }
-      },
-      { root: null, threshold: 0.6 }
-    );
+        });
 
-    observer.observe(this);
-  }
+        inner.classList.add('rotate-always');
+
+        const bgUrl = card.getAttribute('background') || '';
+        const bgContainer = card.closest('.ResponsiveImage_imageContainer__zPndE');
+        if (bgUrl && bgContainer) {
+          bgContainer.style.backgroundImage = `url('${bgUrl}')`;
+          bgContainer.style.backgroundSize = 'cover';
+          bgContainer.style.backgroundPosition = 'center';
+        }
+
+      } else {
+        inner.classList.remove('rotate-always');
+        const bgContainer = card.closest('.ResponsiveImage_imageContainer__zPndE');
+        if (bgContainer) {
+          bgContainer.style.backgroundImage = '';
+        }
+      }
+    }
+  }, { root: null, threshold: 0.6 });
+
+  observer.observe(this);
+}
 }
 
 customElements.define('rotating-card', RotatingCard);
