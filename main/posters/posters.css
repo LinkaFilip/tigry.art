@@ -97,6 +97,8 @@ html:not(.dev) {
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .ResponsiveImage_image__K_qtD {
