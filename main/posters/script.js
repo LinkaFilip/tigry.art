@@ -155,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </clipPath>
           </defs>
         </svg>`;
-      clickableElement.style.display = "block";
 
       overlay.style.opacity = "0";
       overlay.style.visibility = "hidden";
