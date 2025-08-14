@@ -5824,3 +5824,5 @@ section:nth-child(3)>.FeaturedProductsModule>.FeaturedProductsModule_tileWrapper
     align-items: center;
     justify-content: center;
 }
+.hidden { display: none; }
+.visible { display: block !important; }
