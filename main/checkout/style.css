@@ -24690,7 +24690,8 @@ button:hover ._19gi7yt19,button:focus ._19gi7yt19,a:hover ._19gi7yt19,a:focus ._
 }
 
 ._1mjy8kn1:not(:focus-visible) {
-    outline: .2rem solid transparent
+    outline: .2rem solid transparent;
+    overflow: hidden;
 }
 
 ._1mjy8kn8:before,._1mjy8kn8:after {
@@ -28897,7 +28898,9 @@ _::-webkit-full-page-media,.xvcb04:indeterminate::-webkit-progress-bar {
 .vyybB {
     padding-top: var(--x-product-thumbnail-badge-offset)
 }
-
+.uz5rE{
+    overflow: hidden;
+}
 [dir=ltr] ._1qy6ue60 {
     padding-left: var(--x-money-lines-inline-padding)
 }
@@ -30409,4 +30412,13 @@ label.active{
 }
 #packeta-button{
     margin-bottom: 16px;
+}
+.Ce3eZ {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.t5Ui9{
+    display: flex;
+    justify-content: flex-end;
 }

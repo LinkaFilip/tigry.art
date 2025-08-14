@@ -341,8 +341,8 @@ packetaButton.addEventListener("click", (e) => {
       itemDiv.className =
         "_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8";
       itemDiv.innerHTML = `
-        <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
-          <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh; overflow: hidden;">
+        <div class="_1mjy8kn6 _1fragemms _16s97g73k">
+          <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB uz5rE">
             <div class="_6zbcq522 _1fragemth">
               <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">${
                 item.name
@@ -360,14 +360,14 @@ packetaButton.addEventListener("click", (e) => {
               <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou">
                 <div role="row" class="_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k">
                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
-                    <div class="_1fragem32 _1fragemms _16s97g74b" style="--_16s97g746: 6.4rem;">
+                    <div class="_1fragem32 _1fragemms _16s97g74b">
                       <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
                         <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
-                          <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
+                          <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" >
                             <picture>
                               <img src="${
                                 item.image
-                              }" style="width: 100%; height: 100%; object-fit: contain;" alt="${
+                              }" class="Ce3eZ" alt="${
         item.name
       }">
                             </picture>
@@ -382,7 +382,7 @@ packetaButton.addEventListener("click", (e) => {
                       </div>
                     </div>
                   </div>
-                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
+                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741">
                     <div class="_1fragem32 _1fragemms dDm6x">
                       <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${
                         item.name
@@ -390,8 +390,8 @@ packetaButton.addEventListener("click", (e) => {
                       <p class="_1fragem12">${item.description || ""}</p>
                     </div>
                   </div>
-                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox" style="--_16s97g73w: 6.4rem;">
-                    <span style="display: flex; justify-content: flex-end;">€ ${(
+                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox">
+                    <span class="t5Ui9">€ ${(
                       item.price * item.quantity
                     ).toFixed(2)}</span>
                   </div>
