@@ -139,7 +139,7 @@ html:not(.dev) {
     display: block;
 }
 .zeroPaddingRight{
-    padding-right: 0px;
+    padding-right: 0px !important;
 }
 .oP3uq{
     transform: translate(100%, 0px); transition: transform 0.5s;
@@ -3479,7 +3479,8 @@ html:not(.dev) body::-webkit-scrollbar {
 
 .rich-content.is-post-text p {
     text-align: justify;
-    margin-bottom: 8px
+    margin-bottom: 8px;
+    margin: 0 32px 16px 32px
 }
 
 @media(min-width: 1024px) {
