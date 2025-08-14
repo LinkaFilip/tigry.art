@@ -80,8 +80,6 @@ class RotatingCard extends HTMLElement {
       .back { background-image: url('${backUrl}'); background: white; }
     `;
     this.shadow.appendChild(imgStyle);
-
-    // Rotace při viditelnosti na mobilu
     const observer = new IntersectionObserver(
       (entries) => {
         if (window.innerWidth > 1000) return;
@@ -94,11 +92,22 @@ class RotatingCard extends HTMLElement {
             document.querySelectorAll('rotating-card').forEach(el => {
               if (el !== card) {
                 el.shadowRoot.querySelector('.inner')?.classList.remove('rotate-always');
+                el.closest('.ResponsiveImage_imageContainer__zPndE')?.style.backgroundImage = '';
               }
             });
+
             inner.classList.add('rotate-always');
+            
+            const bgUrl = card.getAttribute('background') || '';
+            if (bgUrl) {
+              card.closest('.ResponsiveImage_imageContainer__zPndE').style.backgroundImage = `url('${bgUrl}')`;
+              card.closest('.ResponsiveImage_imageContainer__zPndE').style.backgroundSize = 'cover';
+              card.closest('.ResponsiveImage_imageContainer__zPndE').style.backgroundPosition = 'center';
+            }
+
           } else {
             inner.classList.remove('rotate-always');
+            card.closest('.ResponsiveImage_imageContainer__zPndE').style.backgroundImage = '';
           }
         }
       },
