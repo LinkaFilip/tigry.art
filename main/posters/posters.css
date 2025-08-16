@@ -5834,7 +5834,7 @@ section:nth-child(3)>.FeaturedProductsModule>.FeaturedProductsModule_tileWrapper
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background-color: var(--yellow);
+    background-color: #146757;
     z-index: 9999999999;
     transition: 1s;
     top: 0%;
