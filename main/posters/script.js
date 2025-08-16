@@ -2,7 +2,9 @@ if (new URL(window.location.href).pathname === "/posters/" && new URL(window.loc
   localStorage.clear();
   window.history.replaceState({}, document.title, "/posters/");
 }
-
+window.addEventListener("load", () => {
+    document.querySelector(".loadingScreen_loadingScreen__5RET6").classList.add("loadingScreen_loadingScreenHidden");
+})
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 

@@ -5829,3 +5829,18 @@ section:nth-child(3)>.FeaturedProductsModule>.FeaturedProductsModule_tileWrapper
 }
 .hidden { display: none; }
 .visible { display: block !important; }
+
+.loadingScreen_loadingScreen__5RET6 {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: var(--yellow);
+    z-index: 9999999999;
+    transition: 1s;
+    top: 0%;
+}
+
+.loadingScreen_loadingScreenHidden {
+    top: -100%;
+    transition: 1s;
+}
