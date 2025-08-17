@@ -90,12 +90,12 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.style.visibility = "hidden";
       overlay.style.pointerEvents = "none";
       cartPanel.style.transform = isMobile ? "translate(0, -100%)" : "translate(100%, 0)";
+      clickableElement.classList.add("visible");
+      clickableElement.classList.remove("hidden");
     } else {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
       overlay.style.opacity = "1";
-      clickableElement.classList.add("visible");
-      clickableElement.classList.remove("hidden");
       overlay.style.visibility = "inherit";
       overlay.style.pointerEvents = "auto";
       cartPanel.style.transform = "translate(0, 0)";
