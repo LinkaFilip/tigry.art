@@ -74,6 +74,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   element.innerHTML = bagSVG;
   clickableElement.addEventListener("click", () => {
+
+      if (clickableElement.classList.contains("visible")) {
+        clickableElement.classList.add("hidden");
+        clickableElement.classList.remove("visible");
+      } else if (clickableElement.classList.contains("hidden")){
+        clickableElement.classList.add("visible");
+        clickableElement.classList.remove("hidden");
+      }
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
 
@@ -96,16 +104,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cartPanel.classList.toggle("Cart_open__Hlx3_");
     renderCart();
   });
-
-      clickableElement.addEventListener("click", () => {
-      if (clickableElement.classList.contains("visible")) {
-        clickableElement.classList.add("hidden");
-        clickableElement.classList.remove("visible");
-      } else if (clickableElement.classList.contains("hidden")){
-        clickableElement.classList.add("visible");
-        clickableElement.classList.remove("hidden");
-      }
-    });
   element.addEventListener("click", () => {
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
