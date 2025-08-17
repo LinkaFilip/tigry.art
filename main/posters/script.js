@@ -99,11 +99,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       clickableElement.addEventListener("click", () => {
       if (clickableElement.classList.contains("visible")) {
-        clickableElement.classList.remove("visible");
         clickableElement.classList.add("hidden");
+        clickableElement.classList.remove("visible");
       } else {
-        clickableElement.classList.remove("hidden");
         clickableElement.classList.add("visible");
+        clickableElement.classList.remove("hidden");
       }
     });
   element.addEventListener("click", () => {
