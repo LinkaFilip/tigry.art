@@ -1970,3 +1970,6 @@
                     left: 0;
                 }
             }
+            
+.hidden { display: none; }
+.visible { display: block !important; }
