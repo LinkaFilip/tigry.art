@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const element = document.querySelector(".CartIndicator_icon__AFivB");
-  const clickableElement = document.querySelector(".CartIndicator_label__KOYQo");
   const cartPanel = document.querySelector(".Cart_cart__yGsQk");
   const panel = document.querySelector(".Cart_cartContent__TEVzy");
 
@@ -72,15 +71,19 @@ document.addEventListener("DOMContentLoaded", () => {
   <path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"/>
 </svg>`;
 
-  element.innerHTML = bagSVG;
-  clickableElement.addEventListener("click", () => {
+  const clickableElement = document.querySelector(".CartIndicator_label__KOYQo");
 
+  element.innerHTML = bagSVG;
+
+  clickableElement.addEventListener("click", () => {
       if (clickableElement.classList.contains("visible")) {
         clickableElement.classList.add("hidden");
         clickableElement.classList.remove("visible");
       } else if (clickableElement.classList.contains("hidden")){
-        clickableElement.classList.add("visible");
-        clickableElement.classList.remove("hidden");
+        clickableElement.addEventListener("click", () => {
+          clickableElement.classList.add("visible");
+          clickableElement.classList.remove("hidden");
+        });
       }
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
