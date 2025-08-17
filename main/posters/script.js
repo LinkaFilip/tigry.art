@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (clickableElement.classList.contains("visible")) {
         clickableElement.classList.add("hidden");
         clickableElement.classList.remove("visible");
-      } else {
+      } else if (clickableElement.classList.contains("hidden")){
         clickableElement.classList.add("visible");
         clickableElement.classList.remove("hidden");
       }
