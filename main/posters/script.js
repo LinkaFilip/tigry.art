@@ -76,10 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
   element.innerHTML = bagSVG;
 
   clickableElement.addEventListener("click", () => {
-      if (clickableElement.classList.contains("visible")) {
-        clickableElement.classList.add("hidden");
-        clickableElement.classList.remove("visible");
-      }
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
 
@@ -90,14 +86,14 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.style.visibility = "hidden";
       overlay.style.pointerEvents = "none";
       cartPanel.style.transform = isMobile ? "translate(0, -100%)" : "translate(100%, 0)";
-      clickableElement.classList.add("visible");
-      clickableElement.classList.remove("hidden");
+      clickableElement.classList.replace("hidden", "visible");
     } else {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
       overlay.style.opacity = "1";
       overlay.style.visibility = "inherit";
       overlay.style.pointerEvents = "auto";
+      clickableElement.classList.replace("visible", "hidden");
       cartPanel.style.transform = "translate(0, 0)";
     }
 
