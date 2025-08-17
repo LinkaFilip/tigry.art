@@ -73,7 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </svg>`;
 
   element.innerHTML = bagSVG;
-clickableElement.classList.add("visible");
   clickableElement.addEventListener("click", () => {
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
