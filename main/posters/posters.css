@@ -4436,7 +4436,8 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
 .ShopifyImage_shopifyImage__FC9OT {
     display: block;
     width: 100%;
-    position: relative
+    position: relative;
+    padding: 0;
 }
 
 .ShopifyImage_lqip__ZG1tP {
