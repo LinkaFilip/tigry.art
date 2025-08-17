@@ -71,12 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
   <path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"/>
 </svg>`;
 
+  const clickableElement = document.querySelector(".CartIndicator_label__KOYQo");
 
   element.innerHTML = bagSVG;
 
   clickableElement.addEventListener("click", () => {
-  const clickableElement = document.querySelector(".CartIndicator_label__KOYQo");
-
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
     const isClosed = element.classList.contains("CartIndicator_icon__AFivB");
@@ -103,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cartPanel.classList.toggle("Cart_open__Hlx3_");
     renderCart();
   });
+
   element.addEventListener("click", () => {
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
@@ -115,9 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.style.visibility = "hidden";
       overlay.style.pointerEvents = "none";
       cartPanel.style.transform = isMobile ? "translate(0, -100%)" : "translate(100%, 0)";
+      clickableElement.classList.replace("hidden", "visible");
     } else {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
+      clickableElement.classList.replace("visible", "hidden");
+
 
       overlay.style.opacity = "1";
       overlay.style.visibility = "inherit";
