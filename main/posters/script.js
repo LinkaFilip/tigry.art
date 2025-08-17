@@ -71,11 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
   <path stroke="currentColor" stroke-linejoin="round" d="M13 1L1 13M1 1l12 12"/>
 </svg>`;
 
-  const clickableElement = document.querySelector(".CartIndicator_label__KOYQo");
 
   element.innerHTML = bagSVG;
 
   clickableElement.addEventListener("click", () => {
+  const clickableElement = document.querySelector(".CartIndicator_label__KOYQo");
+
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
     const isClosed = element.classList.contains("CartIndicator_icon__AFivB");
