@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   clickableElement.addEventListener("click", () => {
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
+    const isClosed = element.classList.contains("CartIndicator_icon__AFivB");
 
     if (isOpen) {
       element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
@@ -87,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.style.pointerEvents = "none";
       cartPanel.style.transform = isMobile ? "translate(0, -100%)" : "translate(100%, 0)";
       clickableElement.classList.replace("visible", "hidden");
-    } else {
+    } if(isClosed) {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
       overlay.style.opacity = "1";
