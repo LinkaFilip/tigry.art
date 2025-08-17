@@ -79,11 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (clickableElement.classList.contains("visible")) {
         clickableElement.classList.add("hidden");
         clickableElement.classList.remove("visible");
-      } else if (clickableElement.classList.contains("hidden")){
-        clickableElement.addEventListener("click", () => {
-          clickableElement.classList.add("visible");
-          clickableElement.classList.remove("hidden");
-        });
       }
     const overlay = document.querySelector(".Overlay_overlay__hwjQ3");
     const isOpen = element.classList.contains("CartIndicator_closeBtn___fEN6");
@@ -99,6 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
       overlay.style.opacity = "1";
+      clickableElement.classList.add("visible");
+      clickableElement.classList.remove("hidden");
       overlay.style.visibility = "inherit";
       overlay.style.pointerEvents = "auto";
       cartPanel.style.transform = "translate(0, 0)";
