@@ -88,7 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.style.pointerEvents = "none";
       cartPanel.style.transform = isMobile ? "translate(0, -100%)" : "translate(100%, 0)";
       clickableElement.classList.replace("hidden", "visible");
-    } if(isClosed) {
+    }
+    if(isClosed) {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
       overlay.style.opacity = "1";
