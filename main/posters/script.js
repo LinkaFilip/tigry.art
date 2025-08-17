@@ -81,8 +81,8 @@ clickableElement.classList.add("visible");
     if (isOpen) {
       element.classList.replace("CartIndicator_closeBtn___fEN6", "CartIndicator_icon__AFivB");
       element.innerHTML = bagSVG;
-      clickableElement.classList.add("visible");
-      clickableElement.classList.remove("hidden");
+      clickableElement.classList.add("hidden");
+      clickableElement.classList.remove("visible");
       overlay.style.opacity = "0";
       overlay.style.visibility = "hidden";
       overlay.style.pointerEvents = "none";
@@ -90,8 +90,8 @@ clickableElement.classList.add("visible");
     } else {
       element.classList.replace("CartIndicator_icon__AFivB", "CartIndicator_closeBtn___fEN6");
       element.innerHTML = crossSVG;
-      clickableElement.classList.add("hidden");
-      clickableElement.classList.remove("visible");
+      clickableElement.classList.add("visible");
+      clickableElement.classList.remove("hidden");
       overlay.style.opacity = "1";
       overlay.style.visibility = "inherit";
       overlay.style.pointerEvents = "auto";
