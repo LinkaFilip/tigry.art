@@ -3776,7 +3776,6 @@ svg {
 @media (min-width: 1024px) {
     .Cart_cartContent__TEVzy {
         padding-top: 48px;
-        padding-bottom: 224px;
         display: flex;;
         flex-direction: column-reverse;
     }
@@ -4889,7 +4888,6 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
     justify-content: flex-start;
     overflow-y: auto;
     padding-top: 16px;
-    padding-bottom: 208px
 }
 
 .Cart_cartContent__TEVzy::-webkit-scrollbar,.Cart_cartContent__TEVzy::-webkit-scrollbar-track {
@@ -4900,12 +4898,7 @@ span.Cart_itemCount__FrJbS.Cart_greyText__LM8q6 {
     visibility: hidden
 }
 
-@media(min-width: 1024px) {
-    .Cart_cartContent__TEVzy {
-        padding-top:48px;
-        padding-bottom: 224px
-    }
-}
+
 
 .Cart_cartFooter__owP1q {
     background-color: var(--white);
