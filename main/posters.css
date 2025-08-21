@@ -1973,3 +1973,12 @@
             
 .hidden { display: none; }
 .visible { display: block !important; }
+.REfRz {
+    position: relative;
+    display: flex;
+    font-size: 1rem;
+    color: white;
+    top: 50%;
+    transform: translateY(-50%);
+    justify-content: center;
+}
