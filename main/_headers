@@ -1,2 +1,2 @@
 /*
-    Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-...' 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' https://js.stripe.com 'unsafe-inline' 'unsafe-eval';
+    Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-…' 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' https://js.stripe.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.stripe.com https://*.supabase.co; img-src 'self' data: https://*.stripe.com; frame-src https://js.stripe.com; object-src 'none';
