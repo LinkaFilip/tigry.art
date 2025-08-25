@@ -1,5 +1,5 @@
 /*
-    Content-Security-Policy: default-src 'self';script-src 'self' 'nonce-faaf6aeaa9f54cf69fe001db535042f0'; script-src-elem 'self' https://js.stripe.com https://widget.packeta.com;style-src 'self' 'unsafe-inline';img-src 'self' data: https://*.stripe.com https://*.packeta.com;connect-src 'self' https://api.stripe.com https://*.supabase.co;frame-src https://js.stripe.com https://widget.packeta.com;object-src 'none';
+    Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-faaf6aeaa9f54cf69fe001db535042f0'; script-src-elem 'self' https://js.stripe.com https://widget.packeta.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com https://*.packeta.com; connect-src 'self' https://api.stripe.com https://*.supabase.co; frame-src https://js.stripe.com https://widget.packeta.com;object-src 'none';
     Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
     X-Content-Type-Options: nosniff
     X-Frame-Options: SAMEORIGIN
