@@ -15478,7 +15478,7 @@ button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focu
 
 [type=checkbox],[type=radio] {
     padding: 1rem;
-    border: 1px solid black;
+    border: 1px solid #d6d6d6;
 }
 
 [hidden],template {
@@ -30420,6 +30420,7 @@ input:disabled, button:disabled {
 }
 label.active{
     border: 1px solid black !important;
+    color: black;
 }
 #packeta-button{
     margin-bottom: 16px;
@@ -30453,6 +30454,7 @@ label.active{
     padding: 1rem;
     border: 1px solid #d6d6d6;
     border-radius: 6px;
+    color: #6d6d6d;
 }
 .z6uRE{
     display: flex;
