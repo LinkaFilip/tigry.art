@@ -1,3 +1,2 @@
 /*
-Content-Security-Policy: 
-  default-src 'self'; script-src 'self' 'nonce-...' 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' https://js.stripe.com 'unsafe-inline' 'unsafe-eval';
+    Content-Security-Policy: default-src 'self'; script-src 'self' 'nonce-...' 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' https://js.stripe.com 'unsafe-inline' 'unsafe-eval';
