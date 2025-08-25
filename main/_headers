@@ -9,4 +9,4 @@
 /images/*
   Cross-Origin-Resource-Policy: same-origin
 /checkout
-  Content-Security-Policy:
+  Content-Security-Policy: default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
