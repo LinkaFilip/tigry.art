@@ -146,6 +146,8 @@ exports.handler = async (event) => {
         number: number
       },
     });
+    console.log("Using Supabase:", supabaseUrl);
+    console.log("Service role key exists:", !!supabaseServiceRoleKey);
 
     const { data, error } = await supabase.from('orders').insert([{
       payment_intent_id: paymentIntent.id,
