@@ -7,6 +7,6 @@
     Access-Control-Allow-Headers: Content-Type, Authorization
     Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
 /checkout
-  Content-Security-Policy: default-src 'self' https://tigry.art; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://widget.packeta.com; script-src-elem 'self' https://js.stripe.com https://widget.packeta.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; style-src-elem 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com https://*.packeta.com; connect-src 'self' https://api.stripe.com https://*.supabase.co; frame-src https://js.stripe.com https://widget.packeta.com; object-src 'none';
+  Content-Security-Policy: default-src 'self' https://tigry.art; script-src 'self' 'nonce-117b93f498044b25859f6dd9ab300c7e' https://js.stripe.com 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' https://js.stripe.com https://widget.packeta.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; style-src-elem 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com https://*.packeta.com; connect-src 'self' https://api.stripe.com https://*.supabase.co; frame-src https://js.stripe.com https://widget.packeta.com; object-src 'none';
 /images/*
   Cross-Origin-Resource-Policy: same-origin
