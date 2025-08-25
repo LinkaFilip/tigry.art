@@ -3,20 +3,14 @@ const { v4: uuidv4 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
-console.log("ENV SUPABASE vars:", {
-  SUPABASE_URL: process.env.SUPABASE_URL,
-  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
-  SUPABASE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY
-});
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const supabaseUrl = 'https://hhzratwfjumkidragfed.supabase.co';
-const supabaseAnonKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing SUPABASE_URL or SUPABASE_ANON_KEY environment variables');
+if (!supabaseUrl || !supabaseServiceRoleKey) {
+  throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables');
 }
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey)
+const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
 
 exports.handler = async (event) => {
   try {
