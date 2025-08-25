@@ -19,7 +19,6 @@ window.addEventListener("beforeunload", () => {
   }
 });
 document.addEventListener("DOMContentLoaded", async () => {
-
   const deliveryRadios = document.querySelectorAll(
     'input[name="deliveryMethod"]'
   );
@@ -79,66 +78,68 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.removeItem("selectedBranchLatitude");
   }
 
-packetaButton.addEventListener("click", (e) => {
-  e.preventDefault();
+  packetaButton.addEventListener("click", (e) => {
+    e.preventDefault();
 
-  Packeta.Widget.pick({ apiKey: "45e618492867392e" }, (point) => {
-    if (!point) return;
+    Packeta.Widget.pick({}, function (point) {
+      if (point) {
+        const type = point.pickup_point_type || point.type;
 
-    const type = point.pickup_point_type || point.type || "";
-    const countryCode = point.country?.toLowerCase() || "cz";
+        let shippingMethod = "packeta";
+        let shippingFee = 0;
+        const countryCode = point.country.toLowerCase();
+        localStorage.setItem("countryCode", countryCode);
 
-    localStorage.setItem("countryCode", countryCode);
+        if (type === "zbox") {
+          shippingMethod = "zbox";
+        } else if (
+          type === "external" ||
+          point.name.toLowerCase().includes("evening")
+        ) {
+          shippingMethod = "evening";
+        }
 
-    let shippingMethod = "packeta";
-    let shippingFee = 0;
+        if (countryCode === "cz") {
+          if (shippingMethod === "zbox") shippingFee = 300;
+          else if (shippingMethod === "evening") shippingFee = 550;
+          else shippingFee = 300;
+        } else if (countryCode === "sk") {
+          if (shippingMethod === "zbox") shippingFee = 300;
+          else if (shippingMethod === "evening") shippingFee = 600;
+          else shippingFee = 400;
+        }
 
-    if (type === "zbox") {
-      shippingMethod = "zbox";
-    } else if (type === "external" || point.name?.toLowerCase().includes("evening")) {
-      shippingMethod = "evening";
-    }
-    if (countryCode === "cz") {
-      shippingFee = shippingMethod === "evening" ? 550 : 200;
-    } else if (countryCode === "sk") {
-      if (shippingMethod === "zbox") shippingFee = 200;
-      else if (shippingMethod === "evening") shippingFee = 600;
-      else shippingFee = 200;
-    }
-    const details = {
-      selectedBranchId: point.id,
-      selectedBranchName: point.name,
-      selectedBranchStreet: point.street,
-      selectedBranchCity: point.city,
-      selectedBranchZip: point.zip,
-      selectedBranchType: point.type,
-      selectedBranchLongitude: point.longitude,
-      selectedBranchLatitude: point.latitude,
-      shippingMethod,
-      shippingFee
-    };
+        localStorage.setItem("selectedBranchId", point.id);
+        localStorage.setItem("selectedBranchName", point.name);
+        localStorage.setItem("shippingMethod", shippingMethod);
+        localStorage.setItem("shippingFee", shippingFee);
+        localStorage.setItem("selectedBranchStreet", point.street);
+        localStorage.setItem("selectedBranchCity", point.city);
+        localStorage.setItem("selectedBranchZip", point.zip);
+        localStorage.setItem("selectedBranchType", point.type);
+        localStorage.setItem("selectedBranchLongitude", point.longitude);
+        localStorage.setItem("selectedBranchLatitude", point.latitude);
 
-    Object.entries(details).forEach(([key, value]) =>
-      localStorage.setItem(key, value)
-    );
-
-    // Aktualizace UI
-    const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
-    let shipping = SHIPPING_COST[getSelectedCountry()] || shippingFee || 0;
-
-    if (selectedRadio?.value === "packeta") {
-      shipping = shippingFee;
-    }
-
-    shippingDisplay.textContent = point.name
-      ? `€ ${(shipping / 100).toFixed(2)}`
-      : "Enter shipping details";
-
-    packetaButton.innerText = point.name || "Choose the parcel shop";
-
-    updateUI();
+        let shipping = parseInt(localStorage.getItem("shippingFee"));
+        const selectedRadio = document.querySelector(
+          'input[name="deliveryMethod"]:checked'
+        );
+        if (selectedRadio && selectedRadio.value === "packeta") {
+          shipping = Number(localStorage.getItem("shippingFee")) || 0;
+        } else {
+          shipping = SHIPPING_COST[getSelectedCountry()] || 0;
+        }
+        if (point.name) {
+          shippingDisplay.textContent = `€ ${(shipping / 100).toFixed(2)}`;
+        }
+        if (!point.name) {
+          shippingDisplay.textContent = "Enter shipping details";
+        }
+        packetaButton.innerText = `${point.name}`;
+        updateUI();
+      }
+    });
   });
-});
   const getCurrentShipping = () => {
     const deliveryMethod =
       document.querySelector('input[name="deliveryMethod"]:checked')?.value ||
@@ -168,6 +169,7 @@ packetaButton.addEventListener("click", (e) => {
       packetaButton.style.display = "inline-block";
 
       const selectedBranchId = localStorage.getItem("selectedBranchId");
+      const container = document.getElementById("payment_request_button");
       const selectedBranchName = localStorage.getItem("selectedBranchName");
       packetaButton.innerText = selectedBranchId
         ? selectedBranchName
@@ -178,7 +180,11 @@ packetaButton.addEventListener("click", (e) => {
       payButton.style.margin = "0px 0px 0px 0px";
 
       if (payButton.disabled === false) {
+        container.style.pointerEvents = "auto";
+        container.style.opacity = "1";
       } else if (payButton.disabled === true) {
+        container.style.pointerEvents = "none";
+        container.style.opacity = ".7";
       }
       const shownElement = document.querySelector(".jHvVd");
       shownElement.style.display = "none";
@@ -196,6 +202,14 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.removeItem("shippingFee");
       payButton.disabled = false;
       payButton.style.margin = "0px 0px 0px 0px";
+      const container = document.getElementById("payment_request_button");
+      if (payButton.disabled === false) {
+        container.style.pointerEvents = "auto";
+        container.style.opacity = "1";
+      } else if (payButton.disabled === true) {
+        container.style.pointerEvents = "none";
+        container.style.opacity = ".7";
+      }
 
       const element = document.querySelector(
         "._1fragemui._1fragemq6._1fragemqc._1fragemqo._1fragemqi._1fragem32._1fragemg9._1fragemi2._1fragemeg._1fragemjv._1fragemms"
@@ -341,8 +355,8 @@ packetaButton.addEventListener("click", (e) => {
       itemDiv.className =
         "_1fragem32 _1fragemms uniqueChild_uniqueChildTemplate_Az6bO8";
       itemDiv.innerHTML = `
-        <div class="_1mjy8kn6 _1fragemms _16s97g73k">
-          <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB uz5rE">
+        <div class="_1mjy8kn6 _1fragemms _16s97g73k" style="--_16s97g73f: 40vh;">
+          <div tabindex="0" role="group" scrollbehaviour="chain" class="_1mjy8kn1 _1mjy8kn0 _1fragemms _1fragempm _1fragem2x _1fragemdm _16s97g73k _1mjy8kn4 _1mjy8kn2 _1fragemku _1frageml9 vyybB" style="--_16s97g73f: 40vh; overflow: hidden;">
             <div class="_6zbcq522 _1fragemth">
               <h3 id="ResourceList0" class="n8k95w1 n8k95w0 _1fragemms n8k95w4 n8k95wg">${
                 item.name
@@ -360,14 +374,14 @@ packetaButton.addEventListener("click", (e) => {
               <div role="rowgroup" class="_6zbcq54 _6zbcq53 _1fragem3c _1fragemou">
                 <div role="row" class="_6zbcq51i _6zbcq51h _1fragem3c _1fragem2x _6zbcq51l _6zbcq510 _6zbcq51k">
                   <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51t _6zbcq51q _1fragem8w _6zbcq51o">
-                    <div class="_1fragem32 _1fragemms _16s97g74b">
+                    <div class="_1fragem32 _1fragemms _16s97g74b" style="--_16s97g746: 6.4rem;">
                       <div class="_5uqybw0 _1fragemms _1fragem3c _1fragem8h">
                         <div class="_5uqybw1 _1fragem3c _1fragemlt _1fragemp0 _1fragemu _1fragemnm _1fragem50 _1fragem6t _1fragem8h">
-                          <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" >
+                          <div class="_1m6j2n34 _1m6j2n33 _1fragemms _1fragemui _1m6j2n3a _1m6j2n39 _1m6j2n35" style="--_1m6j2n30: 1;">
                             <picture>
                               <img src="${
                                 item.image
-                              }" class="Ce3eZ" alt="${
+                              }" style="width: 100%; height: 100%; object-fit: contain;" alt="${
         item.name
       }">
                             </picture>
@@ -382,7 +396,7 @@ packetaButton.addEventListener("click", (e) => {
                       </div>
                     </div>
                   </div>
-                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741">
+                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51u _6zbcq51r _1fragem87 _6zbcq51p _6zbcq51n _1fragemno _6zbcq51x _6zbcq51w _1fragemox _16s97g741" style="--_16s97g73w: 6.4rem;">
                     <div class="_1fragem32 _1fragemms dDm6x">
                       <p class="_1tx8jg70 _1fragemms _1tx8jg7c _1tx8jg7b _1fragemp3 _1tx8jg715 _1tx8jg71d _1tx8jg71f">${
                         item.name
@@ -390,8 +404,8 @@ packetaButton.addEventListener("click", (e) => {
                       <p class="_1fragem12">${item.description || ""}</p>
                     </div>
                   </div>
-                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox">
-                    <span class="t5Ui9">€ ${(
+                  <div role="cell" class="_6zbcq521 _6zbcq520 _1fragem3c _1fragemou _6zbcq51w _6zbcq51t _1fragemno _6zbcq51a _6zbcq519 _1fragemox" style="--_16s97g73w: 6.4rem;">
+                    <span style="display: flex; justify-content: flex-end;">€ ${(
                       item.price * item.quantity
                     ).toFixed(2)}</span>
                   </div>
@@ -423,21 +437,6 @@ packetaButton.addEventListener("click", (e) => {
     const promoDiscount = applyDiscount(subtotal + shipping);
     return subtotal + shipping - promoDiscount;
   }
-  async function createPacket(data) {
-  const res = await fetch("/.netlify/functions/create-packet", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
-
-  if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error("Packeta API error: " + errorText);
-  }
-
-  const json = await res.json();
-  return json;
-}
   const createPaymentRequest = () => {
     const country = (selectElement.value || "CZ").toUpperCase();
 
@@ -473,7 +472,7 @@ packetaButton.addEventListener("click", (e) => {
             id: "in-europe",
             label: "Shipping in central Europe",
             detail: "Delivery within 5 days",
-            amount: 200
+            amount: 300
           }
         ];
       } else {
@@ -486,6 +485,15 @@ packetaButton.addEventListener("click", (e) => {
           }
         ];
       }
+
+      event.updateWith({
+        status: "success",
+        shippingOptions,
+        total: {
+          label: "Total",
+          amount: 1000 + shippingOptions[0].amount
+        }
+      });
     });
     if (!paymentRequest) {
       return;
@@ -503,9 +511,32 @@ packetaButton.addEventListener("click", (e) => {
         event.complete("success");
       }
     });
+    const prButton = elements.create("paymentRequestButton", {
+      paymentRequest,
+      style: {
+        paymentRequestButton: {
+          type: "default",
+          theme: "dark",
+          height: "44px"
+        }
+      }
+    });
 
-
-
+    paymentRequest
+      .canMakePayment()
+      .then((result) => {
+        const container = document.getElementById("payment_request_button");
+        if (result) {
+          container.innerHTML = "";
+          prButton.mount(container);
+          paymentRequestButton = prButton;
+        } else {
+          container.style.display = "none";
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   selectElement.addEventListener(
@@ -545,34 +576,9 @@ packetaButton.addEventListener("click", (e) => {
     calculateSubtotal() +
     getSelectedShipping() / 100
   ).toFixed(2)}`;
-
-
-
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
     payButton.textContent = "Processing...";
-      const email = document.getElementById("email").value;
-      const firstName = document.getElementById("TextField0").value;
-      const lastName = document.getElementById("TextField1").value;
-      const phone = document.getElementById("TextField6").value || null;
-      const address1 = document.getElementById("TextField2").value;
-      const postalCode = document.getElementById("TextField4").value;
-      const city = document.getElementById("TextField5").value;
-
-      if (!email.trim() || !firstName.trim() || !lastName.trim() || !address1.trim() || !postalCode.trim() || !city.trim()) {
-        const errorMessage = document.getElementById("error-message");
-        errorMessage.textContent = "There was an error during your payment. You have most likely forgotten to enter all of your shipping details.";
-        payButton.disabled = false;
-        payButton.textContent = "Pay now";
-      }
-    function generateOrderNumber() {
-      const now = new Date();
-      const datePart = now.toISOString().slice(0,10).replace(/-/g,"");
-      const timePart = now.toTimeString().slice(0,8).replace(/:/g,"");
-      const randomPart = Math.floor(Math.random() * 9000) + 1000;
-      return `ORD-${datePart}${timePart}-${randomPart}`;
-    }
-    const number = generateOrderNumber();
 
     const cart = getCartFromCookie();
     if (!cart.length) {
@@ -608,16 +614,14 @@ packetaButton.addEventListener("click", (e) => {
         country: country,
         promoCode: promoCode,
         deliveryMethod: deliveryMethod,
-        packetaBranchId: selectedBranchId || null,
-        packetaBranchName: selectedBranchName || null,
-        packetaBranchStreet: selectedBranchStreet || null,
-        packetaBranchCity: selectedBranchCity || null,
-        number: number
+        packetaBranchId: selectedBranchId,
+        packetaBranchName: selectedBranchName,
+        packetaBranchStreet: selectedBranchStreet,
+        packetaBranchCity: selectedBranchCity,
       })
     });
 
     const data = await response.json();
-    
     if (!data.clientSecret) {
       const errorMessage = document.getElementById("error-message");
       errorMessage.textContent = "";
@@ -626,59 +630,14 @@ packetaButton.addEventListener("click", (e) => {
       payButton.textContent = "Pay now";
       return;
     }
-if (data.clientSecret) {
-  const email = document.getElementById("email").value;
-  const firstName = document.getElementById("TextField0").value;
-  const lastName = document.getElementById("TextField1").value;
-  const phone = document.getElementById("TextField6").value || null;
 
-  const shippingMethod = localStorage.getItem("shippingMethod");
-  if(shippingMethod === "packeta"){
-    if (!selectedBranchId) {
-      console.error("Branch ID není vybrán");
-      payButton.disabled = false;
-      return;
-    }
-  }
-
-  try {
-    const packetaResponse = await fetch("/.netlify/functions/create-packeta-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        number,
-        name: firstName,
-        surname: lastName,
-        email,
-        phone,
-        addressId: selectedBranchId,
-        cod: 0,
-        value: 1000,
-        weight: 0.7,
-        eshop: "Tigry.art"
-      }),
-    });
-
-    const packetaData = await packetaResponse.json();
-    const shippingMethod = localStorage.getItem("shippingMethod");
-    if (
-      (shippingMethod === "packeta" && packetaData.success) ||
-      shippingMethod === "courier"
-    ) {
-      payButton.textContent = "Order created!";
-    } else {
-      console.error("Error in shipping step:", packetaData);
-      payButton.disabled = false;
-    }
-  } catch (err) {
-    console.error("Error when calling Packeta API:", err);
-    payButton.disabled = false;
-  }
-} else {
-  payButton.textContent = "Error creating payment";
-  payButton.disabled = false;
-}
-
+    const email = document.getElementById("email").value;
+    const firstName = document.getElementById("TextField0").value;
+    const lastName = document.getElementById("TextField1").value;
+    const address1 = document.getElementById("TextField2").value;
+    const postalCode = document.getElementById("TextField4").value;
+    const city = document.getElementById("TextField5").value;
+    const phone = document.getElementById("TextField6").value;
 
     const { error, paymentIntent } = await stripe.confirmCardPayment(
       data.clientSecret,
