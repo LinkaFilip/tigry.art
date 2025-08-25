@@ -9,4 +9,4 @@
 /images/*
   Cross-Origin-Resource-Policy: same-origin
 /checkout
-  Content-Security-Policy: default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://js.stripe.com https://widget.packeta.com 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' https://js.stripe.com https://widget.packeta.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com https://*.packeta.com; connect-src 'self' https://api.stripe.com https://*.supabase.co; frame-src https://js.stripe.com https://widget.packeta.com; object-src 'none';
