@@ -8,3 +8,5 @@
     Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
 /images/*
   Cross-Origin-Resource-Policy: same-origin
+/checkout
+  Content-Security-Policy:
