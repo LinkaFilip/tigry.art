@@ -5837,5 +5837,4 @@ section:nth-child(3)>.FeaturedProductsModule>.FeaturedProductsModule_tileWrapper
 .loadingScreen_loadingScreenHidden {
     top: -100%;
     transition: 1s;
-    display: none !important;
 }
