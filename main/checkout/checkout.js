@@ -104,6 +104,10 @@ packetaButton.addEventListener("click", (e) => {
       if (shippingMethod === "zbox") shippingFee = 200;
       else if (shippingMethod === "evening") shippingFee = 600;
       else shippingFee = 200;
+    } else if (countryCode === "pl") {
+      if (shippingMethod === "zbox") shippingFee = 265;
+      else if (shippingMethod === "evening") shippingFee = 600;
+      else shippingFee = 200;
     }
     const details = {
       selectedBranchId: point.id,
@@ -122,7 +126,6 @@ packetaButton.addEventListener("click", (e) => {
       localStorage.setItem(key, value)
     );
 
-    // Aktualizace UI
     const selectedRadio = document.querySelector('input[name="deliveryMethod"]:checked');
     let shipping = SHIPPING_COST[getSelectedCountry()] || shippingFee || 0;
 
@@ -653,8 +656,8 @@ if (data.clientSecret) {
         phone,
         addressId: selectedBranchId,
         cod: 0,
-        value: 1000,
-        weight: 0.7,
+        value: 1499,
+        weight: 0.15,
         eshop: "Tigry.art"
       }),
     });
