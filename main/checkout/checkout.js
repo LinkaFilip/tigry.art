@@ -151,16 +151,6 @@ packetaButton.addEventListener("click", (e) => {
     }
     return SHIPPING_COST[selectElement.value] || 0;
   };
-  function enableGooglePayIfAvailable() {
-    paymentRequest.canMakePayment().then(function (result) {
-      const container = document.getElementById("payment_request_button");
-      if (result) {
-        container.style.display = "block";
-      } else {
-        container.style.display = "none";
-      }
-    });
-  }
   function updateUI() {
     const selectedRadio = document.querySelector(
       'input[name="deliveryMethod"]:checked'
@@ -465,7 +455,8 @@ packetaButton.addEventListener("click", (e) => {
           detail: "Delivery within 5 days",
           amount: 0
         }
-      ]
+      ],
+        disableWallets: ["googlePay"]
     });
     paymentRequest.on("shippingaddresschange", (event) => {
       let shippingOptions = [];
