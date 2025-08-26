@@ -148,22 +148,21 @@ exports.handler = async (event) => {
     });
     console.log("Using Supabase:", supabaseUrl);
     console.log("Service role key exists:", !!supabaseServiceRoleKey);
+    const { data, error } = await supabase
+      .from('orders')
+      .insert([{
+        payment_intent_id: paymentIntent.id,
+        items,
+        total_amount: totalAmount,
+        status: 'pending',
+        country,
+        delivery_method: deliveryMethod,
+        created_at: new Date().toISOString(),
+      }], { count: 'exact', returning: 'representation' });
 
-    const { data, error } = await supabase.from('orders').insert([{
-      payment_intent_id: paymentIntent.id,
-      items,
-      total_amount: totalAmount,
-      status: 'pending',
-      country,
-      delivery_method: deliveryMethod,
-      packeta_branch_id: packetaBranchId || null,
-      packeta_branch_name: packetaBranchName || null,
-      packeta_branch_address: packetaBranchStreet && packetaBranchCity ? `${packetaBranchStreet}, ${packetaBranchCity}` : null,
-      created_at: new Date().toISOString(),
-    }]);
     if (error) {
-      console.error('Chyba při ukládání objednávky do DB:', error);
-      return { statusCode: 500, body: JSON.stringify({ error: 'Database error' }) };
+      console.error('Supabase insert error:', error);
+      throw error;
     }
 
     return {
