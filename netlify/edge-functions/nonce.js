@@ -3,7 +3,7 @@ export default async (request, context) => {
   let response = await context.next();
   response.headers.set(
     "Content-Security-Policy",
-    `script-src 'self' 'nonce-${nonce}' https://js.stripe.com https://widget.packeta.com; style-src 'self' 'nonce-${nonce}' 'sha256-rmNO4l4SSxtfucFsayNzWLfapzbl/2uXkL4mbZqAkiY=' 'sha256-yyKvG+1MOCo5oWMut5dCaFDe6JXHSC/pOxSjwbFSGQU=' https://js.stripe.com https://widget.packeta.com; object-src 'none'; base-uri 'self';`
+    `script-src 'self' 'nonce-${nonce}' https://js.stripe.com https://widget.packeta.com; style-src 'self' 'nonce-${nonce}' 'unsafe-hashes' 'sha256-rmNO4l4SSxtfucFsayNzWLfapzbl/2uXkL4mbZqAkiY=' 'sha256-yyKvG+1MOCo5oWMut5dCaFDe6JXHSC/pOxSjwbFSGQU=' https://js.stripe.com https://widget.packeta.com; object-src 'none'; base-uri 'self';`
   );
   if (response.headers.get("content-type")?.includes("text/html")) {
     let body = await response.text();
