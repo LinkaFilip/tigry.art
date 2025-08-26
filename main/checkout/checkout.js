@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   const stripe = Stripe(
-    "pk_test_51LpXXlEqK4P4Y8FRSczm8KCIMxVjzLerGMsgdEK3HeICDVhbkk94wahUTxP7BcNIMXIzmf8fSWn5GddCAVXQlBrO00WN9j5yNb"
+    "pk_live_51LpXXlEqK4P4Y8FRmvpDyFPIhKGiJCVCgYE1gMsYK6C7mjzJvFK8PAQlN9coFjtGeKuvVMAMO4iKHePrFRwNrSDM00wFzIJwxA"
   );
   const elements = stripe.elements();
 
