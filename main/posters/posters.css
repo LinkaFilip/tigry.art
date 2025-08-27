@@ -5838,3 +5838,6 @@ section:nth-child(3)>.FeaturedProductsModule>.FeaturedProductsModule_tileWrapper
     top: -100%;
     transition: 1s;
 }
+.relative{
+    position: relative;
+}
