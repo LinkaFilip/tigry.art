@@ -108,6 +108,12 @@ packetaButton.addEventListener("click", (e) => {
       if (shippingMethod === "zbox") shippingFee = 265;
       else if (shippingMethod === "evening") shippingFee = 600;
       else shippingFee = 200;
+    } else if (countryCode === "hu") {
+      if (shippingMethod === "zbox") shippingFee = 350;
+      else shippingFee = 350;
+    } else if (countryCode === "ro") {
+      if (shippingMethod === "zbox") shippingFee = 400;
+      else shippingFee = 400;
     }
     const details = {
       selectedBranchId: point.id,
