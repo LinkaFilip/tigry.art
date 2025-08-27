@@ -66,8 +66,22 @@ exports.handler = async (event) => {
           evening: 600,
           packeta: 200,
         },
+        PL: {
+          zbox: 265,
+          evening: 600,
+          packeta: 200,
+        },
+        HU: {
+          zbox: 350,
+          evening: 350,
+          packeta: 350,
+        },
+        RO: {
+          zbox: 400,
+          evening: 400,
+          packeta: 400,
+        },
       };
-
       const pricing = shippingTable[country];
       if (pricing) {
         shipping = pricing[deliveryMethod] || 0;
