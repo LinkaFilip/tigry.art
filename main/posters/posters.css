@@ -5832,10 +5832,15 @@ section:nth-child(3)>.FeaturedProductsModule>.FeaturedProductsModule_tileWrapper
     z-index: 9999999999;
     transition: 1s;
     top: 0%;
+
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 }
 
 .loadingScreen_loadingScreenHidden {
-    top: -100%;
+    top: -200%;
     transition: 1s;
 }
 .relative{
