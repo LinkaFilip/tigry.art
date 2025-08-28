@@ -6,9 +6,13 @@ window.addEventListener("load", () => {
     document.querySelector(".loadingScreen_loadingScreen__5RET6").classList.add("loadingScreen_loadingScreenHidden");
 })
 window.onload = () => {
-      document.querySelector(".loadingScreen_loadingScreen__5RET6").classList.add("loadingScreen_loadingScreenHidden");
       document.querySelector(".loadingScreen_loadingScreenHidden").style.display = "none";
 };
+function setVh() {
+  document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+}
+setVh();
+window.addEventListener('resize', setVh);
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 
