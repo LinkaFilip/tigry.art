@@ -5828,10 +5828,13 @@ section:nth-child(3)>.FeaturedProductsModule>.FeaturedProductsModule_tileWrapper
     width: 100vw;
     height: 120vh;
     position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-color: #146757;
     z-index: 9999999999;
     transition: 1s;
-    top: 0%;
 
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
