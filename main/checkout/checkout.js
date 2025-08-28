@@ -661,6 +661,20 @@ if (data.clientSecret) {
 
     const packetaData = await packetaResponse.json();
     const shippingMethod = localStorage.getItem("shippingMethod");
+    if (error) {
+      console.error("Payment failed:", error.message);
+      payButton.disabled = false;
+      payButton.textContent = "Try again";
+      return;
+    }
+    if (paymentIntent) {
+      if (paymentIntent.status === "succeeded") {
+        payButton.textContent = "Order created!";
+      } else {
+        payButton.disabled = false;
+        payButton.textContent = "Payment failed";
+      }
+    }
     if (
       (shippingMethod === "packeta" && packetaData.success) ||
       shippingMethod === "courier"
