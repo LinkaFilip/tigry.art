@@ -8,11 +8,6 @@ window.addEventListener("load", () => {
 window.onload = () => {
       document.querySelector(".loadingScreen_loadingScreenHidden").classList.add("displayNone");
 };
-function setVh() {
-  document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-}
-setVh();
-window.addEventListener('resize', setVh);
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 
