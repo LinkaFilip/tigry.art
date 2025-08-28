@@ -667,14 +667,6 @@ if (data.clientSecret) {
       payButton.textContent = "Try again";
       return;
     }
-    if (paymentIntent) {
-      if (paymentIntent.status === "succeeded") {
-        payButton.textContent = "Order created!";
-      } else {
-        payButton.disabled = false;
-        payButton.textContent = "Payment failed";
-      }
-    }
     if (
       (shippingMethod === "packeta" && packetaData.success) ||
       shippingMethod === "courier"
