@@ -6,7 +6,7 @@ window.addEventListener("load", () => {
     document.querySelector(".loadingScreen_loadingScreen__5RET6").classList.add("loadingScreen_loadingScreenHidden");
 })
 window.onload = () => {
-      document.querySelector(".loadingScreen_loadingScreenHidden").style.display = "none";
+      document.querySelector(".loadingScreen_loadingScreenHidden").classList.add("displayNone");
 };
 function setVh() {
   document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);

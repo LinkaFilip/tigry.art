@@ -5841,3 +5841,6 @@ section:nth-child(3)>.FeaturedProductsModule>.FeaturedProductsModule_tileWrapper
 .relative{
     position: relative;
 }
+.displayNone{
+    display: none;
+}
