@@ -5,6 +5,10 @@ if (new URL(window.location.href).pathname === "/posters/" && new URL(window.loc
 window.addEventListener("load", () => {
     document.querySelector(".loadingScreen_loadingScreen__5RET6").classList.add("loadingScreen_loadingScreenHidden");
 })
+window.onload = () => {
+      document.querySelector(".loadingScreen_loadingScreen__5RET6").classList.add("loadingScreen_loadingScreenHidden");
+      document.querySelector(".loadingScreen_loadingScreenHidden").style.display = "none";
+};
 document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 
