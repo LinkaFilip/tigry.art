@@ -522,8 +522,8 @@ packetaButton.addEventListener("click", (e) => {
     },
     invalid: {
       "::placeholder": { color: "#cc0000" },
-      borderColor: "var(--x-default-color-accent)",
-      boxShadow: "0 0 0 1px var(--x-default-color-accent)"
+      borderColor: "#cc0000",
+      boxShadow: "0 0 0 1px #cc0000"
     }
   };
   const cardNumber = elements.create("cardNumber", { style });
