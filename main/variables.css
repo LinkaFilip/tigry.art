@@ -35,7 +35,7 @@ img {
     width: 114px;
     height: 34px;
     background-color: rgb(255, 255, 255);
-    border-radius: 1.2rem;
+    border-radius: 6px;
     transition: .5s;
     display: flex;
     align-items: flex-start;

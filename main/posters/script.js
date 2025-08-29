@@ -232,7 +232,7 @@ function renderCart() {
       <div class="LineItem_topRow__FjuFV">
         <div class="LineItem_top__4SbKk">
           <span class="LineItem_title__FgmYr">${item.name}</span>
-          <span class="LineItem_totalPrice__KJ57U"><strong>${lineTotal.toFixed(2)} €</strong></span>
+          <span class="LineItem_totalPrice__KJ57U"><strong>€ ${lineTotal.toFixed(2)}</strong></span>
         </div>
       </div>
 <div class="LineItem_bottomRow__auvwE">
@@ -290,12 +290,12 @@ function renderFooter(total, itemCount) {
         <span class="Cart_itemCount__FrJbS Cart_greyText__LM8q6">(${itemCount} items)</span>
       </div>
       <div class="Cart_detailValue__JJpkB">
-        <span>${total.toFixed(2)} €</span>
+        <span>€ ${total.toFixed(2)}</span>
       </div>
     </div>
     <button type="button" class="CheckoutButton_checkoutButton__WVgGK Button_button__OFOdO Button_styled__xGVes">
       <span>Checkout</span>
-      <span>${total.toFixed(2)} €</span>
+      <span>€ ${total.toFixed(2)}</span>
     </button>
   `;
 
