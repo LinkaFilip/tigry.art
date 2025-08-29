@@ -30465,3 +30465,7 @@ label.active{
 .marginTop16 {
     margin-top: 16px;
 }
+.StripeElement--invalid{
+    border: 1px solid #cc0000;
+    box-shadow: 0 0 0 1px #ffaaaa !important;
+}
