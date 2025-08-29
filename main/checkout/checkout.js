@@ -516,11 +516,15 @@ packetaButton.addEventListener("click", (e) => {
 
   const style = {
     base: {
-      fontSize: "16px",
+      fontSize: "var(--field-font-size)",
       color: "#000000",
       "::placeholder": { color: "#aaa" }
     },
-    invalid: { color: "#e5424d" }
+    invalid: {
+      "::placeholder": { color: "#cc0000" },
+      borderColor: "var(--x-default-color-accent)",
+      boxShadow: "0 0 0 1px var(--x-default-color-accent)"
+    }
   };
   const cardNumber = elements.create("cardNumber", { style });
   const cardExpiry = elements.create("cardExpiry", { style });
