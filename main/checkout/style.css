@@ -30468,4 +30468,5 @@ label.active{
 .StripeElement--invalid{
     border: 1px solid #cc0000 !important;
     box-shadow: 0 0 0 1px #ffaaaa !important;
+    background-color: #ffffff00;
 }
