@@ -201,7 +201,7 @@ packetaButton.addEventListener("click", (e) => {
       );
       const shownElement = document.querySelector(".jHvVd");
       shownElement.style.display = "block";
-      element.style.borderRadius = "8px";
+      element.style.borderRadius = "6px";
       element.style.border = "1px solid black";
       const all = document.querySelectorAll("._1fragem32._1fragemms.gfFXW");
       const space = all[1];
