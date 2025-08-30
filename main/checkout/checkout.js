@@ -274,7 +274,7 @@ packetaButton.addEventListener("click", (e) => {
     const totalBeforeDiscount = subtotal + shipping / 100;
 
     const code = promoInput.value.trim().toUpperCase();
-    const discountPercent = code === "TEST10" ? 20 : 0;
+    const discountPercent = code === null ? 20 : 0;
     const discountAmount = totalBeforeDiscount * (discountPercent / 100);
     const totalAfterDiscount = totalBeforeDiscount - discountAmount;
 
@@ -410,7 +410,7 @@ packetaButton.addEventListener("click", (e) => {
     const code = promoInput.value.trim().toUpperCase();
 
     switch (code) {
-      case "TEST10":
+      case null:
         return price * 0.8;
       default:
         return price;
