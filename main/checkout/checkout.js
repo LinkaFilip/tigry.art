@@ -550,8 +550,6 @@ packetaButton.addEventListener("click", (e) => {
     getSelectedShipping() / 100
   ).toFixed(2)}`;
 
-
-
   payButton.addEventListener("click", async () => {
     payButton.disabled = true;
     payButton.textContent = "Processing...";
