@@ -1,58 +1,153 @@
+functionsDirectory = "C:\\Users\\linka\\Documents\\GitHub\\tigry.art\\netlify\\functions"
+functionsDirectoryOrigin = "config"
+headersOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+
 [build]
-  command = "npm run"
-  publish = "main"
-  functions = "netlify/functions"
+edge_functions = "C:\\Users\\linka\\Documents\\GitHub\\tigry.art\\netlify\\edge-functions"
+publish = "C:\\Users\\linka\\Documents\\GitHub\\tigry.art\\main"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "npm run"
+functions = "C:\\Users\\linka\\Documents\\GitHub\\tigry.art\\netlify\\functions"
+
+  [build.environment]
+
+  [build.processing]
+
+    [build.processing.css]
+
+    [build.processing.html]
+
+    [build.processing.images]
+
+    [build.processing.js]
+
+  [build.services]
 
 [functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"  
-  [functions."stripe-webhook"]
-    include_files = []
-    node_bundler = "esbuild"
-    external_node_modules = ["stripe"]
 
-[[redirects]]
-  from = '/api/*'
-  to = '/.netlify/functions/:splat'
-  status = 200
+  [functions.stripe-webhook]
+  include_files = []
+  node_bundler = "esbuild"
+  external_node_modules = [
+    "stripe"
+  ]
+
+  [functions."*"]
+  node_bundler = "esbuild"
 
 [[headers]]
-  for = "/robots.txt"
+for = "/*"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'nonce-faaf6aeaa9f54cf69fe001db535042f0'; script-src-elem 'self' https://js.stripe.com https://widget.packeta.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com https://*.packeta.com; connect-src 'self' https://api.stripe.com https://*.supabase.co; frame-src https://js.stripe.com https://widget.packeta.com;object-src 'none';"
+  Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+  X-Content-Type-Options = "nosniff"
+  X-Frame-Options = "SAMEORIGIN"
+  Access-Control-Allow-Origin = "*"
+  Access-Control-Allow-Headers = "Content-Type, Authorization"
+  Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+
+[[headers]]
+for = "/images/*"
+
+  [headers.values]
+  Cross-Origin-Resource-Policy = "same-origin"
+
+[[headers]]
+for = "/checkout"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self' https://js.stripe.com https://widget.packeta.com 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' https://js.stripe.com https://widget.packeta.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.stripe.com https://*.packeta.com; connect-src 'self' https://api.stripe.com https://*.supabase.co; frame-src https://js.stripe.com https://widget.packeta.com; object-src 'none';"
+
+[[headers]]
+for = "/robots.txt"
+
   [headers.values]
   Content-Type = "text/plain"
 
 [[redirects]]
-  from = "http://www.tigry.art/*"
-  to = "https://tigry.art/:splat"
-  status = 301
-  force = true
+from = "/api/*"
+to = "/.netlify/functions/:splat"
+status = 200
+force = false
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
 
 [[redirects]]
-  from = "https://www.tigry.art/*"
-  to = "https://tigry.art/:splat"
-  status = 301
-  force = true
+from = "http://www.tigry.art/*"
+to = "https://tigry.art/:splat"
+status = 301
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
 
 [[redirects]]
-  from = "http://tigry.art/*"
-  to = "https://tigry.art/:splat"
-  status = 301
-  force = true
+from = "https://www.tigry.art/*"
+to = "https://tigry.art/:splat"
+status = 301
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
 
 [[redirects]]
-  from = "http://www.tigry.art"
-  to = "https://tigry.art"
-  status = 301
-  force = true
+from = "http://tigry.art/*"
+to = "https://tigry.art/:splat"
+status = 301
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
 
 [[redirects]]
-  from = "http://tigry.art"
-  to = "https://tigry.art"
-  status = 301
-  force = true
+from = "http://www.tigry.art"
+to = "https://tigry.art"
+status = 301
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
 
 [[redirects]]
-  from = "https://www.tigry.art"
-  to = "https://tigry.art"
-  status = 301
-  force = true
+from = "http://tigry.art"
+to = "https://tigry.art"
+status = 301
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
+
+[[redirects]]
+from = "https://www.tigry.art"
+to = "https://tigry.art"
+status = 301
+force = true
+
+  [redirects.query]
+
+  [redirects.conditions]
+
+  [redirects.headers]
