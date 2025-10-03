@@ -12,7 +12,21 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Tigry.art" />
     <link rel="manifest" href="/images/favicon/site.webmanifest" />
+    <script>
+      requestIdleCallback(() => {
+        const script = document.createElement("script");
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-9E4KKSRL2X";
+        script.async = true;
+        document.head.appendChild(script);
 
+        script.onload = () => {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag("js", new Date());
+          gtag("config", "G-9E4KKSRL2X");
+        };
+      });
+    </script>
     <link rel="preload" href="https://tigry.art/geist-variablefont_wght.ttf" as="font" type="font/ttf" crossorigin>
 
 

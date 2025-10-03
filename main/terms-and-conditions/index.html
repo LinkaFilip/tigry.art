@@ -12,6 +12,21 @@
     <meta name="apple-mobile-web-app-title" content="Tigry.art" />
     <link rel="manifest" href="/images/favicon/site.webmanifest" />
 
+    <script>
+      requestIdleCallback(() => {
+        const script = document.createElement("script");
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-9E4KKSRL2X";
+        script.async = true;
+        document.head.appendChild(script);
+
+        script.onload = () => {
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag("js", new Date());
+          gtag("config", "G-9E4KKSRL2X");
+        };
+      });
+    </script>
 </head>
 <body>
     <main class="Page_mainContent__4KIV9">
