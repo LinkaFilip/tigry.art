@@ -337,7 +337,7 @@
       </div><strong><strong>
           <div class="ProductControls_productControls__OabTs">
             <div class="ProductControls_productActions__R_jg2">
-              <button class="add-to-cart ProductControls_addToCartBtn__8Qr1t Button_button__OFOdO Button_styled__xGVes" data-id="poster004" data-name="Middle East – landscape" data-price="14.99" data-img="../../images/WebP/MiddleEast-landscape.webp">
+              <button onclick="trackAddToCart()" class="add-to-cart ProductControls_addToCartBtn__8Qr1t Button_button__OFOdO Button_styled__xGVes" data-id="poster004" data-name="Middle East – landscape" data-price="14.99" data-img="../../images/WebP/MiddleEast-landscape.webp">
                 Add to cart
               </button>
             </div>
@@ -345,6 +345,20 @@
           <div class="Overlay_overlay__hwjQ3 Overlay_light__VICDK FepO9"></div>
     </div>
   </div>
+  <script>
+function trackAddToCart() {
+  gtag('event', 'add_to_cart', {
+    currency: 'EUR',
+    value: 14.99,
+    items: [{
+      item_id: '004',
+      item_name: 'Middle East landscape',
+      quantity: 1,
+      price: 14.99
+    }]
+  });
+}
+</script>
 </body>
 
 </html>
