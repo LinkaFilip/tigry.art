@@ -6,18 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tigry.art | Czechia landscape poster</title>  
   <script>
-    function trackAddToCart() {
-      gtag('event', 'add_to_cart', {
-        currency: 'EUR',
-        value: 14.99,
-        items: [{
-          item_id: '003',
-          item_name: 'Czechia landscape',
-          quantity: 1,
-          price: 14.99
-        }]
-      });
-    }
+
     </script>
   <script>
     requestIdleCallback(() => {
@@ -30,6 +19,18 @@
         function gtag() { dataLayer.push(arguments); }
         gtag("js", new Date());
         gtag("config", "G-9E4KKSRL2X");
+            function trackAddToCart() {
+              gtag('event', 'add_to_cart', {
+                currency: 'EUR',
+                value: 14.99,
+                items: [{
+                  item_id: '003',
+                  item_name: 'Czechia landscape',
+                  quantity: 1,
+                  price: 14.99
+                }]
+              });
+            }
       };
     });
   </script>
