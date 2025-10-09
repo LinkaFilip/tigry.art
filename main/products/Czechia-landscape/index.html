@@ -5,32 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tigry.art | Czechia landscape poster</title>  
-  <script async>
-    requestIdleCallback(() => {
-      const script = document.createElement("script");
-      script.src = "https://www.googletagmanager.com/gtag/js?id=G-9E4KKSRL2X";
-      script.async = true;
-      document.head.appendChild(script);
-      script.onload = () => {
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag("js", new Date());
-        gtag("config", "G-9E4KKSRL2X");
-            function trackAddToCart() {
-              gtag('event', 'add_to_cart', {
-                currency: 'EUR',
-                value: 14.99,
-                items: [{
-                  item_id: '003',
-                  item_name: 'Czechia landscape',
-                  quantity: 1,
-                  price: 14.99
-                }]
-              });
-            }
-      };
-    });
-  </script>
+
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -324,7 +299,7 @@
       <div class="ProductHero_description__6BbjO rich-content">
         <div>
           <p>The posters contain elements of Czech architecture captured in a minimalist way. They include both historical and modern pieces such as the iconic Žižkov Tower in the background. Enjoy Prague without crowds!</p>
-          <p>Format: <strong>29.7×40<strong> cm</p>
+          <p>Format: <strong>29.7×40</strong> cm</p>
         </div>
       </div>
       <div class="ProductControls_productControls__OabTs">
@@ -339,7 +314,32 @@
   </div>
   </section>
 
-
+  <script>
+    requestIdleCallback(() => {
+      const script = document.createElement("script");
+      script.src = "https://www.googletagmanager.com/gtag/js?id=G-9E4KKSRL2X";
+      script.async = true;
+      document.head.appendChild(script);
+      script.onload = () => {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag("js", new Date());
+        gtag("config", "G-9E4KKSRL2X");
+            function trackAddToCart() {
+              gtag('event', 'add_to_cart', {
+                currency: 'EUR',
+                value: 14.99,
+                items: [{
+                  item_id: '003',
+                  item_name: 'Czechia landscape',
+                  quantity: 1,
+                  price: 14.99
+                }]
+              });
+            }
+      };
+    });
+  </script>
 </body>
 
 </html>
