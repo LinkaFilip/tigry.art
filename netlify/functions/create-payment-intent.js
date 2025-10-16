@@ -1,16 +1,5 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const { v4: uuidv4 } = require('uuid');
-const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config();
-
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!supabaseUrl || !supabaseServiceRoleKey) {
-  throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables');
-}
-
-const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
 
 exports.handler = async (event) => {
   try {
@@ -160,24 +149,6 @@ exports.handler = async (event) => {
         number: number
       },
     });
-    console.log("Using Supabase:", supabaseUrl);
-    console.log("Service role key exists:", !!supabaseServiceRoleKey);
-    const { data, error } = await supabase
-      .from('orders')
-      .insert([{
-        payment_intent_id: paymentIntent.id,
-        items,
-        total_amount: totalAmount,
-        status: 'pending',
-        country,
-        delivery_method: deliveryMethod,
-        created_at: new Date().toISOString(),
-      }], { count: 'exact', returning: 'representation' });
-
-    if (error) {
-      console.error('Supabase insert error:', error);
-      throw error;
-    }
 
     return {
       statusCode: 200,
